@@ -4,7 +4,6 @@
     import Footer from '$lib/reusable_components/+footer.svelte'
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
-    import MainPage_purpleSquaresSVG from '$lib/svg_files/MainPage/MainPage_purpleSquaresSVG.svg'
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
     import MainPage_stylingForSunsetImageSVG from '$lib/svg_files/MainPage/MainPage_stylingForSunsetImage.svg'
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
