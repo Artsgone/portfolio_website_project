@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'Neutral_Normal';
+    font-style: normal;
+    src: url('/src/lib/fonts/NeutralFace.otf');
+}
+@font-face {
+    font-family: 'Neutral_Bold';
+    font-style: normal;
+    src: url('/src/lib/fonts/NeutralFace-Bold.otf');
+}
+@font-face {
+    font-family: 'Brolimo';
+    font-style: normal;
+    src: url('/src/lib/fonts/BrolimoRegular.ttf');
+}
+@font-face {
+    font-family: 'Subjectivity_Thin';
+    font-style: normal;
+    src: url('/src/lib/fonts/Subjectivity/Subjectivity-Light.otf');
+}
+@font-face {
+    font-family: 'Subjectivity_Regular';
+    font-style: normal;
+    src: url('/src/lib/fonts/Subjectivity/Subjectivity-Regular.otf');
+}
+@font-face {
+    font-family: 'Subjectivity_Medium';
+    font-style: normal;
+    src: url('/src/lib/fonts/Subjectivity/Subjectivity-Medium.otf');
+}
+@font-face {
+    font-family: 'Subjectivity_Bold';
+    font-style: normal;
+    src: url('/src/lib/fonts/Subjectivity/Subjectivity-Bold.otf');
+}
+@font-face {
+    font-family: 'Misto';
+    font-style: normal;
+    src: url('/src/lib/fonts/Misto/Misto.otf');
+}
+@font-face {
+    font-family: 'Vetrino';
+    font-style: normal;
+    src: url('/src/lib/fonts/Vetrino.otf');
+}
+@font-face {
+    font-family: 'Butler_Medium';
+    font-style: normal;
+    src: url('/src/lib/fonts/Butler/Butler-Medium.woff'),
+        url('/src/lib/fonts/Butler/Butler-Medium.woff2');
+}
+@font-face {
+    font-family: 'Butler_Light';
+    font-style: normal;
+    src: url('/src/lib/fonts/Butler/Butler-Light.woff'),
+        url('/src/lib/fonts/Butler/Butler-Light.woff2');
+}

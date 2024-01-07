@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="905.73303mm"
+   height="837.70959mm"
+   viewBox="0 0 905.73303 837.7096"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="AboutMe_LanguagesDecorMobile.svg"
+   inkscape:export-filename="MainPage_Design_Mobile.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#323232"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#626262"
+     inkscape:document-units="mm"
+     showborder="false"
+     borderlayer="false"
+     inkscape:zoom="0.11313709"
+     inkscape:cx="1811.9611"
+     inkscape:cy="1427.4718"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1"
+       x="-0.030150274"
+       y="-0.032621945"
+       width="1.0603134"
+       height="1.0654033">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="7.565413"
+         id="feGaussianBlur1" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter2"
+       x="-0.029805871"
+       y="-0.035134678"
+       width="1.0596406"
+       height="1.0702694">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="6.9307507"
+         id="feGaussianBlur2" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-1839.9021,-773.74752)">
+    <path
+       style="fill:none;stroke:#d3dedc;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1864.0359,1587.3233 c 0,0 232.0205,-109.4339 352.9648,-151.4178 138.8024,-48.183 344.9744,8.2207 425.6267,-114.5918 55.7907,-84.9548 33.8351,-236.6237 -44.2516,-301.6805 -133.4626,-111.19247 -353.3256,64.8376 -520.8015,18.7089 -81.6919,-22.5008 -213.5384,-137.91287 -213.5384,-137.91287"
+       id="path2"
+       sodipodi:nodetypes="caaaac" />
+    <path
+       style="mix-blend-mode:normal;fill:none;stroke:#f6f5ee;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter2)"
+       d="m 1864.0359,1587.3233 c 0,0 232.0205,-109.4339 352.9648,-151.4178 138.8024,-48.183 344.9744,8.2207 425.6267,-114.5918 55.7907,-84.9548 33.8351,-236.6237 -44.2516,-301.6805 -133.4626,-111.19247 -353.3256,64.8376 -520.8015,18.7089 -81.6919,-22.5008 -213.5384,-137.91287 -213.5384,-137.91287"
+       id="path131"
+       sodipodi:nodetypes="caaaac" />
+    <path
+       style="fill:none;stroke:#b5cac7;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1864.0359,1587.3233 c 0,0 129.0954,-169.9148 222.3268,-212.6027 169.365,-77.5473 437.2254,89.8681 556.2647,-53.4069 106.5995,-128.3025 98.3937,-411.99286 -44.2516,-498.46435 -160.6599,-97.39198 -333.3805,228.53875 -520.8015,215.49275 -213.5383,-14.864 -213.5384,-137.91287 -213.5384,-137.91287"
+       id="path1"
+       sodipodi:nodetypes="caaasc" />
+    <path
+       style="mix-blend-mode:normal;fill:none;stroke:#dde6e4;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter1)"
+       d="m 1868.9968,1581.949 c 0,0 129.0954,-169.9148 222.3268,-212.6027 169.365,-77.5473 437.2254,89.8681 556.2647,-53.4069 106.5995,-128.3025 98.3937,-411.99291 -44.2516,-498.4644 -160.6599,-97.39198 -333.3805,228.5388 -520.8015,215.4928 -213.5383,-14.864 -213.5384,-137.91292 -213.5384,-137.91292"
+       id="path192"
+       sodipodi:nodetypes="caaasc" />
+  </g>
+</svg>
