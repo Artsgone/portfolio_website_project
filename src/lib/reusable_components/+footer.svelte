@@ -9,7 +9,7 @@
     export let footer_Decor_ID = ""
     import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
     import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
-    import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_FooterDecor.svg'
+    import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
     import Contact_FooterDecor from '$lib/svg_files/Contact/Contact_FooterDecor.svg'
 
     import '$lib/styles_and_fonts/fonts.css'
