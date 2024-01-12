@@ -14,23 +14,6 @@
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
-    // (function() {
-    // document.addEventListener("mousemove", parallax);
-    // const elem = document.querySelector("#MainPage_titlePageSVG");
-    //     function parallax(e) {
-    //         let _w = window.innerWidth/2;
-    //         let _h = window.innerHeight/2;
-    //         let _mouseX = e.clientX;
-    //         let _mouseY = e.clientY;
-    //         let _depth1 = `${50 - (_mouseX - _w) * 0.01}% ${50 - (_mouseY - _h) * 0.01}%`;
-    //         let _depth2 = `${50 - (_mouseX - _w) * 0.02}% ${50 - (_mouseY - _h) * 0.02}%`;
-    //         let _depth3 = `${50 - (_mouseX - _w) * 0.06}% ${50 - (_mouseY - _h) * 0.06}%`;
-    //         let x = `${_depth3}, ${_depth2}, ${_depth1}`;
-    //         console.log(x);
-    //         elem.style.backgroundPosition = x;
-    //     }
-
-    // })();
 </script>
 
 <main>
@@ -70,18 +53,18 @@
         <div class="content_container page4">
             <div class="left_part page4">
                 <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
-                <img class="MainPage_stylingForSunsetImageSVG" src={MainPage_stylingForSunsetImageSVG} alt="MainPage_stylingForSunsetImageSVG">
+                <!-- <img class="MainPage_stylingForSunsetImageSVG" src={MainPage_stylingForSunsetImageSVG} alt="MainPage_stylingForSunsetImageSVG"> -->
             </div>
             <div class="right_part page4">
                 <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
-                <p class="page4_text darkgrayText"> 
+                <!-- <p class="page4_text darkgrayText"> 
                     mazingamazingamazinga <br>
                     azingamazingamazingma <br>
                     zingamazingamazingama <br>
                     ingamazingamazingamaz <br>
                     ngamazingamazingamazi <br>
                     gamazingamazingamazin
-                </p>
+                </p> -->
             </div>
         </div>
     </div>
@@ -124,16 +107,13 @@
     }
     .default_container{
         width: 100%;
-        /* height: 100svh; */
         height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        /* border-bottom: 1px solid var(--text_color_gray90); */
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
-        /* overflow: hidden; */
     }
     .content_container{
         width: 92.5%;
@@ -146,6 +126,7 @@
         color: var(--text_color_gray5);
     }
     .default_container.cyan{
+        height: 100svh;
         background-color: var(--background_color_lightCyan);
         box-shadow: none;
     }
@@ -181,8 +162,8 @@
 
     @media (width < 500px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 3rem;
+            justify-content: center;
+            gap: 17.5vh;
         }
         #MainPage_titlePageSVG{
             width: 100%;
@@ -416,12 +397,23 @@
         z-index: 1;
         border-radius: max(1rem, 1vw);
     }
-    .MainPage_stylingForSunsetImageSVG{
-        border-radius: max(1rem, 1vw);
-        border: max(0.25vw, 2.75px) solid var(--text_color_gray90);
+    .left_part.page4::before{
         position: absolute;
+        content: "";
         width: 100%;
+        height: 50%;
         bottom: 0;
+        border: max(0.25vw, 2.75px) solid var(--text_color_gray90);
+        border-radius: max(1rem, 1vw);
+    }
+    .left_part.page4::after{
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 50%;
+        bottom: 0;
+        border: max(0.25vw, 2.75px) solid var(--text_color_gray90);
+        border-radius: max(15vw, 10rem);
     }
 
     .right_part.page4::before{
@@ -440,17 +432,17 @@
         line-height: var(--page4_title_text_size);
         padding-block-start: 8vw;
     }
-    .page4_text{
+    /* .page4_text{
         font-family: 'Butler_Light';
         font-size: max(1.3vw, 1.5rem);
         line-height: max(0.85vw, 1.1rem);
         z-index: 1;
         padding: max(1.25rem, 1vw);
-    }
+    } */
 
     @container sunset_page_left_part (block-size < 600px) and (inline-size < 850px) {
         .sunsetInTheCloudsIMG{
-            height: auto;
+            height: 75%;
         }
         .MainPage_stylingForSunsetImageSVG{
             display: none;
@@ -458,7 +450,7 @@
     }
     @container sunset_page_left_part (block-size < 600px) and (inline-size < 300px) {
         .sunsetInTheCloudsIMG{
-            height: 75%;
+            height: 80%;
         }
     }
     @container sunset_page_left_part (block-size < 600px) and (inline-size < 500px) {
@@ -502,9 +494,9 @@
             align-items: center;
             justify-content: center;
         }
-        .page4_text{
+        /* .page4_text{
             padding: 0;
-        }
+        } */
     }
     @media (width < 1000px) and (height < 690px) {
         .content_container.page4{
@@ -646,7 +638,7 @@
     @media (width < 1100px) {
         .content_container{
             width: 85%;
-            height: 80%;
+            height: 87.5%;
         }
     }     
     @media (width < 1100px) and (height < 690px){ 

@@ -128,9 +128,7 @@
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        /* border-bottom: 1px solid var(--text_color_gray90); */
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
-        /* overflow: hidden; */
     }
     .content_container{
         width: 92.5%;
@@ -146,6 +144,7 @@
         color: var(--text_color_gray65);
     }
     .default_container.cyan{
+        height: 100svh;
         background-color: var(--background_color_lightCyan);
         box-shadow: none;
     }
@@ -178,8 +177,10 @@
 
     @media (width < 500px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 3rem;
+            /* justify-content: space-evenly;
+            gap: 5vh; */
+            justify-content: center;
+            gap: 17.5vh;
         }
         #AboutMe_titlePageSVG{
             width: 75%;
@@ -461,7 +462,7 @@
     @media (width < 1100px) {
         .content_container{
             width: 85%;
-            height: 80%;
+            height: 87.5%;
         }
     }     
     @media (width < 1100px) and (height < 690px){ 

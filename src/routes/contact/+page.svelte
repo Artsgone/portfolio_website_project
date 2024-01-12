@@ -108,6 +108,7 @@
         color: var(--text_color_gray5);
     }
     .default_container.cyan{
+        height: 100svh;
         background-color: var(--background_color_lightCyan);
         box-shadow: none;
     }
@@ -139,8 +140,8 @@
 
     @media (width < 500px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 3rem;
+            justify-content: center;
+            gap: 17.5vh;
         }
         #Contact_TitleDecor{
             width: 85%;
@@ -208,7 +209,7 @@
         border: max(2px, 0.12vw) var(--text_color_gray90) solid;
         background-color: var(--background_color_lightYellow);
     }
-    select, select > option{
+    select{
         color: var(--text_color_gray40);
         font-family: 'Neutral_Normal';
         font-size: max(1vw, 0.9rem);;
@@ -312,15 +313,12 @@
         .form_item.itemEmail{
             grid-area: 2 / 1 / 3 / 3;
         } 
-        .form_item{
-            color: var(--text_color_gray40);
-            font-family: 'Neutral_Normal';
-        }
         .links > a{
             font-size: var(--text_size_extra_small);
         }
         .emailAdress_Text{
             font-size: var(--text_size_extra_small);
+            font-size: max(1.15rem, 1.25vw);
         }
     }  
     @media (width < 950px) {
@@ -382,7 +380,7 @@
     @media (width < 1100px) {
         .content_container{
             width: 85%;
-            height: 80%;
+            height: 87.5%;
         }
     }
     @media (width < 1100px) and (height < 690px){ 

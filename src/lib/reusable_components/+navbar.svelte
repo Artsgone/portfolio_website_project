@@ -89,13 +89,13 @@
                     0 0.5rem 1rem 0.1rem var(--background_color_lightCyanSaturated);
     }
     
-    @container (inline-size < 1100px) {
+    @container (inline-size < 800px) {
         .navbar_inner{
             flex-direction: column;
-            gap: 2.25rem;
+            gap: max(1.5rem, 3vw);
         }
         .navbar_list{
-            width: 65%;
+            width: 60%;
             min-width: 25rem;
         }
         .navbar_list::before{
@@ -103,13 +103,15 @@
             border-radius: 2rem;
         }
         .navbar_list > a{
-            font-size: min(7vw, 2rem);
-            padding-block: 0.9rem;
+            font-size: min(7vw, 1.5rem);
+            padding-block: 0.75rem;
+            padding-block: max(0.25rem, 1.25vw);
         }
     }
     @container (inline-size < 500px) {
         .navbar_inner{
-            gap: 1.5rem;
+            gap: 1.6rem;
+            margin-bottom: 5vh;
         }
         .navbar_list{
             width: 100%;
@@ -126,7 +128,7 @@
 
     @media (height < 750px) {
         .navbar_list > a{
-            font-size: min(6vw, 2rem);
+            font-size: min(6vw, 1.75rem);
             padding-block: 0.5rem;
         }
         .navbar_list::before{

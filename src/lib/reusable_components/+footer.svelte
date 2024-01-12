@@ -20,13 +20,13 @@
     <div class="content_container footer">
         <nav class="footer_top">
             <div class="navbar_list">
-                <a href="/{linkAddress1}">{firstLink}</a>
+                <a class="first" href="/{linkAddress1}">{firstLink}</a>
             </div>
             <div class="navbar_list">
-                <a href="/{linkAddress2}">{secondLink}</a>
+                <a class="second" href="/{linkAddress2}">{secondLink}</a>
             </div>
             <div class="navbar_list">
-                <a href="/{linkAddress3}">{thirdLink}</a>
+                <a class="third" href="/{linkAddress3}">{thirdLink}</a>
             </div>
         </nav>
         
@@ -109,7 +109,7 @@
         color: var(--text_color_gray90);
         background-color: var(--element_background_color_lightestCyan);
         border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
-        border-radius: 10rem;
+        border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
         transition: all 0.15s ease-out;
@@ -195,15 +195,43 @@
     @container footer (inline-size < 650px) {
         .titleName{
             font-family: 'Brolimo';
-            font-size: max(17vw, 3.5rem);
+            font-size: max(16vw, 3.5rem);
             text-wrap: nowrap;
         }
+        .footer_top{
+            gap: 0;
+        }
+        .navbar_list:nth-child(2) {
+            width: max(25%, 11.5rem);
+        }
+
         .authorName::before{
             height: 157.5%;
             padding-bottom: 0.75rem;
         }
-        .navbar_list::before{
-            height: 100%;
+        .navbar_list > a.first {
+            border-radius: 10rem 0 0 10rem;
+            padding-left: 1.75vw;
+        }
+        .navbar_list > a.second {
+            border-inline: none;
+            border-radius: 0 0 0 0;
+        }
+        .navbar_list > a.third {
+            border-radius: 0 10rem 10rem 0;
+            padding-right: 1.75vw;
+        } 
+
+        .navbar_list:nth-child(1)::before{
+            border-radius: 10rem 0 0 10rem;
+        }
+        .navbar_list:nth-child(2)::before{
+            border-inline: none;
+            border-radius: 0 0 0 0;
+
+        }
+        .navbar_list:nth-child(3)::before{
+            border-radius: 0 10rem 10rem 0;
         }
         .navbar_list > a:hover{
             translate: 0 0;
@@ -229,17 +257,38 @@
         }
         .footer_top{
             flex-direction: column;
-            gap: 2.25vh;
+            gap: 1.25vh;
         }
         .navbar_list::before{
-            height: 95%;
+            display: none;
+        }
+        .navbar_list:nth-child(2)::before{
+            border-inline: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
         }
         .navbar_list{
-            width: 100%;
+            width: 100% !important;
         }
         .navbar_list > a {
+            border-radius: 10rem !important;
             font-size: max(1.7vw, 1rem);
             padding-block: max(.5vw, 0.3rem);
+        }
+        .navbar_list > a.second{
+            border-inline: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        }
+
+        .authorName{
+            font-size: 1.85vh;
+            padding-block: max(1vw, 0.75rem);
+            padding-inline: max(2vw, 1.5rem);
+            box-shadow: inset 0px max(3vw, 2rem) var(--background_color_darkestCyan), inset 0px calc(max(3vw, 2rem) + max(2px, 0.09vw)) var(--text_color_gray90);
+        }
+        .authorName::before{
+            font-size: 1.85vh;
+            padding-bottom: max(0.65rem, 0.85vw);
+            border-radius: max(1.75rem, 2.2vw);
+            width: 100%;
+            height: 165%;
         }
     }
     @media (height > 750px) {

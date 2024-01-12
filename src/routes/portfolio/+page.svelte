@@ -92,6 +92,7 @@
         color: var(--text_color_gray90);
     }
     .default_container.cyan{
+        height: 100svh;
         background-color: var(--background_color_lightCyan);
         box-shadow: none;
     }
@@ -123,8 +124,8 @@
 
     @media (width < 500px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 3rem;
+            justify-content: center;
+            gap: 17.5vh;
         }
         #Portfolio_TitleDecor{
             width: 85%;
@@ -287,7 +288,7 @@
     @media (width < 1100px) {
         .content_container{
             width: 85%;
-            height: 80%;
+            height: 87.5%;
         }
     }     
     @media (width < 1100px) and (height < 690px){ 
