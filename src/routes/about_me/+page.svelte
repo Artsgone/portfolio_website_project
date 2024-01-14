@@ -111,6 +111,15 @@
         margin: 0;
         padding: 0;
     }
+    :global(body)::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    :global(body)::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    :global(body)::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+    }
     *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -162,6 +171,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        /* outline: 2px red solid; */
     }
     #AboutMe_titlePageSVG{
         width: var(--element_size_title_decor_about_me);
@@ -180,7 +190,7 @@
             /* justify-content: space-evenly;
             gap: 5vh; */
             justify-content: center;
-            gap: 17.5vh;
+            gap: 15vh;
         }
         #AboutMe_titlePageSVG{
             width: 75%;

@@ -95,8 +95,7 @@
             gap: max(1.5rem, 3vw);
         }
         .navbar_list{
-            width: 60%;
-            min-width: 25rem;
+            width: max(60%, 25rem);
         }
         .navbar_list::before{
             height: 105%;
@@ -126,7 +125,7 @@
         }
     }
 
-    @media (height < 750px) {
+    @media (height < 750px) and (width < 950px) {
         .navbar_list > a{
             font-size: min(6vw, 1.75rem);
             padding-block: 0.5rem;

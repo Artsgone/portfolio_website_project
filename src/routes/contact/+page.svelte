@@ -75,6 +75,15 @@
         margin: 0;
         padding: 0;
     }
+    :global(body)::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    :global(body)::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    :global(body)::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+    }
     *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -141,7 +150,7 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: center;
-            gap: 17.5vh;
+            gap: 15vh;
         }
         #Contact_TitleDecor{
             width: 85%;
@@ -251,7 +260,7 @@
     .links > a{
         font-family: 'Neutral_Bold';
         text-decoration: none;
-        font-size: var(--text_size_small);
+        font-size: var(--text_size_extra_small);
         letter-spacing: 0.07rem;
         background-color: rgb(141, 175, 167);
         box-shadow: inset -0.2rem 0.2rem 1rem 0.75rem var(--background_color_lightCyan);
@@ -350,11 +359,11 @@
         } 
         
     }
-    @media (width < 585px) {
+    @media (width < 650px) {
         .contact_title{
             font-size: 21.5vw;
             text-wrap: wrap;
-            line-height: 10vh;
+            line-height: max(10vh, 17.5vw);
         }
         .contact_form_grid{
             gap: 1.5vh;

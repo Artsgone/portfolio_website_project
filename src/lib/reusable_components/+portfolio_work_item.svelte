@@ -1,9 +1,14 @@
 <script>
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
-    // export let workElementItem = ''
+    export let workElementItem = ''
     // export let workElementItemLink = '$lib/svg_files/Portfolio/Portfolio_Works/' + workElementItem
     import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
+    import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
+    import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
+    import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
+    import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
+    import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
     // import Portfolio_workPreviewElement_ART from '${workElementItemLink}'
     //list of items <<
 </script>
@@ -11,7 +16,20 @@
 <main>
     <div class="workPresentation_container">
         <div class="content_container work_presentation_page">
-            <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
+            {#if workElementItem === "0"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "1"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "2"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "3"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "4"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "5"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement">
+            {/if}
+            
             <div class="description_box">
                 <p class="work_title">"{workElementTitle}"</p>
                 <p class="work_description">{workElementText}</p>
@@ -52,7 +70,8 @@
         height: 85%;
     }
     .Portfolio_workPreviewElement{
-        width: max(12.5rem, 65%);
+        width: max(12.5rem, 70%);
+        max-height: 100%;
     }
     .description_box{
         width: 65%;

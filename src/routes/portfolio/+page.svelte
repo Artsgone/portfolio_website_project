@@ -6,6 +6,11 @@
     import WorkPresentAlt from '$lib/reusable_components/+portfolio_work_item_alt.svelte'
     import Portfolio_TitleDecor from '$lib/svg_files/Portfolio/Portfolio_TitleDecor.svg'
     import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
+    import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
+    import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
+    import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
+    import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
+    import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
 </script>
 
 <main>
@@ -29,19 +34,19 @@
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box2 top mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box3 top rounded mobile_left mobile_rounded ">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box4 bottom rounded">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box5 bottom mobile_left">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box6 bottom rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
             </div>
         </div>
@@ -50,8 +55,20 @@
         <div class="content_container">
         </div>
     </div> -->
-    <WorkPresent workElementTitle="ART" workElementText="This piece of art is a piece of ... art" />
-    <WorkPresentAlt workElementTitle="LXY" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="0" workElementTitle="ART" workElementText="This piece of art is a piece of ... art" />
+        <!-- <WorkPresentAlt workElementItem="0" workElementTitle="LXY" workElementText="This piece of art is a piece of ... art, maybe baby" /> -->
+    <WorkPresent workElementItem="1" workElementTitle="POE" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="1" workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="2" workElementTitle="Architect" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="2" workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="3" workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="3" workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="4" workElementTitle="LXY" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="4" workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="5" workElementTitle="Lexi v2" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="5" workElementTitle="LXY v2" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <!-- <WorkPresent workElementItem="6" workElementTitle="ART" workElementText="This piece of art is a piece of ... art" /> -->
+    
     <Footer firstLink="Main page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
     titleName = "Portfolio" footer_Decor_ID = "portfolio" />
@@ -61,6 +78,15 @@
     :global(body){
         margin: 0;
         padding: 0;
+    }
+    :global(body)::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    :global(body)::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    :global(body)::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
     }
     *, *::before, *::after {
         margin: 0;
@@ -95,6 +121,7 @@
         height: 100svh;
         background-color: var(--background_color_lightCyan);
         box-shadow: none;
+        border-bottom: none;
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -110,11 +137,11 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        /* outline: 2px red solid; */
     }
     #Portfolio_TitleDecor{
         width: var(--element_size_title_decor_portfolio);
         position: absolute;
-
     }
     .title_name{
         font-size: max(15vw, 6.25rem);
@@ -125,11 +152,11 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: center;
-            gap: 17.5vh;
+            gap: 15vh;
         }
         #Portfolio_TitleDecor{
             width: 85%;
-            translate: 0% 10%;
+            translate: 0% 5%;
         }
         .title_name{
             visibility: hidden;
@@ -141,7 +168,7 @@
         }
         .title_name::after{
             content: "Port-folio";
-            inset: -2.5% 0 0 0;
+            inset: 0 0 0 0;
             visibility: visible;
             position: absolute;
         }
@@ -203,7 +230,7 @@
         position: relative;
     }
     .work_element_preview{
-        width: 60%;
+        width: 70%;
     }
 
     .works_preview_grid > :not(.rounded)::before, .rounded::before{

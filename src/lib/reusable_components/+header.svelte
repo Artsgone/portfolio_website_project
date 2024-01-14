@@ -74,7 +74,7 @@
         }
         #A_Logo{
             width: min(12.5vh, 5rem);
-            padding-block: 4vh 0;
+            padding-block: 3.5vh 0;
             translate: 0 0vh;
         }
         .inner_header.left{

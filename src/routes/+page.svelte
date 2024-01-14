@@ -5,7 +5,6 @@
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
-    import MainPage_stylingForSunsetImageSVG from '$lib/svg_files/MainPage/MainPage_stylingForSunsetImage.svg'
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
     import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.jpg'
     import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.jpg'
@@ -14,6 +13,11 @@
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
+    // window.scrollBy({
+    //     top: 2500, 
+    //     left: 0, 
+    //     behavior: 'smooth'
+    // });
 </script>
 
 <main>
@@ -32,7 +36,6 @@
         <div class="content_container greeting_page">
             <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
             <div class="text introducing">
-                <!-- <img class="purpleSquares" src={MainPage_purpleSquaresSVG} alt="MainPage_purpleSquaresSVG"> -->
                  <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am <span>UX/UI designer</span>, <br> and this is my  <span>personal website</span>.</p>
             </div>
         </div>
@@ -53,7 +56,6 @@
         <div class="content_container page4">
             <div class="left_part page4">
                 <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
-                <!-- <img class="MainPage_stylingForSunsetImageSVG" src={MainPage_stylingForSunsetImageSVG} alt="MainPage_stylingForSunsetImageSVG"> -->
             </div>
             <div class="right_part page4">
                 <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
@@ -98,7 +100,6 @@
     :global(body){
         margin: 0;
         padding: 0;
-        scroll-behavior: smooth;
     }
     *, *::before, *::after {
         margin: 0;
@@ -134,6 +135,16 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
+    
+    :global(body)::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    :global(body)::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    :global(body)::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+    }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -163,7 +174,7 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: center;
-            gap: 17.5vh;
+            gap: 15vh;
         }
         #MainPage_titlePageSVG{
             width: 100%;
@@ -571,8 +582,6 @@
         gap: max(3vw, 5vh);
         align-items: center;
         justify-items: flex-end;
-        border-radius: max(1rem, 1vw);
-        overflow: clip;
     }
     .right_part.page5{
         width: max(50%, 13.5vw);
@@ -603,6 +612,7 @@
     .MainPage_YellowHighlight{
         width: 100%;
         rotate: 180deg;
+        border-radius: max(1rem, 1vw);
     }
     .page6_text{
         font-family: 'Neutral_Normal';

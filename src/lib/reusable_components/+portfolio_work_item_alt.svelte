@@ -1,9 +1,14 @@
 <script>
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
-    // export let workElementItem = ''
+    export let workElementItem = ''
     // export let workElementItemLink = '$lib/svg_files/Portfolio/Portfolio_Works/' + workElementItem
     import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
+    import Portfolio_workPreviewElement_Logo_Ww from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg'
+    import Portfolio_workPreviewElement_Logo_Tt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Tt.svg'
+    import Portfolio_workPreviewElement_Lexi from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi.svg'
+    import Portfolio_workPreviewElement_Lexi_V2 from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_V2.svg'
+    import Portfolio_workPreviewElement_LXY_alt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY_alt.svg'
     // import Portfolio_workPreviewElement_ART from '${workElementItemLink}'
     //list of items <<
 </script>
@@ -15,7 +20,19 @@
                 <p class="work_title">"{workElementTitle}"</p>
                 <p class="work_description">{workElementText}</p>
             </div>
-            <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
+            {#if workElementItem === "0"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "1"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "2"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "3"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "4"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "5"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement">
+            {/if}
             <p class="button_more_info">press to view more</p>
         </div>
     </div>
@@ -52,7 +69,7 @@
         height: 85%;
     }
     .Portfolio_workPreviewElement{
-        width: max(20rem, 65%);
+        width: max(20rem, 70%);
     }
     .description_box{
         width: 65%;

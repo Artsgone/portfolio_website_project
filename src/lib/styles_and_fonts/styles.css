@@ -4,6 +4,7 @@
     --background_color_alternativeLightYellow: #ece3d7;
     --background_color_darkGray: #0c0c0c;
     --background_color_lightCyan: #aac0bdff;
+    /* --background_color_lightCyan: rgb(167, 192, 189); */
     --background_color_lightCyanSaturated: #8aa8a3ff;
     --background_color_darkCyan: #66888399;
     --background_color_darkCyanSaturated: rgb(78, 126, 115);
@@ -31,7 +32,7 @@
 
     /* Default */
     --text_size_title_ultrabig: max(15vw, 5.5rem);
-    --text_size_big: max(5vw, 4rem);
+    --text_size_big: max(5vw, 3rem);
 
     --text_size_medium_big: max(2.2vw, 1.65rem);
     --text_size_medium: max(2vw, 1.35rem);
