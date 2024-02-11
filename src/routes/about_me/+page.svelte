@@ -437,7 +437,7 @@
     .AboutMe_OtherPE_Rounded, .AboutMe_OtherPE_Square{
         position: absolute;
         top: 50%;
-        translate: -150% -75%;
+        translate: -150% -62.5%;
     }
 
     .AboutMe_OtherPE_Square{

@@ -108,7 +108,7 @@
         white-space: nowrap;
         color: var(--text_color_gray90);
         background-color: var(--element_background_color_lightestCyan);
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.12vw) var(--text_color_gray90) solid;
         border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
@@ -122,7 +122,7 @@
         border-radius: max(2.1vw, 2rem);
         width: 100%;
         height: 110%;
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
         z-index: -1;
 }
     .navbar_list > a:hover{
@@ -146,7 +146,7 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_transparent);
         border-radius: 50rem;
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
         position: relative;
         font-family: 'Neutral_Normal';
         align-self: flex-start;
@@ -173,7 +173,7 @@
         top: 0;
         width: 100%;
         height: 165%;
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
         z-index: -1;
     }
     .footer_Decor{

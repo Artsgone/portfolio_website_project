@@ -266,6 +266,15 @@
             width: 100%;
         }
     }
+    @media (width < 350px) {
+        .text > p{
+            font-size: max(1.75vw, 1.25rem);
+            line-height: max(2.25vw, 2rem);
+        }
+        .text > p > span{
+            font-size: max(2vw, 1.5rem);
+        }
+    }
 
     /* PAGE 3 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -528,7 +537,9 @@
         container: dandelion_page / size;
     }
     .dandelion{
-        max-height: 100%;
+        height: 100%;
+        width: 40%;
+        object-fit: cover;
     }
     .dandelion.IMG1{
         scale: -1 1;
@@ -550,7 +561,7 @@
         background: linear-gradient(70deg, #71786dff, #989d95ff);
     }
 
-    @container dandelion_page (inline-size < 1450px) {
+    @container dandelion_page (inline-size < 1500px) {
         .dandelion{
             width: 35%;
             height: 100%;
@@ -560,15 +571,21 @@
 
     @media (width < 600px) {
         .content_container.page5{
-            display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
+        }
+        .page5_title_text{
+            font-size: 9vw;
+            line-height: 9vw;
         }
         .dandelion{
             width: 100%;
-            height: 35%;
+            height: 30%;
             object-fit: cover;
+        }
+    }
+    @media (width < 450px) {
+        .dandelion{
+            height: 34%;
         }
     }
 

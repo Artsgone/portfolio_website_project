@@ -4,6 +4,7 @@
     import Footer from '$lib/reusable_components/+footer.svelte'
     import WorkPresent from '$lib/reusable_components/+portfolio_work_item.svelte'
     import WorkPresentAlt from '$lib/reusable_components/+portfolio_work_item_alt.svelte'
+    import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import Portfolio_TitleDecor from '$lib/svg_files/Portfolio/Portfolio_TitleDecor.svg'
     import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
     import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
@@ -11,6 +12,7 @@
     import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
     import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
     import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
+    import Portfolio_workPreviewElement_Omic from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Omic.svg'
 </script>
 
 <main>
@@ -34,7 +36,7 @@
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box2 top mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box3 top rounded mobile_left mobile_rounded ">
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
@@ -43,7 +45,7 @@
                     <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box5 bottom mobile_left">
-                    <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                    <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div class="work_element_preview_box wep_box6 bottom rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
@@ -51,13 +53,10 @@
             </div>
         </div>
     </div>
-    <!-- <div class="default_container">
-        <div class="content_container">
-        </div>
-    </div> -->
+    <!-- <WorkItemDetailed workElementItem="6" workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" /> -->
     <WorkPresent workElementItem="0" workElementTitle="ART" workElementText="This piece of art is a piece of ... art" />
         <!-- <WorkPresentAlt workElementItem="0" workElementTitle="LXY" workElementText="This piece of art is a piece of ... art, maybe baby" /> -->
-    <WorkPresent workElementItem="1" workElementTitle="POE" workElementText="This piece of art is a piece of ... art" />
+    <WorkPresent workElementItem="1" workElementTitle="POE" workElementText="This piece of art is a piece of ... art and of course it is lorem ipsum compatible" />
         <WorkPresentAlt workElementItem="1" workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art, maybe baby" />
     <WorkPresent workElementItem="2" workElementTitle="Architect" workElementText="This piece of art is a piece of ... art" />
         <WorkPresentAlt workElementItem="2" workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art, maybe baby" />
@@ -65,10 +64,16 @@
         <WorkPresentAlt workElementItem="3" workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art, maybe baby" />
     <WorkPresent workElementItem="4" workElementTitle="LXY" workElementText="This piece of art is a piece of ... art" />
         <WorkPresentAlt workElementItem="4" workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art, maybe baby" />
-    <WorkPresent workElementItem="5" workElementTitle="Lexi v2" workElementText="This piece of art is a piece of ... art" />
-        <WorkPresentAlt workElementItem="5" workElementTitle="LXY v2" workElementText="This piece of art is a piece of ... art, maybe baby" />
-    <!-- <WorkPresent workElementItem="6" workElementTitle="ART" workElementText="This piece of art is a piece of ... art" /> -->
-    
+    <WorkPresent workElementItem="5" workElementTitle="Lexi - alt" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="5" workElementTitle="LXY - alt" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="6" workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="6" workElementTitle="Anata" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="7" workElementTitle="A/R" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="7" workElementTitle="Omic" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    <WorkPresent workElementItem="8" workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art" />
+        <WorkPresentAlt workElementItem="8" workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art, maybe baby k k k k k k k k kk k k k k k k kk k k k k k k kkkkkk k k k k k k k k k kk k k k k kk k" />
+    <WorkPresent workElementItem="9" workElementTitle="Bena" workElementText="This piece of art is a piece of ... art" />
+
     <Footer firstLink="Main page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
     titleName = "Portfolio" footer_Decor_ID = "portfolio" />
@@ -230,7 +235,7 @@
         position: relative;
     }
     .work_element_preview{
-        width: 70%;
+        width: 77%;
     }
 
     .works_preview_grid > :not(.rounded)::before, .rounded::before{
@@ -248,7 +253,7 @@
         z-index: -2;
     }
     .rounded, .rounded::before{
-        border-radius: 45%;
+        border-radius: 40%;
     }
 
     .works_preview_grid > .work_element_preview_box.top::before{

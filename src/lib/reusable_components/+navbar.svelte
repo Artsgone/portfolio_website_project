@@ -67,7 +67,7 @@
         white-space: nowrap;
         color: var(--text_color_gray90);
         background-color: var(--element_background_color_lightestCyan);
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
         border-radius: 10rem;
         font-size: max(1.5rem, 1.6vw);
         padding-block: max(1vw, 0.8rem);
@@ -80,7 +80,7 @@
         border-radius: max(2.1vw, 2rem);
         width: 100%;
         height: 110%;
-        border: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
         z-index: -1;
     }
     .navbar_list > a:hover{

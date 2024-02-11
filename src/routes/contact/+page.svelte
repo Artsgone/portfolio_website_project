@@ -153,7 +153,7 @@
             gap: 15vh;
         }
         #Contact_TitleDecor{
-            width: 85%;
+            width: 80%;
             translate: 0% 15%;
         }
         .title_name{

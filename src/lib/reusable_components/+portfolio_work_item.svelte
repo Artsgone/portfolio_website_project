@@ -9,6 +9,10 @@
     import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
     import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
     import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
+    import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
+    import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
+    import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
+    import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
     // import Portfolio_workPreviewElement_ART from '${workElementItemLink}'
     //list of items <<
 </script>
@@ -28,6 +32,14 @@
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement">
             {:else if workElementItem === "5"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "6"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "7"}
+                <img class="Portfolio_workPreviewElement" src={New_LOGO_AR} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "8"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement">
+            {:else if workElementItem === "9"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement">
             {/if}
             
             <div class="description_box">
@@ -65,43 +77,69 @@
         grid-template-rows: 1fr 2rem;
         align-items: center;
         justify-items: center;
-        gap: 0rem max(2.5rem, 4.5vw);
+        gap: 0rem max(2.5rem, 4vw);
         width: 95%;
         height: 85%;
     }
     .Portfolio_workPreviewElement{
-        width: max(12.5rem, 70%);
-        max-height: 100%;
+        width: max(12.5rem, 80%);
+        max-height: 90%;
+        
     }
+    
     .description_box{
-        width: 65%;
+        width: 80%;
         display: flex;
         flex-direction: column;
-        gap: max(0.5vw, 0.5rem);
+        gap: max(1.5vw, 1.5rem);
+        position: relative;
     }
     .work_title{
         font-family: 'Brolimo';
         font-size: var(--text_size_big);
+        line-height: var(--text_line_height_big);
     }
     .work_description{
         font-family: 'Subjectivity_Regular';
         font-size: var(--text_size_small);
-        position: relative;
+        line-height: var(--text_line_small);
         letter-spacing: -0.5px;
     }
-    .work_description::before{
+    .description_box::before{
         content: "";
         position: absolute;
         background-color: var(--element_color_darkerCyan);
         width: max(1rem, 1.75vw);
         aspect-ratio: 1;
         border-radius: 50%;
-        translate: 0 250%;
+        bottom: 0;
+        translate: 0 200%;
     }
     .button_more_info{
+        width: 90%;
+        text-align: center;
         font-family: 'Brolimo';
         font-size: var(--text_size_extra_small);
         grid-area: 2 / 1 / 3 / 3;
+        position: relative;
+        isolation: isolate;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+    .button_more_info::after{
+        content: "";
+        position: absolute;
+        inset: 0 45% 0 45%;
+        background-color: var(--background_color_alternativeLightYellow);
+        filter: blur(1rem);
+        z-index: -1;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+    }
+    .button_more_info:hover::after{
+        opacity: 1;
+        inset: 0 0 0 0;
     }
 
     @media (width < 1100px) {
@@ -119,11 +157,11 @@
             gap: max(1.75rem, 3.5vw) 0;
         }
         .Portfolio_workPreviewElement{
-            width: max(20rem, 50%);
+            width: max(25rem, 75%);
         }
         .description_box{
             align-self: flex-start;
-            width: max(22.5rem, 60%);
+            width: max(25rem, 75%);
         }
         .button_more_info{
             grid-area: auto;

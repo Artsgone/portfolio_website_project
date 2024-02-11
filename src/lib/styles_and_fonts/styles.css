@@ -33,14 +33,15 @@
     /* Default */
     --text_size_title_ultrabig: max(15vw, 5.5rem);
     --text_size_big: max(5vw, 3rem);
+    --text_line_height_big: max(4.75vw, 2.75rem);
 
-    --text_size_medium_big: max(2.2vw, 1.65rem);
-    --text_size_medium: max(2vw, 1.35rem);
-    --text_line_height_medium: max(2.4vw, 1.75rem);
+    --text_size_medium_big: max(2.25vw, 1.75rem);
+    --text_size_medium: max(2vw, 1.45rem);
+    --text_line_height_medium: max(2.75vw, 2.15rem);
 
     --text_size_medium_small: max(2vw, 1.5rem);
     --text_size_small: max(1.5vw, 1.25rem);
-    --text_line_small: max(1.75vw, 1.5rem);
+    --text_line_small: max(1.8vw, 1.75rem);
 
     --text_size_extra_small: max(1rem, 1.15vw);
     /* --text_size_super_extra_small: max(0.5rem, 1.15vw); */
@@ -48,7 +49,7 @@
     /* MEDIA 1 */
     --text_size_medium_big_media1: max(2.5vw, 1.8rem);
     --text_size_medium_media1: max(2.2vw, 1.5rem);
-    --text_line_height_medium_media1: max(2.6vw, 2rem);
+    --text_line_height_medium_media1: max(3vw, 2.5rem);
 
 
 }
