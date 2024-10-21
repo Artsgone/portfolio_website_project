@@ -57,10 +57,11 @@
     }
     #A_Logo{
         width: max(10vh, 6rem);
+        width: max(5svw, 6rem);
         translate: 0 1vh;
     }
     .title_Decor{
-        width: max(21vw, 20rem);
+        width: max(21vw, 22rem);
     }
 
     @container (inline-size < 800px) {

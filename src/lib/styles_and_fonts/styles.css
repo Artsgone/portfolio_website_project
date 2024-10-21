@@ -1,26 +1,46 @@
 :root{
     /* COLOURS */
     --background_color_lightYellow: #f6f5eeff;
-    --background_color_alternativeLightYellow: #ece3d7;
+    --background_color_alternativeLightYellow: hsl(35, 39%, 88%);
+    --background_color_alternativeLightYellow_Darker: hsl(33, 39%, 80%);
+    /* --background_color_alternativeLightYellow: #ece2d4ff; PREVIOUS */
     --background_color_darkGray: #0c0c0c;
-    --background_color_lightCyan: #aac0bdff;
-    /* --background_color_lightCyan: rgb(167, 192, 189); */
-    --background_color_lightCyanSaturated: #8aa8a3ff;
-    --background_color_darkCyan: #66888399;
-    --background_color_darkCyanSaturated: rgb(78, 126, 115);
-    --background_color_darkestCyan: #89a9a4;
-    --element_color_darkerCyan: #a9c1bcff;
 
+    /* --background_color_lightCyan: #aac0bdff; */
+    --background_color_lightCyan: hsl(172, 20%, 70%);
+    --background_color_lightCyan_lowerOpacity: hsla(172, 23%, 77%, 0.5);
+
+    /* --background_color_lightCyanSaturated: #8aa8a3ff; */
+    --background_color_lightCyanSaturated: hsl(172, 20%, 60%);
+
+    /* --background_color_darkCyan: #66888399; */
+    --background_color_darkCyan: hsl(172, 20%, 47%);
+
+    /* --background_color_darkCyanSaturated: #4e7e73; */
+    --background_color_darkCyanSaturated: hsl(172, 25%, 39%);
+    --background_color_darkAsHellCyanSaturated: hsl(172, 24%, 28%);
+
+    /* --background_color_darkestCyan: #89a9a4; */
+    --background_color_darkestCyan: hsl(172, 20%, 60%);
+
+    --element_color_darkerCyan: hsl(172, 22%, 71%);
+
+    /* --cyan_outline: #4e716bff; */
+    --cyan_outline_bright: hsl(172, 18%, 65%);
+    --cyan_outline: hsl(172, 18%, 50%);
     --text_color_gray5: #f2f2f2ff;
     --text_color_gray40: #666666ff;
-    --text_color_gray65: rgb(175, 175, 175);
-    --text_color_gray90: rgb(31, 31, 31);
+    --text_color_gray50: #a5a5a5;
+    --text_color_gray65: #b0b0b0;
+    --text_color_gray90: #1f1f1f;
+    /* --text_color_gray_bright: #ece2d4ff; */
     --text_color_yellow60: #e1ddc6ff;
     --text_color_transparent: #00000000;
 
     --element_background_color_darkerYellow: #e8e5d3ff;
     --element_background_color_darkestYellow: #ccc39c;
-    --element_background_color_lightestCyan: #c1d2d0ff;
+    /* --element_background_color_lightestCyan: #c0d3d0ff; */
+    --element_background_color_lightestCyan: hsl(172, 20%, 79%);
 
     /* ELEMENTS SIZES */
     --element_size_title_decor_main_page: max(42vw, 20rem);
@@ -31,25 +51,29 @@
     /* FONT SIZES */
 
     /* Default */
-    --text_size_title_ultrabig: max(15vw, 5.5rem);
-    --text_size_big: max(5vw, 3rem);
-    --text_line_height_big: max(4.75vw, 2.75rem);
+    --text_size_title_ultrabig: max(15vw, 6rem);
+    
+    --text_size_big: max(4vw, 2.75rem);
+    --text_line_height_big: max(4vw, 2.5rem);
 
     --text_size_medium_big: max(2.25vw, 1.75rem);
+    --text_line_height_medium_big: max(2vw, 1.75rem);
+
     --text_size_medium: max(2vw, 1.45rem);
     --text_line_height_medium: max(2.75vw, 2.15rem);
 
     --text_size_medium_small: max(2vw, 1.5rem);
-    --text_size_small: max(1.5vw, 1.25rem);
-    --text_line_small: max(1.8vw, 1.75rem);
+
+    --text_size_small: max(1.4vw, 1.25rem);
+    --text_line_small: max(2vw, 1.75rem);
 
     --text_size_extra_small: max(1rem, 1.15vw);
     /* --text_size_super_extra_small: max(0.5rem, 1.15vw); */
 
     /* MEDIA 1 */
-    --text_size_medium_big_media1: max(2.5vw, 1.8rem);
-    --text_size_medium_media1: max(2.2vw, 1.5rem);
-    --text_line_height_medium_media1: max(3vw, 2.5rem);
+    --text_size_medium_big_media1: max(3.75vw, 1.9rem);
+    --text_line_height_medium_media1: max(5vw, 2.7rem);
 
+    --text_size_medium_media1: max(2.2vw, 1.5rem);
 
 }

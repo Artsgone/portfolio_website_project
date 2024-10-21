@@ -9,6 +9,24 @@
     import Instagram_Icon from '$lib/svg_files/Contact/Contact_Insta_Icon.svg'
     import Telegram_Icon from '$lib/svg_files/Contact/Contact_Telegram_Icon.svg'
     import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
+    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
+    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+
+    import { onMount } from "svelte";
+    import { fade, blur, fly, slide } from 'svelte/transition';
+    import { quintOut, sineInOut } from 'svelte/easing';
+    import { afterNavigate, beforeNavigate } from '$app/navigation';
+    
+    let pageLoaded = false;
+    onMount(async() => {;
+        pageLoaded = true;
+    });
+    beforeNavigate(async() => {
+        pageLoaded = false;
+    });
+    afterNavigate(async() => {
+        pageLoaded = true;
+    });
 
     let numberOfRows = 1
     $: innerWidth = 0
@@ -16,19 +34,47 @@
     if (innerWidth < 600){
         numberOfRows = 2
     }
+    
+    function scrollToTop(){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    $: innerHeight = 0;
+    let y;
+    
+    let newY = [];
+    $: oldY = newY[1];
+    function updateY(event){
+        newY.push(y);
+        if(newY.length > 5) {
+            newY.shift();
+        }
+        newY=newY;
+    }
+    
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window bind:innerWidth bind:innerHeight bind:scrollY={y} on:scroll={updateY} />
 
-<main>
+<main class="main_body">
+    {#if !pageLoaded}
+        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="Global_loadingAnimation"></div>
+    {/if}
+
+    {#if y > (innerHeight / 1.75) && oldY > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {/if}
+
     <div class="default_container cyan">
         <Header title_Decor_ID = "contact" />
         <div class="content_container title_page">
-            <div class="title_page_name">
-                <div class="title_name darkgrayText">Contact</div>
-                <img id="Contact_TitleDecor" src={Contact_TitleDecor} alt="Contact_TitleDecor">
-            </div>
-            <Navbar firstLink="Main page" secondLink="About me" thirdLink="Portfolio" 
+            {#if pageLoaded}
+                <div class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                    <div class="title_name darkgrayText">Contact</div>
+                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} alt="Contact_TitleDecor">
+                </div>
+            {/if}
+            <Navbar firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
                     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"/>
         </div>
     </div>
@@ -65,7 +111,7 @@
             </div>
         </div>
     </div>
-    <Footer firstLink="Main page" secondLink="About me" thirdLink="Portfolio" 
+    <Footer firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"
     titleName = "Contact" footer_Decor_ID = "contact"/>
 </main>
@@ -75,14 +121,71 @@
         margin: 0;
         padding: 0;
     }
+    .loader_animation{
+        position: fixed;
+        z-index: 9999;
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
+        inset: -10% -10% -10% -10%;
+        transition: all 1s ease-in;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Brolimo';
+        font-size: var(--text_size_medium_big);
+        color: var(--text_color_gray5);
+        translate: 0 -2.5%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .loadingSpinner{
+        width: max(10rem, 12.5vw);
+        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
+    }
+    @keyframes loadingSpinner{
+        0%{
+            rotate: 0deg;
+        }
+        25%{
+            rotate: 160deg;
+        }
+        50%{
+            rotate: 220deg;
+        }
+        75%{
+            rotate: 300deg;
+        }
+        100%{
+            rotate: 360deg;
+        }
+    }
+    @keyframes jumpFromBottom{
+        0%{
+            scale: 1;
+        }
+        25%{
+            scale: 0.9;
+        }
+        50%{
+            scale: 0.95;
+        }
+        75%{
+            scale: 0.9;
+        }
+        100%{
+            scale: 1;
+        }
+    }
     :global(body)::-webkit-scrollbar {
-        width: 0.5em;
+        width: max(0.5em, 0.5vw);
     }
     :global(body)::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
     :global(body)::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
     }
     *, *::before, *::after {
         margin: 0;
@@ -93,6 +196,12 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
+
+    /* .main_body{
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+    } */
     .default_container{
         width: 100%;
         height: 100vh;
@@ -101,10 +210,10 @@
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        /* border-bottom: 2px solid var(--text_color_gray90); */
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         position: relative;
         z-index: 0;
+        /* scroll-snap-align: center; */
     }
     .content_container{
         width: 92.5%;
@@ -118,8 +227,29 @@
     }
     .default_container.cyan{
         height: 100svh;
-        background-color: var(--background_color_lightCyan);
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
+    }
+
+    .scrollUp_button{
+        position: fixed;
+        cursor: pointer;
+        width: max(3.5rem, 3vw);
+        aspect-ratio: 1;
+        z-index: 999;
+        bottom: 7.5%;
+        right: min(10%, calc(4rem + 2vw));
+        outline: max(4px, 0.25vw) var(--background_color_lightCyan) solid;
+        border: none;
+        border-radius: 25%;
+        overflow: clip;
+        backdrop-filter: blur(5px) invert(25%);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+    }
+    .arrowIcon{
+        width: 50%;
+        aspect-ratio: 1;
+        filter: drop-shadow(0 0 0.5rem var(--cyan_outline));
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -144,9 +274,22 @@
     .title_name{
         font-size: max(15vw, 7rem);
         font-family: 'Brolimo';
-        z-index: 9999;
+        z-index: 999;
     }
 
+    @media (width < 942px){
+        /* .content_container.title_page{
+            justify-content: center;
+            gap: 15vh;
+        } */
+        #Contact_TitleDecor{
+            width: 45%;
+            translate: 20% 10%;
+        }
+        .title_name{
+            font-size: 20vw;
+        }
+    }
     @media (width < 500px){
         .content_container.title_page{
             justify-content: center;
@@ -197,7 +340,7 @@
         translate: 0% 15%;
     }
     .contact_title{
-        font-family: 'Vetrino';
+        font-family: 'Brolimo';
         font-size: max(12.5vw, 7.5rem);
         align-self: flex-start;
         text-wrap: nowrap;
@@ -210,20 +353,19 @@
         gap: 1.7vw 0.85vw;
     }
     .form_item{
-        color: var(--text_color_gray40);
-        font-family: 'Neutral_Normal';
+        color: var(--text_color_gray50);
+        font-family: 'Neutral_Bold';
+        letter-spacing: max(0.05vw, 0.07rem);
         font-size: max(1vw, 0.9rem);
         padding: max(1.25vw, 1.1rem) max(2vw, 1.75rem);
         border-radius: 50rem;
-        border: max(2px, 0.12vw) var(--text_color_gray90) solid;
+        border: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
         background-color: var(--background_color_lightYellow);
     }
     select{
-        color: var(--text_color_gray40);
-        font-family: 'Neutral_Normal';
+        color: var(--text_color_gray50);
         font-size: max(1vw, 0.9rem);;
         border-radius: 50rem;
-        border: 1px var(--text_color_gray90) solid;
         outline: 0;
         background-color: var(--background_color_lightYellow);
         cursor: pointer;
@@ -262,7 +404,7 @@
         text-decoration: none;
         font-size: var(--text_size_extra_small);
         letter-spacing: 0.07rem;
-        background-color: rgb(141, 175, 167);
+        background-color: var(--background_color_lightCyanSaturated);
         box-shadow: inset -0.2rem 0.2rem 1rem 0.75rem var(--background_color_lightCyan);
         border-radius: 50rem;
         width: 100%;
@@ -348,7 +490,7 @@
         
         .form_item{
             font-size: max(1vw, 0.85rem);
-            padding: max(1vw, 0.9rem) max(2.5vw, 2.25rem);
+            padding: max(1vw, 0.9rem) max(2vw, 1.75rem);
             border-radius: 1.75rem;
         }
         .form_item.itemUserText{

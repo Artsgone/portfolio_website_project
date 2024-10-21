@@ -1,52 +1,98 @@
 <script>
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
-    export let workElementItem = ''
-    // export let workElementItemLink = '$lib/svg_files/Portfolio/Portfolio_Works/' + workElementItem
-    import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
-    import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
-    import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
-    import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
-    import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
-    import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
-    import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
-    import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
-    import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
-    import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
-    // import Portfolio_workPreviewElement_ART from '${workElementItemLink}'
-    //list of items <<
+    export let workElementImage = '';
+    
+    import { onMount } from "svelte";
+    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+
+    let imageHeight;
+
+    onMount(() => {;
+        imageHeight = imageHeight;
+    });
+
+    $: work_presentation_page_height = 0;
+    $: work_description_container_height = 0;
+    $: description_box_height = 0;
+
+    let position = "center";
+    let fadeBar_Visiblity = "hidden";
+    let fadeBar_Opacity = 0;
+    let fadeBar_VisiblityMobile = "hidden";
+    let fadeBar_OpacityMobile = 0;
+
+    let fadeBar_display = "block";
+    let fadeBar_displayMobile = "block";
+
+    let work_description_container;
+    let work_presentation_page;
+    let scrollYMobile = 0;
+    let scrollY = 0;
+    $: innerWidth = 0;
+    
+    function scrollCounter(){
+        scrollY = work_description_container.scrollTop;
+    }
+    function scrollCounterMobile(){
+        scrollYMobile = work_presentation_page.scrollTop;
+    }
+
+    $: if (scrollY < (work_description_container_height * 0.1)) {
+        fadeBar_Visiblity = "hidden";
+        fadeBar_Opacity = 0;
+    } else {
+        fadeBar_Visiblity = "visible";
+        fadeBar_Opacity = 1;
+    }
+
+    $: if ((work_description_container_height + scrollY) > (description_box_height)) {
+        fadeBar_display = "none";
+    } else {
+        fadeBar_display = "block";
+    }
+
+    $: if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
+        fadeBar_displayMobile = "block";
+    } else {
+        fadeBar_displayMobile = "none";
+    }
+    
+    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
+        fadeBar_VisiblityMobile = "hidden";
+        fadeBar_OpacityMobile = 0;
+    } else {
+        fadeBar_VisiblityMobile = "visible";
+        fadeBar_OpacityMobile = 1;
+    }
+
+    $: if ((work_description_container_height - description_box_height) < 0) {
+        position = "start";
+    } else {
+        position = "center";
+        fadeBar_Visiblity = "hidden";
+        fadeBar_Opacity = 0;
+    }
+
 </script>
+
+<svelte:window bind:innerWidth />
 
 <main>
     <div class="workPresentation_container">
-        <div class="content_container work_presentation_page">
-            {#if workElementItem === "0"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "1"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "2"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "3"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "4"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "5"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "6"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "7"}
-                <img class="Portfolio_workPreviewElement" src={New_LOGO_AR} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "8"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "9"}
-                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement">
-            {/if}
-            
-            <div class="description_box">
-                <p class="work_title">"{workElementTitle}"</p>
-                <p class="work_description">{workElementText}</p>
+        <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile};">
+            <!-- {#if open === true}  {/if} -->
+            <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
+                <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
             </div>
-            <p class="button_more_info">press to view more</p>
+            <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display};">
+                <div class="description_box" bind:clientHeight={description_box_height}>
+                    <p class="work_title">"{workElementTitle}"</p>
+                    <p class="work_description">{workElementText} <slot/> </p>
+                </div>
+            </div>
+            
+            <!-- <p class="button_more_info"><button class="button_more_info_action" on:click={open_more_info}>- view more -</button></p> -->
         </div>
     </div>
 </main>
@@ -60,6 +106,16 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
+    /* button, button:focus{
+        outline: none;
+        background: transparent;
+        border: 1px solid transparent;
+    }
+    button:active{
+        outline: none;
+        background: transparent;
+        border: 1px solid transparent;
+    } */
     .workPresentation_container{
         width: 100%;
         height: 100vh;
@@ -68,27 +124,97 @@
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        border-bottom: 2px solid var(--text_color_gray90);
+        border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        /* position: fixed;
+        bottom: 0; */
     }
     .content_container.work_presentation_page{
         display: grid;
-        grid-template-columns: 2fr 1.65fr;
-        grid-template-rows: 1fr 2rem;
+        grid-template-columns: 2fr 1.5fr;
+        grid-template-rows: 1fr;
         align-items: center;
         justify-items: center;
         gap: 0rem max(2.5rem, 4vw);
         width: 95%;
         height: 85%;
-    }
-    .Portfolio_workPreviewElement{
-        width: max(12.5rem, 80%);
-        max-height: 90%;
         
     }
     
+    .workPreviewElement_Box{
+        width: 100%;
+        height: fit-content;
+        max-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .Portfolio_workPreviewElement{
+        width: max(20rem, 80%);
+        max-height: 80vh;
+    }
+    
+    .work_description_container{
+        width: 100%;
+        height: 75%;
+        display: flex;
+        justify-content: flex-start;
+        /* align-items: center; */
+        /* border-radius: max(1rem, 1vw); */
+        /* background: radial-gradient(transparent 80%, var(--background_color_alternativeLightYellow) 125%);
+        box-shadow: inset 0 0 1rem var(--background_color_alternativeLightYellow); */
+
+        overflow-x: clip;
+        overflow-y: auto;
+
+        position: relative;
+        isolation: isolate;
+    }
+    .work_description_container::before{
+        content: "↓";
+        position: absolute;
+        display: var(--displayFade);
+        width: 100%;
+        height: 10%;
+        bottom: calc((var(--fade_offset) * -1) - 5px);
+        background: linear-gradient(transparent, var(--background_color_lightYellow));
+        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 80%);
+        backdrop-filter: blur(5px);
+        z-index: 500;
+
+        text-align: end;
+        color: var(--background_color_alternativeLightYellow_Darker);
+        font-family: "Neutral_Bold";
+        font-size: max(2.5rem, 2vw);
+    }
+    .work_description_container::after{
+        content: "";
+        position: absolute;
+        visibility: var(--visibility);
+        opacity: var(--opacity);
+        transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        width: 100%;
+        height: 10%;
+        top: calc(var(--fade_offset) - 5px);
+        background: linear-gradient(var(--background_color_lightYellow), transparent);
+        z-index: 500;
+        mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 80%);
+        backdrop-filter: blur(5px);
+    }
+
+    .work_description_container::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    .work_description_container::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightYellow);
+    }
+    .work_description_container::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
+    }
     .description_box{
-        width: 80%;
+        width: 90%;
         display: flex;
         flex-direction: column;
         gap: max(1.5vw, 1.5rem);
@@ -104,6 +230,8 @@
         font-size: var(--text_size_small);
         line-height: var(--text_line_small);
         letter-spacing: -0.5px;
+        text-wrap: pretty;
+        hyphens: auto;
     }
     .description_box::before{
         content: "";
@@ -114,33 +242,40 @@
         border-radius: 50%;
         bottom: 0;
         translate: 0 200%;
+        z-index: 600;
     }
-    .button_more_info{
+    /* .button_more_info{
         width: 90%;
-        text-align: center;
-        font-family: 'Brolimo';
-        font-size: var(--text_size_extra_small);
         grid-area: 2 / 1 / 3 / 3;
         position: relative;
         isolation: isolate;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }
+    .button_more_info_action{
+        width: 100%;
+        height: 100%;
+        font-family: 'Brolimo';
+        font-size: var(--text_size_extra_small);
+        cursor: pointer;
+    }
     .button_more_info::after{
         content: "";
         position: absolute;
         inset: 0 45% 0 45%;
         background-color: var(--background_color_alternativeLightYellow);
-        filter: blur(1rem);
+        filter: blur(max(0.5rem, 0.8vw));
         z-index: -1;
         cursor: pointer;
+        translate: 0 50%;
         transition: all 0.3s ease-in-out;
-        opacity: 0;
     }
     .button_more_info:hover::after{
-        opacity: 1;
-        inset: 0 0 0 0;
-    }
+        inset: -15% 0 -25% 0;
+        translate: 0 0%;
+        filter: blur(max(0.25rem, 0.25vw));
+        border-radius: max(0.5rem, 0.5vw);
+    } */
 
     @media (width < 1100px) {
         .description_box{
@@ -149,29 +284,84 @@
     }
     @media (width < 1000px) {
         .content_container.work_presentation_page{
-            display: grid;
             grid-template-columns: 1fr;
-            grid-template-rows: 1.5fr 1fr 2rem;
-            align-items: center;
-            justify-items: center;
-            gap: max(1.75rem, 3.5vw) 0;
+            grid-template-rows: 1.5fr 1fr;
+            gap: max(2.5rem, 3.5vw) 0;
+            overflow-y: scroll;
+            overflow-x: clip;
+
+            position: relative;
+            isolation: isolate;
         }
+        .content_container.work_presentation_page::before{
+            content: "↓";
+            position: absolute;
+            width: 100%;
+            height: 8%;
+            display: var(--displayFadeMobile);
+            bottom: calc((var(--fade_offsetMobile) * -1) - 10px);
+            background: linear-gradient(transparent, var(--background_color_lightYellow));
+            mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 80%);
+            backdrop-filter: blur(5px);
+            z-index: 500;
+
+            text-align: end;
+            color: var(--background_color_alternativeLightYellow_Darker);
+            font-family: "Neutral_Bold";
+            font-size: max(2rem, 2vh);
+        }
+        .content_container.work_presentation_page::after{
+            content: "";
+            position: absolute;
+            visibility: var(--visibilityMobile);
+            opacity: var(--opacityMobile);
+            transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            width: 100%;
+            height: 8%;
+            top: calc(var(--fade_offsetMobile) - 5px);
+            background: linear-gradient(var(--background_color_lightYellow), transparent);
+            mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 80%);
+            backdrop-filter: blur(5px);
+            z-index: 500;
+        }
+
         .Portfolio_workPreviewElement{
+            max-height: 50vh;
             width: max(25rem, 75%);
+        }
+
+        .work_description_container{
+            align-self: flex-start;
+            overflow-y: visible;
+            height: fit-content;
+            justify-content: center;
+        }
+        .work_description_container::after{
+            display: none;
+        }
+        .work_description_container::before{
+            display: none;
         }
         .description_box{
-            align-self: flex-start;
             width: max(25rem, 75%);
         }
-        .button_more_info{
+        .description_box::before{
+            translate: 0 300%;
+            z-index: 600;
+        }
+        /* .button_more_info{
             grid-area: auto;
-        }   
-        .work_description::before{
+        }    */
+        /* .work_description::before{
             width: max(1.25rem, 1.75vw);
             left: 0;
             top: 50%;
             translate: 0 max(5vh, 2rem);
-        }
+        } */
+        /* .button_more_info::after{
+            inset: 0 40% 0 40%;
+            translate: 0 50%;
+        } */
     }
     @media (width < 500px) {
         .Portfolio_workPreviewElement{
@@ -180,6 +370,10 @@
         .description_box{
             width: 95%;
         }
+        /* .button_more_info::after{
+            inset: 0 35% 0 35%;
+            translate: 0 50%;
+        } */
     }
 
     @media (width < 1100px) {

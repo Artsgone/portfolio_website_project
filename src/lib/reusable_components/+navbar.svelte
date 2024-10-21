@@ -59,6 +59,7 @@
     }
     .navbar_list > a {
         font-family: 'Neutral_Normal';
+        text-transform: uppercase;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -66,27 +67,39 @@
         text-decoration: none;
         white-space: nowrap;
         color: var(--text_color_gray90);
-        background-color: var(--element_background_color_lightestCyan);
-        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
+        background: radial-gradient(var(--element_background_color_lightestCyan) 40%, var(--background_color_lightCyanSaturated) 125%);
+        /* border: max(2px, 0.125vw) var(--text_color_gray90) solid; */
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
         border-radius: 10rem;
         font-size: max(1.5rem, 1.6vw);
         padding-block: max(1vw, 0.8rem);
         transition: all 0.15s ease-out;
     }
+    .navbar_list > a:focus-visible{
+        outline: 0.20rem var(--background_color_alternativeLightYellow) solid;
+        translate: 0 max(0.5rem, 0.40vw);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
+    }
     .navbar_list::before{
         content: '';
         position: absolute;
-        top: max(0.6rem, 0.25vw);
+        top: max(0.6rem, 0.45vw);
         border-radius: max(2.1vw, 2rem);
         width: 100%;
         height: 110%;
-        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+        background-image: radial-gradient(var(--background_color_lightCyan) 25%, var(--background_color_darkestCyan) 100%);
+        background-size: 100% 100%;
+        background-position: center top;
+        background-repeat: no-repeat;
+
         z-index: -1;
     }
     .navbar_list > a:hover{
-        translate: 0 max(0.5rem, 0.25vw);
-        box-shadow: inset 0 0 1.25rem 0.2rem var(--background_color_lightCyanSaturated),
-                    0 0.5rem 1rem 0.1rem var(--background_color_lightCyanSaturated);
+        translate: 0 max(0.5rem, 0.40vw);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
     }
     
     @container (inline-size < 800px) {
@@ -99,7 +112,7 @@
         }
         .navbar_list::before{
             height: 105%;
-            border-radius: 2rem;
+            border-radius: 1.85rem;
         }
         .navbar_list > a{
             font-size: min(7vw, 1.5rem);

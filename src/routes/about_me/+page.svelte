@@ -13,22 +13,69 @@
     import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
     import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
 
+    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
+    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+
     $: innerWidth = 0
 	// $: innerHeight = 0
+    import { onMount } from 'svelte';
+    import { fade, blur, fly, slide } from 'svelte/transition';
+    import { afterNavigate, beforeNavigate } from '$app/navigation';
+    import { quintOut, sineInOut } from 'svelte/easing';
+    
+    let pageLoaded = false;
+    onMount(async() => {;
+        pageLoaded = true;
+    });
+    beforeNavigate(async() => {
+        pageLoaded = false;
+    });
+
+    afterNavigate(async() => {
+        pageLoaded = true;
+    });
+
+    function scrollToTop(){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    $: innerHeight = 0;
+    let y;
+    
+    let newY = [];
+    $: oldY = newY[1];
+    function updateY(event){
+        newY.push(y);
+        if(newY.length > 5) {
+            newY.shift();
+        }
+        newY=newY;
+    }
+    
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window bind:innerWidth bind:innerHeight bind:scrollY={y} on:scroll={updateY}  />
 
 <main>
+    {#if !pageLoaded}
+        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}  class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="Global_loadingAnimation"></div>
+    {/if}
+
+    {#if y > (innerHeight / 1.75) && oldY > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {/if}
+
     <div class="default_container cyan">
-        <Header  title_Decor_ID = "aboutme"/>
+        <Header title_Decor_ID = "aboutme" />
         <div class="content_container title_page">
-            <div class="title_page_name">
-                <div class="title_name darkgrayText">About me</div>
-                <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} alt="AboutMe_titlePageSVG">
-            </div>
-        <Navbar firstLink="Main page" secondLink="Portfolio" thirdLink="Contact" 
-                linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"/>
+            {#if pageLoaded}
+                <div class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                    <div class="title_name darkgrayText">About me</div>
+                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} alt="AboutMe_titlePageSVG">
+                </div>
+            {/if}
+            <Navbar firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
+                    linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"/>
         </div>
     </div>
     <div class="default_container">
@@ -57,7 +104,7 @@
             <div class="text languages">
                 <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
                  <p class="darkgrayText">
-                    English - B2 <br>
+                    English - B2 / C1 <br>
                     Russian - Native <br>
                     Czech - Fluent
                 </p>
@@ -65,7 +112,7 @@
             <p class="grayText65">LANGUAGES</p>
         </div>
     </div>
-    <div class="default_container def_skills_title">
+    <div class="default_container def_skills_title noBorders">
         <div class="content_container skills_title_page">
             <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
         </div>
@@ -83,25 +130,29 @@
     </div>
     <div class="default_container">
         <div class="content_container otherAbilities_page">
-            <p class="yellowText60 vt">OTHER ABILITIES</p>
+            <p class="altyellowText vt">OTHER ABILITIES</p>
             <div class="text otherAbilities">
                 <p class="rounded darkgrayText">
                     <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                    Creative in designing everything <br> Effective both on my own and in team.
+                    Creative at designing things.
                 </p>
                 <p class="darkgrayText">
                     <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
-                    Lorem ipsum solte amore de amo, solte amore de amo. <br>
+                    Willing to learn and develope my skills anytime.
                 </p>
                 <p class="rounded darkgrayText">
                     <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                    Poberto horte si de goeremo be tamo. <br>
+                    Aiming for a hardwork to achieve the best result possible.
+                </p>
+                <p class="darkgrayText">
+                    <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
+                    Effective both on my own and in team.
                 </p>
             </div>
-            <p class="yellowText60 vt">OTHER ABILITIES</p>
+            <p class="altyellowText vt">OTHER ABILITIES</p>
         </div>
     </div>
-    <Footer firstLink="Main page" secondLink="Portfolio" thirdLink="Contact" 
+    <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
     titleName = "About me" footer_Decor_ID = "aboutme"/>
 </main>
@@ -111,14 +162,71 @@
         margin: 0;
         padding: 0;
     }
+    .loader_animation{
+        position: fixed;
+        z-index: 9999;
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
+        inset: -10% -10% -10% -10%;
+        transition: all 1s ease-in;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Brolimo';
+        font-size: var(--text_size_medium_big);
+        color: var(--text_color_gray5);
+        translate: 0 -2.5%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .loadingSpinner{
+        width: max(10rem, 12.5vw);
+        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
+    }
+    @keyframes loadingSpinner{
+        0%{
+            rotate: 0deg;
+        }
+        25%{
+            rotate: 160deg;
+        }
+        50%{
+            rotate: 220deg;
+        }
+        75%{
+            rotate: 300deg;
+        }
+        100%{
+            rotate: 360deg;
+        }
+    }
+    @keyframes jumpFromBottom{
+        0%{
+            scale: 1;
+        }
+        25%{
+            scale: 0.9;
+        }
+        50%{
+            scale: 0.95;
+        }
+        75%{
+            scale: 0.9;
+        }
+        100%{
+            scale: 1;
+        }
+    }
     :global(body)::-webkit-scrollbar {
-        width: 0.5em;
+        width: max(0.5em, 0.5vw);
     }
     :global(body)::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
     :global(body)::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
     }
     *, *::before, *::after {
         margin: 0;
@@ -138,6 +246,7 @@
         justify-content: center;
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
     }
     .content_container{
         width: 92.5%;
@@ -146,16 +255,41 @@
     .darkgrayText{
         color: var(--text_color_gray90);
     }
-    .yellowText60{
-        color: var(--text_color_yellow60);
+    .altyellowText{
+        color: var(--background_color_alternativeLightYellow);
     }
     .grayText65{
         color: var(--text_color_gray65);
     }
+    .noBorders{
+        border: none;
+    }
     .default_container.cyan{
         height: 100svh;
-        background-color: var(--background_color_lightCyan);
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
+        border: none;
+    }
+
+    .scrollUp_button{
+        position: fixed;
+        cursor: pointer;
+        width: max(3.5rem, 3vw);
+        aspect-ratio: 1;
+        z-index: 999;
+        bottom: 7.5%;
+        right: min(10%, calc(4rem + 2vw));
+        outline: max(4px, 0.25vw) var(--background_color_lightCyan) solid;
+        border: none;
+        border-radius: 25%;
+        overflow: clip;
+        backdrop-filter: blur(5px) invert(25%);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+    }
+    .arrowIcon{
+        width: 50%;
+        aspect-ratio: 1;
+        filter: drop-shadow(0 0 0.5rem var(--cyan_outline));
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -182,9 +316,25 @@
         font-size: max(15vw, 5.5rem);
         font-family: 'Brolimo';
         text-wrap: nowrap;
-        z-index: 9999;
+        z-index: 999;
     }
 
+    @media (width < 942px){
+        .content_container.title_page{
+            justify-content: center;
+            gap: 15vh;
+        }
+        #AboutMe_titlePageSVG{
+            width: 55%;
+            translate: -1% 5%;
+        }
+        .title_name{
+            text-wrap: wrap;
+            text-align: center;
+            font-size: 22.5vw;
+            line-height: 17.5vw;
+        }
+    }
     @media (width < 500px){
         .content_container.title_page{
             /* justify-content: space-evenly;
@@ -194,7 +344,7 @@
         }
         #AboutMe_titlePageSVG{
             width: 75%;
-            translate: -5% 5%;
+            translate: -2.5% 5%;
         }
         .title_name{
             text-wrap: wrap;
@@ -340,9 +490,11 @@
     }
     .AboutMe_LanguagesYellowHighlight{
         position: absolute;
-        width: 45%;
-        translate: 115% -18.5%;
+        width: 40%;
+        translate: 130% -5%;
         z-index: -1;
+        filter: blur(max(0.5rem, 0.5vw));
+        border-radius: max(1rem, 1vw);
     }
 
     @media (height < 800px) {
@@ -364,7 +516,7 @@
         width: max(35rem, 65%);
     }
 
-    @media (width < 777px) {
+    @media (width < 800px) {
         #AboutMe_SkillsTitleSVG{
             width: 100%;
         }
@@ -384,18 +536,22 @@
     .skills_box{
         display: flex;
         justify-content: center;
+        align-items: center;
         width: max(40rem, 60%);
+        height: 100%;
     }
     #AboutMe_Skills{
-        width: 85%;
+        width: max(85%, 30rem);
+        max-height: 90%;
     }
     #AboutMe_Skills_Mobile{
         width: 100%;
+        max-height: 90%;
     }
 
-    @media (width < 777px) {
+    @media (width < 1050px) {
         #AboutMe_Skills{
-            width: 85%;
+            width: 95%;
         }
     }
 
@@ -437,14 +593,14 @@
     .AboutMe_OtherPE_Rounded, .AboutMe_OtherPE_Square{
         position: absolute;
         top: 50%;
-        translate: -150% -62.5%;
+        translate: -140% -62.5%;
     }
 
     .AboutMe_OtherPE_Square{
-        width: max(2.25vw, 1.5rem);
+        width: max(2.5vw, 1.75rem);
     }
     .AboutMe_OtherPE_Rounded{
-        width: max(2.1vw, 1.25rem);
+        width: max(2.25vw, 1.5rem);
     }
 
     @media (width < 1100px) {
@@ -461,10 +617,11 @@
             font-size: 9.25vw;
         }
     }
-    @media (width < 650px) {
+    @media (width < 800px) {
         .AboutMe_OtherPE_Rounded, .AboutMe_OtherPE_Square{
             top: 0;
-            translate: 0% -125%;
+            translate: -10% -125%;
+            opacity: 0.75;
         }
     }
 

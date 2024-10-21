@@ -68,7 +68,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: var(--background_color_lightCyan);
+        /* background-color: var(--background_color_lightCyan); */
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         position: relative;
         z-index: 0;
     }
@@ -107,28 +108,41 @@
         text-decoration: none;
         white-space: nowrap;
         color: var(--text_color_gray90);
-        background-color: var(--element_background_color_lightestCyan);
-        border: max(2px, 0.12vw) var(--text_color_gray90) solid;
+        /* background-color: var(--element_background_color_lightestCyan); */
+        background: radial-gradient(var(--element_background_color_lightestCyan) 30%, var(--background_color_lightCyanSaturated) 145%);
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
         border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
         transition: all 0.15s ease-out;
         
     }
+    .navbar_list > a:focus-visible{
+        outline: 0.20rem var(--background_color_alternativeLightYellow) solid;
+        translate: 0 max(0.5rem, 0.40vw);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
+    }
     .navbar_list::before{
         content: '';
         position: absolute;
-        top: max(0.6rem, 0.25vw);
+        top: max(0.6rem, 0.45vw);
         border-radius: max(2.1vw, 2rem);
         width: 100%;
         height: 110%;
-        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+
+        background-image: radial-gradient(var(--background_color_lightCyan) 25%, var(--background_color_darkestCyan) 100%);
+        background-size: 100% 100%;
+        background-position: center top;
+        background-repeat: no-repeat;
+        
         z-index: -1;
 }
     .navbar_list > a:hover{
-        translate: 0 max(0.5rem, 0.25vw);
-        box-shadow: inset 0 0 1.25rem 0.1rem var(--background_color_lightCyanSaturated),
-                    0 0.5rem 1rem 0.1rem var(--background_color_lightCyanSaturated);
+        translate: 0 max(0.5rem, 0.40vw);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
     }
     .titleName{
         font-family: 'Brolimo';
@@ -146,9 +160,9 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_transparent);
         border-radius: 50rem;
-        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
         position: relative;
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Bold';
         align-self: flex-start;
         display: flex;
         align-items: center;
@@ -157,23 +171,25 @@
         font-size: max(1.3vw, 1rem);
         padding-block: max(1.15vw, 1rem);
         padding-inline: max(2vw, 1.5rem);
-        box-shadow: inset 0px max(3.1vw, 2.5rem) var(--background_color_darkestCyan), inset 0px calc(max(3.1vw, 2.5rem) + max(2px, 0.09vw)) var(--text_color_gray90);
+        box-shadow: inset 0px max(3.1vw, 2.5rem) var(--background_color_darkestCyan), inset 0px calc(max(3.1vw, 2.5rem) + max(4px, 0.225vw)) var(--cyan_outline);
     }
     .authorName::before{
         content: "web by Artem Damin";
         box-sizing: content-box;
-        color: var(--text_color_gray90);
-        background-color: var(--background_color_lightCyan);
+        color: var(--cyan_outline);
+        letter-spacing: max(0.05vw, 0.07rem);
+        /* background: radial-gradient(var(--background_color_lightCyanSaturated) 70%, var(--cyan_outline) 100%); */
         display: flex;
         align-items: flex-end;
         justify-content: center;
         position: absolute;
-        padding-bottom: max(1rem, 0.85vw);
+        padding-bottom: max(1.1rem, 0.95vw);
         border-radius: max(1.75rem, 2.2vw);
         top: 0;
         width: 100%;
         height: 165%;
-        border: max(2px, 0.125vw) var(--text_color_gray90) solid;
+        /* border: max(2px, 0.125vw) var(--text_color_gray90) solid; */
+        border: max(4px, 0.250vw) var(--cyan_outline) solid;
         z-index: -1;
     }
     .footer_Decor{

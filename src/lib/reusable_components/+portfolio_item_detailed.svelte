@@ -1,21 +1,30 @@
 <script>
-    export let workElementTitle = "Title area: no data"
-    export let workElementText = "Text area: not data"
-    export let workElementItem = ''
+    export let workElementTitlePopup = "Title area: no data"
+    export let workElementTextPopup = "Text area: not data"
+    export let workElementItemPopup = ''
+
+    // export let workElementTitlePopup2 = "Title area: no data"
+    // export let workElementTextPopup2 = "Text area: not data"
+    export let workElementItemPopup2 = ''
+    
     // export let workElementItemLink = '$lib/svg_files/Portfolio/Portfolio_Works/' + workElementItem
-    import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
     import Portfolio_workPreviewElement_Logo_Ww from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg'
     import Portfolio_workPreviewElement_Logo_Tt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Tt.svg'
     import Portfolio_workPreviewElement_Lexi from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi.svg'
     import Portfolio_workPreviewElement_Lexi_V2 from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_V2.svg'
     import Portfolio_workPreviewElement_LXY_alt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY_alt.svg'
     import Portfolio_workPreviewElement_Anata from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg'
+    import Portfolio_workPreviewElement_Omic from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Omic.svg'
+    import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
+    import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
     import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
     import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
     import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
     import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
     import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
     import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
+    import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
+    import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
     import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
     // import Portfolio_workPreviewElement_ART from '${workElementItemLink}'
     //list of items <<
@@ -24,27 +33,50 @@
 <main>
     <!-- <div class="workPresentation_container"> -->
         <div class="content_container work_presentation_page">
-            {#if workElementItem === "0"}
+            {#if workElementItemPopup === "0"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "1"}
+            {:else if workElementItemPopup === "1"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "2"}
+            {:else if workElementItemPopup === "2"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "3"}
+            {:else if workElementItemPopup === "3"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "4"}
+            {:else if workElementItemPopup === "4"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "5"}
+            {:else if workElementItemPopup === "5"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "6"}
+            {:else if workElementItemPopup === "6"}
                 <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement">
-            {:else if workElementItem === "7"}
+            {:else if workElementItemPopup === "7"}
                 <img class="Portfolio_workPreviewElement" src={New_LOGO_AR} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup === "8"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup === "9"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement">
+            {/if}
+            {#if workElementItemPopup2 === "0"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "1"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "2"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "3"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "4"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "5"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "6"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "7"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement">
+            {:else if workElementItemPopup2 === "8"}
+                <img class="Portfolio_workPreviewElement" src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement">
             {/if}
             
             <div class="description_box">
-                <p class="work_title">"{workElementTitle}"</p>
-                <p class="work_description">{workElementText}</p>
+                <p class="work_title">"{workElementTitlePopup}"</p>
+                <p class="work_description">{workElementTextPopup}</p>
             </div>
         </div>
     <!-- </div> -->

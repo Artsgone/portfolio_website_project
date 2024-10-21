@@ -2,32 +2,100 @@
     import Navbar from '$lib/reusable_components/+navbar.svelte'
     import Header from '$lib/reusable_components/+header.svelte'
     import Footer from '$lib/reusable_components/+footer.svelte'
+//
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
+    import MainPage_MyPhotosDecorElement from '$lib/svg_files/MainPage/MainPage_MyPhotosDecorElement.svg'
+    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+    import MainPage_cvDownloadDecor from '$lib/svg_files/MainPage/MainPage_cvDownloadDecor.svg'
+    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin.png'
+    import MY from '$lib/svg_files/MainPage/MY.svg'
+//
     import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.jpg'
     import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.jpg'
     import goldenLeaves from '$lib/compressed_images/golden_leaves.jpg'
-    import MY from '$lib/svg_files/MainPage/MY.svg'
+//
+    // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
+    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
+//
+    import { navigating } from '$app/stores'
+    import { afterNavigate, beforeNavigate } from '$app/navigation';
 
-    // window.scrollBy({
-    //     top: 2500, 
-    //     left: 0, 
-    //     behavior: 'smooth'
-    // });
+    import { onMount, afterUpdate } from "svelte";
+    import { fade, blur, fly, slide } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
+    import { quintOut, sineInOut, quadOut } from 'svelte/easing';
+    
+    let pageLoaded = false;
+    // let pageFullyLoaded = false;
+    // let firstPageLoad = false;
+    $: sunsetInTheCloudsIMG_height = 0;
+    $: page4_totalHeight = 0;
+    let yellowBox_height = 0;
+
+    onMount(async() => {;
+        pageLoaded = true;
+        yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
+    });
+    beforeNavigate(async() => {
+        pageLoaded = false;
+    });
+
+    afterNavigate(async() => {
+        pageLoaded = true;
+    });
+
+    let scrollUp_button_visible = true;
+    
+    function scrollToTop(){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    
+    $: innerHeight = 0;
+    let y;
+    
+    let newY = [];
+    $: oldY = newY[1];
+    function updateY(event){
+        newY.push(y);
+        if(newY.length > 5) {
+            newY.shift();
+        }
+        newY=newY;
+        
+    }
+    // function buttonVisible(event){
+    //     oldY += oldY;
+    // }
+    // on:mousemove={buttonVisible}
+
 </script>
 
+<svelte:window bind:innerHeight bind:scrollY={y} on:scroll={updateY} />
+
 <main>
+    {#if !pageLoaded}
+        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="Global_loadingAnimation"> </div>
+    {/if}
+
+    {#if y > (innerHeight / 1.75) && oldY > y && scrollUp_button_visible}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {/if}
+
     <div class="default_container cyan">
         <Header title_Decor_ID = "mainpage" />
         <div class="content_container title_page">
-            <div class="title_page_name">
-                <div class="title_name darkgrayText">Main page</div>
-                <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} alt="MainPage_titlePageSVG">
-            </div>
+            {#if pageLoaded}
+                <div  class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                    <div class="title_name darkgrayText">Art's page</div>
+                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} alt="MainPage_titlePageSVG">
+                </div>
+            {/if}
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
                     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
         </div>
@@ -40,6 +108,16 @@
             </div>
         </div>
     </div>
+    <div class="default_container greeting dwnCV">
+        <div class="content_container CV_download_page">
+            <div class="text cvDownload">
+                 <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
+            </div>
+            <div class="CV_downloadLink">
+                <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside"> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+            </div>
+        </div>
+    </div>
     <div class="default_container cyanSaturated">
         <div class="content_container introductionToPhotos_page">
             <div class="top_part page3">
@@ -47,26 +125,20 @@
                 <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
             </div>
             <div class="bottom_part page3">
-                <p class="copyright_text darkgrayText">copyrightcopyrighted <br> copyrightcopyrighted <br> copyrightcopyrighted <br>copyrightcopyrighted</p>
+                <img class="copyright_text" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
                 <div class="photo_collection_text lightgrayText">photo <br> collection</div>
             </div>
         </div>
     </div>
     <div class="default_container">
-        <div class="content_container page4">
+        <div bind:clientHeight={page4_totalHeight} class="content_container page4">
             <div class="left_part page4">
-                <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                <div bind:clientHeight={sunsetInTheCloudsIMG_height} class="sunsetIMG_box">
+                    <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                </div>
             </div>
-            <div class="right_part page4">
+            <div class="right_part page4" style="--yellowBox_height: {yellowBox_height}px">
                 <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
-                <!-- <p class="page4_text darkgrayText"> 
-                    mazingamazingamazinga <br>
-                    azingamazingamazingma <br>
-                    zingamazingamazingama <br>
-                    ingamazingamazingamaz <br>
-                    ngamazingamazingamazi <br>
-                    gamazingamazingamazin
-                </p> -->
             </div>
         </div>
     </div>
@@ -100,7 +172,66 @@
     :global(body){
         margin: 0;
         padding: 0;
+        background-color: #a8c2beff;
+        /* -webkit-font-smoothing: antialiased; */
     }
+    .loader_animation{
+        position: fixed;
+        z-index: 9999;
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
+        inset: -10% -10% -10% -10%;
+        transition: all 1s ease-in;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Brolimo';
+        font-size: var(--text_size_medium_big);
+        color: var(--text_color_gray5);
+        translate: 0 -2.5%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .loadingSpinner{
+        width: max(10rem, 12.5vw);
+        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
+    }
+    @keyframes loadingSpinner{
+        0%{
+            rotate: 0deg;
+        }
+        25%{
+            rotate: 160deg;
+        }
+        50%{
+            rotate: 220deg;
+        }
+        75%{
+            rotate: 300deg;
+        }
+        100%{
+            rotate: 360deg;
+        }
+    }
+    @keyframes jumpFromBottom{
+        0%{
+            scale: 1;
+        }
+        25%{
+            scale: 0.9;
+        }
+        50%{
+            scale: 0.95;
+        }
+        75%{
+            scale: 0.9;
+        }
+        100%{
+            scale: 1;
+        }
+    }
+
     *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -115,6 +246,7 @@
         justify-content: center;
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
     }
     .content_container{
         width: 92.5%;
@@ -128,8 +260,11 @@
     }
     .default_container.cyan{
         height: 100svh;
-        background-color: var(--background_color_lightCyan);
+        /* background-color: var(--background_color_lightCyan); */
+        /* url($lib/svg_files/GlobalSVGs/noise-light.png) */
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
+        border: none;
     }
     *::selection{
         background-color: var(--background_color_lightCyan);
@@ -137,13 +272,35 @@
     }
     
     :global(body)::-webkit-scrollbar {
-        width: 0.5em;
+        width: max(0.5em, 0.5vw);
     }
     :global(body)::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
     :global(body)::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
+    }
+
+    .scrollUp_button{
+        position: fixed;
+        cursor: pointer;
+        width: max(3.5rem, 3vw);
+        aspect-ratio: 1;
+        z-index: 999;
+        bottom: 7.5%;
+        right: min(10%, calc(4rem + 2vw));
+        outline: max(4px, 0.25vw) var(--background_color_lightCyan) solid;
+        border: none;
+        border-radius: 25%;
+        overflow: clip;
+        backdrop-filter: blur(5px) invert(25%);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+    }
+    .arrowIcon{
+        width: 50%;
+        aspect-ratio: 1;
+        filter: drop-shadow(0 0 0.5rem var(--cyan_outline));
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -167,10 +324,25 @@
     .title_name{
         font-size: var(--text_size_title_ultrabig);
         font-family: 'Brolimo';
-        z-index: 9999;
+        z-index: 999;
         text-wrap: nowrap;
     }
 
+    @media (width < 942px){
+        .content_container.title_page{
+            justify-content: center;
+            gap: 15vh;
+        }
+        #MainPage_titlePageSVG{
+            width: 80%;
+        }
+        .title_name{
+            text-wrap: wrap;
+            text-align: center;
+            font-size: 22.5vw;
+            line-height: 17.5vw;
+        }
+    }
     @media (width < 500px){
         .content_container.title_page{
             justify-content: center;
@@ -198,6 +370,7 @@
     .default_container.greeting{
         background-color: var(--background_color_darkGray);
         box-shadow: none;
+        border: none;
     }
     .content_container.greeting_page{
         display: grid;
@@ -216,13 +389,13 @@
         flex-direction: column;
         align-self: center;
     }
-    .text > p{
+    .text.introducing > p{
         font-family: 'Subjectivity_Medium';
         font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium);
         letter-spacing: -0.5px;
     }
-    .text > p > span{
+    .text.introducing > p > span{
         font-family: 'Subjectivity_Bold';
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
@@ -242,19 +415,19 @@
             grid-auto-rows: 1fr 1fr;
         }
         #MainPage_greetingPageSVG{
-            width: max(25rem, 50%);
+            width: max(27.5rem, 60%);
         }
-        .text > p{
+        .text.introducing > p{
             text-align: center;
         }
     }
     @media (width < 1100px) and (width > 650px) {
-        .text > p{
+        .text.introducing > p{
             text-align: center;
             font-size: var(--text_size_medium_big_media1);
             line-height: var(--text_line_height_medium_media1);
         }
-        .text > p > span{
+        .text.introducing > p > span{
             font-size: var(--text_size_medium_big_media1);
         }
     }
@@ -267,12 +440,146 @@
         }
     }
     @media (width < 350px) {
-        .text > p{
+        .text.introducing > p{
             font-size: max(1.75vw, 1.25rem);
             line-height: max(2.25vw, 2rem);
         }
-        .text > p > span{
+        .text.introducing > p > span{
             font-size: max(2vw, 1.5rem);
+        }
+    }
+
+    /* CV Download */
+/* ------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+    .default_container.dwnCV{
+        overflow-x: clip;
+    }
+    .content_container.CV_download_page{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1.25fr;
+
+        justify-items: center;
+        align-items: center;
+    }
+
+    .text.cvDownload > p{
+        font-family: 'Brolimo';
+        font-size: max(4vw, 3.5rem);
+        /* line-height: var(--text_line_height_big); */
+        text-wrap: balance;
+        /* word-spacing: max(1rem, 1vw); */
+    }
+    .span_CV{
+        font-family: 'Subjectivity_Bold';
+        font-size: max(5vw, 4.5rem);
+        background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        isolation: isolate;
+    }
+    .span_CV::before {
+        content: "";
+        position: absolute;
+        height: 125%;
+        width: 200%;
+        left: -50%;
+        background-image: radial-gradient(var(--background_color_darkCyanSaturated) 15%, var(--cyan_outline) 100%);
+        background-size: 100% 100%;
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        border-radius: max(0.35rem, 0.35vw);
+        filter: blur(7.5rem);
+        z-index: -1;
+    }
+
+    .CV_downloadLink{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        isolation: isolate;
+    }
+    .CV_downloadLinkInside{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: max(2rem, 2vw);
+        
+        width: 100%;
+        padding: max(1rem, 1vw) max(3.25rem, 3.25vw);
+        text-wrap: balance;
+        text-decoration: none;
+        font-family: "Neutral_Normal";
+        font-size: max(2vw, 1.75rem);
+        color: var(--background_color_lightCyan);
+        text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
+        backdrop-filter: blur(0.6rem);
+        /* background: radial-gradient(var(--background_color_darkCyan) 1%, var(--background_color_darkGray) 150%); */
+        border-radius: max(2rem, 2vw);
+        border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+        transition: all 0.15s ease-out;
+    }
+    .MainPage_cvDownloadDecor{
+        height: max(2.25rem, 2.25vw);
+        filter: drop-shadow(0 0 1rem var(--background_color_lightCyanSaturated));
+    }
+
+    .CV_downloadLink > .CV_downloadLinkInside:hover{
+        color: var(--text_color_gray5);
+        text-shadow: 0rem 0rem 0.75rem var(--text_color_gray5);
+        translate: 0 max(0.5rem, 0.40vw);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.25rem var(--background_color_lightCyanSaturated);
+    }
+
+    .CV_downloadLink::before{
+        content: '';
+        position: absolute;
+        top: max(0.6rem, 0.45vw);
+        border-radius: max(1.9rem, 1.9vw);
+        width: 100%;
+        height: 115%;
+        border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+        z-index: -1;
+
+        background-image: radial-gradient(var(--text_color_gray90) 15%, var(--background_color_darkCyanSaturated) 100%);
+        background-size: 100% 100%;
+        background-position: center top;
+        background-repeat: no-repeat;
+        /* transition: background-size 1s ease-out; */
+    }
+    /* .CV_downloadLink:hover::before{
+        background-size: 100% 100%;
+        transition: background-size 0.25s ease-out;
+    } */
+
+    @media (width < 670px) {
+        .CV_downloadLink{
+            width: 90%;
+        }
+        .text.cvDownload > p{
+            font-size: min(7.5vw, 3.5rem);
+        }
+        .span_CV{
+            font-size: min(10vw, 4.5rem);
+        }
+        .span_CV::before{
+            filter: blur(15vw);
+        }
+        .MainPage_cvDownloadDecor{
+            height: min(2.25rem, 7.5vw);
+        }
+    }
+    @media (width < 500px) {
+        .CV_downloadLinkInside{
+            gap: min(2rem, 5vw);
+            padding: max(1rem, 1vw) max(3.25rem, 3.25vw);
+            font-size: min(6vw, 1.45rem);
+            border-radius: max(2rem, 2vw);
+            border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
         }
     }
 
@@ -282,6 +589,7 @@
     .default_container.cyanSaturated{
         background-color: var(--background_color_lightCyanSaturated);
         box-shadow: none;
+        border: none;
     }
     .content_container.introductionToPhotos_page{
         display: flex;
@@ -291,12 +599,13 @@
     }
     .content_container.introductionToPhotos_page::before{
         content: "";
-        position: absolute;
-        height: max(3.375rem, 6vh);
+        position: absolute; 
+        height: max(2.75rem, 4.5vh);
         border-radius: max(1rem, 1vw);
         width: 100%;
         bottom: 0;
         background-color: var(--background_color_darkCyan);
+        display: none;
     }
     .top_part.page3, .bottom_part.page3{
         display: flex;
@@ -306,34 +615,38 @@
         padding-block: 3vh;
         container: photos_title / size;
     }
+    .top_part.page3{
+        border-block: max(5px, 0.4vw) var(--cyan_outline) solid;
+    }
+    .bottom_part.page3{
+        border-bottom: max(5px, 0.4vw) var(--cyan_outline) solid;
+    }
     .MY{
         width: 65%;
         height: 100%;
     }
     .earLikeThing{
         height: 100%;
-        width: 35%;
+        max-width: 30%;
     }
     .photo_collection_text{
-        font-family: 'Vetrino';
-        padding-bottom: max(1vw, 2rem);
+        font-family: 'Brolimo';
+        /* padding-bottom: max(1vw, 2rem); */
         font-size: max(7.5vw, 5rem);
         text-align: end;
-        align-self: flex-end;
+        align-self: center;
         z-index: 1;
     }
     .copyright_text{
-        font-family: 'Neutral_Normal';
-        line-height: max(0.9rem, 0.9vw);
-        font-size: max(1rem, 1vw);
-        align-self: flex-end;
+        height: 100%;
+        max-width: 50%;
+        align-self: center;
         z-index: 1;
-        translate: 0 calc(-50% - 1rem);
     }
     
     @media (width > 1650px) {
         .MY{
-            width: auto;
+            width: 60%;
         }
     }
     @container photos_title (inline-size < 1200px) {
@@ -342,7 +655,7 @@
         } 
         .earLikeThing{
             width: 40%;
-            height: min( 17.5rem, 85%);
+            height: min(17.5rem, 85%);
             padding-inline: 0;
         }
         .bottom_part.page3{
@@ -351,30 +664,31 @@
     }
     @container photos_title (inline-size < 680px) {
         .MY{
-            height: 40%;
+            height: 35%;
             width: 100%;
         } 
         .earLikeThing{
-            height: 60%;
+            height: 55%;
             width: 50%;
+            max-width: none;
         }
         .bottom_part.page3{
             justify-content: center;
         } 
         .photo_collection_text{
             text-align: center;
-            font-size: min(17vw, 6rem);
-        }
-        .copyright_text{
-            display: none;
+            font-size: min(19vw, 6.5rem);
         } 
     }
 
     @media (width < 800px) {
         .top_part.page3, .bottom_part.page3{
             border: none;
+            padding-bottom: 0;
         }
-        
+        .copyright_text{
+            display: none;
+        }
         .top_part.page3{
             flex-direction: column;
             align-items: center;
@@ -410,11 +724,17 @@
     .right_part.page4{
         container: sunset_page_right_part / size;
     }
-    .sunsetInTheCloudsIMG{
+
+    .sunsetIMG_box{
         width: 100%;
         height: 85%;
-        object-fit: cover;
         z-index: 1;
+    }
+    .sunsetInTheCloudsIMG{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 2;
         border-radius: max(1rem, 1vw);
     }
     .left_part.page4::before{
@@ -423,7 +743,7 @@
         width: 100%;
         height: 50%;
         bottom: 0;
-        border: max(0.25vw, 2.75px) solid var(--text_color_gray90);
+        border: max(0.25vw, 3.5px) solid var(--text_color_gray90);
         border-radius: max(1rem, 1vw);
     }
     .left_part.page4::after{
@@ -432,67 +752,52 @@
         width: 100%;
         height: 50%;
         bottom: 0;
-        border: max(0.25vw, 2.75px) solid var(--text_color_gray90);
+        border: max(0.25vw, 3.5px) solid var(--text_color_gray90);
         border-radius: max(15vw, 10rem);
     }
 
     .right_part.page4::before{
         content: "";
         position: absolute;
-        height: max(5rem, 15vh);
+        /* height: max(5rem, 20vh); */
+        height: var(--yellowBox_height);
         width: 100%;
         bottom: 0;
         background-color: var(--background_color_alternativeLightYellow);
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_Darker) 125%);
         border-radius: max(1rem, 1vw);
     }
     .page4_title_text{
         font-family: 'Neutral_Normal';
-        --page4_title_text_size: max(3vw, 3rem);
+        --page4_title_text_size: max(3vw, 2.85rem);
         font-size: var(--page4_title_text_size);
         line-height: var(--page4_title_text_size);
         padding-block-start: 8vw;
     }
-    /* .page4_text{
-        font-family: 'Butler_Light';
-        font-size: max(1.3vw, 1.5rem);
-        line-height: max(0.85vw, 1.1rem);
-        z-index: 1;
-        padding: max(1.25rem, 1vw);
-    } */
 
     @container sunset_page_left_part (block-size < 600px) and (inline-size < 850px) {
-        .sunsetInTheCloudsIMG{
-            height: 75%;
-        }
-        .MainPage_stylingForSunsetImageSVG{
-            display: none;
+        .sunsetIMG_box{
+            height: 85%;
         }
     }
-    @container sunset_page_left_part (block-size < 600px) and (inline-size < 300px) {
-        .sunsetInTheCloudsIMG{
+    @container sunset_page_left_part (block-size < 450px) and (inline-size < 400px) {
+        .sunsetIMG_box{
             height: 80%;
         }
     }
-    @container sunset_page_left_part (block-size < 600px) and (inline-size < 500px) {
-        .MainPage_stylingForSunsetImageSVG{
-            display: block;
-        }
-    }
     
-    @container sunset_page_right_part (block-size < 500px) and (inline-size < 850px) {
+    @container sunset_page_right_part (block-size < 350px) and (inline-size < 850px) {
         .page4_title_text{
             padding-block-start: max(2rem, 5vh);
-            --page4_title_text_size: max(4vw, 2rem);
+            --page4_title_text_size: max(5vw, 2.25rem);
             font-size: var(--page4_title_text_size);
             line-height: var(--page4_title_text_size);
         }
-        .page4_text{
-            display: none;
-        }
+
         .right_part.page4::before{
-            height: min(8vh, 22.5vw);
+            height: min(10vh, 22.5vw);
             width: 100%;
-            bottom: -1vh;
+            bottom: min(-2.5vh, -3vw);
         }
     }
     /* @container sunset_page_right_part (block-size >= 300px) and (inline-size < 850px) {
@@ -514,9 +819,6 @@
             align-items: center;
             justify-content: center;
         }
-        /* .page4_text{
-            padding: 0;
-        } */
     }
     @media (width < 1000px) and (height < 690px) {
         .content_container.page4{
@@ -558,14 +860,12 @@
         width: 100%;
         height: 100%;
         opacity: 0.75;
-        background: linear-gradient(70deg, #71786dff, #989d95ff);
+        background: linear-gradient(-25deg, hsl(93, 8%, 40%), hsl(94, 8%, 65%));
     }
 
     @container dandelion_page (inline-size < 1500px) {
         .dandelion{
-            width: 35%;
-            height: 100%;
-            object-fit: cover;
+            width: 31%;
         }
     }
 
@@ -649,12 +949,13 @@
             align-items: start;
         }
         .MainPage_YellowHighlight{
-            width: min(30vw, 10rem);
+            width: min(35vw, 12.5rem);
             rotate: 0deg;
         }
         .page6_text{
-            font-size: min(11.75vw, 3.5rem);
-            line-height: min(11.75vw, 3.5rem);
+            --font_size_golden_leaves: min(12vw, 3.65rem);
+            font-size: var(--font_size_golden_leaves);
+            line-height: var(--font_size_golden_leaves);
             writing-mode: horizontal-tb;
         }
     }
