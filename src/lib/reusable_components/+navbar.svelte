@@ -130,7 +130,7 @@
             min-width: 15rem;
         }
         .navbar_list > a{
-            padding-block: 0.7rem;
+            padding-block: 0.8rem 0.75rem;
         }
         .navbar_list > a:hover{
             translate: 0 0;
@@ -141,11 +141,11 @@
     @media (height < 750px) and (width < 950px) {
         .navbar_list > a{
             font-size: min(6vw, 1.75rem);
-            padding-block: 0.5rem;
+            padding-block: 0.55rem;
         }
         .navbar_list::before{
-            height: 102.5%;
-            border-radius: 2rem;
+            height: 105%;
+            border-radius: 1.65rem;
         }
     }
 </style>

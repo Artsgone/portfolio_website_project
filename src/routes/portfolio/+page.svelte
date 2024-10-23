@@ -97,7 +97,7 @@
 
 <main>
     {#if !pageLoaded}
-        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="Global_loadingAnimation"></div>
+        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
     {/if}
 
     {#if y > (innerHeight / 1.75) && oldY > y}
@@ -346,12 +346,12 @@
     .scrollUp_button{
         position: fixed;
         cursor: pointer;
-        width: max(3.5rem, 3vw);
+        width: max(3.3rem, 3vw);
         aspect-ratio: 1;
         z-index: 999;
         bottom: 7.5%;
         right: min(10%, calc(4rem + 2vw));
-        outline: max(4px, 0.25vw) var(--background_color_lightCyan) solid;
+        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
         border: none;
         border-radius: 25%;
         overflow: clip;

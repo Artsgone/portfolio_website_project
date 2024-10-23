@@ -80,7 +80,7 @@
 
 <main>
     {#if !pageLoaded}
-        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="Global_loadingAnimation"> </div>
+        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> </div>
     {/if}
 
     {#if y > (innerHeight / 1.75) && oldY > y && scrollUp_button_visible}
@@ -285,12 +285,12 @@
     .scrollUp_button{
         position: fixed;
         cursor: pointer;
-        width: max(3.5rem, 3vw);
+        width: max(3.3rem, 3vw);
         aspect-ratio: 1;
         z-index: 999;
         bottom: 7.5%;
         right: min(10%, calc(4rem + 2vw));
-        outline: max(4px, 0.25vw) var(--background_color_lightCyan) solid;
+        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
         border: none;
         border-radius: 25%;
         overflow: clip;
@@ -300,7 +300,7 @@
     .arrowIcon{
         width: 50%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 0.5rem var(--cyan_outline));
+        filter: drop-shadow(0 0 .4rem var(--background_color_darkCyanSaturated));
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -557,14 +557,17 @@
     } */
 
     @media (width < 670px) {
+        .content_container.CV_download_page{
+            grid-template-rows: 1fr 1.5fr;
+        }
         .CV_downloadLink{
-            width: 90%;
+            width: 75%;
         }
         .text.cvDownload > p{
-            font-size: min(7.5vw, 3.5rem);
+            font-size: min(9vw, 3.5rem);
         }
         .span_CV{
-            font-size: min(10vw, 4.5rem);
+            font-size: min(12.5vw, 4.5rem);
         }
         .span_CV::before{
             filter: blur(15vw);
@@ -572,11 +575,20 @@
         .MainPage_cvDownloadDecor{
             height: min(2.25rem, 7.5vw);
         }
+        .CV_downloadLinkInside{
+            border-radius: max(2.1rem, 2.1vw);
+        }
+        .CV_downloadLink::before{
+            height: 112.5%;
+        }
     }
     @media (width < 500px) {
+        .CV_downloadLink{
+            width: 85%;
+        }
         .CV_downloadLinkInside{
             gap: min(2rem, 5vw);
-            padding: max(1rem, 1vw) max(3.25rem, 3.25vw);
+            padding: max(1rem, 1vw) max(3rem, 3vw);
             font-size: min(6vw, 1.45rem);
             border-radius: max(2rem, 2vw);
             border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
