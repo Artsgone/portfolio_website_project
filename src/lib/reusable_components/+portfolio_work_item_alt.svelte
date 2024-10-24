@@ -43,7 +43,7 @@
         // console.log(scrollYMobile + "scrolled")
     }
 
-    $: if (scrollY < (work_description_container_height * 0.1)) {
+    $: if (scrollY < (work_description_container_height * 0.025)) {
         fadeBar_Visiblity = "hidden";
         fadeBar_Opacity = 0;
     } else {
@@ -163,6 +163,7 @@
         overflow-x: clip;
         overflow-y: auto;
         direction: rtl;
+        overscroll-behavior: none;
 
         position: relative;
         isolation: isolate;
@@ -175,12 +176,12 @@
         height: 10%;
         bottom: calc((var(--fade_offset) * -1) - 5px);
         background: linear-gradient(transparent, var(--background_color_lightYellow));
-        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 80%);
+        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 75%);
         backdrop-filter: blur(5px);
         z-index: 500;
 
         text-align: end;
-        color: var(--background_color_alternativeLightYellow_Darker);
+        color: var(--background_color_lightCyan);
         font-family: "Neutral_Bold";
         font-size: max(2.5rem, 1.75vw);
     }
@@ -195,7 +196,7 @@
         top: calc(var(--fade_offset) - 5px);
         background: linear-gradient(var(--background_color_lightYellow), transparent);
         z-index: 500;
-        mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 80%);
+        mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 75%);
         backdrop-filter: blur(5px);
     }
 
@@ -279,7 +280,7 @@
             z-index: 500;
 
             text-align: end;
-            color: var(--background_color_alternativeLightYellow_Darker);
+            color: var(--background_color_lightCyan);
             font-family: "Neutral_Bold";
             font-size: max(2rem, 2vh);
         }

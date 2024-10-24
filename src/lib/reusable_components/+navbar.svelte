@@ -73,13 +73,13 @@
         border-radius: 10rem;
         font-size: max(1.5rem, 1.6vw);
         padding-block: max(1vw, 0.8rem);
-        transition: all 0.15s ease-out;
+        transition: translate 0.15s ease-out, box-shadow 2s ease-out;
     }
     .navbar_list > a:focus-visible{
         outline: 0.20rem var(--background_color_alternativeLightYellow) solid;
         translate: 0 max(0.5rem, 0.40vw);
-        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
-                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) max(0.3rem, 0.3vw) var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) max(0.2rem, 0.2vw) var(--background_color_lightCyanSaturated);
     }
     .navbar_list::before{
         content: '';
@@ -98,8 +98,9 @@
     }
     .navbar_list > a:hover{
         translate: 0 max(0.5rem, 0.40vw);
-        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
-                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.1rem var(--background_color_lightCyanSaturated);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) max(0.3rem, 0.3vw) var(--background_color_lightCyanSaturated),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) max(0.2rem, 0.2vw) var(--background_color_lightCyanSaturated);
+        transition: translate 0.15s ease-out, box-shadow 0.25s ease-out;
     }
     
     @container (inline-size < 800px) {

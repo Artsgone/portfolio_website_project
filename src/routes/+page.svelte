@@ -63,11 +63,11 @@
     $: oldY = newY[1];
     function updateY(event){
         newY.push(y);
-        if(newY.length > 5) {
+        if(newY.length > 100) {
             newY.shift();
         }
         newY=newY;
-        
+        console.log(newY)
     }
     // function buttonVisible(event){
     //     oldY += oldY;
@@ -83,7 +83,7 @@
         <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> </div>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY > y && scrollUp_button_visible}
+    {#if y > (innerHeight / 1.75) && oldY - 100 > y}
         <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
     {/if}
 
@@ -296,11 +296,35 @@
         overflow: clip;
         backdrop-filter: blur(5px) invert(25%);
         background-color: var(--background_color_lightCyan_lowerOpacity);
+        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
     }
     .arrowIcon{
         width: 50%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 .4rem var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
+    }
+    .scrollUp_button:hover > .arrowIcon{
+        animation: arrowIcon_animation .5s ease-in-out;
+    }
+    .scrollUp_button:hover{
+        animation: scrollUp_button_animation .5s ease-in-out;
+    }
+
+    @keyframes arrowIcon_animation{
+        0%, 100% {
+            translate: 0 0%;
+        }
+        50%{
+            translate: 0 -15%;
+        }
+    }
+    @keyframes scrollUp_button_animation{
+        0%, 100% {
+            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        }
+        50%{
+            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
+        }
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
