@@ -2,9 +2,11 @@
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
     export let workElementImage = '';
+    export let workElementVisibility = 'hidden';
     
     import { onMount } from "svelte";
-    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+    import { fade} from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
 
     let imageHeight;
 
@@ -17,6 +19,10 @@
     $: description_box_height = 0;
 
     let position = "center";
+    
+    let fadeBar_DisplayTop = "none";
+    let fadeBar_DisplayTopMobile = "none";
+
     let fadeBar_Visiblity = "hidden";
     let fadeBar_Opacity = 0;
     let fadeBar_VisiblityMobile = "hidden";
@@ -38,12 +44,29 @@
         scrollYMobile = work_presentation_page.scrollTop;
     }
 
+    // $: if (scrollY < (work_description_container_height * 0.025) || workElementVisibility == "hidden") {
+    //     fadeBar_Visiblity = "hidden";
+    //     fadeBar_Opacity = 0;
+    // } else {
+    //     fadeBar_Visiblity = "visible";
+    //     fadeBar_Opacity = 1;
+    // }
+    // $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
+    //     fadeBar_VisiblityMobile = "hidden";
+    //     fadeBar_OpacityMobile = 0;
+    // } else {
+    //     fadeBar_VisiblityMobile = "visible";
+    //     fadeBar_OpacityMobile = 1;
+    // }
     $: if (scrollY < (work_description_container_height * 0.025)) {
-        fadeBar_Visiblity = "hidden";
-        fadeBar_Opacity = 0;
+        fadeBar_DisplayTop = "none";
     } else {
-        fadeBar_Visiblity = "visible";
-        fadeBar_Opacity = 1;
+        fadeBar_DisplayTop = "block";
+    }
+    $: if (scrollYMobile < (work_presentation_page_height * 0.25)) {
+        fadeBar_DisplayTopMobile = "none";
+    } else {
+        fadeBar_DisplayTopMobile = "block";
     }
 
     $: if ((work_description_container_height + scrollY) > (description_box_height)) {
@@ -56,14 +79,6 @@
         fadeBar_displayMobile = "block";
     } else {
         fadeBar_displayMobile = "none";
-    }
-    
-    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
-        fadeBar_VisiblityMobile = "hidden";
-        fadeBar_OpacityMobile = 0;
-    } else {
-        fadeBar_VisiblityMobile = "visible";
-        fadeBar_OpacityMobile = 1;
     }
 
     $: if ((work_description_container_height - description_box_height) < 0) {
@@ -78,24 +93,28 @@
 
 <svelte:window bind:innerWidth />
 
-<main>
-    <div class="workPresentation_container">
-        <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile};">
-            <!-- {#if open === true}  {/if} -->
-            <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
-            </div>
-            <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display};">
-                <div class="description_box" bind:clientHeight={description_box_height}>
-                    <p class="work_title">"{workElementTitle}"</p>
-                    <p class="work_description">{workElementText} <slot/> </p>
+{#if workElementVisibility = 'visible'}
+    <main transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        <!-- style="--portfolio_item_visible:{workElementVisibility};" -->
+        <div class="workPresentation_container">
+            <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
+                <!-- {#if open === true}  {/if} -->
+                <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
+                    <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
                 </div>
+                <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+                    <div class="description_box" bind:clientHeight={description_box_height}>
+                        <p class="work_title">"{workElementTitle}"</p>
+                        <p class="work_description">{workElementText} <slot/> </p>
+                    </div>
+                </div>
+                <!-- <div class="fade_blur"></div> -->
+                <!-- <p class="button_more_info"><button class="button_more_info_action" on:click={open_more_info}>- view more -</button></p> -->
             </div>
-            
-            <!-- <p class="button_more_info"><button class="button_more_info_action" on:click={open_more_info}>- view more -</button></p> -->
         </div>
-    </div>
-</main>
+    </main>
+{/if}
+
 
 <style>
     *{
@@ -105,6 +124,13 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
+    }
+    main{
+        visibility: var(--portfolio_item_visible);
+        /* position: fixed; */
+        inset: 0;
+        z-index: 9991;
+        scroll-snap-align: start;
     }
     /* button, button:focus{
         outline: none;
@@ -126,8 +152,6 @@
         background-color: var(--background_color_lightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
-        /* position: fixed;
-        bottom: 0; */
     }
     .content_container.work_presentation_page{
         display: grid;
@@ -171,7 +195,22 @@
 
         position: relative;
         isolation: isolate;
+
+        /* anchor-name: --_work_description_container; */
     }
+
+    /* .fade_blur{
+        position: absolute;
+        position-anchor: --_work_description_container;
+        display: var(--displayFade);
+        width: 100%;
+        height: 10%;
+        bottom: anchor(bottom);
+        background: linear-gradient(transparent, var(--element_color_darkerCyan));
+        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 75%);
+        backdrop-filter: blur(5px);
+        z-index: 500;
+    } */
     .work_description_container::before{
         content: "↓";
         position: absolute;
@@ -185,17 +224,18 @@
         z-index: 500;
 
         text-align: end;
-        /* color: var(--background_color_alternativeLightYellow_Darker); */
-        color: var(--background_color_lightCyan);
+        color: var(--background_color_alternativeLightYellow_Darker);
+        /* color: var(--text_color_gray40); */
         font-family: "Neutral_Bold";
         font-size: max(2.5rem, 2vw);
     }
     .work_description_container::after{
         content: "";
         position: absolute;
-        visibility: var(--visibility);
-        opacity: var(--opacity);
-        transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        display: var(--displayFadeTop);
+        /* visibility: var(--visibility); */
+        /* opacity: var(--opacity); */
+        /* transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out; */
         width: 100%;
         height: 10%;
         top: calc(var(--fade_offset) - 5px);
@@ -308,16 +348,17 @@
             z-index: 500;
 
             text-align: end;
-            color: var(--background_color_lightCyan);
+            color: var(--text_color_gray90);
             font-family: "Neutral_Bold";
             font-size: max(2rem, 2vh);
         }
         .content_container.work_presentation_page::after{
             content: "";
             position: absolute;
-            visibility: var(--visibilityMobile);
+            display: var(--displayFadeMobileTop);
+            /* visibility: var(--visibilityMobile);
             opacity: var(--opacityMobile);
-            transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out; */
             width: 100%;
             height: 8%;
             top: calc(var(--fade_offsetMobile) - 5px);

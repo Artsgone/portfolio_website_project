@@ -10,11 +10,11 @@
     import Telegram_Icon from '$lib/svg_files/Contact/Contact_Telegram_Icon.svg'
     import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
 
     import { onMount } from "svelte";
-    import { fade, blur, fly, slide } from 'svelte/transition';
-    import { quintOut, sineInOut } from 'svelte/easing';
+    import { fade} from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     let pageLoaded = false;
@@ -46,7 +46,7 @@
     $: oldY = newY[1];
     function updateY(event){
         newY.push(y);
-        if(newY.length > 100) {
+        if(newY.length > 50) {
             newY.shift();
         }
         newY=newY;
@@ -61,8 +61,8 @@
         <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY - 100 > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
     {/if}
 
     <div class="default_container cyan">
@@ -120,6 +120,7 @@
     :global(body){
         margin: 0;
         padding: 0;
+        background-color: var(--background_color_lightCyan);
     }
     .loader_animation{
         position: fixed;

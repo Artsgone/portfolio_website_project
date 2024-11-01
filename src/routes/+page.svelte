@@ -8,7 +8,6 @@
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
     import MainPage_MyPhotosDecorElement from '$lib/svg_files/MainPage/MainPage_MyPhotosDecorElement.svg'
-    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
     import MainPage_cvDownloadDecor from '$lib/svg_files/MainPage/MainPage_cvDownloadDecor.svg'
     import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin.png'
     import MY from '$lib/svg_files/MainPage/MY.svg'
@@ -19,6 +18,7 @@
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
+    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 //
@@ -27,7 +27,6 @@
 
     import { onMount, afterUpdate } from "svelte";
     import { fade, blur, fly, slide } from 'svelte/transition';
-    import { flip } from 'svelte/animate';
     import { quintOut, sineInOut, quadOut } from 'svelte/easing';
     
     let pageLoaded = false;
@@ -55,36 +54,34 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    
+    let svelte_main_element;
     $: innerHeight = 0;
-    let y;
+    $: y = 0;
     
     let newY = [];
     $: oldY = newY[1];
     function updateY(event){
+        y = svelte_main_element.scrollTop;
         newY.push(y);
-        if(newY.length > 100) {
+        if(newY.length > 50) {
             newY.shift();
         }
         newY=newY;
-        console.log(newY)
+        // console.log(newY)
     }
-    // function buttonVisible(event){
-    //     oldY += oldY;
-    // }
-    // on:mousemove={buttonVisible}
 
 </script>
 
-<svelte:window bind:innerHeight bind:scrollY={y} on:scroll={updateY} />
+<svelte:window bind:innerHeight  />
+<!-- bind:scrollY={y} on:scroll={updateY} -->
 
-<main>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     {#if !pageLoaded}
         <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> </div>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY - 100 > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
     {/if}
 
     <div class="default_container cyan">
@@ -172,8 +169,32 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: #a8c2beff;
+        background-color: var(--background_color_lightCyan);
         /* -webkit-font-smoothing: antialiased; */
+    }
+    main.svelte_main{
+        overflow-y: scroll;
+        height: 100vh;
+        scroll-snap-type: block proximity;
+    }
+    @media (width < 800px){
+        main.svelte_main{
+            scroll-snap-type: block mandatory;
+        }
+    }
+
+    :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    main.svelte_main::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    main.svelte_main::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    main.svelte_main::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
     }
     .loader_animation{
         position: fixed;
@@ -247,6 +268,7 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        scroll-snap-align: start;
     }
     .content_container{
         width: 92.5%;
@@ -269,17 +291,6 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
-    }
-    
-    :global(body)::-webkit-scrollbar {
-        width: max(0.5em, 0.5vw);
-    }
-    :global(body)::-webkit-scrollbar-track {
-        background-color: var(--background_color_lightCyan);
-    }
-    :global(body)::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_alternativeLightYellow);
-        border-radius: 5rem;
     }
 
     .scrollUp_button{

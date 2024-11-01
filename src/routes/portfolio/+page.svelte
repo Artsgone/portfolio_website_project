@@ -32,18 +32,18 @@
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
+    import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
 
     import { onMount } from "svelte";
-    import { fade } from 'svelte/transition';
-    import { quintOut, sineInOut } from 'svelte/easing';
+    import { fade, slide, fly } from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     let works_preview_grid;
     let pageLoaded = false;
     onMount(async() => {;
         pageLoaded = true;
-        works_preview_grid = works_preview_grid;
     });
     beforeNavigate(async() => {
         pageLoaded = false;
@@ -64,33 +64,27 @@
     $: oldY = newY[1];
     function updateY(event){
         newY.push(y);
-        if(newY.length > 100) {
+        if(newY.length > 50) {
             newY.shift();
         }
         newY=newY;
     }
     
+    let workPresent_Visibility = 'hidden';
+    let workPresent_Display = 'none';
+    let close_button_scale = '0.85'
+
     function openInLargeList(){
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        workPresent_Visibility = 'visible';
+        workPresent_Display = "flex";
+        close_button_scale = '1';
     }
-    // let show = false;
-    // function intersect(node) {
-    //     const observer = new IntersectionObserver(
-    //     entries => {
-    //         show = entries[0].isIntersecting;
+    function closeInLargeList(){
+        workPresent_Visibility = 'hidden';
+        workPresent_Display = "none";
+        close_button_scale = '0.85';
+    }
 
-    //         if (show)
-    //         observer.unobserve(node);
-    //     },
-    //     { threshold: 0.5 },
-    //     );
-    //     observer.observe(node);
-
-    //     return {
-    //     destroy: () => observer.disconnect(),
-    //     };
-    // }
-    // let imagesLinks = works_preview_grid
 </script>
 
 <svelte:window bind:innerHeight bind:scrollY={y} on:scroll={updateY} />
@@ -100,8 +94,8 @@
         <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY - 100 > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
     {/if}
 
     <div class="default_container cyan">
@@ -119,8 +113,8 @@
     </div>
     <div class="default_container endless">
         <div class="content_container work_summary_page">
-            <p class="text_corner_previewOfWorks tcp1">preview <br> of works</p>
-            <p class="text_corner_previewOfWorks tcp2">preview <br> of works</p>
+            <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
+            <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
             <div class="works_preview_grid" bind:this={works_preview_grid}>
 
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
@@ -129,7 +123,7 @@
                 <!-- blank -->
                 <div class="work_element_preview_box blank mobileBlank"></div>
                 <!-- blank -->
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" >
+                <div role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box3 top rounded mobile_left" >
@@ -184,49 +178,58 @@
             </div>
         </div>
     </div>
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
-        <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
-        <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
-        <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
-    </WorkPresent>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet" />
-         
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art and of course it is lorem ipsum compatible" />
+    <button class="close_button" on:click={closeInLargeList} style="visibility: {workPresent_Visibility}; scale: {close_button_scale}"><img src={Global_closeIcon} class="Global_closeIcon" alt="Global_closeIcon"> </button>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art, maybe baby" />
+    {#if workPresent_Visibility == 'visible'}
+        <div class="workPresent_wrapper" in:fly={{ y: -200 }} out:fade>
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+            <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
+            <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
+            <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
+            </WorkPresent>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet" workElementVisibility={workPresent_Visibility} />
+                
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art, maybe baby" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art" />
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art, maybe baby" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art" />
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art, maybe baby" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi - alt" workElementText="This piece of art is a piece of ... art" />
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY - alt" workElementText="This piece of art is a piece of ... art, maybe baby" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" />
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi - alt" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art, maybe baby" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY - alt" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art" />
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj" />
+            <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj Lorem ipsdf sdfsdfs dsd sdfs sdss sdfsdfsdf sd sdfsdf sdfak aksjl alsj " />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
 
-    <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-        <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W" />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
+
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W" workElementVisibility={workPresent_Visibility}/>
+        </div>
+    {/if}
+    
+    
     
         <Footer firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
@@ -237,6 +240,7 @@
     :global(body){
         margin: 0;
         padding: 0;
+        background-color: var(--background_color_lightCyan);
     }
     .loader_animation{
         position: fixed;
@@ -296,6 +300,7 @@
     }
     :global(body)::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
+        display: var(--scrollbar_display);
     }
     :global(body)::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
@@ -482,19 +487,12 @@
         bottom: 0;
         left: 0;
     }
-    /* @keyframes intersected{
-        0%{
-            visibility: hidden;
-        }
-        100%{
-            visibility: visible;
-        }
-    } */
     .works_preview_grid{
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(4, 20vw);
-        justify-items: center;
+        grid-template-rows: 1fr;
+        grid-auto-rows: 1fr;
+        gap: max(0.75rem, 0.75vw) max(1rem, 1vw);
     }
     .work_element_preview_box{
         aspect-ratio: 1;
@@ -520,7 +518,7 @@
         font-family: 'Brolimo';
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
-        backdrop-filter: blur(0.5rem) opacity(0.9);
+        backdrop-filter: blur(1rem) opacity(0.9);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
@@ -534,7 +532,7 @@
         visibility: visible;
         scale: 1;
         filter: blur(0rem);
-        transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.35s ease;
+        transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
     }
     .work_element_preview_box:focus-visible{
         outline: 0.25rem var(--background_color_lightCyan) solid;
@@ -578,6 +576,53 @@
         border-radius: 35%;
     }
 
+    .close_button{
+        position: fixed;
+        cursor: pointer;
+        width: max(3.3rem, 3vw);
+        aspect-ratio: 1;
+        z-index: 9999;
+        top: min(5%, 1rem + 2vw);
+        right: min(7.5%, 3rem + 2vw);
+        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+        border: none;
+        border-radius: 25%;
+        overflow: clip;
+        backdrop-filter: blur(5px) invert(25%);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+
+        transition: scale 0.3s ease-out, box-shadow 0.3s ease-in-out;
+    }
+    .close_button:hover{
+        scale: 1.065 !important;
+        box-shadow: 0 0 max(1.25rem, 1.25vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+    }
+    .Global_closeIcon{
+        width: 65%;
+        aspect-ratio: 1;
+    }
+    .workPresent_wrapper{
+        /* visibility: ; */
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        overflow-y: scroll;
+        scroll-snap-type: block mandatory;
+        z-index: 9990;
+        inset: 0;
+    }
+    .workPresent_wrapper::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    .workPresent_wrapper::-webkit-scrollbar-track {
+        background-color: var(--background_color_lightCyan);
+    }
+    .workPresent_wrapper::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow);
+        border-radius: 5rem;
+    }
+
     @media (width < 900px) {
         .works_preview_grid{
             grid-template-columns: repeat(2, 50%);
@@ -613,7 +658,7 @@
     @media (width < 475px) {
         .work_element_preview{
             width: 85%;
-            max-height: 80%;
+            max-height: 85%;
         }
     }
 

@@ -14,7 +14,7 @@
     import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
 
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import MainPage_arrowScrollUp from '$lib/svg_files/MainPage/MainPage_arrowScrollUp.svg'
+    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
 
     $: innerWidth = 0
 	// $: innerHeight = 0
@@ -46,7 +46,7 @@
     $: oldY = newY[1];
     function updateY(event){
         newY.push(y);
-        if(newY.length > 100) {
+        if(newY.length > 50) {
             newY.shift();
         }
         newY=newY;
@@ -61,8 +61,8 @@
         <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}  class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY - 100 > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={MainPage_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+    {#if y > (innerHeight / 1.75) && (oldY - 50) > y}
+        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
     {/if}
 
     <div class="default_container cyan">
@@ -161,6 +161,7 @@
     :global(body){
         margin: 0;
         padding: 0;
+        background-color: var(--background_color_lightCyan);
     }
     .loader_animation{
         position: fixed;
@@ -565,8 +566,8 @@
         height: 100%;
     }
     #AboutMe_Skills{
-        width: max(85%, 30rem);
-        max-height: 90%;
+        width: max(100%, 30rem);
+        max-height: 85vh;
     }
     #AboutMe_Skills_Mobile{
         width: 100%;

@@ -35,7 +35,7 @@
         <div class="footer_bottom">
             <div class="authorName">
                 <!-- web by Artem Damin -->
-                what the hell u doin?
+                artem damin by web
             </div>
             {#if footer_Decor_ID === "mainpage"}
                     <img class="footer_Decor" src={MainPage_FooterDecor} alt="footer_Decor">
@@ -72,6 +72,8 @@
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         position: relative;
         z-index: 0;
+
+        scroll-snap-align: end;
     }
     .content_container.footer{
         display: flex;
@@ -164,6 +166,7 @@
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         position: relative;
         font-family: 'Neutral_Bold';
+        letter-spacing: max(0.05vw, 0.07rem);
         align-self: flex-start;
         display: flex;
         align-items: center;
@@ -178,8 +181,8 @@
         content: "web by Artem Damin";
         box-sizing: content-box;
         color: var(--cyan_outline);
-        letter-spacing: max(0.05vw, 0.07rem);
-        /* background: radial-gradient(var(--background_color_lightCyanSaturated) 70%, var(--cyan_outline) 100%); */
+        
+        background: radial-gradient(var(--background_color_lightCyan) 60%, var(--cyan_outline) 125%);
         display: flex;
         align-items: flex-end;
         justify-content: center;

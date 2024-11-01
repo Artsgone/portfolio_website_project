@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="211.0507"
-   height="347.8432"
-   viewBox="0 0 55.840497 92.033512"
+   width="55.8405"
+   height="38.452644"
+   viewBox="0 0 55.8405 38.452644"
    version="1.1"
    id="svg5"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
@@ -28,9 +28,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.0888418"
-     inkscape:cx="5.2660762"
-     inkscape:cy="224.76571"
+     inkscape:zoom="1.4770342"
+     inkscape:cx="-36.559749"
+     inkscape:cy="213.60372"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -215,7 +215,7 @@
      inkscape:label="Слой 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-24.996417,-17.471916)">
+     transform="translate(-24.996416,-25.578482)">
     <g
        id="g5"
        transform="translate(-5.1592212e-7,8.1065659)">
@@ -243,7 +243,7 @@
     </g>
     <g
        id="g4"
-       transform="matrix(0.9299602,0,0,0.9299602,2.7062116,15.727718)"
+       transform="matrix(0.9299602,0,0,0.9299602,-134.59875,-32.658415)"
        style="stroke-width:1.07531">
       <path
          style="fill:url(#linearGradient2);fill-opacity:1;stroke:none;stroke-width:0.693921;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"

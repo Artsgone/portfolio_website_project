@@ -2,6 +2,7 @@
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
     export let workElementImage = ''
+    export let workElementVisibility = 'hidden';
 
     // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import { onMount } from "svelte";
@@ -24,6 +25,9 @@
     let fadeBar_VisiblityMobile = "hidden";
     let fadeBar_OpacityMobile = 0;
 
+    let fadeBar_DisplayTop = "none";
+    let fadeBar_DisplayTopMobile = "none";
+
     let fadeBar_display = "block";
     let fadeBar_displayMobile = "block";
 
@@ -44,11 +48,14 @@
     }
 
     $: if (scrollY < (work_description_container_height * 0.025)) {
-        fadeBar_Visiblity = "hidden";
-        fadeBar_Opacity = 0;
+        fadeBar_DisplayTop = "none";
     } else {
-        fadeBar_Visiblity = "visible";
-        fadeBar_Opacity = 1;
+        fadeBar_DisplayTop = "block";
+    }
+    $: if (scrollYMobile < (work_presentation_page_height * 0.25)) {
+        fadeBar_DisplayTopMobile = "none";
+    } else {
+        fadeBar_DisplayTopMobile = "block";
     }
 
     $: if ((work_description_container_height + scrollY) > (description_box_height)) {
@@ -63,13 +70,7 @@
         fadeBar_displayMobile = "none";
     }
     
-    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
-        fadeBar_VisiblityMobile = "hidden";
-        fadeBar_OpacityMobile = 0;
-    } else {
-        fadeBar_VisiblityMobile = "visible";
-        fadeBar_OpacityMobile = 1;
-    }
+    
 
     $: if ((work_description_container_height - description_box_height) < 0) {
         position = "start";
@@ -82,15 +83,20 @@
 
 <svelte:window bind:innerWidth />
 
-<main>
+<main style="--portfolio_item_visible:{workElementVisibility};">
     <div class="workPresentation_container">
-        <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile};">
+        <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height}
+
+        style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
             
-            <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display};">
-                <div class="description_box" bind:clientHeight={description_box_height}>
-                    <p class="work_title">"{workElementTitle}"</p>
-                    <p class="work_description">{workElementText} <slot/> </p>
-                </div>
+            <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
+
+            style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+                
+            <div class="description_box" bind:clientHeight={description_box_height}>
+                <p class="work_title">"{workElementTitle}"</p>
+                <p class="work_description">{workElementText} <slot/> </p>
+            </div>
             </div>
             <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
                 <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
@@ -109,16 +115,13 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
-    /* button, button:focus{
-        outline: none;
-        background: transparent;
-        border: 1px solid transparent;
+    main{
+        visibility: var(--portfolio_item_visible);
+        /* position: fixed; */
+        inset: 0;
+        z-index: 9991;
+        scroll-snap-align: center;
     }
-    button:active{
-        outline: none;
-        background: transparent;
-        border: 1px solid transparent;
-    } */
     .workPresentation_container{
         width: 100%;
         height: 100vh;
@@ -181,16 +184,14 @@
         z-index: 500;
 
         text-align: end;
-        color: var(--background_color_lightCyan);
+        color: var(--text_color_gray40);
         font-family: "Neutral_Bold";
-        font-size: max(2.5rem, 1.75vw);
+        font-size: max(2.5rem, 2vw);
     }
     .work_description_container::after{
         content: "";
         position: absolute;
-        visibility: var(--visibility);
-        opacity: var(--opacity);
-        transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        display: var(--displayFadeTop);
         width: 100%;
         height: 10%;
         top: calc(var(--fade_offset) - 5px);
@@ -280,16 +281,14 @@
             z-index: 500;
 
             text-align: end;
-            color: var(--background_color_lightCyan);
+            color: var(--text_color_gray90);
             font-family: "Neutral_Bold";
             font-size: max(2rem, 2vh);
         }
         .content_container.work_presentation_page::after{
             content: "";
             position: absolute;
-            visibility: var(--visibilityMobile);
-            opacity: var(--opacityMobile);
-            transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            display: var(--displayFadeMobileTop);
             width: 100%;
             height: 8%;
             top: calc(var(--fade_offsetMobile) - 5px);
