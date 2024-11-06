@@ -5,7 +5,7 @@
     export let workElementVisibility = 'hidden';
     
     import { onMount } from "svelte";
-    import { fade} from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
 
     let imageHeight;
@@ -44,26 +44,12 @@
         scrollYMobile = work_presentation_page.scrollTop;
     }
 
-    // $: if (scrollY < (work_description_container_height * 0.025) || workElementVisibility == "hidden") {
-    //     fadeBar_Visiblity = "hidden";
-    //     fadeBar_Opacity = 0;
-    // } else {
-    //     fadeBar_Visiblity = "visible";
-    //     fadeBar_Opacity = 1;
-    // }
-    // $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
-    //     fadeBar_VisiblityMobile = "hidden";
-    //     fadeBar_OpacityMobile = 0;
-    // } else {
-    //     fadeBar_VisiblityMobile = "visible";
-    //     fadeBar_OpacityMobile = 1;
-    // }
     $: if (scrollY < (work_description_container_height * 0.025)) {
         fadeBar_DisplayTop = "none";
     } else {
         fadeBar_DisplayTop = "block";
     }
-    $: if (scrollYMobile < (work_presentation_page_height * 0.25)) {
+    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
         fadeBar_DisplayTopMobile = "none";
     } else {
         fadeBar_DisplayTopMobile = "block";
@@ -94,11 +80,10 @@
 <svelte:window bind:innerWidth />
 
 {#if workElementVisibility = 'visible'}
-    <main transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+    <main >
         <!-- style="--portfolio_item_visible:{workElementVisibility};" -->
         <div class="workPresentation_container">
             <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
-                <!-- {#if open === true}  {/if} -->
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
                     <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
                 </div>
@@ -132,16 +117,6 @@
         z-index: 9991;
         scroll-snap-align: start;
     }
-    /* button, button:focus{
-        outline: none;
-        background: transparent;
-        border: 1px solid transparent;
-    }
-    button:active{
-        outline: none;
-        background: transparent;
-        border: 1px solid transparent;
-    } */
     .workPresentation_container{
         width: 100%;
         height: 100vh;
@@ -197,6 +172,7 @@
         isolation: isolate;
 
         /* anchor-name: --_work_description_container; */
+        /* mask: linear-gradient(180deg, transparent, white 10%, white 90%, transparent); */
     }
 
     /* .fade_blur{
@@ -218,14 +194,13 @@
         width: 100%;
         height: 10%;
         bottom: calc((var(--fade_offset) * -1) - 5px);
-        background: linear-gradient(transparent, var(--background_color_lightYellow));
-        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 75%);
+        background: linear-gradient(transparent, var(--background_color_lightYellow) 90%);
+        mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 75%);
         backdrop-filter: blur(5px);
         z-index: 500;
 
         text-align: end;
         color: var(--background_color_alternativeLightYellow_Darker);
-        /* color: var(--text_color_gray40); */
         font-family: "Neutral_Bold";
         font-size: max(2.5rem, 2vw);
     }
@@ -237,12 +212,13 @@
         /* opacity: var(--opacity); */
         /* transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out; */
         width: 100%;
-        height: 10%;
-        top: calc(var(--fade_offset) - 5px);
-        background: linear-gradient(var(--background_color_lightYellow), transparent);
-        z-index: 500;
-        mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 75%);
+        height: 20%;
+        translate: 0 -50%;
+        top: calc(var(--fade_offset));
+        background: linear-gradient(transparent, var(--background_color_lightYellow) 30%, var(--background_color_lightYellow) 50%, transparent);
+        mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 65%, transparent);
         backdrop-filter: blur(5px);
+        z-index: 500;
     }
 
     .work_description_container::-webkit-scrollbar {
@@ -342,8 +318,8 @@
             height: 8%;
             display: var(--displayFadeMobile);
             bottom: calc((var(--fade_offsetMobile) * -1) - 10px);
-            background: linear-gradient(transparent, var(--background_color_lightYellow));
-            mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 80%);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 85%);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 60%);
             backdrop-filter: blur(5px);
             z-index: 500;
 
@@ -360,10 +336,11 @@
             opacity: var(--opacityMobile);
             transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out; */
             width: 100%;
-            height: 8%;
+            height: 16%;
+            translate: 0 -50%;
             top: calc(var(--fade_offsetMobile) - 5px);
-            background: linear-gradient(var(--background_color_lightYellow), transparent);
-            mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 80%);
+            background: linear-gradient(transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 60%, transparent);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 0%, var(--background_color_lightYellow) 75%, transparent);
             backdrop-filter: blur(5px);
             z-index: 500;
         }

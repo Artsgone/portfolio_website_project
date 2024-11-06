@@ -2,6 +2,8 @@
     import Navbar from '$lib/reusable_components/+navbar.svelte'
     import Header from '$lib/reusable_components/+header.svelte'
     import Footer from '$lib/reusable_components/+footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
 //
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
@@ -17,17 +19,15 @@
     import goldenLeaves from '$lib/compressed_images/golden_leaves.jpg'
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
-    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 //
     import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
 
-    import { onMount, afterUpdate } from "svelte";
-    import { fade, blur, fly, slide } from 'svelte/transition';
-    import { quintOut, sineInOut, quadOut } from 'svelte/easing';
+    import { onMount, tick, onDestroy } from "svelte";
+    import { fade, fly } from 'svelte/transition';
+    import { quintOut, sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
     // let pageFullyLoaded = false;
@@ -36,23 +36,29 @@
     $: page4_totalHeight = 0;
     let yellowBox_height = 0;
 
-    onMount(async() => {;
+    // $: stored_scrollY = 100;
+
+    // onDestroy(() => {
+    //     stored_scrollY = svelte_main_element.scrollTop;
+    // });
+
+    onMount(() => {
         pageLoaded = true;
         yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
+        // svelte_main_element.scrollTo(0, 100);
+        // const interval = setInterval(() => {
+		// 	pageFullyLoaded = true;
+		// }, 5000);
+
+		// return () => clearInterval(interval);
     });
-    beforeNavigate(async() => {
+    beforeNavigate(() => {
         pageLoaded = false;
     });
 
-    afterNavigate(async() => {
+    afterNavigate(() => {
         pageLoaded = true;
     });
-
-    let scrollUp_button_visible = true;
-    
-    function scrollToTop(){
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
     let svelte_main_element;
     $: innerHeight = 0;
@@ -72,23 +78,23 @@
 
 </script>
 
-<svelte:window bind:innerHeight  />
+<svelte:window bind:innerHeight/>
 <!-- bind:scrollY={y} on:scroll={updateY} -->
 
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     {#if !pageLoaded}
-        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> </div>
+        <LoadingScreen />
     {/if}
 
     {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
     <div class="default_container cyan">
         <Header title_Decor_ID = "mainpage" />
         <div class="content_container title_page">
             {#if pageLoaded}
-                <div  class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                <div  class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
                     <div class="title_name darkgrayText">Art's page</div>
                     <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} alt="MainPage_titlePageSVG">
                 </div>
@@ -174,15 +180,9 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100vh;
+        height: 100dvh;
         scroll-snap-type: block proximity;
     }
-    @media (width < 800px){
-        main.svelte_main{
-            scroll-snap-type: block mandatory;
-        }
-    }
-
     :global(body)::-webkit-scrollbar {
         display: none;
     }
@@ -196,60 +196,12 @@
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
     }
-    .loader_animation{
-        position: fixed;
-        z-index: 9999;
-        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
-        inset: -10% -10% -10% -10%;
-        transition: all 1s ease-in;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Brolimo';
-        font-size: var(--text_size_medium_big);
-        color: var(--text_color_gray5);
-        translate: 0 -2.5%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .loadingSpinner{
-        width: max(10rem, 12.5vw);
-        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
-    }
-    @keyframes loadingSpinner{
-        0%{
-            rotate: 0deg;
+    @media (width < 800px){
+        main.svelte_main{
+            scroll-snap-type: block mandatory;
         }
-        25%{
-            rotate: 160deg;
-        }
-        50%{
-            rotate: 220deg;
-        }
-        75%{
-            rotate: 300deg;
-        }
-        100%{
-            rotate: 360deg;
-        }
-    }
-    @keyframes jumpFromBottom{
-        0%{
-            scale: 1;
-        }
-        25%{
-            scale: 0.9;
-        }
-        50%{
-            scale: 0.95;
-        }
-        75%{
-            scale: 0.9;
-        }
-        100%{
-            scale: 1;
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
         }
     }
 
@@ -260,7 +212,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -269,6 +221,7 @@
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     .content_container{
         width: 92.5%;
@@ -282,8 +235,6 @@
     }
     .default_container.cyan{
         height: 100svh;
-        /* background-color: var(--background_color_lightCyan); */
-        /* url($lib/svg_files/GlobalSVGs/noise-light.png) */
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
         border: none;
@@ -293,50 +244,7 @@
         color: var(--text_color_gray5);
     }
 
-    .scrollUp_button{
-        position: fixed;
-        cursor: pointer;
-        width: max(3.3rem, 3vw);
-        aspect-ratio: 1;
-        z-index: 999;
-        bottom: 7.5%;
-        right: min(10%, calc(4rem + 2vw));
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
-        border: none;
-        border-radius: 25%;
-        overflow: clip;
-        backdrop-filter: blur(5px) invert(25%);
-        background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-    }
-    .arrowIcon{
-        width: 50%;
-        aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
-    }
-    .scrollUp_button:hover > .arrowIcon{
-        animation: arrowIcon_animation .5s ease-in-out;
-    }
-    .scrollUp_button:hover{
-        animation: scrollUp_button_animation .5s ease-in-out;
-    }
-
-    @keyframes arrowIcon_animation{
-        0%, 100% {
-            translate: 0 0%;
-        }
-        50%{
-            translate: 0 -15%;
-        }
-    }
-    @keyframes scrollUp_button_animation{
-        0%, 100% {
-            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-        }
-        50%{
-            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
-        }
-    }
+    
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -353,8 +261,7 @@
     #MainPage_titlePageSVG{
         width: var(--element_size_title_decor_main_page);
         position: absolute;
-        inset: 50% 0 0 50%;
-        translate: -50% -38%;
+        translate: 33% 2%;
     }
     .title_name{
         font-size: var(--text_size_title_ultrabig);
@@ -370,6 +277,7 @@
         }
         #MainPage_titlePageSVG{
             width: 80%;
+            translate: 15% 10%;
         }
         .title_name{
             text-wrap: wrap;
@@ -385,6 +293,7 @@
         }
         #MainPage_titlePageSVG{
             width: 100%;
+            translate: 0% 10%;
         }
         .title_name{
             text-wrap: wrap;

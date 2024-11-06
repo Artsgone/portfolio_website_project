@@ -14,6 +14,11 @@
 
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
+
+    let authorName_element = false;
+    function animate_troll(){
+        authorName_element = true;
+    }
 </script>
 
 <footer class="footer_container">
@@ -33,7 +38,7 @@
         <div class="titleName">{titleName}</div>
         
         <div class="footer_bottom">
-            <div class="authorName">
+            <div tabindex="0" role="button" class="authorName" class:troll={authorName_element} on:mousedown={animate_troll}>
                 <!-- web by Artem Damin -->
                 artem damin by web
             </div>
@@ -73,6 +78,7 @@
         position: relative;
         z-index: 0;
 
+        scroll-snap-stop: always;
         scroll-snap-align: end;
     }
     .content_container.footer{
@@ -166,7 +172,7 @@
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         position: relative;
         font-family: 'Neutral_Bold';
-        letter-spacing: max(0.05vw, 0.07rem);
+        letter-spacing: max(0.025vw, 0.035rem);
         align-self: flex-start;
         display: flex;
         align-items: center;
@@ -177,6 +183,7 @@
         padding-inline: max(2vw, 1.5rem);
         box-shadow: inset 0px max(3.1vw, 2.5rem) var(--background_color_darkestCyan), inset 0px calc(max(3.1vw, 2.5rem) + max(4px, 0.225vw)) var(--cyan_outline);
     }
+    
     .authorName::before{
         content: "web by Artem Damin";
         box-sizing: content-box;
@@ -195,6 +202,30 @@
         /* border: max(2px, 0.125vw) var(--text_color_gray90) solid; */
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         z-index: -1;
+    }
+    .authorName.troll::before{
+        animation: troll_animation 2.5s linear;
+    }
+    @keyframes troll_animation{
+        0%, 100%{
+            background: none;
+            background-color: var(--background_color_lightCyan);
+        }
+        20%{
+            background-color: hsla(46, 100%, 50%);
+        }
+        40% {
+            background-color: hsla(140, 100%, 50%);
+        }
+        60% {
+            background-color: hsla(231, 100%, 50%);
+        }
+        60% {
+            background-color: hsla(281, 100%, 50%);
+        }
+        80%{
+            background-color: hsla(0, 100%, 50%);
+        }
     }
     .footer_Decor{
         width: max(24rem, 60%);

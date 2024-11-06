@@ -52,7 +52,7 @@
     } else {
         fadeBar_DisplayTop = "block";
     }
-    $: if (scrollYMobile < (work_presentation_page_height * 0.25)) {
+    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
         fadeBar_DisplayTopMobile = "none";
     } else {
         fadeBar_DisplayTopMobile = "block";
@@ -178,8 +178,8 @@
         width: 100%;
         height: 10%;
         bottom: calc((var(--fade_offset) * -1) - 5px);
-        background: linear-gradient(transparent, var(--background_color_lightYellow));
-        mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 75%);
+        background: linear-gradient(transparent, var(--background_color_lightYellow) 90%);
+        mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 75%);
         backdrop-filter: blur(5px);
         z-index: 500;
 
@@ -193,12 +193,13 @@
         position: absolute;
         display: var(--displayFadeTop);
         width: 100%;
-        height: 10%;
-        top: calc(var(--fade_offset) - 5px);
-        background: linear-gradient(var(--background_color_lightYellow), transparent);
-        z-index: 500;
-        mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 75%);
+        height: 20%;
+        translate: 0 -50%;
+        top: calc(var(--fade_offset));
+        background: linear-gradient(transparent, var(--background_color_lightYellow) 30%, var(--background_color_lightYellow) 50%, transparent);
+        mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 65%, transparent);
         backdrop-filter: blur(5px);
+        z-index: 500;
     }
 
     .work_description_container::-webkit-scrollbar {
@@ -275,8 +276,8 @@
             height: 8%;
             display: var(--displayFadeMobile);
             bottom: calc((var(--fade_offsetMobile) * -1) - 10px);
-            background: linear-gradient(transparent, var(--background_color_lightYellow));
-            mask: linear-gradient(to bottom, transparent, var(--background_color_lightYellow) 80%);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 85%);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 60%);
             backdrop-filter: blur(5px);
             z-index: 500;
 
@@ -290,10 +291,11 @@
             position: absolute;
             display: var(--displayFadeMobileTop);
             width: 100%;
-            height: 8%;
+            height: 16%;
+            translate: 0 -50%;
             top: calc(var(--fade_offsetMobile) - 5px);
-            background: linear-gradient(var(--background_color_lightYellow), transparent);
-            mask: linear-gradient(to top, transparent, var(--background_color_lightYellow) 80%);
+            background: linear-gradient(transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 60%, transparent);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 0%, var(--background_color_lightYellow) 75%, transparent);
             backdrop-filter: blur(5px);
             z-index: 500;
         }

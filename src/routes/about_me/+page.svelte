@@ -2,6 +2,9 @@
     import Navbar from '$lib/reusable_components/+navbar.svelte'
     import Header from '$lib/reusable_components/+header.svelte'
     import Footer from '$lib/reusable_components/+footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+
     import AboutMe_titlePageSVG from '$lib/svg_files/AboutMe/AboutMe_TitleDecorSVG.svg'
     import AboutMe_EducationSVG from '$lib/svg_files/AboutMe/AboutMe_EducationSVG.svg'
     import AboutMe_BackgroundSVG from '$lib/svg_files/AboutMe/AboutMe_LanguagesDecorSVG.svg'
@@ -13,9 +16,6 @@
     import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
     import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
 
-    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
-
     $: innerWidth = 0
 	// $: innerHeight = 0
     import { onMount } from 'svelte';
@@ -24,27 +24,25 @@
     import { quintOut, sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
-    onMount(async() => {;
+    onMount(() => {
         pageLoaded = true;
     });
-    beforeNavigate(async() => {
+    beforeNavigate(() => {
         pageLoaded = false;
     });
 
-    afterNavigate(async() => {
+    afterNavigate(() => {
         pageLoaded = true;
     });
 
-    function scrollToTop(){
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     $: innerHeight = 0;
-    let y;
+    $: y = 0;
+    let svelte_main_element;
     
     let newY = [];
     $: oldY = newY[1];
     function updateY(event){
+        y = svelte_main_element.scrollTop;
         newY.push(y);
         if(newY.length > 50) {
             newY.shift();
@@ -54,22 +52,22 @@
     
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight bind:scrollY={y} on:scroll={updateY}  />
+<svelte:window bind:innerWidth bind:innerHeight  />
 
-<main>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     {#if !pageLoaded}
-        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}  class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
+        <LoadingScreen />
     {/if}
 
     {#if y > (innerHeight / 1.75) && (oldY - 50) > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
     <div class="default_container cyan">
         <Header title_Decor_ID = "aboutme" />
         <div class="content_container title_page">
             {#if pageLoaded}
-                <div class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
                     <div class="title_name darkgrayText">About me</div>
                     <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} alt="AboutMe_titlePageSVG">
                 </div>
@@ -93,7 +91,7 @@
         </div>
     </div>
     <div class="default_container def_lang">
-        {#if innerWidth > 1450}
+        {#if innerWidth > 1100}
             <img id="AboutMe_BackgroundSVG" src={AboutMe_BackgroundSVG} alt="AboutMe_BackgroundSVG">
         {:else}
             <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
@@ -163,71 +161,31 @@
         padding: 0;
         background-color: var(--background_color_lightCyan);
     }
-    .loader_animation{
-        position: fixed;
-        z-index: 9999;
-        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
-        inset: -10% -10% -10% -10%;
-        transition: all 1s ease-in;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Brolimo';
-        font-size: var(--text_size_medium_big);
-        color: var(--text_color_gray5);
-        translate: 0 -2.5%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .loadingSpinner{
-        width: max(10rem, 12.5vw);
-        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
-    }
-    @keyframes loadingSpinner{
-        0%{
-            rotate: 0deg;
-        }
-        25%{
-            rotate: 160deg;
-        }
-        50%{
-            rotate: 220deg;
-        }
-        75%{
-            rotate: 300deg;
-        }
-        100%{
-            rotate: 360deg;
-        }
-    }
-    @keyframes jumpFromBottom{
-        0%{
-            scale: 1;
-        }
-        25%{
-            scale: 0.9;
-        }
-        50%{
-            scale: 0.95;
-        }
-        75%{
-            scale: 0.9;
-        }
-        100%{
-            scale: 1;
-        }
+    main.svelte_main{
+        overflow-y: scroll;
+        height: 100dvh;
+        scroll-snap-type: block proximity;
     }
     :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
     }
-    :global(body)::-webkit-scrollbar-track {
+    main.svelte_main::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
-    :global(body)::-webkit-scrollbar-thumb {
+    main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    }
+    @media (width < 800px){
+        main.svelte_main{
+            scroll-snap-type: block mandatory;
+        }
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
     }
     *, *::before, *::after {
         margin: 0;
@@ -240,7 +198,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -248,6 +206,8 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     .content_container{
         width: 92.5%;
@@ -272,51 +232,6 @@
         border: none;
     }
 
-    .scrollUp_button{
-        position: fixed;
-        cursor: pointer;
-        width: max(3.3rem, 3vw);
-        aspect-ratio: 1;
-        z-index: 999;
-        bottom: 7.5%;
-        right: min(10%, calc(4rem + 2vw));
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
-        border: none;
-        border-radius: 25%;
-        overflow: clip;
-        backdrop-filter: blur(5px) invert(25%);
-        background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-    }
-    .arrowIcon{
-        width: 50%;
-        aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
-    }
-    .scrollUp_button:hover > .arrowIcon{
-        animation: arrowIcon_animation .5s ease-in-out;
-    }
-    .scrollUp_button:hover{
-        animation: scrollUp_button_animation .5s ease-in-out;
-    }
-
-    @keyframes arrowIcon_animation{
-        0%, 100% {
-            translate: 0 0%;
-        }
-        50%{
-            translate: 0 -15%;
-        }
-    }
-    @keyframes scrollUp_button_animation{
-        0%, 100% {
-            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-        }
-        50%{
-            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
-        }
-    }
-
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
         display: flex;
@@ -330,6 +245,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        position: relative;
         /* outline: 2px red solid; */
     }
     #AboutMe_titlePageSVG{
@@ -350,7 +266,7 @@
             gap: 15vh;
         }
         #AboutMe_titlePageSVG{
-            width: 55%;
+            width: 65%;
             translate: -1% 5%;
         }
         .title_name{
@@ -362,18 +278,14 @@
     }
     @media (width < 500px){
         .content_container.title_page{
-            /* justify-content: space-evenly;
-            gap: 5vh; */
             justify-content: center;
             gap: 15vh;
         }
         #AboutMe_titlePageSVG{
-            width: 75%;
-            translate: -2.5% 5%;
+            width: 90%;
+            translate: 2% 2%;
         }
         .title_name{
-            text-wrap: wrap;
-            text-align: center;
             font-size: 30vw;
             line-height: 22.5vw;
         }
@@ -476,7 +388,7 @@
     }
     #AboutMe_BackgroundSVG{
         position: absolute;
-        width: 100%;
+        width: 95%;
     }
     #AboutMe_BackgroundLanguagesMobile{
         width: max(60%, 55vh);
@@ -490,7 +402,8 @@
         justify-content: space-between;
     }
     .content_container.languages_page > p {
-        font-family: 'Vetrino';
+        font-family: 'Brolimo';
+        color: hsl(171, 22%, 82%);
         font-size: max(3.3vw, 2.5rem);
         text-align: center;
         text-wrap: nowrap;
@@ -523,8 +436,11 @@
     }
 
     @media (height < 800px) {
+        .content_container.languages_page > p {
+            visibility: hidden;
+        }
         #AboutMe_BackgroundLanguagesMobile{
-            width: max(60%, 70vh);
+            width: max(85%, 70vh);
             position: absolute;
         }
     }
@@ -538,7 +454,7 @@
         justify-content: center;
     }
     #AboutMe_SkillsTitleSVG{
-        width: max(35rem, 65%);
+        width: max(35rem, 55%);
     }
 
     @media (width < 800px) {

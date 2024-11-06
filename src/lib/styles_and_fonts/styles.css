@@ -1,7 +1,7 @@
 :root{
     /* COLOURS */
-    --background_color_lightYellow: #f6f5eeff;
-    --background_color_alternativeLightYellow: hsl(35, 39%, 88%);
+    --background_color_lightYellow: hsl(53, 30%, 95%);
+    --background_color_alternativeLightYellow: hsl(35, 40%, 88%);
     --background_color_alternativeLightYellow_Darker: hsl(33, 39%, 80%);
     /* --background_color_alternativeLightYellow: #ece2d4ff; PREVIOUS */
     --background_color_darkGray: #0c0c0c;
@@ -26,8 +26,8 @@
     --element_color_darkerCyan: hsl(172, 22%, 71%);
 
     /* --cyan_outline: #4e716bff; */
-    --cyan_outline_bright: hsl(172, 18%, 65%);
-    --cyan_outline: hsl(172, 18%, 50%);
+    --cyan_outline_bright: hsl(172, 20%, 65%);
+    --cyan_outline: hsl(172, 20%, 52%);
     --text_color_gray5: #f2f2f2ff;
     --text_color_gray40: #666666ff;
     --text_color_gray50: #a5a5a5;

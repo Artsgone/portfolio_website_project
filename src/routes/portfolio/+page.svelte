@@ -2,6 +2,9 @@
     import Navbar from '$lib/reusable_components/+navbar.svelte'
     import Header from '$lib/reusable_components/+header.svelte'
     import Footer from '$lib/reusable_components/+footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+
     import WorkPresent from '$lib/reusable_components/+portfolio_work_item.svelte'
     import WorkPresentAlt from '$lib/reusable_components/+portfolio_work_item_alt.svelte'
     import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
@@ -31,8 +34,6 @@
     import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
-    import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
 
     import { onMount } from "svelte";
@@ -42,27 +43,25 @@
     
     let works_preview_grid;
     let pageLoaded = false;
-    onMount(async() => {;
+    onMount(() => {
         pageLoaded = true;
     });
-    beforeNavigate(async() => {
+    beforeNavigate(() => {
         pageLoaded = false;
     });
 
-    afterNavigate(async() => {
+    afterNavigate(() => {
         pageLoaded = true;
     });
-
-    function scrollToTop(){
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
     
     $: innerHeight = 0;
-    let y;
+    $: y = 0;
+    let svelte_main_element;
     
     let newY = [];
     $: oldY = newY[1];
     function updateY(event){
+        y = svelte_main_element.scrollTop;
         newY.push(y);
         if(newY.length > 50) {
             newY.shift();
@@ -87,22 +86,22 @@
 
 </script>
 
-<svelte:window bind:innerHeight bind:scrollY={y} on:scroll={updateY} />
+<svelte:window bind:innerHeight />
 
-<main>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     {#if !pageLoaded}
-        <div transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} class="loader_animation"><img class="loadingSpinner" src={Global_loadingAnimation} alt="*"></div>
+        <LoadingScreen />
     {/if}
 
     {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
-        <button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
     <div class="default_container cyan">
         <Header title_Decor_ID = "portfolio"/>
         <div class="content_container title_page">
             {#if pageLoaded}
-                <div class="title_page_name" transition:fade={{ delay: 300, duration: 500, easing: sineInOut}}>
+                <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
                     <div class="title_name darkgrayText">Portfolio</div>
                     <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} alt="Portfolio_TitleDecor">
                 </div>
@@ -117,21 +116,21 @@
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
             <div class="works_preview_grid" bind:this={works_preview_grid}>
 
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a data-sveltekit-preload-data="viewport" href="/portfolio" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <!-- blank -->
-                <div class="work_element_preview_box blank mobileBlank"></div>
-                <!-- blank -->
+                </a>
+                    <!-- blank -->
+                        <div class="work_element_preview_box blank mobileBlank"></div>
+                    <!-- blank -->
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box3 top rounded mobile_left" >
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
-                <!-- blank -->
-                <div class="work_element_preview_box blank"></div>
-                <!-- blank -->
+                    <!-- blank -->
+                        <div class="work_element_preview_box blank"></div>
+                    <!-- blank -->
                 <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
@@ -159,18 +158,18 @@
                 <div class="work_element_preview_box blank">
                      <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                <!-- blank -->
-                <div class="work_element_preview_box blank"></div>
-                <!-- blank -->
+                    <!-- blank -->
+                        <div class="work_element_preview_box blank"></div>
+                    <!-- blank -->
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" >
                     <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" >
                     <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
-                <!-- blank -->
-                <div class="work_element_preview_box blank mobileBlank"></div>
-                <!-- blank -->
+                    <!-- blank -->
+                        <div class="work_element_preview_box blank mobileBlank"></div>
+                    <!-- blank -->
                 <div role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" >
                     <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </div>
@@ -178,18 +177,24 @@
             </div>
         </div>
     </div>
-
-    <button class="close_button" on:click={closeInLargeList} style="visibility: {workPresent_Visibility}; scale: {close_button_scale}"><img src={Global_closeIcon} class="Global_closeIcon" alt="Global_closeIcon"> </button>
+    
+    {#if workPresent_Visibility == 'visible'}
+        <button transition:fade={{ delay: 0, duration: 400, easing: sineInOut}} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="Global_closeIcon"> </button>
+    {/if}
 
     {#if workPresent_Visibility == 'visible'}
         <div class="workPresent_wrapper" in:fly={{ y: -200 }} out:fade>
             <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
-            <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
-            <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
-            <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
+                <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
+                <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
+                <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
             </WorkPresent>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet" workElementVisibility={workPresent_Visibility} />
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
+                 It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
+                  It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
+                   It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
+                    It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists." workElementVisibility={workPresent_Visibility} />
                 
             <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
@@ -242,72 +247,31 @@
         padding: 0;
         background-color: var(--background_color_lightCyan);
     }
-    .loader_animation{
-        position: fixed;
-        z-index: 9999;
-        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
-        inset: -10% -10% -10% -10%;
-        transition: all 1s ease-in;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Brolimo';
-        font-size: var(--text_size_medium_big);
-        color: var(--text_color_gray5);
-        translate: 0 -2.5%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .loadingSpinner{
-        width: max(10rem, 12.5vw);
-        animation: loadingSpinner 2s ease-in-out alternate both infinite, jumpFromBottom 1s ease-out forwards infinite;
-    }
-    @keyframes loadingSpinner{
-        0%{
-            rotate: 0deg;
-        }
-        25%{
-            rotate: 160deg;
-        }
-        50%{
-            rotate: 220deg;
-        }
-        75%{
-            rotate: 300deg;
-        }
-        100%{
-            rotate: 360deg;
-        }
-    }
-    @keyframes jumpFromBottom{
-        0%{
-            scale: 1;
-        }
-        25%{
-            scale: 0.9;
-        }
-        50%{
-            scale: 0.95;
-        }
-        75%{
-            scale: 0.9;
-        }
-        100%{
-            scale: 1;
-        }
+    main.svelte_main{
+        overflow-y: scroll;
+        height: 100dvh;
+        scroll-snap-type: block proximity;
     }
     :global(body)::-webkit-scrollbar {
-        width: max(0.5em, 0.5vw);
-        display: var(--scrollbar_display);
+        display: none;
     }
-    :global(body)::-webkit-scrollbar-track {
+    main.svelte_main::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    main.svelte_main::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
-    :global(body)::-webkit-scrollbar-thumb {
+    main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    }
+    @media (width < 800px){
+        main.svelte_main{
+            scroll-snap-type: block mandatory;
+        }
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
     }
     *, *::before, *::after {
         margin: 0;
@@ -320,7 +284,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -330,6 +294,8 @@
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         position: relative;
         z-index: 0;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     .endless{
         height: auto;
@@ -348,51 +314,6 @@
         border-bottom: none;
     }
 
-    .scrollUp_button{
-        position: fixed;
-        cursor: pointer;
-        width: max(3.3rem, 3vw);
-        aspect-ratio: 1;
-        z-index: 999;
-        bottom: 7.5%;
-        right: min(10%, calc(4rem + 2vw));
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
-        border: none;
-        border-radius: 25%;
-        overflow: clip;
-        backdrop-filter: blur(5px) invert(25%);
-        background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-    }
-    .arrowIcon{
-        width: 50%;
-        aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
-    }
-    .scrollUp_button:hover > .arrowIcon{
-        animation: arrowIcon_animation .5s ease-in-out;
-    }
-    .scrollUp_button:hover{
-        animation: scrollUp_button_animation .5s ease-in-out;
-    }
-
-    @keyframes arrowIcon_animation{
-        0%, 100% {
-            translate: 0 0%;
-        }
-        50%{
-            translate: 0 -15%;
-        }
-    }
-    @keyframes scrollUp_button_animation{
-        0%, 100% {
-            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-        }
-        50%{
-            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
-        }
-    }
-
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
         display: flex;
@@ -406,10 +327,12 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        position: relative;
     }
     #Portfolio_TitleDecor{
         width: var(--element_size_title_decor_portfolio);
         position: absolute;
+        translate: 0 2%;
     }
     .title_name{
         font-size: max(15vw, 6.25rem);
@@ -418,15 +341,11 @@
     }
 
     @media (width < 942px){
-        /* .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
-        } */
         #Portfolio_TitleDecor{
-            width: 50%;
+            width: 65%;
         }
         .title_name{
-            font-size: 20vw;
+            font-size: max(18vw, 6.5rem);
         }
     }
     @media (width < 500px){
@@ -435,8 +354,8 @@
             gap: 15vh;
         }
         #Portfolio_TitleDecor{
-            width: 85%;
-            translate: 0% 5%;
+            width: 95%;
+            translate: 0% 7%;
         }
         .title_name{
             visibility: hidden;
@@ -535,7 +454,7 @@
         transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
     }
     .work_element_preview_box:focus-visible{
-        outline: 0.25rem var(--background_color_lightCyan) solid;
+        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
     }
     /* .work_element_preview_box.show{
         animation: intersected 2s ease-out forwards;
@@ -586,24 +505,53 @@
         right: min(7.5%, 3rem + 2vw);
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
         border: none;
-        border-radius: 25%;
+        border-radius: 30%;
         overflow: clip;
         backdrop-filter: blur(5px) invert(25%);
         background-color: var(--background_color_lightCyan_lowerOpacity);
         box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
 
-        transition: scale 0.3s ease-out, box-shadow 0.3s ease-in-out;
+        transition: scale 0.15s ease-out, box-shadow 0.2s ease-in-out;
+    }
+    
+    .Global_closeIcon{
+        width: 60%;
+        aspect-ratio: 1;
+        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
+    }
+    /* .close_button:hover > .Global_closeIcon{
+        scale: 1.065;
+    } */
+    .close_button:hover > .Global_closeIcon{
+        animation: arrowIcon_animation .5s ease-in-out;
     }
     .close_button:hover{
-        scale: 1.065 !important;
-        box-shadow: 0 0 max(1.25rem, 1.25vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        animation: scrollUp_button_animation .5s ease-in-out;
     }
-    .Global_closeIcon{
-        width: 65%;
-        aspect-ratio: 1;
+
+    @keyframes arrowIcon_animation{
+        0%, 100% {
+            rotate: 0deg;
+            scale: 1;
+        }
+        25%{
+            rotate: 5deg;
+            scale: 0.85;
+        }
+        65%{
+            rotate: -10deg;
+            scale: 0.85;
+        }
+    }
+    @keyframes scrollUp_button_animation{
+        0%, 100% {
+            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        }
+        50%{
+            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
+        }
     }
     .workPresent_wrapper{
-        /* visibility: ; */
         display: flex;
         flex-direction: column;
         position: fixed;
