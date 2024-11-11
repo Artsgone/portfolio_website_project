@@ -1,9 +1,10 @@
-<script>
-    import Navbar from '$lib/reusable_components/+navbar.svelte'
-    import Header from '$lib/reusable_components/+header.svelte'
-    import Footer from '$lib/reusable_components/+footer.svelte'
-    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+<script lang="js">
+    import Navbar from '$lib/reusable_components/Navbar.svelte'
+    import Header from '$lib/reusable_components/Header.svelte'
+    import Footer from '$lib/reusable_components/Footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    import { saveScrollY } from '$lib/saveScrollY'
 //
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
@@ -24,38 +25,41 @@
 //
     import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
+    // import { writable } from 'svelte/store'
+    // import { browser } from "$app/environment"
 
     import { onMount, tick, onDestroy } from "svelte";
     import { fade, fly } from 'svelte/transition';
     import { quintOut, sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
-    // let pageFullyLoaded = false;
-    // let firstPageLoad = false;
     $: sunsetInTheCloudsIMG_height = 0;
     $: page4_totalHeight = 0;
     let yellowBox_height = 0;
 
-    // $: stored_scrollY = 100;
-
-    // onDestroy(() => {
-    //     stored_scrollY = svelte_main_element.scrollTop;
-    // });
-
     onMount(() => {
-        pageLoaded = true;
         yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
-        // svelte_main_element.scrollTo(0, 100);
+        
+        const oldScrollY = sessionStorage.getItem("stored_scrollY")
+        if (oldScrollY != null) {
+            // console.log(oldScrollY)
+            svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
+        }
+        pageLoaded = true;
         // const interval = setInterval(() => {
 		// 	pageFullyLoaded = true;
 		// }, 5000);
-
 		// return () => clearInterval(interval);
     });
-    beforeNavigate(() => {
+    beforeNavigate(({to, from}) => {
         pageLoaded = false;
+        // console.log("To: " + to?.url.pathname + ", from: " + from?.url.pathname)
+        if ( from?.url.pathname == "/" && to?.url.pathname == undefined ) {
+            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+        } else {
+            saveScrollY.updateScrollY(0)
+        }
     });
-
     afterNavigate(() => {
         pageLoaded = true;
     });
@@ -68,6 +72,7 @@
     $: oldY = newY[1];
     function updateY(event){
         y = svelte_main_element.scrollTop;
+        // console.log(y)
         newY.push(y);
         if(newY.length > 50) {
             newY.shift();
@@ -107,7 +112,7 @@
         <div class="content_container greeting_page">
             <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
             <div class="text introducing">
-                 <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am <span>UX/UI designer</span>, <br> and this is my  <span>personal website</span>.</p>
+                 <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI designer</span> <br> and a <span>frontend developer</span>. <br></p>
             </div>
         </div>
     </div>
@@ -175,13 +180,13 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--text_color_gray90);
         /* -webkit-font-smoothing: antialiased; */
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
-        scroll-snap-type: block proximity;
+        height: 100vh;
+        scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -197,9 +202,9 @@
         border-radius: 5rem;
     }
     @media (width < 800px){
-        main.svelte_main{
+        /* main.svelte_main{
             scroll-snap-type: block mandatory;
-        }
+        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -212,7 +217,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100dvh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -261,7 +266,7 @@
     #MainPage_titlePageSVG{
         width: var(--element_size_title_decor_main_page);
         position: absolute;
-        translate: 33% 2%;
+        left: 19%;
     }
     .title_name{
         font-size: var(--text_size_title_ultrabig);
@@ -270,33 +275,30 @@
         text-wrap: nowrap;
     }
 
-    @media (width < 942px){
+    @media (width < 800px){
         .content_container.title_page{
             justify-content: center;
             gap: 15vh;
         }
         #MainPage_titlePageSVG{
-            width: 80%;
-            translate: 15% 10%;
+            width: max(80%, 21rem);
+            top: 15%;
+            left: 12.5%;
         }
         .title_name{
-            text-wrap: wrap;
+            text-wrap: balance;
             text-align: center;
-            font-size: 22.5vw;
-            line-height: 17.5vw;
+            font-size: max(22.5vw, 8rem);
+            line-height: max(17.5vw, 6rem);
         }
     }
     @media (width < 500px){
-        .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
-        }
         #MainPage_titlePageSVG{
             width: 100%;
-            translate: 0% 10%;
+            top: 14%;
+            left: 4%;
         }
         .title_name{
-            text-wrap: wrap;
             text-align: center;
             font-size: 30vw;
             line-height: 22.5vw;
@@ -312,20 +314,21 @@
     /* PAGE 2 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .default_container.greeting{
-        background-color: var(--background_color_darkGray);
+        background-color: hsl(0, 0%, 0%);
         box-shadow: none;
         border: none;
     }
     .content_container.greeting_page{
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: 1.75fr 2fr;
+        grid-auto-columns: 1fr 1.1fr;
         align-content: center;
         justify-items: center;
         gap: 1vw;
     }
     #MainPage_greetingPageSVG{
         width: max(10rem, 75%);
+        max-height: 70vh;
         align-self: center;
     }
     .text.introducing{
@@ -348,11 +351,6 @@
         text-wrap: nowrap;
     }
 
-    @media (width < 1450px) {
-        .content_container.greeting_page{
-            grid-auto-columns: 1fr 1.25fr;
-        }
-    }
     @media (width < 1100px) {
         .content_container.greeting_page{
             grid-auto-flow: row;
@@ -365,7 +363,7 @@
             text-align: center;
         }
     }
-    @media (width < 1100px) and (width > 650px) {
+    @media (500px < width < 1100px) {
         .text.introducing > p{
             text-align: center;
             font-size: var(--text_size_medium_big_media1);
@@ -756,13 +754,6 @@
             bottom: min(-2.5vh, -3vw);
         }
     }
-    /* @container sunset_page_right_part (block-size >= 300px) and (inline-size < 850px) {
-        .page4_title_text{
-            --page4_title_text_size: max(5vw, 3rem);
-            font-size: var(--page4_title_text_size);
-            line-height: var(--page4_title_text_size);
-        }
-    } */
 
     @media (width < 1000px) {
         .content_container.page4{
@@ -786,17 +777,18 @@
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
     .content_container.page5{
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
         align-items: center;
+        justify-items: center;
         position: relative;
         border-radius: max(1rem, 1vw);
         overflow: clip;
-        container: dandelion_page / size;
     }
     .dandelion{
         height: 100%;
-        width: 40%;
+        width: 100%;
         object-fit: cover;
     }
     .dandelion.IMG1{
@@ -805,8 +797,8 @@
     .page5_title_text{
         font-family: 'Neutral_Normal';
         text-align: center;
-        font-size: max(7.5vw, 2.25rem);
-        line-height: max(7.5vw, 2.25rem);
+        font-size: max(6.5vw, 4rem);
+        line-height: max(6.5vw, 4rem);
         position: absolute;
         top: 50%;
         left: 50%;
@@ -819,29 +811,16 @@
         background: linear-gradient(-25deg, hsl(93, 8%, 40%), hsl(94, 8%, 65%));
     }
 
-    @container dandelion_page (inline-size < 1500px) {
-        .dandelion{
-            width: 31%;
-        }
-    }
-
-    @media (width < 600px) {
+    @media (width < 800px) {
         .content_container.page5{
-            flex-direction: column;
+            --_central_row: 40%;
+            --_edge_rows: calc((100% - var(--_central_row)) / 2);
+            grid-template-columns: 100%;
+            grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
         }
         .page5_title_text{
             font-size: 9vw;
             line-height: 9vw;
-        }
-        .dandelion{
-            width: 100%;
-            height: 30%;
-            object-fit: cover;
-        }
-    }
-    @media (width < 450px) {
-        .dandelion{
-            height: 34%;
         }
     }
 

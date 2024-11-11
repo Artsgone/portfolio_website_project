@@ -1,9 +1,10 @@
 <script>
-    import Navbar from '$lib/reusable_components/+navbar.svelte'
-    import Header from '$lib/reusable_components/+header.svelte'
-    import Footer from '$lib/reusable_components/+footer.svelte'
-    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+    import Navbar from '$lib/reusable_components/Navbar.svelte'
+    import Header from '$lib/reusable_components/Header.svelte'
+    import Footer from '$lib/reusable_components/Footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    import { saveScrollY } from '$lib/saveScrollY'
 
     import Contact_TitleDecor from '$lib/svg_files/Contact/Contact_TitleDecor.svg'
     import Contact_BackgroundDecor from '$lib/svg_files/Contact/Contact_BackgroundDecor.svg'
@@ -20,10 +21,19 @@
     
     let pageLoaded = false;
     onMount(() => {
+        const oldScrollY = sessionStorage.getItem("stored_scrollY")
+        if (oldScrollY != null) {
+            svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
+        }
         pageLoaded = true;
     });
-    beforeNavigate(() => {
+    beforeNavigate(({to, from}) => {
         pageLoaded = false;
+        if ( from?.url.pathname == "/contact" && to?.url.pathname == undefined ) {
+            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+        } else {
+            saveScrollY.updateScrollY(0)
+        }
     });
     afterNavigate(() => {
         pageLoaded = true;
@@ -119,12 +129,12 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--text_color_gray90);
     }
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
-        scroll-snap-type: block proximity;
+        scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -140,9 +150,9 @@
         border-radius: 5rem;
     }
     @media (width < 800px){
-        main.svelte_main{
+        /* main.svelte_main{
             scroll-snap-type: block mandatory;
-        }
+        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -228,19 +238,20 @@
         }
         #Contact_TitleDecor{
             width: 85%;
-            translate: 0% 5%;
+            translate: 0% 10%;
         }
         .title_name{
             visibility: hidden;
             position: relative;
             word-break: break-all;
+            text-wrap: balance;
             text-align: center;
             font-size: 30vw;
-            line-height: 22.5vw;
+            line-height: 25vw;
         }
         .title_name::after{
-            content: "Cont--act";
-            inset: -2.5% 0 0 0;
+            content: "Con-tact";
+            inset: 0 0 0 0;
             visibility: visible;
             position: absolute;
         }

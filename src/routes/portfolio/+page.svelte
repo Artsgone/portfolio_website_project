@@ -1,13 +1,14 @@
 <script>
-    import Navbar from '$lib/reusable_components/+navbar.svelte'
-    import Header from '$lib/reusable_components/+header.svelte'
-    import Footer from '$lib/reusable_components/+footer.svelte'
-    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+    import Navbar from '$lib/reusable_components/Navbar.svelte'
+    import Header from '$lib/reusable_components/Header.svelte'
+    import Footer from '$lib/reusable_components/Footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    import { saveScrollY } from '$lib/saveScrollY'
 
-    import WorkPresent from '$lib/reusable_components/+portfolio_work_item.svelte'
-    import WorkPresentAlt from '$lib/reusable_components/+portfolio_work_item_alt.svelte'
-    import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
+    import WorkPresent from '$lib/reusable_components/Portfolio_work_item.svelte'
+    import WorkPresentAlt from '$lib/reusable_components/Portfolio_work_item_alt.svelte'
+    // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import Portfolio_TitleDecor from '$lib/svg_files/Portfolio/Portfolio_TitleDecor.svg'
 
     // image to left
@@ -44,10 +45,19 @@
     let works_preview_grid;
     let pageLoaded = false;
     onMount(() => {
+        const oldScrollY = sessionStorage.getItem("stored_scrollY")
+        if (oldScrollY != null) {
+            svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
+        }
         pageLoaded = true;
     });
-    beforeNavigate(() => {
+    beforeNavigate(({to, from}) => {
         pageLoaded = false;
+        if ( from?.url.pathname == "/portfolio" && to?.url.pathname == undefined ) {
+            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+        } else {
+            saveScrollY.updateScrollY(0)
+        }
     });
 
     afterNavigate(() => {
@@ -114,9 +124,9 @@
         <div class="content_container work_summary_page">
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid}>
+            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-code="viewport">
 
-                <a data-sveltekit-preload-data="viewport" href="/portfolio" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="/portfolio" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank -->
@@ -238,19 +248,19 @@
     
         <Footer firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
-    titleName = "Portfolio" footer_Decor_ID = "portfolio" />
+    titleName = "Portfolio" footer_Decor_ID = "portfolio" snap_align="none"/>
 </main>
 
 <style>
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--text_color_gray90);
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
-        scroll-snap-type: block proximity;
+        height: 100svh;
+        scroll-snap-type: none;
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -266,9 +276,9 @@
         border-radius: 5rem;
     }
     @media (width < 800px){
-        main.svelte_main{
-            scroll-snap-type: block mandatory;
-        }
+        /* main.svelte_main{
+            scroll-snap-type: none;
+        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -284,7 +294,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100dvh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -361,6 +371,7 @@
             visibility: hidden;
             position: relative;
             word-break: break-all;
+            text-wrap: balance;
             text-align: center;
             font-size: 30vw;
             line-height: 25vw;

@@ -1,9 +1,10 @@
 <script>
-    import Navbar from '$lib/reusable_components/+navbar.svelte'
-    import Header from '$lib/reusable_components/+header.svelte'
-    import Footer from '$lib/reusable_components/+footer.svelte'
-    import LoadingScreen from '$lib/reusable_components/+loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/+scrollUp_button.svelte'
+    import Navbar from '$lib/reusable_components/Navbar.svelte'
+    import Header from '$lib/reusable_components/Header.svelte'
+    import Footer from '$lib/reusable_components/Footer.svelte'
+    import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
+    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    import { saveScrollY } from '$lib/saveScrollY'
 
     import AboutMe_titlePageSVG from '$lib/svg_files/AboutMe/AboutMe_TitleDecorSVG.svg'
     import AboutMe_EducationSVG from '$lib/svg_files/AboutMe/AboutMe_EducationSVG.svg'
@@ -25,12 +26,20 @@
     
     let pageLoaded = false;
     onMount(() => {
+        const oldScrollY = sessionStorage.getItem("stored_scrollY")
+        if (oldScrollY != null) {
+            svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
+        }
         pageLoaded = true;
     });
-    beforeNavigate(() => {
+    beforeNavigate(({to, from}) => {
         pageLoaded = false;
+        if ( from?.url.pathname == "/about_me" && to?.url.pathname == undefined ) {
+            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+        } else {
+            saveScrollY.updateScrollY(0)
+        }
     });
-
     afterNavigate(() => {
         pageLoaded = true;
     });
@@ -81,17 +90,17 @@
             <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
             <div class="text education">
                  <p class="darkgrayText">
-                    <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smichovska SPS</span> <br>
-                    | Field - Cybernetic security <br> <br>
+                    <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
+                    | Field - Cybernetic security |<br> <br>
                    
                     <span class="time_range grayText65">2024-2069</span> - <span class="university_name">Lorem Ipsum university</span> <br>
-                    | Field - Wheat <br>
+                    | Field - Wheat |<br>
                 </p>
             </div>
         </div>
     </div>
     <div class="default_container def_lang">
-        {#if innerWidth > 1100}
+        {#if innerWidth > 1200}
             <img id="AboutMe_BackgroundSVG" src={AboutMe_BackgroundSVG} alt="AboutMe_BackgroundSVG">
         {:else}
             <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
@@ -118,7 +127,7 @@
     <div class="default_container def_skills">
         <div class="content_container skills_page">
             <div class="skills_box">
-                {#if innerWidth > 600}
+                {#if innerWidth > 800}
                     <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
                 {:else}
                     <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} alt="AboutMe_Skills_Mobile">
@@ -159,12 +168,12 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--text_color_gray90);
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
-        scroll-snap-type: block proximity;
+        height: 100svh;
+        scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -180,9 +189,9 @@
         border-radius: 5rem;
     }
     @media (width < 800px){
-        main.svelte_main{
+        /* main.svelte_main{
             scroll-snap-type: block mandatory;
-        }
+        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -198,7 +207,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100dvh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -260,27 +269,23 @@
         z-index: 999;
     }
 
-    @media (width < 942px){
+    @media (width < 800px){
         .content_container.title_page{
             justify-content: center;
             gap: 15vh;
         }
         #AboutMe_titlePageSVG{
-            width: 65%;
+            width: max(65%, 22rem);
             translate: -1% 5%;
         }
         .title_name{
-            text-wrap: wrap;
+            text-wrap: balance;
             text-align: center;
-            font-size: 22.5vw;
-            line-height: 17.5vw;
+            font-size: max(22.5vw, 9rem);
+            line-height: max(17.5vw, 7rem);
         }
     }
     @media (width < 500px){
-        .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
-        }
         #AboutMe_titlePageSVG{
             width: 90%;
             translate: 2% 2%;
@@ -303,14 +308,16 @@
     .content_container.education_page{
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: 1.5fr 2fr;
+        grid-auto-columns: 1fr 1.65fr;
         align-content: center;
         align-items: center;
         justify-items: center;
         gap: 3vw;
     }
     #AboutMe_EducationSVG{
-        width: max(15rem, 50%);
+        width: max(15rem, 60%);
+        max-height: 50vh;
+        translate: -2% 0;
     }
     .text.education{
         justify-self: start;
@@ -333,48 +340,27 @@
         letter-spacing: 0px;
     }
 
-    @media (width < 1450px) {
-        .content_container.education_page{
-            grid-auto-columns: 1.5fr 2fr;
-        }
-    }
     @media (width < 1100px) {
         .content_container.education_page{
             grid-auto-flow: row;
             grid-auto-rows: 1fr 1fr;
         }
         #AboutMe_EducationSVG{
-            width: max(15rem, 30%);
+            width: min(65%, 20rem);
+            max-height: 40vh;
         }
         .text.education > p{
             text-align: center;
+            font-size: min(5.75vw, 1.65rem);
+            line-height: min(7.5vw, 2.25rem);
         }
         .text.education{
             justify-self: center;
         }
     }
-    @media (width < 1100px) and (width > 650px) {
-        .text.education > p{
-            text-align: center;
-            font-size: var(--text_size_medium_big_media1);
-            line-height: var(--text_line_height_medium_media1);
-        }
-    }
     @media (width < 500px) {
         .content_container.education_page{
             gap: 0;
-        }
-        #AboutMe_EducationSVG{
-            width: 65%;
-        }
-        .text.education > p{
-            font-size: min(7vw, 1.4rem);
-            line-height: min(7.4vw, 1.8rem);
-        }
-    }
-    @media (width < 500px) and (height < 680px){
-        #AboutMe_EducationSVG{
-            width: 60%;
         }
     }
 
@@ -382,16 +368,17 @@
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
     .default_container.def_lang{
-        overflow: hidden;
+        overflow: clip;
         position: relative;
         z-index: 0;
     }
     #AboutMe_BackgroundSVG{
         position: absolute;
-        width: 95%;
+        width: 100%;
     }
     #AboutMe_BackgroundLanguagesMobile{
-        width: max(60%, 55vh);
+        width: min(100%, 40rem);
+        max-height: 100vh;
         position: absolute;
         translate: 0 -1%;
     }
@@ -404,7 +391,7 @@
     .content_container.languages_page > p {
         font-family: 'Brolimo';
         color: hsl(171, 22%, 82%);
-        font-size: max(3.3vw, 2.5rem);
+        font-size: max(3.3vw, 2.25rem);
         text-align: center;
         text-wrap: nowrap;
     }
@@ -420,10 +407,8 @@
     }
     .text.languages > p{
         font-family: 'Subjectivity_Bold';
-        font-size: 3rem;
-        font-size: max(2.5vw, 1.9rem);
-        line-height: max(3vw, 2.4rem);
-        letter-spacing: -0.5px;
+        font-size: max(2.5vw, 2.25rem);
+        line-height: max(3.25vw, 3rem);
         text-wrap: nowrap;
     }
     .AboutMe_LanguagesYellowHighlight{
@@ -435,13 +420,19 @@
         border-radius: max(1rem, 1vw);
     }
 
+
+    @media (width < 800px) {
+        .text.languages > p{
+            font-size: min(8vw, 2.25rem);
+            line-height: min(11vw, 3rem);
+        }
+    }
     @media (height < 800px) {
         .content_container.languages_page > p {
             visibility: hidden;
         }
         #AboutMe_BackgroundLanguagesMobile{
-            width: max(85%, 70vh);
-            position: absolute;
+            /* width: max(100%, 100vh); */
         }
     }
 
@@ -454,7 +445,7 @@
         justify-content: center;
     }
     #AboutMe_SkillsTitleSVG{
-        width: max(35rem, 55%);
+        width: max(40rem, 65%);
     }
 
     @media (width < 800px) {
@@ -462,7 +453,7 @@
             width: 100%;
         }
         .default_container.def_skills_title{
-            height: 50vh;
+            height: 60vh;
         }
     }
 
@@ -478,22 +469,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: max(40rem, 60%);
+        width: max(45rem, 60%);
         height: 100%;
     }
     #AboutMe_Skills{
-        width: max(100%, 30rem);
+        width: max(100%, 37.5rem);
         max-height: 85vh;
     }
     #AboutMe_Skills_Mobile{
         width: 100%;
         max-height: 90%;
-    }
-
-    @media (width < 1050px) {
-        #AboutMe_Skills{
-            width: 95%;
-        }
     }
 
     /* PAGE 5 OTHER INFOs */ 

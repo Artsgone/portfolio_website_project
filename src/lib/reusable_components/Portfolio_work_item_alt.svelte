@@ -121,6 +121,7 @@
         inset: 0;
         z-index: 9991;
         scroll-snap-align: center;
+        scroll-snap-stop: always;
     }
     .workPresentation_container{
         width: 100%;
@@ -217,7 +218,7 @@
         width: 90%;
         display: flex;
         flex-direction: column;
-        gap: max(1.5vw, 1.5rem);
+        gap: max(1.5vw, 1.5rem) 0;
         position: relative;
     }
     .work_title{
@@ -226,6 +227,7 @@
         line-height: var(--text_line_height_big);
         /* text-align: end; */
         direction: ltr;
+        text-wrap: balance;
     }
     .work_description{
         font-family: 'Subjectivity_Regular';
@@ -262,7 +264,7 @@
         .content_container.work_presentation_page{
             grid-template-columns: 1fr;
             grid-template-rows: 1.5fr 1fr;
-            gap: max(2.5rem, 3.5vw) 0;
+            gap: max(2rem + 2.5vh, 3.5vw) 0;
             overflow-y: scroll;
             overflow-x: clip;
 
@@ -318,9 +320,6 @@
         .description_box{
             width: max(25rem, 75%);
         }
-        /* .work_description{
-            text-align: end;
-        } */
         .work_description_container::before{ display: none;}
         .work_description_container::after{ display: none;}
 
@@ -331,10 +330,10 @@
     }
     @media (width < 500px) {
         .Portfolio_workPreviewElement{
-            width: max(10rem, 95%);
+            width: max(10rem, 100%);
         }
         .description_box{
-            width: 95%;
+            width: 100%;
         }
     }
 

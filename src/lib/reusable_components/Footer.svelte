@@ -7,6 +7,8 @@
     export let linkAddress3 = ""
     export let titleName = ""
     export let footer_Decor_ID = ""
+    export let snap_align = 'end'
+
     import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
     import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
@@ -22,7 +24,7 @@
 </script>
 
 <footer class="footer_container">
-    <div class="content_container footer">
+    <div class="content_container footer" style="scroll-snap-align: {snap_align};">
         <nav class="footer_top">
             <div class="navbar_list">
                 <a class="first" href="/{linkAddress1}">{firstLink}</a>
@@ -79,7 +81,6 @@
         z-index: 0;
 
         scroll-snap-stop: always;
-        scroll-snap-align: end;
     }
     .content_container.footer{
         display: flex;
@@ -215,7 +216,7 @@
             background-color: hsla(46, 100%, 50%);
         }
         40% {
-            background-color: hsla(140, 100%, 50%);
+            background-color: hsl(140, 100%, 50%);
         }
         60% {
             background-color: hsla(231, 100%, 50%);

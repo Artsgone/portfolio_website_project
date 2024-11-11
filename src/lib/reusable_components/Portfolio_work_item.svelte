@@ -116,6 +116,7 @@
         inset: 0;
         z-index: 9991;
         scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     .workPresentation_container{
         width: 100%;
@@ -235,13 +236,14 @@
         width: 90%;
         display: flex;
         flex-direction: column;
-        gap: max(1.5vw, 1.5rem);
+        gap: max(1.5vw, 1.5rem) 0;
         position: relative;
     }
     .work_title{
         font-family: 'Brolimo';
         font-size: var(--text_size_big);
         line-height: var(--text_line_height_big);
+        text-wrap: balance;
     }
     .work_description{
         font-family: 'Subjectivity_Regular';
@@ -304,7 +306,7 @@
         .content_container.work_presentation_page{
             grid-template-columns: 1fr;
             grid-template-rows: 1.5fr 1fr;
-            gap: max(2.5rem, 3.5vw) 0;
+            gap: max(2rem + 2.5vh, 3.5vw) 0;
             overflow-y: scroll;
             overflow-x: clip;
 
@@ -385,10 +387,10 @@
     }
     @media (width < 500px) {
         .Portfolio_workPreviewElement{
-            width: max(10rem, 95%);
+            width: max(10rem, 100%);
         }
         .description_box{
-            width: 95%;
+            width: 100%;
         }
         /* .button_more_info::after{
             inset: 0 35% 0 35%;
