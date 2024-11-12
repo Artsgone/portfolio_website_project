@@ -38,7 +38,7 @@
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
 
     import { onMount } from "svelte";
-    import { fade, slide, fly } from 'svelte/transition';
+    import { fade, fly, scale } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
@@ -82,8 +82,9 @@
     let workPresent_Visibility = 'hidden';
     let workPresent_Display = 'none';
     let close_button_scale = '0.85'
+    let id = "";
 
-    function openInLargeList(){
+    function openInLargeList(id){
         workPresent_Visibility = 'visible';
         workPresent_Display = "flex";
         close_button_scale = '1';
@@ -124,66 +125,92 @@
         <div class="content_container work_summary_page">
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-code="viewport">
+            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-code="hover">
 
-                <a href="/portfolio" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Art" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank -->
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#LXY" role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box3 top rounded mobile_left" >
+                </a>
+                <a href="#Architect" role="button" tabindex="0" class="work_element_preview_box wep_box3 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
+                </a>
                     <!-- blank -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank -->
                 <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box4 bottom rounded" >
+                <a href="#Artsgone" role="button" tabindex="0" class="work_element_preview_box wep_box4 bottom rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box5 bottom mobile_rounded mobile_left">
+                </a>
+                <a href="#Omic" role="button" tabindex="0" class="work_element_preview_box wep_box5 bottom mobile_rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box6 bottom rounded mobile_rounded" >
+                </a>
+                <a href="#Lexi2" role="button" tabindex="0" class="work_element_preview_box wep_box6 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
+                </a>
 
                     <!-- next couple -->
 
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box7 top rounded mobile_left" >
+                <a href="#Anata" role="button" tabindex="0" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box8 top" >
+                </a>
+                <a href="#Bena" role="button" tabindex="0" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " >
+                </a>
+                <a href="#MR. Gummy" role="button" tabindex="0" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
+                </a>
                 <div class="work_element_preview_box blank">
                      <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
                     <!-- blank -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank -->
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" >
+                <a href="#LXY2" role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" >
+                </a>
+                <a href="#Antic Museum" role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+                <a href="#Nameless sadas" role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+
+                <!-- next couple -->
+
+                <a href="#Roe" role="button" tabindex="0" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+                <a href="#Wappa" role="button" tabindex="0" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+                <a href="#W(in) logo" role="button" tabindex="0" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+                <div class="work_element_preview_box blank">
+                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
+                    <!-- blank -->
+                        <div class="work_element_preview_box blank"></div>
+                    <!-- blank -->
+                <a href="#Toreno" role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
+                <a href="#Lanobi" role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
                     <!-- blank -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank -->
-                <div role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" >
-                    <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </div>
-
+                <a href="#Dajy" role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                    <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                </a>
             </div>
         </div>
     </div>
@@ -193,7 +220,7 @@
     {/if}
 
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" in:fly={{ y: -200 }} out:fade>
+        <div class="workPresent_wrapper" in:scale={{ duration: 200, start: 0.9, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}}>
             <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                 <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                 <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
@@ -222,9 +249,9 @@
 
                 <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi - alt" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY - alt" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
             <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
 
@@ -294,7 +321,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100svh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;

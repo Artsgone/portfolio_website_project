@@ -2,6 +2,7 @@
     /* COLOURS */
     --background_color_lightYellow: hsl(53, 30%, 95%);
     --background_color_alternativeLightYellow: hsl(35, 40%, 88%);
+    --background_color_alternativeLightYellow_lowerOpacity: hsla(34, 41%, 88%, 0.75);
     --background_color_alternativeLightYellow_Darker: hsl(33, 39%, 80%);
     /* --background_color_alternativeLightYellow: #ece2d4ff; PREVIOUS */
     --background_color_darkGray: #0c0c0c;

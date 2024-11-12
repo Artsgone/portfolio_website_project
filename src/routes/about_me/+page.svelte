@@ -12,6 +12,7 @@
     import AboutMe_BackgroundLanguagesMobile from '$lib/svg_files/AboutMe/AboutMe_LanguagesDecorMobile.svg'
     import AboutMe_LanguagesYellowHighlight from '$lib/svg_files/AboutMe/AboutMe_LanguagesYellowHighlight.svg'
     import AboutMe_SkillsTitleSVG from '$lib/svg_files/AboutMe/AboutMe_SkillsTitleSVG.svg'
+    import AboutMe_SkillsTitleSVG_Mobile from '$lib/svg_files/AboutMe/AboutMe_SkillsTitleSVG_Mobile.svg'
     import AboutMe_Skills from '$lib/svg_files/AboutMe/AboutMe_Skills.svg'
     import AboutMe_Skills_Mobile from '$lib/svg_files/AboutMe/AboutMe_Skills_Mobile.svg'
     import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
@@ -121,7 +122,12 @@
     </div>
     <div class="default_container def_skills_title noBorders">
         <div class="content_container skills_title_page">
-            <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
+            {#if innerWidth > 800}
+                <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
+            {:else}
+                 <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} alt="AboutMe_SkillsTitleSVG_Mobile">
+            {/if}
+            
         </div>
     </div>
     <div class="default_container def_skills">
@@ -431,9 +437,6 @@
         .content_container.languages_page > p {
             visibility: hidden;
         }
-        #AboutMe_BackgroundLanguagesMobile{
-            /* width: max(100%, 100vh); */
-        }
     }
 
     /* PAGE 4(1) SKILLS TITLE */ 
@@ -469,16 +472,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: max(45rem, 60%);
+        width: max(50rem, 65%);
         height: 100%;
     }
     #AboutMe_Skills{
-        width: max(100%, 37.5rem);
+        width: 100%;
         max-height: 85vh;
     }
     #AboutMe_Skills_Mobile{
         width: 100%;
-        max-height: 90%;
+        max-height: 85vh;
+    }
+    @media (width < 800px) {
+        .skills_box{
+            width: 100%;
+        }
     }
 
     /* PAGE 5 OTHER INFOs */ 

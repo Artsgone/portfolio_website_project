@@ -185,7 +185,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100vh;
+        height: 100svh;
         scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
@@ -217,7 +217,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100svh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -296,7 +296,7 @@
         #MainPage_titlePageSVG{
             width: 100%;
             top: 14%;
-            left: 4%;
+            left: 1.75%;
         }
         .title_name{
             text-align: center;
@@ -567,7 +567,6 @@
         align-items: center;
         height: 50%;
         padding-block: 3vh;
-        container: photos_title / size;
     }
     .top_part.page3{
         border-block: max(5px, 0.4vw) var(--cyan_outline) solid;
@@ -576,7 +575,7 @@
         border-bottom: max(5px, 0.4vw) var(--cyan_outline) solid;
     }
     .MY{
-        width: 65%;
+        width: max(50%, 47.5vh);
         height: 100%;
     }
     .earLikeThing{
@@ -598,28 +597,18 @@
         z-index: 1;
     }
     
-    @media (width > 1650px) {
-        .MY{
-            width: 60%;
-        }
-    }
-    @container photos_title (inline-size < 1200px) {
-        .MY{
-            width: 60%;
-        } 
+    @media (width < 1300px) {
         .earLikeThing{
             width: 40%;
             height: min(17.5rem, 85%);
-            padding-inline: 0;
         }
-        .bottom_part.page3{
-            justify-content: center;
-        }  
     }
-    @container photos_title (inline-size < 680px) {
+
+    @media (width < 800px) {
         .MY{
             height: 35%;
             width: 100%;
+            min-height: auto;
         } 
         .earLikeThing{
             height: 55%;
@@ -631,11 +620,8 @@
         } 
         .photo_collection_text{
             text-align: center;
-            font-size: min(19vw, 6.5rem);
+            font-size: min(20vw, 6.5rem);
         } 
-    }
-
-    @media (width < 800px) {
         .top_part.page3, .bottom_part.page3{
             border: none;
             padding-bottom: 0;
@@ -664,31 +650,25 @@
     .content_container.page4{
         display: grid;
         grid-template-columns: 1.5fr 1fr;
+        grid-template-rows: 1fr;
         gap: max(7.5vw, 2rem);
     }
     .left_part.page4, .right_part.page4{
         display: flex;
-        justify-content: space-between;
         flex-direction: column;
         position: relative;
-    }
-    .left_part.page4{
-        container: sunset_page_left_part / size;
-    }
-    .right_part.page4{
-        container: sunset_page_right_part / size;
     }
 
     .sunsetIMG_box{
         width: 100%;
-        height: 85%;
+        height: 90%;
+        max-height: 75vh;
         z-index: 1;
     }
     .sunsetInTheCloudsIMG{
         width: 100%;
         height: 100%;
         object-fit: cover;
-        z-index: 2;
         border-radius: max(1rem, 1vw);
     }
     .left_part.page4::before{
@@ -729,48 +709,33 @@
         padding-block-start: 8vw;
     }
 
-    @container sunset_page_left_part (block-size < 600px) and (inline-size < 850px) {
-        .sunsetIMG_box{
-            height: 85%;
+    @media (width < 1000px) {
+        .content_container.page4{
+            grid-template-columns: 1fr;
+            grid-auto-rows: 1.65fr;
+            gap: max(8vh, 4rem);
         }
-    }
-    @container sunset_page_left_part (block-size < 450px) and (inline-size < 400px) {
-        .sunsetIMG_box{
-            height: 80%;
-        }
-    }
-    
-    @container sunset_page_right_part (block-size < 350px) and (inline-size < 850px) {
         .page4_title_text{
-            padding-block-start: max(2rem, 5vh);
-            --page4_title_text_size: max(5vw, 2.25rem);
+            padding-block-start: max(1.5rem, 2.75vh);
+            --page4_title_text_size: min(9vw, 2.65rem);
             font-size: var(--page4_title_text_size);
             line-height: var(--page4_title_text_size);
         }
 
         .right_part.page4::before{
             height: min(10vh, 22.5vw);
-            width: 100%;
-            bottom: min(-2.5vh, -3vw);
-        }
-    }
-
-    @media (width < 1000px) {
-        .content_container.page4{
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr 1.75fr;
-            gap: max(8vh, 4rem);
         }
         .left_part.page4{
             order: 2;
-            align-items: center;
-            justify-content: center;
+        }
+        .sunsetIMG_box{
+            height: 87.5%;
+            max-height: 50vh;
         }
     }
     @media (width < 1000px) and (height < 690px) {
         .content_container.page4{
-            grid-template-rows: 1fr 1.5fr;
-            gap: min(4vh, 2rem);
+            gap: min(6vh, 3rem);
         }
     }
     /* PAGE 5 */
@@ -813,7 +778,7 @@
 
     @media (width < 800px) {
         .content_container.page5{
-            --_central_row: 40%;
+            --_central_row: 37.5%;
             --_edge_rows: calc((100% - var(--_central_row)) / 2);
             grid-template-columns: 100%;
             grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
@@ -838,7 +803,6 @@
     .right_part.page5{
         width: max(50%, 13.5vw);
         height: 100%;
-        container: golden_leaves_page_right_part / size;
     }
     .left_part.img_box{
         height: 100%;
@@ -846,7 +810,6 @@
         display: flex;
         align-items: center;
         justify-content: start;
-        container: golden_leaves_page_left_part / size;
     }
     .right_part_text_box{
         display: flex;
@@ -872,7 +835,7 @@
         writing-mode: vertical-rl;
     }
     
-    @media (width < 1400px) {
+    @media (width < 1000px) {
         .content_container.page6{
             grid-template-columns: 1fr;
             grid-template-rows: 1.5fr 1fr;
@@ -883,12 +846,15 @@
         .right_part_text_box{
             align-items: start;
         }
+        .goldenLeaves{
+            max-height: 50vh;
+        }
         .MainPage_YellowHighlight{
             width: min(35vw, 12.5rem);
             rotate: 0deg;
         }
         .page6_text{
-            --font_size_golden_leaves: min(12vw, 3.65rem);
+            --font_size_golden_leaves: min(11vw, 3.65rem);
             font-size: var(--font_size_golden_leaves);
             line-height: var(--font_size_golden_leaves);
             writing-mode: horizontal-tb;

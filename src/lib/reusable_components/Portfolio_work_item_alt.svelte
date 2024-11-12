@@ -6,6 +6,8 @@
 
     // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import { onMount } from "svelte";
+    import { fade } from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
 
     let imageHeight;
 
@@ -20,10 +22,6 @@
     $: description_box_height = 0;
 
     let position = "center";
-    let fadeBar_Visiblity = "hidden";
-    let fadeBar_Opacity = 0;
-    let fadeBar_VisiblityMobile = "hidden";
-    let fadeBar_OpacityMobile = 0;
 
     let fadeBar_DisplayTop = "none";
     let fadeBar_DisplayTopMobile = "none";
@@ -36,7 +34,8 @@
     let scrollYMobile = 0;
     let scrollY = 0;
 
-    
+    let enableScrollAllow = true;
+    let enableScrollToggle = "clip"
     
     function scrollCounter(){
         scrollY = work_description_container.scrollTop;
@@ -45,6 +44,17 @@
     function scrollCounterMobile(){
         scrollYMobile = work_presentation_page.scrollTop;
         // console.log(scrollYMobile + "scrolled")
+    }
+    function enableScroll(){
+        if (enableScrollAllow) {
+            enableScrollToggle = "scroll"
+            enableScrollAllow = false;
+        } else {
+            enableScrollToggle = "clip"
+            enableScrollAllow = true;
+            scrollYMobile = 0;
+            work_presentation_page.scrollTo({ top: 0, behavior: 'auto' })
+        }
     }
 
     $: if (scrollY < (work_description_container_height * 0.025)) {
@@ -69,42 +79,41 @@
     } else {
         fadeBar_displayMobile = "none";
     }
-    
-    
 
     $: if ((work_description_container_height - description_box_height) < 0) {
         position = "start";
     } else {
         position = "center";
-        fadeBar_Visiblity = "hidden";
-        fadeBar_Opacity = 0;
     }
 </script>
 
 <svelte:window bind:innerWidth />
 
-<main style="--portfolio_item_visible:{workElementVisibility};">
-    <div class="workPresentation_container">
-        <div class="content_container work_presentation_page" on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height}
-
-        style="--fade_offsetMobile: {scrollYMobile}px; --visibilityMobile: {fadeBar_VisiblityMobile}; --opacityMobile: {fadeBar_OpacityMobile}; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
-            
-            <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
-
-            style="align-items: {position}; --fade_offset: {scrollY}px; --visibility: {fadeBar_Visiblity}; --opacity: {fadeBar_Opacity}; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+{#if workElementVisibility = 'visible'}
+    <main id={workElementTitle}>
+        <div class="workPresentation_container">
+            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
+            style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 
-            <div class="description_box" bind:clientHeight={description_box_height}>
-                <p class="work_title">"{workElementTitle}"</p>
-                <p class="work_description">{workElementText} <slot/> </p>
+                <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
+
+                style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+                    
+                <div class="description_box" bind:clientHeight={description_box_height}>
+                    <p class="work_title">"{workElementTitle}"</p>
+                    <p class="work_description">{workElementText} <slot/> </p>
+                </div>
+                </div>
+                <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
+                    <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                </div>
+                {#if enableScrollAllow && description_box_height > 200}
+                    <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> tap for description </div>
+                {/if}
             </div>
-            </div>
-            <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
-            </div>
-            <!-- <p class="button_more_info"> <button class="button_more_info_action" on:click={open_more_info}>- view more -</button></p> -->
         </div>
-    </div>
-</main>
+    </main>
+{/if}
 
 <style>
     *{
@@ -162,7 +171,6 @@
         width: 100%;
         height: 75%;
         display: flex;
-        justify-content: flex-start;
 
         overflow-x: clip;
         overflow-y: auto;
@@ -201,6 +209,9 @@
         mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 65%, transparent);
         backdrop-filter: blur(5px);
         z-index: 500;
+    }
+    .tapForMoreInfo_button{
+        display: none;
     }
 
     .work_description_container::-webkit-scrollbar {
@@ -265,11 +276,28 @@
             grid-template-columns: 1fr;
             grid-template-rows: 1.5fr 1fr;
             gap: max(2rem + 2.5vh, 3.5vw) 0;
-            overflow-y: scroll;
-            overflow-x: clip;
+            /* overflow-x: clip; */
 
             position: relative;
             isolation: isolate;
+        }
+        .tapForMoreInfo_button{
+            position: absolute;
+            bottom: 0;
+            width: 105%;
+            translate: 0 2.5vh;
+            height: calc(100% - var(--imageHeight) - 5vh);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow));
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 25%);
+            backdrop-filter: blur(5px);
+            border-radius: max(2vw, 2rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+
+            font-family: 'Neutral_Normal';
+            font-size: max(1.5vw, 1.25rem);
         }
         .content_container.work_presentation_page::before{
             content: "↓";
@@ -303,8 +331,7 @@
         }
 
         .Portfolio_workPreviewElement{
-            /* min-width: auto; */
-            max-height: 50vh;
+            max-height: 40vh;
             width: max(25rem, 75%);
             order: 1;
         }

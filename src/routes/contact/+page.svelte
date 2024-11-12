@@ -133,7 +133,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
+        height: 100svh;
         scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
@@ -160,7 +160,7 @@
 
     .default_container{
         width: 100%;
-        height: 100dvh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
