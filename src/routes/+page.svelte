@@ -74,7 +74,7 @@
         y = svelte_main_element.scrollTop;
         // console.log(y)
         newY.push(y);
-        if(newY.length > 50) {
+        if(newY.length > 5) {
             newY.shift();
         }
         newY=newY;
@@ -91,7 +91,7 @@
         <LoadingScreen />
     {/if}
 
-    {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
+    {#if y > (innerHeight / 1.75) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -185,7 +185,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100svh;
+        height: 100vh;
         scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
@@ -432,8 +432,8 @@
         background-size: 100% 100%;
         background-position: right bottom;
         background-repeat: no-repeat;
-        border-radius: max(0.35rem, 0.35vw);
-        filter: blur(7.5rem);
+        border-radius: max(1rem, 1vw);
+        filter: blur(max(7.5rem, 7.5vw));
         z-index: -1;
     }
 
@@ -458,7 +458,7 @@
         font-size: max(2vw, 1.75rem);
         color: var(--background_color_lightCyan);
         text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
-        backdrop-filter: blur(0.6rem);
+        backdrop-filter: blur(max(0.6rem, 0.6vw));
         /* background: radial-gradient(var(--background_color_darkCyan) 1%, var(--background_color_darkGray) 150%); */
         border-radius: max(2rem, 2vw);
         border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
@@ -466,12 +466,12 @@
     }
     .MainPage_cvDownloadDecor{
         height: max(2.25rem, 2.25vw);
-        filter: drop-shadow(0 0 1rem var(--background_color_lightCyanSaturated));
+        filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_lightCyanSaturated));
     }
 
     .CV_downloadLink > .CV_downloadLinkInside:hover{
         color: var(--text_color_gray5);
-        text-shadow: 0rem 0rem 0.75rem var(--text_color_gray5);
+        text-shadow: 0rem 0rem max(0.75rem, 0.75vw) var(--text_color_gray5);
         translate: 0 max(0.5rem, 0.40vw);
         box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
                     0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.25rem var(--background_color_lightCyanSaturated);
@@ -821,6 +821,7 @@
     .goldenLeaves{
         width: 100%;
         height: 100%;
+        max-height: 87.5vh;
         object-fit: cover;
         border-radius: max(1rem, 1vw);
     }   

@@ -54,7 +54,7 @@
     function updateY(event){
         y = svelte_main_element.scrollTop;
         newY.push(y);
-        if(newY.length > 50) {
+        if(newY.length > 5) {
             newY.shift();
         }
         newY=newY;
@@ -69,7 +69,7 @@
         <LoadingScreen />
     {/if}
 
-    {#if y > (innerHeight / 1.75) && (oldY - 50) > y}
+    {#if y > (innerHeight / 1.75) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -213,7 +213,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;

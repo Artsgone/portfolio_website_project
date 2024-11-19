@@ -4,29 +4,22 @@
     --background_color_alternativeLightYellow: hsl(35, 40%, 88%);
     --background_color_alternativeLightYellow_lowerOpacity: hsla(34, 41%, 88%, 0.75);
     --background_color_alternativeLightYellow_Darker: hsl(33, 39%, 80%);
-    /* --background_color_alternativeLightYellow: #ece2d4ff; PREVIOUS */
     --background_color_darkGray: #0c0c0c;
 
-    /* --background_color_lightCyan: #aac0bdff; */
     --background_color_lightCyan: hsl(172, 20%, 70%);
     --background_color_lightCyan_lowerOpacity: hsla(172, 23%, 77%, 0.5);
 
-    /* --background_color_lightCyanSaturated: #8aa8a3ff; */
     --background_color_lightCyanSaturated: hsl(172, 20%, 60%);
 
-    /* --background_color_darkCyan: #66888399; */
     --background_color_darkCyan: hsl(172, 20%, 47%);
 
-    /* --background_color_darkCyanSaturated: #4e7e73; */
     --background_color_darkCyanSaturated: hsl(172, 25%, 39%);
     --background_color_darkAsHellCyanSaturated: hsl(172, 24%, 28%);
 
-    /* --background_color_darkestCyan: #89a9a4; */
     --background_color_darkestCyan: hsl(172, 20%, 60%);
 
     --element_color_darkerCyan: hsl(172, 22%, 71%);
 
-    /* --cyan_outline: #4e716bff; */
     --cyan_outline_bright: hsl(172, 20%, 65%);
     --cyan_outline: hsl(172, 20%, 52%);
     --text_color_gray5: #f2f2f2ff;
@@ -40,7 +33,6 @@
 
     --element_background_color_darkerYellow: #e8e5d3ff;
     --element_background_color_darkestYellow: #ccc39c;
-    /* --element_background_color_lightestCyan: #c0d3d0ff; */
     --element_background_color_lightestCyan: hsl(172, 20%, 79%);
 
     /* ELEMENTS SIZES */

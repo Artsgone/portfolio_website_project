@@ -33,6 +33,9 @@
     import Portfolio_workPreviewElement_Anata from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg'
     import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
     import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
+    
+    // Large works
+    import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -73,25 +76,25 @@
     function updateY(event){
         y = svelte_main_element.scrollTop;
         newY.push(y);
-        if(newY.length > 50) {
+        if(newY.length > 5) {
             newY.shift();
         }
         newY=newY;
     }
     
+    let portfolio_loadingScreenShow = false;
     let workPresent_Visibility = 'hidden';
-    let workPresent_Display = 'none';
     let close_button_scale = '0.85'
-    let id = "";
+    // let id = "";
 
-    function openInLargeList(id){
+    function openInLargeList(){
+        portfolio_loadingScreenShow = true;
         workPresent_Visibility = 'visible';
-        workPresent_Display = "flex";
         close_button_scale = '1';
     }
     function closeInLargeList(){
+        portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
-        workPresent_Display = "none";
         close_button_scale = '0.85';
     }
 
@@ -103,8 +106,11 @@
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
+    {#if portfolio_loadingScreenShow}
+        <LoadingScreen fadeDuration=100 fadeDelay=250/>
+    {/if}
 
-    {#if y > (innerHeight / 1.75) && (oldY - 40) > y}
+    {#if y > (innerHeight / 1.75) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -125,18 +131,18 @@
         <div class="content_container work_summary_page">
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-code="hover">
+            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="hover">
 
-                <a href="#Art" role="button" tabindex="0" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Art" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank -->
-                <a href="#LXY" role="button" tabindex="0" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#LXY" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Architect" role="button" tabindex="0" class="work_element_preview_box wep_box3 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Architect" class="work_element_preview_box wep_box3 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank -->
@@ -145,52 +151,54 @@
                 <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                <a href="#Artsgone" role="button" tabindex="0" class="work_element_preview_box wep_box4 bottom rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Artsgone" class="work_element_preview_box wep_box4 bottom rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Omic" role="button" tabindex="0" class="work_element_preview_box wep_box5 bottom mobile_rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Omic" class="work_element_preview_box wep_box5 bottom mobile_rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Lexi2" role="button" tabindex="0" class="work_element_preview_box wep_box6 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Lexi2" class="work_element_preview_box wep_box6 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
                     <!-- next couple -->
 
-                <a href="#Anata" role="button" tabindex="0" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Anata" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Bena" role="button" tabindex="0" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Bena" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#MR. Gummy" role="button" tabindex="0" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#MR. Gummy" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <div class="work_element_preview_box blank">
                      <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
                     <!-- blank -->
-                        <div class="work_element_preview_box blank"></div>
+                        <div class="work_element_preview_box blank">
+                            <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
+                        </div>
                     <!-- blank -->
-                <a href="#LXY2" role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#LXY2" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Antic Museum" role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Antic Museum" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Nameless sadas" role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Nameless sadas" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
                 <!-- next couple -->
 
-                <a href="#Roe" role="button" tabindex="0" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Roe" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Wappa" role="button" tabindex="0" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Wappa" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#W(in) logo" role="button" tabindex="0" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#W(in) logo" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <div class="work_element_preview_box blank">
@@ -199,28 +207,39 @@
                     <!-- blank -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank -->
-                <a href="#Toreno" role="button" tabindex="0" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Toreno" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Lanobi" role="button" tabindex="0" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Lanobi" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank -->
-                <a href="#Dajy" role="button" tabindex="0" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Dajy" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
             </div>
         </div>
     </div>
-    
+    <div class="default_container endless">
+        <div class="content_container work_summary_page largeWorks">
+            <p class="largeWorks_upperText">Other projects</p>
+            <div class="largeWorks_preview_grid">
+                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+            </div>
+        </div>
+    </div>
+
     {#if workPresent_Visibility == 'visible'}
         <button transition:fade={{ delay: 0, duration: 400, easing: sineInOut}} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="Global_closeIcon"> </button>
     {/if}
 
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" in:scale={{ duration: 200, start: 0.9, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}}>
+        <div class="workPresent_wrapper" in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} on:introstart={() => (portfolio_loadingScreenShow = true)} on:introend={() => (portfolio_loadingScreenShow = false)}>
             <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                 <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                 <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
@@ -420,6 +439,7 @@
     /* PREVIEW OF WORKS */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
+    /* General */
     .default_container.endless{
         padding-block: max(10vh, 5rem);
     }
@@ -429,6 +449,8 @@
         flex-direction: column;
         position: relative;
     }
+
+    /* For logos */
     .text_corner_previewOfWorks{
         position: absolute;
         font-family: 'Subjectivity_Regular';
@@ -475,12 +497,12 @@
         font-family: 'Brolimo';
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
-        backdrop-filter: blur(1rem) opacity(0.9);
+        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
         scale: 0.95;
-        filter: blur(2rem);
+        filter: blur(max(2rem, 2vw));
     }
     .work_element_preview_box.rounded::after{border-radius: 32.5%;}
     /* .work_element_preview_box:not(.rounded)::after{} */
@@ -494,10 +516,6 @@
     .work_element_preview_box:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
     }
-    /* .work_element_preview_box.show{
-        animation: intersected 2s ease-out forwards;
-        visibility: visible;
-    } */
     .work_element_preview{
         width: 80%;
         max-height: 80%;
@@ -561,13 +579,13 @@
         scale: 1.065;
     } */
     .close_button:hover > .Global_closeIcon{
-        animation: arrowIcon_animation .5s ease-in-out;
+        animation: closeIcon_animation .5s ease-in-out;
     }
     .close_button:hover{
-        animation: scrollUp_button_animation .5s ease-in-out;
+        animation: close_button_animation .5s ease-in-out;
     }
 
-    @keyframes arrowIcon_animation{
+    @keyframes closeIcon_animation{
         0%, 100% {
             rotate: 0deg;
             scale: 1;
@@ -581,7 +599,7 @@
             scale: 0.85;
         }
     }
-    @keyframes scrollUp_button_animation{
+    @keyframes close_button_animation{
         0%, 100% {
             box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
         }
@@ -590,6 +608,7 @@
         }
     }
     .workPresent_wrapper{
+        /* scroll-behavior: smooth; */
         display: flex;
         flex-direction: column;
         position: fixed;
@@ -645,6 +664,93 @@
         .work_element_preview{
             width: 85%;
             max-height: 85%;
+        }
+    }
+/* ----------------------------------------------------- */
+
+    .content_container.work_summary_page.largeWorks{
+        gap: 0 0;
+    }
+    .largeWorks_upperText{
+        font-family: "Brolimo";
+        font-size: max(5rem, 13.75vw);
+        text-align: center;
+        text-wrap: nowrap;
+        color: var(--background_color_alternativeLightYellow);
+        translate: 0 -20%;
+    }
+    .largeWorks_preview_grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-auto-rows: 1fr;
+        gap: max(4rem, 5vw) max(1rem, 1vw);
+    }
+    .largeWork_preview_box{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        background-color: var(--background_color_lightYellow);
+        border-radius: max(3rem, 3vw);
+        position: relative;
+    }
+    .largeWork_preview_box::after{
+        content: '- view detailed -';
+        position: absolute;
+        inset: -0.2% 0 -0.2% 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: max(1.75vw, 1.25rem);
+        font-family: 'Brolimo';
+        color: white;
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
+        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
+        scale: 0.95;
+        filter: blur(max(2rem, 2vw));
+        border-radius: max(2.6rem, 2.6vw);
+    }
+    .largeWork_preview_box:hover::after{
+        opacity: 1;
+        visibility: visible;
+        scale: 1;
+        filter: blur(0rem);
+        transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
+    }
+
+    .largeWork_preview_box::before{
+        content: '';
+        box-sizing: content-box;
+        position: absolute;
+        width: 100%;
+        height: 112%;
+        background-color: var(--background_color_alternativeLightYellow);
+        border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        border-radius: max(3rem, 3vw);
+        z-index: -1;
+    }
+    
+    .largeWork_preview_box:focus-visible{
+        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+    }
+
+    .largeWork_element_preview{
+        width: 100%;
+        height: 45vh;
+        object-fit: contain;
+        image-rendering: optimizeQuality;
+    }
+
+    @media (width < 1000px) {
+        .largeWorks_preview_grid{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            grid-auto-rows: 1fr;
+            gap: max(4rem, 5vw) max(1rem, 1vw);
         }
     }
 

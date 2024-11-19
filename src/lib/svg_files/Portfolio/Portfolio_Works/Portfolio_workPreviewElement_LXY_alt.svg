@@ -28,9 +28,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.4770342"
-     inkscape:cx="-36.559749"
-     inkscape:cy="213.60372"
+     inkscape:zoom="11.816274"
+     inkscape:cx="20.94569"
+     inkscape:cy="27.546756"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -218,7 +218,7 @@
      transform="translate(-24.996416,-25.578482)">
     <g
        id="g5"
-       transform="translate(-5.1592212e-7,8.1065659)">
+       transform="translate(-5.1592212e-7,11.86141)">
       <path
          id="rect5312"
          style="fill:url(#linearGradient14536);fill-opacity:1;stroke:none;stroke-width:0.645319;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none"
@@ -271,9 +271,5 @@
          id="path2983-1"
          sodipodi:nodetypes="ssccscss" />
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 47.587948,63.549826 c 0,-0.0218 1.166806,-1.133536 1.823135,-0.588567 0.656328,0.544969 0.299294,0.915549 1.061214,0.675762 0.761921,-0.239787 0.801469,-0.915549 1.267864,-0.566768 0.466395,0.34878 0.516492,0.887325 1.014076,0.501372 0.497583,-0.385954 1.348379,-1.809299 1.664389,-0.959147 0.31601,0.850153 0.704946,1.650284 1.045264,1.111738 0.340318,-0.538545 0.327355,-1.220732 0.729254,-0.697561 0.401899,0.523171 0.944193,0.930923 1.167168,0.54497 0.222974,-0.385954 1.074554,-0.871952 0.944059,-0.54497"
-       id="path6" />
   </g>
 </svg>

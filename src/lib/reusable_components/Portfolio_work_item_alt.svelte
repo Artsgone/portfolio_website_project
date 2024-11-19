@@ -3,8 +3,8 @@
     export let workElementText = "Text area: not data"
     export let workElementImage = ''
     export let workElementVisibility = 'hidden';
+    import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
 
-    // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import { onMount } from "svelte";
     import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
@@ -46,7 +46,7 @@
         // console.log(scrollYMobile + "scrolled")
     }
     function enableScroll(){
-        if (enableScrollAllow) {
+        if (enableScrollAllow && innerWidth <= 1000 && description_box_height > 300) {
             enableScrollToggle = "scroll"
             enableScrollAllow = false;
         } else {
@@ -107,8 +107,8 @@
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
                     <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
                 </div>
-                {#if enableScrollAllow && description_box_height > 200}
-                    <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> tap for description </div>
+                {#if enableScrollAllow && description_box_height > 300}
+                    <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
                 {/if}
             </div>
         </div>
@@ -193,9 +193,9 @@
         z-index: 500;
 
         text-align: end;
-        color: var(--text_color_gray40);
+        color: var(--background_color_alternativeLightYellow_Darker);
         font-family: "Neutral_Bold";
-        font-size: max(2.5rem, 2vw);
+        font-size: max(2.5rem, 2.5vw);
     }
     .work_description_container::after{
         content: "";
@@ -276,7 +276,7 @@
             grid-template-columns: 1fr;
             grid-template-rows: 1.5fr 1fr;
             gap: max(2rem + 2.5vh, 3.5vw) 0;
-            /* overflow-x: clip; */
+            overflow-x: clip;
 
             position: relative;
             isolation: isolate;
@@ -286,18 +286,25 @@
             bottom: 0;
             width: 105%;
             translate: 0 2.5vh;
-            height: calc(100% - var(--imageHeight) - 5vh);
+            height: calc(100% - var(--imageHeight) - 10vh);
             background: linear-gradient(180deg, transparent, var(--background_color_lightYellow));
             mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 25%);
             backdrop-filter: blur(5px);
             border-radius: max(2vw, 2rem);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 1.25vh 0;
             z-index: 1;
 
-            font-family: 'Neutral_Normal';
-            font-size: max(1.5vw, 1.25rem);
+            font-family: 'Subjectivity_Regular';
+            /* text-transform: uppercase; */
+            font-size: max(1.5vw, 1.4rem);
+        }
+        .Global_tapIcon{
+            width: 15%;
+            aspect-ratio: 1;
         }
         .content_container.work_presentation_page::before{
             content: "↓";
