@@ -70,6 +70,8 @@
     $: innerHeight = 0;
     $: y = 0;
     let svelte_main_element;
+    let workPresent_wrapper_bind;
+    let workPresent_wrapper_bind_height = 0;
     
     let newY = [];
     $: oldY = newY[1];
@@ -91,13 +93,22 @@
         portfolio_loadingScreenShow = true;
         workPresent_Visibility = 'visible';
         close_button_scale = '1';
+
+        const interval = setInterval(() => {
+			portfolio_loadingScreenShow = false
+		}, 1500);
+		return () => clearInterval(interval);
     }
     function closeInLargeList(){
         portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
         close_button_scale = '0.85';
     }
-
+    function hide_LoadingScreen(){
+        if (portfolio_loadingScreenShow = true) {
+            portfolio_loadingScreenShow = false;
+        }
+    }
 </script>
 
 <svelte:window bind:innerHeight />
@@ -107,7 +118,7 @@
         <LoadingScreen />
     {/if}
     {#if portfolio_loadingScreenShow}
-        <LoadingScreen fadeDuration=100 fadeDelay=250/>
+        <LoadingScreen fadeDuration=50 fadeDelay=100/>
     {/if}
 
     {#if y > (innerHeight / 1.75) && oldY > y}
@@ -235,11 +246,11 @@
     </div>
 
     {#if workPresent_Visibility == 'visible'}
-        <button transition:fade={{ delay: 0, duration: 400, easing: sineInOut}} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="Global_closeIcon"> </button>
+        <button transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
     {/if}
-
+    <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} on:introstart={() => (portfolio_loadingScreenShow = true)} on:introend={() => (portfolio_loadingScreenShow = false)}>
+        <div class="workPresent_wrapper" bind:this={workPresent_wrapper_bind} on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
             <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                 <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                 <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
@@ -406,8 +417,8 @@
     }
     @media (width < 500px){
         .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
+            justify-content: space-evenly;
+            /* gap: 15vh; */
         }
         #Portfolio_TitleDecor{
             width: 95%;
@@ -441,7 +452,7 @@
 
     /* General */
     .default_container.endless{
-        padding-block: max(10vh, 5rem);
+        padding-block: max(15vh, 5rem);
     }
     .content_container.work_summary_page{
         display: flex;
@@ -487,7 +498,7 @@
         cursor: pointer;
     }
     .work_element_preview_box::after{
-        content: '- view more -';
+        content: '- view detailed -';
         position: absolute;
         inset: 0;
         display: flex;
@@ -673,11 +684,11 @@
     }
     .largeWorks_upperText{
         font-family: "Brolimo";
-        font-size: max(5rem, 13.75vw);
+        font-size: max(5rem, 7.5vw);
         text-align: center;
         text-wrap: nowrap;
         color: var(--background_color_alternativeLightYellow);
-        translate: 0 -20%;
+        translate: 0 -30%;
     }
     .largeWorks_preview_grid{
         display: grid;
@@ -739,10 +750,11 @@
     }
 
     .largeWork_element_preview{
-        width: 100%;
+        width: 90%;
         height: 45vh;
+        max-height: 90%;
         object-fit: contain;
-        image-rendering: optimizeQuality;
+        /* image-rendering: optimizeQuality; */
     }
 
     @media (width < 1000px) {
@@ -751,6 +763,10 @@
             grid-template-rows: 1fr;
             grid-auto-rows: 1fr;
             gap: max(4rem, 5vw) max(1rem, 1vw);
+        }
+        .largeWorks_upperText{
+            font-size: min(5rem, 12vw);
+            translate: 0 -50%;
         }
     }
 

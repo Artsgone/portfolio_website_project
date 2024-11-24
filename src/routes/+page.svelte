@@ -23,7 +23,7 @@
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 //
-    import { navigating } from '$app/stores'
+    // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     // import { writable } from 'svelte/store'
     // import { browser } from "$app/environment"
@@ -33,13 +33,16 @@
     import { quintOut, sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
+    $: innerHeight = 0;
+    let userScreenHeight = 0;
     $: sunsetInTheCloudsIMG_height = 0;
     $: page4_totalHeight = 0;
     let yellowBox_height = 0;
 
     onMount(() => {
         yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
-        
+        userScreenHeight = innerHeight;
+        // console.log(userScreenHeight)
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             // console.log(oldScrollY)
@@ -65,7 +68,6 @@
     });
 
     let svelte_main_element;
-    $: innerHeight = 0;
     $: y = 0;
     
     let newY = [];
@@ -81,12 +83,15 @@
         // console.log(newY)
     }
 
+    $: if (userScreenHeight < innerHeight || userScreenHeight > innerHeight) {
+        userScreenHeight = innerHeight;
+    }
 </script>
 
 <svelte:window bind:innerHeight/>
 <!-- bind:scrollY={y} on:scroll={updateY} -->
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight}px;">
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -201,14 +206,7 @@
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
     }
-    @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
+    
 
     *, *::before, *::after {
         margin: 0;
@@ -249,7 +247,20 @@
         color: var(--text_color_gray5);
     }
 
-    
+    @media (width < 800px){
+        /* main.svelte_main{
+            scroll-snap-type: block mandatory;
+        } */
+        main.svelte_main {
+            height: var(--user_height);
+        }
+        .default_container{
+            height: var(--user_height);
+        }
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
+    }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -277,8 +288,8 @@
 
     @media (width < 800px){
         .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
+            justify-content: space-evenly;
+            /* gap: 14vh; */
         }
         #MainPage_titlePageSVG{
             width: max(80%, 21rem);

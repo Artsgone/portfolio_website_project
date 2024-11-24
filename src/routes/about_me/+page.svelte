@@ -277,8 +277,8 @@
 
     @media (width < 800px){
         .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
+            justify-content: space-evenly;
+            /* gap: 15vh; */
         }
         #AboutMe_titlePageSVG{
             width: max(65%, 22rem);

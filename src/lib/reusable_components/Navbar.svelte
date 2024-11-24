@@ -124,7 +124,8 @@
     @container (inline-size < 500px) {
         .navbar_inner{
             gap: 1.6rem;
-            margin-bottom: 5vh;
+            /* margin-bottom: 5vh; */
+            margin-bottom: 1.5vh;
         }
         .navbar_list{
             width: 100%;
