@@ -418,7 +418,7 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: space-evenly;
-            /* gap: 15vh; */
+            gap: 10vh;
         }
         #Portfolio_TitleDecor{
             width: 95%;

@@ -225,6 +225,8 @@
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         scroll-snap-align: start;
         scroll-snap-stop: always;
+
+        transition: all 0.25s ease;
     }
     .content_container{
         width: 92.5%;
@@ -289,7 +291,7 @@
     @media (width < 800px){
         .content_container.title_page{
             justify-content: space-evenly;
-            /* gap: 14vh; */
+            gap: 10vh;
         }
         #MainPage_titlePageSVG{
             width: max(80%, 21rem);
