@@ -147,18 +147,18 @@
                 <a href="#Art" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box3 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                 <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
@@ -172,7 +172,7 @@
                     <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
-                    <!-- next couple -->
+                    <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Anata" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
@@ -186,11 +186,9 @@
                 <div class="work_element_preview_box blank">
                      <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                    <!-- blank -->
-                        <div class="work_element_preview_box blank">
-                            <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
-                        </div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
+                        <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview"> </div>
+                    <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
@@ -201,7 +199,7 @@
                     <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
-                <!-- next couple -->
+                <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Roe" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
@@ -215,18 +213,18 @@
                 <div class="work_element_preview_box blank">
                      <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
-                    <!-- blank -->
+                    <!-- blank_________________________________________________ -->
                 <a href="#Dajy" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
@@ -237,7 +235,7 @@
         <div class="content_container work_summary_page largeWorks">
             <p class="largeWorks_upperText">Other projects</p>
             <div class="largeWorks_preview_grid">
-                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
                 <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
                 <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
                 <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
@@ -246,7 +244,7 @@
     </div>
 
     {#if workPresent_Visibility == 'visible'}
-        <button transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
+        <button in:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 300, start: 0.75, easing: sineInOut }} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
     {/if}
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     {#if workPresent_Visibility == 'visible'}
@@ -418,7 +416,7 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: space-evenly;
-            gap: 10vh;
+            gap: 8.5vh;
         }
         #Portfolio_TitleDecor{
             width: 95%;
@@ -713,7 +711,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: max(1.75vw, 1.25rem);
+        font-size: max(1.75vw, 1.75rem);
         font-family: 'Brolimo';
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);

@@ -234,7 +234,7 @@
     @media (width < 500px){
         .content_container.title_page{
             justify-content: space-evenly;
-            gap: 15vh;
+            gap: 8.5vh;
         }
         #Contact_TitleDecor{
             width: 85%;

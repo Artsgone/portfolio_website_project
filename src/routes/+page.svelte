@@ -254,10 +254,12 @@
             scroll-snap-type: block mandatory;
         } */
         main.svelte_main {
-            height: var(--user_height);
+            /* height: var(--user_height); */
+            height: 100dvh;
         }
         .default_container{
-            height: var(--user_height);
+            /* height: var(--user_height); */
+            height: 100vh;
         }
         main.svelte_main::-webkit-scrollbar {
             display: none;
@@ -291,7 +293,7 @@
     @media (width < 800px){
         .content_container.title_page{
             justify-content: space-evenly;
-            gap: 10vh;
+            gap: 8.5vh;
         }
         #MainPage_titlePageSVG{
             width: max(80%, 21rem);

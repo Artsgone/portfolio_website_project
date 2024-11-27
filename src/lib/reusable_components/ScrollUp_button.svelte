@@ -1,11 +1,11 @@
 <script>
     import Global_arrowScrollUp from '$lib/svg_files/GlobalSVGs/Global_arrowScrollUp.svg'
-    import { fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     export let scrollToTop;
 </script>
 
-<button transition:fade={{ delay: 300, duration: 300, easing: sineInOut}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+<button transition:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '100'}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
 
 <style>
     .scrollUp_button{

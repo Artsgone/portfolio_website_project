@@ -21,9 +21,9 @@
     $: innerWidth = 0
 	// $: innerHeight = 0
     import { onMount } from 'svelte';
-    import { fade, blur, fly, slide } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { quintOut, sineInOut } from 'svelte/easing';
+    import { sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
     onMount(() => {
@@ -178,7 +178,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100svh;
+        height: 100dvh;
         scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
@@ -213,7 +213,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100svh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -278,7 +278,7 @@
     @media (width < 800px){
         .content_container.title_page{
             justify-content: space-evenly;
-            gap: 15vh;
+            gap: 8.5vh;
         }
         #AboutMe_titlePageSVG{
             width: max(65%, 22rem);
