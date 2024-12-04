@@ -93,23 +93,22 @@
     <main id={workElementTitle}>
         <div class="workPresentation_container">
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
-            style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
+                style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 
                 <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
-
-                style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+                    style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
                     
-                <div class="description_box" bind:clientHeight={description_box_height}>
-                    <p class="work_title">"{workElementTitle}"</p>
-                    <p class="work_description">{workElementText} <slot/> </p>
+                    <div class="description_box" bind:clientHeight={description_box_height}>
+                        <p class="work_title">"{workElementTitle}"</p>
+                        <p class="work_description">{workElementText} <slot/> </p>
+                    </div>
                 </div>
-                </div>
-                <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                    <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
-                </div>
-                {#if enableScrollAllow && description_box_height > 300}
-                    <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
-                {/if}
+                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
+                        <img loading="lazy" class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                    </div>
+                    {#if enableScrollAllow && description_box_height > 300}
+                        <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
+                    {/if}
             </div>
         </div>
     </main>
@@ -134,7 +133,7 @@
     }
     .workPresentation_container{
         width: 100%;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -194,7 +193,7 @@
 
         text-align: end;
         color: var(--background_color_alternativeLightYellow_Darker);
-        font-family: "Neutral_Bold";
+        font-family: "Neutral_Bold", system-ui, sans-serif;
         font-size: max(2.5rem, 2.5vw);
     }
     .work_description_container::after{
@@ -233,7 +232,7 @@
         position: relative;
     }
     .work_title{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--text_size_big);
         line-height: var(--text_line_height_big);
         /* text-align: end; */
@@ -241,7 +240,7 @@
         text-wrap: balance;
     }
     .work_description{
-        font-family: 'Subjectivity_Regular';
+        font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         font-size: var(--text_size_small);
         line-height: var(--text_line_small);
         letter-spacing: -0.5px;
@@ -298,7 +297,7 @@
             gap: 1.25vh 0;
             z-index: 1;
 
-            font-family: 'Subjectivity_Regular';
+            font-family: 'Subjectivity_Regular', system-ui, sans-serif;
             /* text-transform: uppercase; */
             font-size: max(1.5vw, 1.4rem);
         }
@@ -320,7 +319,7 @@
 
             text-align: end;
             color: var(--text_color_gray90);
-            font-family: "Neutral_Bold";
+            font-family: "Neutral_Bold", system-ui, sans-serif;
             font-size: max(2rem, 2vh);
         }
         .content_container.work_presentation_page::after{

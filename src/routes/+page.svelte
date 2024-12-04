@@ -5,6 +5,7 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
+    // import intersectionObs from '$lib/intersectionObserver.js'
 //
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
@@ -83,23 +84,59 @@
         // console.log(newY)
     }
 
-    $: if (userScreenHeight < innerHeight || userScreenHeight > innerHeight) {
-        userScreenHeight = innerHeight;
+    function observeElement() {
+        const default_containers = document.querySelectorAll(".default_container")
+        const content_containers = document.querySelectorAll(".content_container")
+        const listLenght = content_containers.length
+        let amountOfElementsObserved = 0;
+
+        const intersecObserver = new IntersectionObserver( entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("showOnScreen")
+                // entry.target.style.visibility = 'visible';
+                // entry.target.style.opacity = 1;
+                amountOfElementsObserved++
+                intersecObserver.unobserve(entry.target)
+                if (amountOfElementsObserved == listLenght) {
+                    intersecObserver.disconnect()
+                    // console.log("DISCONNECTED")
+                }
+            }
+        })
+        },
+            { threshold: 0.1, }
+        )
+        
+        content_containers.forEach( container => {
+            intersecObserver.observe(container)
+        })
+        // intersecObserver.observe(element)
     }
+
+    // function showIntersectingElement() {
+    //     const content_containers = document.querySelectorAll(".content_container")
+    //     content_containers.forEach( (container, containerIndex) => {
+    //         console.log(container, containerIndex)
+    //     })
+    // }
 </script>
 
 <svelte:window bind:innerHeight/>
 <!-- bind:scrollY={y} on:scroll={updateY} -->
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight}px;">
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight};" use:observeElement >
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY > y}
+    {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
+    <!-- {#if condition}
+         
+    {/if} -->
     <div class="default_container cyan">
         <Header title_Decor_ID = "mainpage" />
         <div class="content_container title_page">
@@ -147,7 +184,7 @@
         <div bind:clientHeight={page4_totalHeight} class="content_container page4">
             <div class="left_part page4">
                 <div bind:clientHeight={sunsetInTheCloudsIMG_height} class="sunsetIMG_box">
-                    <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                    <img loading="lazy" class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
                 </div>
             </div>
             <div class="right_part page4" style="--yellowBox_height: {yellowBox_height}px">
@@ -157,22 +194,20 @@
     </div>
     <div class="default_container">
         <div class="content_container page5">
-            <img class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
+            <img loading="lazy" class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
             <div class="page5_gradient"></div>
-            <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
+            <img loading="lazy" class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
             <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
         </div>
     </div>
     <div class="default_container">
         <div class="content_container page6">
             <div class="left_part img_box">
-                <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
+                <img loading="lazy" class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
             </div>
             <div class="right_part page5">
-                <div class="right_part_text_box">
-                    <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
-                    <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
-                </div>
+                <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
+                <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
             </div>
         </div>
     </div>
@@ -190,8 +225,9 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100vh;
+        height: 100dvh;
         scroll-snap-type: block mandatory;
+        /* interpolate-size: allow-keywords; */
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -226,11 +262,16 @@
         scroll-snap-align: start;
         scroll-snap-stop: always;
 
-        transition: all 0.25s ease;
+        /* opacity: 0.5; */
+        /* transition: opacity 1s ease; */
     }
     .content_container{
         width: 92.5%;
         height: 87.5%;
+        /* visibility: hidden;
+        opacity: 0.8;
+        transition: visibility .75s ease-out;
+        transition-behavior: allow-discrete; */
     }
     .darkgrayText{
         color: var(--text_color_gray90);
@@ -259,7 +300,7 @@
         }
         .default_container{
             /* height: var(--user_height); */
-            height: 100vh;
+            height: 100dvh;
         }
         main.svelte_main::-webkit-scrollbar {
             display: none;
@@ -285,7 +326,7 @@
     }
     .title_name{
         font-size: var(--text_size_title_ultrabig);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
         text-wrap: nowrap;
     }
@@ -352,13 +393,13 @@
         align-self: center;
     }
     .text.introducing > p{
-        font-family: 'Subjectivity_Medium';
+        font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium);
         letter-spacing: -0.5px;
     }
     .text.introducing > p > span{
-        font-family: 'Subjectivity_Bold';
+        font-family: 'Subjectivity_Bold', system-ui, sans-serif;
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -422,14 +463,14 @@
     }
 
     .text.cvDownload > p{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: max(4vw, 3.5rem);
         /* line-height: var(--text_line_height_big); */
         text-wrap: balance;
         /* word-spacing: max(1rem, 1vw); */
     }
     .span_CV{
-        font-family: 'Subjectivity_Bold';
+        font-family: 'Subjectivity_Bold', system-ui, sans-serif;
         font-size: max(5vw, 4.5rem);
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
@@ -469,7 +510,7 @@
         padding: max(1rem, 1vw) max(3.25rem, 3.25vw);
         text-wrap: balance;
         text-decoration: none;
-        font-family: "Neutral_Normal";
+        font-family: "Neutral_Normal", system-ui, sans-serif;
         font-size: max(2vw, 1.75rem);
         color: var(--background_color_lightCyan);
         text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
@@ -598,7 +639,7 @@
         max-width: 30%;
     }
     .photo_collection_text{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         /* padding-bottom: max(1vw, 2rem); */
         font-size: max(7.5vw, 5rem);
         text-align: end;
@@ -717,7 +758,7 @@
         border-radius: max(1rem, 1vw);
     }
     .page4_title_text{
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         --page4_title_text_size: max(3vw, 2.85rem);
         font-size: var(--page4_title_text_size);
         line-height: var(--page4_title_text_size);
@@ -760,8 +801,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr;
-        align-items: center;
-        justify-items: center;
         position: relative;
         border-radius: max(1rem, 1vw);
         overflow: clip;
@@ -775,14 +814,12 @@
         scale: -1 1;
     } 
     .page5_title_text{
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         text-align: center;
         font-size: max(6.5vw, 4rem);
         line-height: max(6.5vw, 4rem);
         position: absolute;
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
+        place-self: center;
     }
     .page5_gradient{
         width: 100%;
@@ -809,61 +846,53 @@
 
     .content_container.page6{
         display: grid;
-        grid-template-columns: 2.25fr 1fr;
+        grid-template-columns: 2.5fr 1fr;
         grid-template-rows: 1fr;
         gap: max(3vw, 5vh);
-        align-items: center;
-        justify-items: flex-end;
     }
     .right_part.page5{
-        width: max(50%, 13.5vw);
+        width: 50%;
         height: 100%;
-    }
-    .left_part.img_box{
-        height: 100%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: start;
-    }
-    .right_part_text_box{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        height: 100%;
+        justify-self: flex-end;
+    }
+    .left_part.img_box{
+        min-height: 100%;
+        width: 100%;
     }
     .goldenLeaves{
+        display: block;
         width: 100%;
         height: 100%;
-        max-height: 87.5vh;
         object-fit: cover;
         border-radius: max(1rem, 1vw);
     }   
     .MainPage_YellowHighlight{
         width: 100%;
-        rotate: 180deg;
         border-radius: max(1rem, 1vw);
     }
     .page6_text{
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         font-size: 3.75vw;
+        line-height: 4.5vw;
         writing-mode: vertical-rl;
     }
     
     @media (width < 1000px) {
         .content_container.page6{
             grid-template-columns: 1fr;
-            grid-template-rows: 1.5fr 1fr;
+            grid-template-rows: 1.6fr 1fr;
         } 
         .right_part.page5{
             width: 100%;
-        }
-        .right_part_text_box{
             align-items: start;
         }
         .goldenLeaves{
-            max-height: 50vh;
+            height: 100%;
+            max-height: 60svh;
         }
         .MainPage_YellowHighlight{
             width: min(35vw, 12.5rem);

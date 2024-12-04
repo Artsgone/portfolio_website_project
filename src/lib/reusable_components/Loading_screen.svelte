@@ -20,7 +20,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--text_size_medium_big);
         color: var(--text_color_gray5);
         translate: 0 -2.5%;

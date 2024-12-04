@@ -5,6 +5,8 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
+    import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/styles.css'
 
     import WorkPresent from '$lib/reusable_components/Portfolio_work_item.svelte'
     import WorkPresentAlt from '$lib/reusable_components/Portfolio_work_item_alt.svelte'
@@ -121,7 +123,7 @@
         <LoadingScreen fadeDuration=50 fadeDelay=100/>
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY > y}
+    {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -231,14 +233,14 @@
             </div>
         </div>
     </div>
-    <div class="default_container endless">
+    <div class="default_container endless" id="largeWorksID">
         <div class="content_container work_summary_page largeWorks">
             <p class="largeWorks_upperText">Other projects</p>
             <div class="largeWorks_preview_grid">
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="#CHANGE" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
             </div>
         </div>
     </div>
@@ -314,7 +316,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100svh;
+        height: 100dvh;
         scroll-snap-type: none;
     }
     :global(body)::-webkit-scrollbar {
@@ -401,7 +403,7 @@
     }
     .title_name{
         font-size: max(15vw, 6.25rem);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
     }
 
@@ -462,7 +464,7 @@
     /* For logos */
     .text_corner_previewOfWorks{
         position: absolute;
-        font-family: 'Subjectivity_Regular';
+        font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         font-size: var(--text_size_medium_small);
         letter-spacing: -0.5px;
     }
@@ -503,7 +505,7 @@
         align-items: center;
         justify-content: center;
         font-size: max(1.75vw, 1.25rem);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
         backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);
@@ -681,7 +683,7 @@
         gap: 0 0;
     }
     .largeWorks_upperText{
-        font-family: "Brolimo";
+        font-family: "Brolimo", system-ui, sans-serif;
         font-size: max(5rem, 7.5vw);
         text-align: center;
         text-wrap: nowrap;
@@ -712,7 +714,7 @@
         align-items: center;
         justify-content: center;
         font-size: max(1.75vw, 1.75rem);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
         backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);

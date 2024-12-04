@@ -109,7 +109,7 @@
         isolation: isolate;
     }
     .navbar_list > a {
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -155,7 +155,7 @@
         transition: translate 0.15s ease-out, box-shadow 0.25s ease-out;
     }
     .titleName{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: max(11.25vw, 3.5rem);
         text-wrap: nowrap;
     }
@@ -172,7 +172,7 @@
         border-radius: 50rem;
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         position: relative;
-        font-family: 'Neutral_Bold';
+        font-family: 'Neutral_Bold', system-ui, sans-serif;
         letter-spacing: max(0.025vw, 0.035rem);
         align-self: flex-start;
         display: flex;
@@ -246,7 +246,7 @@
     }
     @container footer (inline-size < 650px) {
         .titleName{
-            font-family: 'Brolimo';
+            font-family: 'Brolimo', system-ui, sans-serif;
             font-size: max(16vw, 3.5rem);
             text-wrap: nowrap;
         }

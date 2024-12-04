@@ -94,7 +94,7 @@
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
             style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                    <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                    <img loading="lazy" class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
                 </div>
                 <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
                     <div class="description_box" bind:clientHeight={description_box_height}>
@@ -103,7 +103,6 @@
                     </div>
                 </div>
                 <!-- <div class="fade_blur"></div> -->
-                <!-- <p class="button_more_info"><button class="button_more_info_action" on:click={open_more_info}>- view more -</button></p> -->
                  {#if enableScrollAllow && description_box_height > 300}
                     <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
                  {/if}
@@ -133,7 +132,7 @@
     }
     .workPresentation_container{
         width: 100%;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -214,7 +213,7 @@
 
         text-align: end;
         color: var(--background_color_alternativeLightYellow_Darker);
-        font-family: "Neutral_Bold";
+        font-family: "Neutral_Bold", system-ui, sans-serif;
         font-size: max(2.5rem, 2.5vw);
     }
     .work_description_container::after{
@@ -252,13 +251,13 @@
         position: relative;
     }
     .work_title{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--text_size_big);
         line-height: var(--text_line_height_big);
         text-wrap: balance;
     }
     .work_description{
-        font-family: 'Subjectivity_Regular';
+        font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         font-size: var(--text_size_small);
         line-height: var(--text_line_small);
         letter-spacing: -0.5px;
@@ -276,38 +275,6 @@
         translate: 0 200%;
         z-index: 600;
     }
-    /* .button_more_info{
-        width: 90%;
-        grid-area: 2 / 1 / 3 / 3;
-        position: relative;
-        isolation: isolate;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-    }
-    .button_more_info_action{
-        width: 100%;
-        height: 100%;
-        font-family: 'Brolimo';
-        font-size: var(--text_size_extra_small);
-        cursor: pointer;
-    }
-    .button_more_info::after{
-        content: "";
-        position: absolute;
-        inset: 0 45% 0 45%;
-        background-color: var(--background_color_alternativeLightYellow);
-        filter: blur(max(0.5rem, 0.8vw));
-        z-index: -1;
-        cursor: pointer;
-        translate: 0 50%;
-        transition: all 0.3s ease-in-out;
-    }
-    .button_more_info:hover::after{
-        inset: -15% 0 -25% 0;
-        translate: 0 0%;
-        filter: blur(max(0.25rem, 0.25vw));
-        border-radius: max(0.5rem, 0.5vw);
-    } */
 
     @media (width < 1100px) {
         .description_box{
@@ -341,7 +308,7 @@
             gap: 1.25vh 0;
             z-index: 1;
 
-            font-family: 'Subjectivity_Regular';
+            font-family: 'Subjectivity_Regular', system-ui, sans-serif;
             font-size: max(1.5vw, 1.4rem);
         }
         .Global_tapIcon{
@@ -362,7 +329,7 @@
 
             text-align: end;
             color: var(--text_color_gray90);
-            font-family: "Neutral_Bold";
+            font-family: "Neutral_Bold", system-ui, sans-serif;
             font-size: max(2rem, 2vh);
         }
         .content_container.work_presentation_page::after{

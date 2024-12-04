@@ -5,6 +5,8 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
+    import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/styles.css'
 
     import AboutMe_titlePageSVG from '$lib/svg_files/AboutMe/AboutMe_TitleDecorSVG.svg'
     import AboutMe_EducationSVG from '$lib/svg_files/AboutMe/AboutMe_EducationSVG.svg'
@@ -69,7 +71,7 @@
         <LoadingScreen />
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY > y}
+    {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -270,7 +272,7 @@
     }
     .title_name{
         font-size: max(15vw, 5.5rem);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         text-wrap: nowrap;
         z-index: 999;
     }
@@ -329,20 +331,20 @@
         justify-self: start;
     }
     .text.education > p{
-        font-family: 'Subjectivity_Medium';
+        font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         font-size: max(2vw, 1.55rem);
         line-height: max(2.4vw, 1.85rem);
         letter-spacing: -0.5px;
     }
     .text.education > p > span.university_name{
-        font-family: 'Subjectivity_Bold';
+        font-family: 'Subjectivity_Bold', system-ui, sans-serif;
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
         -webkit-text-fill-color: transparent;
         white-space: nowrap;
     }
     .text.education > p > span.time_range{
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         letter-spacing: 0px;
     }
 
@@ -395,7 +397,7 @@
         justify-content: space-between;
     }
     .content_container.languages_page > p {
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         color: hsl(171, 22%, 82%);
         font-size: max(3.3vw, 2.25rem);
         text-align: center;
@@ -412,7 +414,7 @@
         position: relative;
     }
     .text.languages > p{
-        font-family: 'Subjectivity_Bold';
+        font-family: 'Subjectivity_Bold', system-ui, sans-serif;
         font-size: max(2.5vw, 2.25rem);
         line-height: max(3.25vw, 3rem);
         text-wrap: nowrap;
@@ -498,7 +500,7 @@
         justify-content: space-between;
     }
     .content_container.otherAbilities_page > p {
-        font-family: 'Misto';
+        font-family: 'Misto', system-ui, sans-serif;
         font-size: 9.85vh;
         height: 100%;
         text-align: center;
@@ -515,7 +517,7 @@
         gap: max(2.5rem, 4vw);
     }
     .text.otherAbilities > p{
-        font-family: 'Subjectivity_Medium';
+        font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         text-wrap: pretty;
         /* font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium); */

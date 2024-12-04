@@ -5,6 +5,8 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
+    import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/styles.css'
 
     import Contact_TitleDecor from '$lib/svg_files/Contact/Contact_TitleDecor.svg'
     import Contact_BackgroundDecor from '$lib/svg_files/Contact/Contact_BackgroundDecor.svg'
@@ -13,9 +15,10 @@
     import Instagram_Icon from '$lib/svg_files/Contact/Contact_Insta_Icon.svg'
     import Telegram_Icon from '$lib/svg_files/Contact/Contact_Telegram_Icon.svg'
     import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
+    import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
 
     import { onMount } from "svelte";
-    import { fade} from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
@@ -49,6 +52,7 @@
     $: innerHeight = 0;
     $: y = 0;
     let svelte_main_element;
+    let optionMenuShow = false;
     
     let newY = [];
     $: oldY = newY[1];
@@ -70,7 +74,7 @@
         <LoadingScreen />
     {/if}
 
-    {#if y > (innerHeight / 1.75) && oldY > y}
+    {#if y > (innerHeight / 1.1) && oldY > y}
     <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
@@ -98,15 +102,28 @@
         <div class="content_container contact_page">
             <p class="contact_title darkgrayText">Contact me</p>
             <div class="contact_form_grid">
-                <input type="text" class="form_item itemName" placeholder="Your name">
-                <select name="Type of work" class="form_item itemtypeOfWork">
+                <input type="text" class="form_item itemName" placeholder="Your name:">
+                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" on:keypress={() => {optionMenuShow = !optionMenuShow}} on:click={() => {optionMenuShow = !optionMenuShow}}>
+                    Type of work
+                    <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu"> 
+                    {#if optionMenuShow}
+                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}}>
+                            <div class="tow_option">Option 1</div>
+                            <div class="tow_option">Option 2</div>
+                            <div class="tow_option">Option 3</div>
+                            <div class="tow_option">Option 4</div>
+                            <div class="tow_option">Option 5</div>
+                        </div>
+                    {/if}
+                </div>
+                <!-- <select name="Type of work" class="form_item itemtypeOfWork">
                     <option value="0">Type of work</option>
                     <option value="web_design">Web design</option>
                     <option value="logo_design">Logo design</option>
                     <option value="poster_design">Poster design</option>
                     <option value="visual_identity">Visual identity</option>
-                </select>
-                <input type="text" class="form_item itemEmail" placeholder="Your email">
+                </select> -->
+                <input type="text" class="form_item itemEmail" placeholder="Your email:">
                 <textarea rows={numberOfRows} class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
             </div>
             <div class="links_bottom_part">
@@ -116,7 +133,7 @@
                     <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
                         {#if innerWidth >= 950} Instagram {/if} <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks"></a>
                 </div>
-                <p class="emailAdress_Text">artemdamin@gmail.com</p>
+                <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin@gmail.com">artemdamin@gmail.com</a>
             </div>
         </div>
     </div>
@@ -133,7 +150,7 @@
     }
     main.svelte_main{
         overflow-y: scroll;
-        height: 100svh;
+        height: 100dvh;
         scroll-snap-type: block mandatory;
     }
     :global(body)::-webkit-scrollbar {
@@ -214,7 +231,7 @@
     }
     .title_name{
         font-size: max(15vw, 7rem);
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
     }
 
@@ -282,7 +299,7 @@
         translate: 0% 15%;
     }
     .contact_title{
-        font-family: 'Brolimo';
+        font-family: 'Brolimo', system-ui, sans-serif;
         font-size: max(12.5vw, 7.5rem);
         margin: 0;
         align-self: flex-start;
@@ -292,32 +309,77 @@
         width: 100%;
         display: grid;
         grid-template-columns: 3fr 2.5fr 3.5fr;
-        grid-auto-rows: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-auto-rows: 0.5fr;
         gap: 1.7vw 0.85vw;
     }
     .form_item{
         color: var(--text_color_gray50);
-        font-family: 'Neutral_Bold';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         letter-spacing: max(0.05vw, 0.07rem);
         font-size: max(1vw, 0.9rem);
         padding: max(1.25vw, 1.1rem) max(2vw, 1.75rem);
-        border-radius: 50rem;
+        border-radius: max(2.5rem, 2.5vw);
         border: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
         background-color: var(--background_color_lightYellow);
     }
     .form_item:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
     }
-    select{
-        color: var(--text_color_gray50);
-        font-size: max(1vw, 0.9rem);;
-        border-radius: 50rem;
-        outline: 0;
-        background-color: var(--background_color_lightYellow);
-        cursor: pointer;
-    }
     .form_item.itemUserText{
-        grid-area: 2 / 1 / 3 / 4;
+        grid-area: 2 / 1 / 4 / 4;
+        line-height: max(1.5rem, 2vh);
+    }
+    .form_item.itemUserText::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    .form_item.itemUserText::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    .form_item.itemUserText::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_lightCyanSaturated);
+        border-radius: 5rem;
+    }
+
+    .form_item.itemtypeOfWork{
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        border-radius: max(2.5rem, 2.5vw) max(2.5rem, 2.5vw) 0 0;
+        color: var(--text_color_gray50);
+    }
+    .Global_arrowDropdownMenu{
+        position: absolute;
+        height: 50%;
+        right: 6%;
+    }
+    .typeOfWork_optionMenu{
+        box-sizing: border-box;
+        position: absolute;
+        inset: calc(100% + max(4px, 0.250vw)) 0 auto 0;
+        width: 100%;
+        background-color: var(--background_color_lightYellow);
+        color: var(--text_color_gray90);
+        border-radius: 0 0 max(2rem, 2vw) max(2rem, 2vw);
+        outline: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: max(3rem, 7vh);
+        align-items: center;
+    }
+    .tow_option{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
+        padding: 0 7.5%;
+        height: 100%;
+        z-index: 999;
+    }
+    .tow_option:last-child{
+        border-bottom: none;
     }
     /* Bottom part -------------------------------------------------------------------------------------------------- */
     .links_bottom_part{
@@ -327,13 +389,15 @@
         width: 100%;
     }
     .emailAdress_Text{
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         font-size: var(--text_size_small);
         background-image: linear-gradient(hsl(169, 14%, 85%) 0%, hsl(169, 14%, 85%) 65%, var(--background_color_lightCyan) 100%);
         background-size: 0% 100%;
         background-position: left bottom;
         background-repeat: no-repeat;
         transition: background-size 0.2s ease-out;
+        text-decoration: none;
+        color: var(--text_color_gray90);
     }
     .emailAdress_Text:hover{
         background-size: 100% 100%;
@@ -346,7 +410,7 @@
     }
     
     .links > a{
-        font-family: 'Neutral_Bold';
+        font-family: 'Neutral_Bold', system-ui, sans-serif;
         text-decoration: none;
         font-size: var(--text_size_extra_small);
         letter-spacing: 0.07rem;
@@ -402,11 +466,11 @@
     @media (width < 1100px) {
         .contact_form_grid{
             grid-template-columns: 3fr 2.5fr;
-            grid-auto-rows: 1fr;
+            grid-template-rows: repeat(3, 1fr);
             gap: 2.5vw 1vw;
         }
         .form_item.itemUserText{
-            grid-area: 3 / 1 / 4 / 3;
+            grid-area: 3 / 1 / 5 / 3;
         }
         .form_item.itemEmail{
             grid-area: 2 / 1 / 3 / 3;
@@ -428,7 +492,8 @@
     @media (width < 815px) {
         .contact_form_grid{
             grid-template-columns: 1fr;
-            grid-auto-rows: 1fr 1fr 1fr 1fr 3vh;
+            grid-template-rows: repeat(4, 1fr);
+            grid-auto-rows: 1.5fr;
             gap: 2.5vw 1vw;
         }
         #Contact_BackgroundDecor{
@@ -479,6 +544,11 @@
         }
         .emailAdress_Text{
             margin: 0;
+        }
+    }
+    @media (height < 800px) {
+        .contact_form_grid{
+            grid-auto-rows: 0.8fr;
         }
     }
 

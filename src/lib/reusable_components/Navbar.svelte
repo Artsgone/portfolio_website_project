@@ -58,7 +58,7 @@
         isolation: isolate;
     }
     .navbar_list > a {
-        font-family: 'Neutral_Normal';
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         text-transform: uppercase;
         display: flex;
         align-items: center;
