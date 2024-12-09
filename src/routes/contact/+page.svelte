@@ -16,6 +16,7 @@
     import Telegram_Icon from '$lib/svg_files/Contact/Contact_Telegram_Icon.svg'
     import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
     import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
+    import submitButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
     import { onMount } from "svelte";
     import { fade, fly } from 'svelte/transition';
@@ -52,7 +53,6 @@
     $: innerHeight = 0;
     $: y = 0;
     let svelte_main_element;
-    let optionMenuShow = false;
     
     let newY = [];
     $: oldY = newY[1];
@@ -65,6 +65,35 @@
         newY=newY;
     }
     
+    let optionMenuShow = false;
+    let border_radius = "inherit"
+    let arrow_rotation = "1"
+
+    function optionMenuShowToggle() {
+        if (!optionMenuShow) {
+            border_radius = "border-radius: max(1.9rem, 2.1vw) max(1.9rem, 2.1vw) 0 0;"
+            arrow_rotation = "-1"
+            optionMenuShow = true
+        } else{
+            border_radius = "inherit"
+            arrow_rotation = "1"
+            optionMenuShow = false
+        }
+    }
+    
+
+    let optionText = ""
+    const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design"]
+
+    function optionClicked() {
+        const options = document.querySelectorAll(".tow_option")
+
+        options.forEach( (option, index) => {
+            option.addEventListener("click", (e) => {
+                optionText = typeOfWorkList[index]
+            })
+        });
+    }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -92,7 +121,7 @@
         </div>
     </div>
     <div class="default_container">
-        {#if innerWidth > 1099}
+        {#if innerWidth > 1000}
             <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor} alt="Contact_BackgroundDecor">
         {:else if innerWidth < 600}
             <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor_Mobile_Small} alt="Contact_BackgroundDecor_Mobile_Small">
@@ -103,16 +132,21 @@
             <p class="contact_title darkgrayText">Contact me</p>
             <div class="contact_form_grid">
                 <input type="text" class="form_item itemName" placeholder="Your name:">
-                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" on:keypress={() => {optionMenuShow = !optionMenuShow}} on:click={() => {optionMenuShow = !optionMenuShow}}>
-                    Type of work
-                    <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu"> 
+                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius} on:keypress={optionMenuShowToggle} on:click={optionMenuShowToggle}>
+                    {#if optionText == ""}
+                        Type of work
+                    {:else}
+                        {optionText}
+                    {/if}
+                    
+                    <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
                     {#if optionMenuShow}
-                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}}>
-                            <div class="tow_option">Option 1</div>
-                            <div class="tow_option">Option 2</div>
-                            <div class="tow_option">Option 3</div>
-                            <div class="tow_option">Option 4</div>
-                            <div class="tow_option">Option 5</div>
+                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked>
+                            <div class="tow_option">Web design</div>
+                            <div class="tow_option">Logo design</div>
+                            <div class="tow_option">Poster design</div>
+                            <div class="tow_option">Visual identity</div>
+                            <div class="tow_option">Product design</div>
                         </div>
                     {/if}
                 </div>
@@ -125,13 +159,16 @@
                 </select> -->
                 <input type="text" class="form_item itemEmail" placeholder="Your email:">
                 <textarea rows={numberOfRows} class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
+                <button type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
             </div>
             <div class="links_bottom_part">
                 <div class="links">
                     <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Telegram_Icon" src={Telegram_Icon} alt="Telegram_Icon"> 
-                        {#if innerWidth >= 950} Telegram {/if} <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks"></a>
+                        <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
+                    </a>
                     <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
-                        {#if innerWidth >= 950} Instagram {/if} <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks"></a>
+                        <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
+                    </a>
                 </div>
                 <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin@gmail.com">artemdamin@gmail.com</a>
             </div>
@@ -295,7 +332,7 @@
     #Contact_BackgroundDecor{
         width: 100%;
         position: absolute;
-        z-index: 0;
+        z-index: -1;
         translate: 0% 15%;
     }
     .contact_title{
@@ -312,23 +349,26 @@
         grid-template-rows: repeat(2, 1fr);
         grid-auto-rows: 0.5fr;
         gap: 1.7vw 0.85vw;
+
+        position: relative;
     }
     .form_item{
-        color: var(--text_color_gray50);
+        color: var(--text_color_gray90);
         font-family: 'Neutral_Normal', system-ui, sans-serif;
         letter-spacing: max(0.05vw, 0.07rem);
         font-size: max(1vw, 0.9rem);
         padding: max(1.25vw, 1.1rem) max(2vw, 1.75rem);
-        border-radius: max(2.5rem, 2.5vw);
+        border-radius: max(1.9rem, 2.1vw);
         border: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
         background-color: var(--background_color_lightYellow);
     }
     .form_item:focus-visible{
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+        outline: max(0.2rem, 0.2vw) var(--background_color_lightCyan) solid;
     }
     .form_item.itemUserText{
         grid-area: 2 / 1 / 4 / 4;
         line-height: max(1.5rem, 2vh);
+        resize: none;
     }
     .form_item.itemUserText::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -346,13 +386,16 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        border-radius: max(2.5rem, 2.5vw) max(2.5rem, 2.5vw) 0 0;
-        color: var(--text_color_gray50);
+        
+        color: var(--text_color_gray90);
+        transition: border-radius 0.15s ease-in-out;
     }
+
     .Global_arrowDropdownMenu{
         position: absolute;
         height: 50%;
         right: 6%;
+        transition: scale 0.25s ease;
     }
     .typeOfWork_optionMenu{
         box-sizing: border-box;
@@ -361,26 +404,80 @@
         width: 100%;
         background-color: var(--background_color_lightYellow);
         color: var(--text_color_gray90);
-        border-radius: 0 0 max(2rem, 2vw) max(2rem, 2vw);
+        border-radius: 0 0 max(1.5rem, 2vw) max(1.5rem, 2vw);
         outline: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
 
         display: grid;
         grid-template-columns: 1fr;
-        grid-auto-rows: max(3rem, 7vh);
+        grid-auto-rows: max(3.75vw, 6vh);
         align-items: center;
+        max-height: 350%;
+        overflow-y: scroll;
+        overscroll-behavior: none;
+    }
+    .typeOfWork_optionMenu::-webkit-scrollbar {
+        width: max(0.5em, 0.5vw);
+    }
+    .typeOfWork_optionMenu::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    .typeOfWork_optionMenu::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+        border-radius: 5rem;
     }
     .tow_option{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
         padding: 0 7.5%;
         height: 100%;
         z-index: 999;
+        cursor: pointer;
     }
-    .tow_option:last-child{
-        border-bottom: none;
+    .tow_option:nth-child(2n){
+        background-color: var(--background_color_lightCyan_lowerOpacity025);
     }
+    .tow_option:hover{
+        background-color: var(--cyan_outline_bright);
+        color: var(--text_color_gray5);
+    }
+
+    .submitButton{
+        position: absolute;
+        width: max(4vw, 3.5rem);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        inset: auto min(0.9rem, 2.5vw) min(0.9rem, 2.5vw) auto;
+
+        background: radial-gradient(var(--background_color_lightCyanSaturated) 25%, var(--background_color_lightCyan) 100%);
+        /* border: max(4px, 0.250vw) var(--cyan_outline) solid; */
+        border: none;
+        cursor: pointer;
+    }
+    .submitButtonArrow{
+        height: 45%;
+        aspect-ratio: 1;
+        rotate: 180deg;
+        
+    }
+    .submitButton:hover > .submitButtonArrow{
+        animation: arrowIcon_animation .5s ease-in-out;
+    }
+    @keyframes arrowIcon_animation{
+        0%, 100% {
+            translate: 0% 0;
+        }
+        50%{
+            translate: 10% 0;
+        }
+        60%{
+            translate: 15% 0;
+        }
+        90%{
+            translate: -5% 0;
+        }
+    }
+
     /* Bottom part -------------------------------------------------------------------------------------------------- */
     .links_bottom_part{
         display: flex;
@@ -410,12 +507,12 @@
     }
     
     .links > a{
-        font-family: 'Neutral_Bold', system-ui, sans-serif;
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
         text-decoration: none;
         font-size: var(--text_size_extra_small);
         letter-spacing: 0.07rem;
         background-color: var(--background_color_lightCyanSaturated);
-        box-shadow: inset -0.2rem 0.2rem 1rem 0.75rem var(--background_color_lightCyan);
+        box-shadow: inset -0.2rem 0.2rem max(1rem, 1vw) max(0.75rem, 0.75vw) var(--background_color_lightCyan);
         border-radius: 50rem;
         width: 100%;
         padding: max(1.25vw, 1.15rem) max(2vw, 1.75rem);   
@@ -423,17 +520,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1.25rem;
+        gap: max(1.5rem, 1.75vw);
         transition: translate 0.15s ease-out, box-shadow 0.2s ease-in-out;
         position: relative;
     }
     .links > a:hover{
         translate: 3% -9%;
-        box-shadow: inset 0.4rem -0.5rem 1rem 1rem var(--background_color_lightCyan);
     }
     .links > a:focus-visible{
         translate: 3% -9%;
-        box-shadow: inset 0.4rem -0.5rem 1rem 1rem var(--background_color_lightCyan);
     }
     a::after{
         content: "";
@@ -503,7 +598,6 @@
         .form_item{
             font-size: max(1vw, 0.85rem);
             padding: max(1vw, 0.9rem) max(2vw, 1.75rem);
-            border-radius: 1.75rem;
         }
         .form_item.itemUserText{
             grid-area: 4 / auto / 6 / auto;
@@ -512,6 +606,10 @@
             grid-area: auto;
         } 
         
+        .typeOfWork_optionMenu{
+            max-height: 425%;
+            grid-auto-rows: max(3.25rem, 5.5vh);
+        }
     }
     @media (width < 650px) {
         .content_container.contact_page{
@@ -551,7 +649,7 @@
             grid-auto-rows: 0.8fr;
         }
     }
-
+/* --------------------------------------------------------------- */
     @media (width < 1100px) {
         .content_container{
             width: 85%;

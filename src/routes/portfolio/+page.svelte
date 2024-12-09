@@ -38,6 +38,8 @@
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
+    import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TimerForWork.png'
+    import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -238,8 +240,8 @@
             <p class="largeWorks_upperText">Other projects</p>
             <div class="largeWorks_preview_grid">
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr"> </a>
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
             </div>
         </div>

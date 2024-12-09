@@ -1,11 +1,15 @@
 <script>
     import { fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
+
+    import backButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 </script>
 
 <div class="sticky_navbar_container">
-    <div class="sticky_navbar_wrapper" transition:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-50'}}>
-        <a href="/portfolio#largeWorksID" class="back_button"> Back </a>
+    <div class="sticky_navbar_wrapper" >
+        <a transition:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-50'}} href="/portfolio#largeWorksID" class="back_button"> 
+            <img class="backButtonArrow" src={backButtonArrow} alt="backButtonArrow"> Back 
+        </a>
     </div>
 </div>
 
@@ -26,7 +30,7 @@
 
     .sticky_navbar_container{
         width: 100%;
-        height: 10vh;
+        height: max(12.5vh, 5rem);
         position: fixed;
         z-index: 999;
 
@@ -44,17 +48,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: max(10%, 7.5rem);
-        height: 7vh;
-        font-size: max(1.5rem, 1.5vw);
+        gap: 0 max(0.75vw, 0.75rem);
+        width: max(10%, 9.5rem);
+        height: max(7vh, 3.5rem);
+        font-size: max(1.4rem, 1.4vw);
         text-decoration: none;
         font-family: 'Neutral_Normal', system-ui, sans-serif;
         color: var(--text_color_gray5);
-        background-color: var(--background_color_lightCyan_lowerOpacity025);
-        backdrop-filter: blur(1rem);
+        backdrop-filter: blur(0.5rem) invert(0.2);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
+        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
 
         border: max(4px, 0.250vw) var(--background_color_lightCyan) solid;
         border-radius: max(1vw, 1rem);
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
+    }
+    .backButtonArrow{
+        height: 45%;
+        aspect-ratio: 1;
+        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
     }
 </style>

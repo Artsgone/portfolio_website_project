@@ -96,8 +96,8 @@
                     <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
                     | Field - Cybernetic security |<br> <br>
                    
-                    <span class="time_range grayText65">2024-2069</span> - <span class="university_name">Lorem Ipsum university</span> <br>
-                    | Field - Wheat |<br>
+                    <span class="time_range grayText65">202x-202x</span> - <span class="university_name">... university</span> <br>
+                    | Field - ... |<br>
                 </p>
             </div>
         </div>
@@ -115,8 +115,8 @@
                 <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
                  <p class="darkgrayText">
                     English - B2 / C1 <br>
-                    Russian - Native <br>
-                    Czech - Fluent
+                    Czech - Fluent <br>
+                    Russian - Fluent
                 </p>
             </div>
             <p class="grayText65">LANGUAGES</p>
@@ -157,7 +157,7 @@
                 </p>
                 <p class="rounded darkgrayText">
                     <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                    Aiming for a hardwork to achieve the best result possible.
+                    Aiming for hardwork to achieve the best result possible.
                 </p>
                 <p class="darkgrayText">
                     <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
@@ -458,7 +458,7 @@
             width: 100%;
         }
         .default_container.def_skills_title{
-            height: 60vh;
+            height: 40vh;
         }
     }
 

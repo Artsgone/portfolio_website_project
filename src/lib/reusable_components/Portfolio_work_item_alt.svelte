@@ -104,7 +104,7 @@
                     </div>
                 </div>
                     <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                        <img loading="lazy" class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                        <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
                     </div>
                     {#if enableScrollAllow && description_box_height > 300}
                         <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
@@ -276,6 +276,7 @@
             grid-template-rows: 1.5fr 1fr;
             gap: max(2rem + 2.5vh, 3.5vw) 0;
             overflow-x: clip;
+            overflow-clip-margin: 1rem;
 
             position: relative;
             isolation: isolate;
@@ -286,16 +287,16 @@
             width: 105%;
             translate: 0 2.5vh;
             height: calc(100% - var(--imageHeight) - 10vh);
-            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow));
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 25%);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative));
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 25%);
             backdrop-filter: blur(5px);
-            border-radius: max(2vw, 2rem);
+            border-radius: max(1vw, 1rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 1.25vh 0;
-            z-index: 1;
+            z-index: 501;
 
             font-family: 'Subjectivity_Regular', system-ui, sans-serif;
             /* text-transform: uppercase; */
@@ -312,8 +313,8 @@
             height: 8%;
             display: var(--displayFadeMobile);
             bottom: calc((var(--fade_offsetMobile) * -1) - 10px);
-            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 85%);
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 60%);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 85%);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 60%);
             backdrop-filter: blur(5px);
             z-index: 500;
 
@@ -330,8 +331,8 @@
             height: 16%;
             translate: 0 -50%;
             top: calc(var(--fade_offsetMobile) - 5px);
-            background: linear-gradient(transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 60%, transparent);
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 0%, var(--background_color_lightYellow) 75%, transparent);
+            background: linear-gradient(transparent, var(--background_color_lightYellow_middlealternative) 15%, var(--background_color_lightYellow_middlealternative) 60%, transparent);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 0%, var(--background_color_lightYellow_middlealternative) 75%, transparent);
             backdrop-filter: blur(5px);
             z-index: 500;
         }

@@ -60,7 +60,7 @@
         <ScrollUpButton scrollToTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
-    {#if y < (innerHeight / 5) || oldY > y}
+    {#if y < (innerHeight / 10) || oldY > y}
         <Sticky_navbar />
     {/if}
 
@@ -73,12 +73,7 @@
             <div class="project_name"> Mount Fuji </div>
             <div class="project_description_wrapper">
                 <p class="project_description"> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi adipisci quo 
-                    dolorum eos accusamus dignissimos numquam ipsa rem praesentium iste magni, impedit, aliquid dolore tempora omnis beatae deleniti voluptas.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi adipisci quo 
-                    dolorum eos accusamus dignissimos numquam ipsa rem praesentium iste magni, impedit, aliquid dolore tempora omnis beatae deleniti voluptas.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi adipisci quo 
-                    dolorum eos accusamus dignissimos numquam ipsa rem praesentium iste magni, impedit, aliquid dolore tempora omnis beatae deleniti voluptas.
+                    Standing at 3,776 meters, Mt. Fuji is the tallest peak in Japan, the result of volcanic activity that began approximately 100,000 years ago. Today, Mt. Fuji and the surrounding area are a popular recreational destination for hiking, camping and relaxation.
                 </p>
             </div>
         </div>
@@ -114,7 +109,7 @@
     .default_container{
         width: 100%;
         min-height: 100svh;
-        padding-block: 10vh;
+        padding-block: max(12.5vh, 5rem);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -153,8 +148,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(var(--background_color_lightYellow) 65%, var(--background_color_lightCyan) 150%);
-        border: max(0.5rem, 0.5vw) var(--cyan_outline_bright) solid;
+        background: radial-gradient(var(--background_color_lightYellow) 50%, #683652 200%);
+        border: max(0.5rem, 0.5vw) #683652 solid;
         z-index: -1;
         border-radius: max(1vw, 1rem);
     }
@@ -165,7 +160,7 @@
         display: flex;
         justify-content: center;
         border-radius: max(1vw, 1rem);
-        padding-block: max(5vh, 1rem);
+        /* padding-block: max(5vh, 1rem); */
     }
     .project_description{
         font-family: 'Subjectivity_Regular', system-ui, sans-serif;
@@ -177,7 +172,7 @@
         hyphens: auto;
     }
     .project_description::first-letter{
-        color: var(--cyan_outline);
+        color: #683652;
         font-family: 'Misto', system-ui, sans-serif;
         initial-letter: 3 2;
         padding-right: max(0.5vw, 0.5rem);
@@ -186,8 +181,8 @@
     .project_image_wrapper{
         width: 100%;
         height: 100%;
-        border: max(0.5rem, 0.5vw) var(--background_color_alternativeLightYellow) solid;
-        background: radial-gradient(var(--background_color_lightYellow) 65%, var(--background_color_alternativeLightYellow) 150%);
+        border: max(0.5rem, 0.5vw) #988185 solid;
+        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(350, 10%, 55%) 200%);
         border-radius: max(1vw, 1rem);
 
         display: grid;
@@ -204,7 +199,7 @@
         .content_container{
             display: grid;
             grid-template-columns: 1fr;
-            gap: 3vh 0;
+            gap: 5vh 0;
             width: 87.5%;
         }
         .project_image_wrapper{
@@ -212,8 +207,8 @@
         }
 
         .project_name{
-            padding-block-end: max(2vh, 0.35rem);
-            padding-block-start: max(4vh, 1.25rem);
+            padding-block-end: max(3vh, 1.5rem);
+            padding-block-start: max(4vh, 1.75rem);
             place-self: start;
         }
         .project_description_wrapper{

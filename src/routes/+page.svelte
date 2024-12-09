@@ -124,8 +124,8 @@
 
 <svelte:window bind:innerHeight/>
 <!-- bind:scrollY={y} on:scroll={updateY} -->
-
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight};" use:observeElement >
+<!-- use:observeElement -->
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight};"  >
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -154,7 +154,7 @@
         <div class="content_container greeting_page">
             <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
             <div class="text introducing">
-                 <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI designer</span> <br> and a <span>frontend developer</span>. <br></p>
+                 <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI</span> and <br> <span>web/graphic</span> designer. <br></p>
             </div>
         </div>
     </div>
@@ -184,7 +184,7 @@
         <div bind:clientHeight={page4_totalHeight} class="content_container page4">
             <div class="left_part page4">
                 <div bind:clientHeight={sunsetInTheCloudsIMG_height} class="sunsetIMG_box">
-                    <img loading="lazy" class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                    <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
                 </div>
             </div>
             <div class="right_part page4" style="--yellowBox_height: {yellowBox_height}px">
@@ -194,16 +194,16 @@
     </div>
     <div class="default_container">
         <div class="content_container page5">
-            <img loading="lazy" class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
+            <img class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
             <div class="page5_gradient"></div>
-            <img loading="lazy" class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
+            <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
             <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
         </div>
     </div>
     <div class="default_container">
         <div class="content_container page6">
             <div class="left_part img_box">
-                <img loading="lazy" class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
+                <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
             </div>
             <div class="right_part page5">
                 <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
