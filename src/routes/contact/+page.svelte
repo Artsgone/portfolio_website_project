@@ -3,6 +3,7 @@
     import Header from '$lib/reusable_components/Header.svelte'
     import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
+    import Info_screen from '$lib/reusable_components/Info_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
     import '$lib/styles_and_fonts/fonts.css'
@@ -66,6 +67,7 @@
     }
     
     let optionMenuShow = false;
+    let infoScreenShow = false;
     let border_radius = "inherit"
     let arrow_rotation = "1"
 
@@ -94,6 +96,10 @@
             })
         });
     }
+
+    function submitEmail() {
+        infoScreenShow = true   
+    }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -103,8 +109,12 @@
         <LoadingScreen />
     {/if}
 
+    {#if infoScreenShow}
+        <Info_screen closeInfoScreen={() => {infoScreenShow = false}} />
+    {/if}
+
     {#if y > (innerHeight / 1.1) && oldY > y}
-    <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
+        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
     <div class="default_container cyan">
@@ -142,11 +152,9 @@
                     <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
                     {#if optionMenuShow}
                         <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked>
-                            <div class="tow_option">Web design</div>
-                            <div class="tow_option">Logo design</div>
-                            <div class="tow_option">Poster design</div>
-                            <div class="tow_option">Visual identity</div>
-                            <div class="tow_option">Product design</div>
+                            {#each typeOfWorkList as item,i}
+                                 <div class="tow_option">{item}</div>
+                            {/each}
                         </div>
                     {/if}
                 </div>
@@ -159,7 +167,7 @@
                 </select> -->
                 <input type="text" class="form_item itemEmail" placeholder="Your email:">
                 <textarea rows={numberOfRows} class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
-                <button type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
+                <button on:click={submitEmail} type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
             </div>
             <div class="links_bottom_part">
                 <div class="links">
@@ -400,6 +408,7 @@
     .typeOfWork_optionMenu{
         box-sizing: border-box;
         position: absolute;
+        z-index: 500;
         inset: calc(100% + max(4px, 0.250vw)) 0 auto 0;
         width: 100%;
         background-color: var(--background_color_lightYellow);
@@ -433,6 +442,7 @@
         height: 100%;
         z-index: 999;
         cursor: pointer;
+        transition: background-color 0.1s ease, color 0.1s ease;
     }
     .tow_option:nth-child(2n){
         background-color: var(--background_color_lightCyan_lowerOpacity025);
@@ -444,7 +454,7 @@
 
     .submitButton{
         position: absolute;
-        width: max(4vw, 3.5rem);
+        width: max(4vw, 3.25rem);
         aspect-ratio: 1;
         border-radius: 50%;
         inset: auto min(0.9rem, 2.5vw) min(0.9rem, 2.5vw) auto;
@@ -453,6 +463,7 @@
         /* border: max(4px, 0.250vw) var(--cyan_outline) solid; */
         border: none;
         cursor: pointer;
+        z-index: 1;
     }
     .submitButtonArrow{
         height: 45%;
@@ -644,7 +655,7 @@
             margin: 0;
         }
     }
-    @media (height < 800px) {
+    @media (height < 700px) {
         .contact_form_grid{
             grid-auto-rows: 0.8fr;
         }

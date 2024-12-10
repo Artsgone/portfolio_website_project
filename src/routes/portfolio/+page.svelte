@@ -588,9 +588,6 @@
         aspect-ratio: 1;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
     }
-    /* .close_button:hover > .Global_closeIcon{
-        scale: 1.065;
-    } */
     .close_button:hover > .Global_closeIcon{
         animation: closeIcon_animation .5s ease-in-out;
     }

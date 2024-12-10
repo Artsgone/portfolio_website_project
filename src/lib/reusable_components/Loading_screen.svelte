@@ -16,14 +16,12 @@
         z-index: 9999;
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         inset: -10% -10% -10% -10%;
-        transition: all 1s ease-in;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Brolimo', system-ui, sans-serif;
+        /* font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--text_size_medium_big);
-        color: var(--text_color_gray5);
-        translate: 0 -2.5%;
+        color: var(--text_color_gray5); */
 
         display: flex;
         flex-direction: column;
@@ -31,6 +29,7 @@
     }
     .loadingSpinner{
         width: max(10rem, 12.5vw);
+        translate: 0 -2.5%;
         animation: loadingSpinner 2s ease-in-out alternate both infinite, scaleSpinner 1s ease-out forwards infinite;
     }
     @keyframes loadingSpinner{

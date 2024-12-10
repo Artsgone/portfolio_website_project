@@ -19,6 +19,12 @@
     import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.jpg'
     import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.jpg'
     import goldenLeaves from '$lib/compressed_images/golden_leaves.jpg'
+    import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
+    import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
+    import Street from '$lib/compressed_images/Street.jpg'
+    import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
+    import Violet_flowers from '$lib/compressed_images/Violet_flowers.jpg'
+    import Modern_building from '$lib/compressed_images/Modern_building.jpg'
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
     import '$lib/styles_and_fonts/fonts.css'
@@ -198,6 +204,7 @@
             <div class="page5_gradient"></div>
             <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
             <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
+            <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
         </div>
     </div>
     <div class="default_container">
@@ -205,9 +212,33 @@
             <div class="left_part img_box">
                 <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
             </div>
-            <div class="right_part page5">
+            <div class="right_part page6">
                 <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
                 <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
+            </div>
+        </div>
+    </div>
+    <div class="default_container">
+        <div class="content_container page7">
+            <div class="image_wrapper_page7">
+                <img class="Violet_flowers" src={Violet_flowers} alt="Violet_flowers">
+            </div>
+            
+            <div class="text_wrapper_page7 firstLayer lightgrayText">
+                <p>Rusty steel, rough concrete</p>
+            </div>
+            <div class="text_wrapper_page7 secondLayer">
+                <p>Rusty steel, rough concrete</p>
+            </div>
+        </div>
+    </div>
+    <div class="default_container">
+        <div class="content_container page8">
+            <div class="text_wrapper_page8 darkgrayText">
+                <p>Thoughts transparent as water in the ocean</p>
+            </div>
+            <div class="image_wrapper_page8">
+                <img class="Modern_building" src={Modern_building} alt="Modern_building">
             </div>
         </div>
     </div>
@@ -279,6 +310,9 @@
     .lightgrayText{
         color: var(--text_color_gray5);
     }
+    .blured{
+        filter: blur(max(0.75rem, 1vw));
+    }
     .default_container.cyan{
         height: 100svh;
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
@@ -288,6 +322,9 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
+    }
+    img{
+        max-width: 100%;
     }
 
     @media (width < 800px){
@@ -300,7 +337,7 @@
         }
         .default_container{
             /* height: var(--user_height); */
-            height: 100dvh;
+            height: 100vh;
         }
         main.svelte_main::-webkit-scrollbar {
             display: none;
@@ -814,9 +851,9 @@
         scale: -1 1;
     } 
     .page5_title_text{
-        font-family: 'Neutral_Normal', system-ui, sans-serif;
+        font-family: 'Misto', system-ui, sans-serif;
         text-align: center;
-        font-size: max(6.5vw, 4rem);
+        font-size: max(7.5vw, 5rem);
         line-height: max(6.5vw, 4rem);
         position: absolute;
         place-self: center;
@@ -827,6 +864,7 @@
         opacity: 0.75;
         background: linear-gradient(-25deg, hsl(93, 8%, 40%), hsl(94, 8%, 65%));
     }
+    
 
     @media (width < 800px) {
         .content_container.page5{
@@ -841,7 +879,7 @@
         }
     }
 
-    /* PAGE 5 */
+    /* PAGE 6 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
     .content_container.page6{
@@ -850,7 +888,7 @@
         grid-template-rows: 1fr;
         gap: max(3vw, 5vh);
     }
-    .right_part.page5{
+    .right_part.page6{
         width: 50%;
         height: 100%;
         display: flex;
@@ -886,7 +924,7 @@
             grid-template-columns: 1fr;
             grid-template-rows: 1.6fr 1fr;
         } 
-        .right_part.page5{
+        .right_part.page6{
             width: 100%;
             align-items: start;
         }
@@ -906,19 +944,109 @@
         }
     }
 
-    /* PAGE 6 */
+    /* PAGE 7 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
+    .content_container.page7{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+
+        overflow: clip;
+        border-radius: max(1vw, 1rem);
+        position: relative;
+        isolation: isolate;
+    }
+    .image_wrapper_page7{
+        max-width: 100%;
+        min-height: 100%;
+    }
+    .Violet_flowers{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* scale: -1 1; */
+    }
+    
+    .text_wrapper_page7{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family: 'Misto';
+        font-size: max(4.5rem, 8vw);
+        line-height: max(6rem, 10vw);
+        inset: 10%;
+    }
+    .text_wrapper_page7.firstLayer{
+        z-index: 2;
+    }
+    .text_wrapper_page7.secondLayer{
+        color: var(--background_color_alternativeLightYellow);
+        filter: blur(max(0.75rem, 1vw));
+        z-index: 1;
+    }
+    @media (width < 1100px) {
+        .text_wrapper_page7{
+            font-size: min(4.5rem, 11vw);
+            line-height: min(6rem, 15vw);
+        }
+    }
+
+/* ------------------------------------- */
+    .content_container.page8{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        gap: max(5vw, 5vh);
+
+        overflow: clip;
+        border-radius: max(1vw, 1rem);
+        position: relative;
+        isolation: isolate;
+    }
+    .image_wrapper_page8{
+        max-width: 100%;
+        min-height: 100%;
+    }
+    .Modern_building{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: max(1vw, 1rem);
+    }
+    .text_wrapper_page8{
+        display: flex;
+        align-items: center;
+
+        font-family: 'Vetrino';
+        font-size: max(3rem, 3.5vw);
+        line-height: max(3rem, 3.5vw);
+    }
+
+    @media (width < 1100px) {
+        .content_container.page8{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 2fr;
+        }
+        .text_wrapper_page8{
+            font-size: min(3rem, 5vh);
+            line-height: min(3rem, 5vh);
+        }
+    }
+
+/* ------------------------------------- */
     @media (width < 1100px) {
         .content_container{
             width: 85%;
             height: 87.5%;
         }
-    }     
+    }
     @media (width < 1100px) and (height < 690px){ 
         .content_container{
             width: 85%;
             height: 90%;
         }
-    }  
+    }
 </style>
