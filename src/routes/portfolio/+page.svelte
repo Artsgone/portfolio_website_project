@@ -40,6 +40,8 @@
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
     import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TimerForWork.png'
     import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
+    import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
+    import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -146,7 +148,7 @@
         <div class="content_container work_summary_page">
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="hover">
+            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="tap">
 
                 <a href="#Art" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
@@ -242,7 +244,9 @@
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork"> </a>
                 <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr"> </a>
+                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji"> </a>
             </div>
         </div>
     </div>
@@ -363,7 +367,7 @@
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         position: relative;
         z-index: 0;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         scroll-snap-stop: always;
     }
     .endless{
@@ -772,14 +776,14 @@
     /* General media ------------------------------------------------------------------------------------------------------------*/
     @media (width < 1100px) {
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 87.5%;
         }
-    }     
+    }
     @media (width < 1100px) and (height < 690px){ 
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 90%;
         }
-    }  
+    }
 </style>

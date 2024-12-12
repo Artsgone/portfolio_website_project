@@ -5,7 +5,6 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
-    // import intersectionObs from '$lib/intersectionObserver.js'
 //
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
@@ -41,18 +40,17 @@
     
     let pageLoaded = false;
     $: innerHeight = 0;
-    let userScreenHeight = 0;
+    let previousScreenHeight = 0;
     $: sunsetInTheCloudsIMG_height = 0;
     $: page4_totalHeight = 0;
     let yellowBox_height = 0;
 
     onMount(() => {
         yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
-        userScreenHeight = innerHeight;
-        // console.log(userScreenHeight)
+        // previousScreenHeight = innerHeight;
+        
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
-            // console.log(oldScrollY)
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true;
@@ -81,13 +79,11 @@
     $: oldY = newY[1];
     function updateY(event){
         y = svelte_main_element.scrollTop;
-        // console.log(y)
         newY.push(y);
         if(newY.length > 5) {
             newY.shift();
         }
         newY=newY;
-        // console.log(newY)
     }
 
     function observeElement() {
@@ -126,12 +122,22 @@
     //         console.log(container, containerIndex)
     //     })
     // }
+
+	// let innerHeightChange;
+	// let innerHeightHasChanged = false;
+	
+    // $: if (!innerHeightHasChanged && previousScreenHeight > innerHeight) {
+    //     innerHeightChange = "100svh"
+    //     innerHeightHasChanged = true
+    // }
+    
 </script>
 
-<svelte:window bind:innerHeight/>
+<svelte:window bind:innerHeight />
 <!-- bind:scrollY={y} on:scroll={updateY} -->
 <!-- use:observeElement -->
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} style="--user_height: {userScreenHeight};"  >
+<!-- style="--user_height: {innerHeightChange};" -->
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -290,7 +296,7 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         scroll-snap-stop: always;
 
         /* opacity: 0.5; */
@@ -330,15 +336,14 @@
     @media (width < 800px){
         /* main.svelte_main{
             scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main {
-            /* height: var(--user_height); */
+            height: var(--user_height);
             height: 100dvh;
-        }
-        .default_container{
-            /* height: var(--user_height); */
+        } */
+        /* .default_container{
+            height: var(--user_height, 100vh);
+            transition: height 0.5s ease-in;
             height: 100vh;
-        }
+        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -1020,9 +1025,9 @@
         display: flex;
         align-items: center;
 
-        font-family: 'Vetrino';
-        font-size: max(3rem, 3.5vw);
-        line-height: max(3rem, 3.5vw);
+        font-family: 'Neutral_Normal';
+        font-size: max(3rem, 3.25vw);
+        line-height: max(3rem, 3.25vw);
     }
 
     @media (width < 1100px) {
@@ -1031,21 +1036,21 @@
             grid-template-rows: 1fr 2fr;
         }
         .text_wrapper_page8{
-            font-size: min(3rem, 5vh);
-            line-height: min(3rem, 5vh);
+            font-size: min(3rem, 10vw);
+            line-height: min(3rem, 10vw);
         }
     }
 
 /* ------------------------------------- */
     @media (width < 1100px) {
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 87.5%;
         }
     }
     @media (width < 1100px) and (height < 690px){ 
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 90%;
         }
     }

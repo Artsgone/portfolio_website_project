@@ -1,5 +1,5 @@
 <script>
-    import { fade, slide } from 'svelte/transition';
+    import { fly, scale } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -7,7 +7,7 @@
 
 </script>
 
-<div in:fade={{ delay: 0, duration: 250, easing: sineInOut}} out:fade={{ delay: 0, duration: 250, easing: sineInOut}} class="loader_animation"> 
+<div in:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 300, start: 0.9, easing: sineInOut }} class="loader_animation"> 
     <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> 
     Your email has been sent! 
     <button class="closeButton" on:click={closeInfoScreen}> <img class="Global_closeIcon" src={Global_closeIcon} alt="Global_closeIcon"> </button>
@@ -34,10 +34,11 @@
         text-align: center;
         gap: max(2vh, 2vw);
         padding-inline: max(2vw, 1.5rem);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        box-shadow: 0 max(0.5vw, 0.5vh) max(2rem, 2vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
     }
     .loadingSpinner{
         width: max(7.5rem, 10vw);
+        animation: rotateInfinately 5s linear 0.5s infinite;
     }
     
     .closeButton{
@@ -71,6 +72,15 @@
         animation: close_button_animation .5s ease-in-out;
     }
     
+    @keyframes rotateInfinately{
+        0%{
+            rotate: 0deg
+        }
+        100%{
+            rotate: 360deg;
+        }
+    }
+
     @keyframes closeIcon_animation{
         0%, 100% {
             rotate: 0deg;

@@ -24,12 +24,14 @@
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
+    let previousScreenHeight = 0;
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
+        // previousScreenHeight = innerHeight;
         pageLoaded = true;
     });
     beforeNavigate(({to, from}) => {
@@ -211,14 +213,7 @@
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
     }
-    @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
+    
 
     .default_container{
         width: 100%;
@@ -232,7 +227,7 @@
         position: relative;
         z-index: 0;
         scroll-snap-stop: always;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
     }
     .content_container{
         width: 92.5%;
@@ -252,6 +247,14 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
+    }
+    @media (width < 800px){
+        /* main.svelte_main{
+            scroll-snap-type: block mandatory;
+        } */
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -663,13 +666,13 @@
 /* --------------------------------------------------------------- */
     @media (width < 1100px) {
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 87.5%;
         }
     }
     @media (width < 1100px) and (height < 690px){ 
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 90%;
         }
     }  

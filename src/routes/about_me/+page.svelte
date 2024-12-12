@@ -20,19 +20,22 @@
     import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
     import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
 
-    $: innerWidth = 0
-	// $: innerHeight = 0
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { sineInOut } from 'svelte/easing';
     
+    $: innerWidth = 0
+	// $: innerHeight = 0
+    let previousScreenHeight = 0;
+
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
+        // previousScreenHeight = innerHeight;
         pageLoaded = true;
     });
     beforeNavigate(({to, from}) => {
@@ -196,14 +199,7 @@
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
     }
-    @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
+    
     *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -223,7 +219,7 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         scroll-snap-stop: always;
     }
     .content_container{
@@ -247,6 +243,15 @@
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
         border: none;
+    }
+
+    @media (width < 800px){
+        /* main.svelte_main{
+            scroll-snap-type: block mandatory;
+        } */
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -564,14 +569,14 @@
     /* MEDIA for content container */
     @media (width < 1100px) {
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 87.5%;
         }
-    }     
+    }
     @media (width < 1100px) and (height < 690px){ 
         .content_container{
-            width: 85%;
+            width: 87.5%;
             height: 90%;
         }
-    }  
+    }
 </style>
