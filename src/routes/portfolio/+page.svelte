@@ -92,28 +92,86 @@
     
     let portfolio_loadingScreenShow = false;
     let workPresent_Visibility = 'hidden';
-    let close_button_scale = '0.85'
     // let id = "";
 
-    function openInLargeList(){
-        portfolio_loadingScreenShow = true;
-        workPresent_Visibility = 'visible';
-        close_button_scale = '1';
-
+    function openInLargeList(idOfElement){
+        // listOfIntersectedElements.push(idOfElement)
+        // someshit++
+        const portfolio_works = document.querySelectorAll(".wep_box")
+        portfolio_works.forEach( (work, workId) => {
+            work.addEventListener("click", (e) => {
+                // listOfIntersectedElements.push(workId)
+                // someshit++
+                portfolio_loadingScreenShow = true;
+                workPresent_Visibility = 'visible';
+            })
+        })
+        
         const interval = setInterval(() => {
 			portfolio_loadingScreenShow = false
-		}, 1500);
+		}, 500);
 		return () => clearInterval(interval);
     }
     function closeInLargeList(){
         portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
-        close_button_scale = '0.85';
     }
     function hide_LoadingScreen(){
         if (portfolio_loadingScreenShow = true) {
             portfolio_loadingScreenShow = false;
         }
+    }
+
+    let intersectingElementIndex
+    let listOfIntersectedElements = []
+    $: someshit = 0;
+
+    function ifExistsInArray(idOfElement) {
+        if (listOfIntersectedElements.includes(idOfElement)) {
+            return true
+        }
+        return false
+    }
+
+    function observeElement() {
+        const default_containers = document.querySelectorAll(".classForIntersecObserver")
+        
+        // const content_containers = document.querySelectorAll(".content_container")
+        const listLenght = default_containers.length
+        let amountOfElementsObserved = 0;
+
+        const intersecObserver = new IntersectionObserver( entries => {
+        entries.forEach( entry => {
+            intersectingElementIndex = entry.target.containerIndex
+
+            if (entry.isIntersecting) {
+                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+                // console.log(intersectingElementIndex, entry.target, 'is visible');
+                listOfIntersectedElements.push(intersectingElementIndex)
+
+                // listOfIntersectedElements = listOfIntersectedElements
+                
+                someshit++
+                amountOfElementsObserved++
+                intersecObserver.unobserve(entry.target)
+                if (amountOfElementsObserved == listLenght) {
+                    intersecObserver.disconnect()
+                    console.log("DISCONNECTED")
+                }
+            }
+        })
+        },
+            { 
+                root: document.querySelector(".workPresent_wrapper"),
+                threshold: 0.1,
+                rootMargin: "0px",
+            }
+        )
+        
+        default_containers.forEach( (container, indexOfContainer) => {
+            container.containerIndex = indexOfContainer
+            intersecObserver.observe(container)
+        })
     }
 </script>
 
@@ -148,18 +206,18 @@
         <div class="content_container work_summary_page">
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="tap">
+            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="tap" use:openInLargeList>
 
-                <a href="#Art" class="work_element_preview_box wep_box1 top rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#ART" class="work_element_preview_box wep_box top rounded">
                     <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY" class="work_element_preview_box wep_box2 top mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#LXY" class="work_element_preview_box wep_box top mobile_rounded">
                     <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Architect" class="work_element_preview_box wep_box3 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Architect" class="work_element_preview_box wep_box top rounded mobile_left">
                     <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -168,25 +226,25 @@
                 <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
                 </div>
-                <a href="#Artsgone" class="work_element_preview_box wep_box4 bottom rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Artsgone" class="work_element_preview_box wep_box bottom rounded">
                     <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Omic" class="work_element_preview_box wep_box5 bottom mobile_rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Omic" class="work_element_preview_box wep_box bottom mobile_rounded mobile_left">
                     <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Lexi2" class="work_element_preview_box wep_box6 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Lexi2" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
                     <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Anata" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Anata" class="work_element_preview_box wep_box top rounded mobile_left">
                     <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Bena" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Bena" class="work_element_preview_box wep_box top">
                     <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#MR. Gummy" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#MR. Gummy" class="work_element_preview_box wep_box top rounded mobile_left mobile_rounded ">
                     <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <div class="work_element_preview_box blank">
@@ -195,25 +253,25 @@
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY2" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#LXY2" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Antic Museum" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Antic Museum" class="work_element_preview_box wep_box bottom mobile_left">
                     <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Nameless sadas" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Nameless sadas" class="work_element_preview_box wep_box bottom mobile_left rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
 
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Roe" class="work_element_preview_box wep_box7 top rounded mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Roe" class="work_element_preview_box wep_box top rounded mobile_left">
                     <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Wappa" class="work_element_preview_box wep_box8 top" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Wappa" class="work_element_preview_box wep_box top">
                     <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#W(in) logo" class="work_element_preview_box wep_box9 top rounded mobile_left mobile_rounded " on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#W(in) logo" class="work_element_preview_box wep_box top rounded mobile_left mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                 <div class="work_element_preview_box blank">
@@ -222,16 +280,16 @@
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#Toreno" class="work_element_preview_box wep_box10 bottom rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Toreno" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
-                <a href="#Lanobi" class="work_element_preview_box wep_box11 bottom mobile_left" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Lanobi" class="work_element_preview_box wep_box bottom mobile_left">
                     <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#Dajy" class="work_element_preview_box wep_box12 bottom mobile_left rounded mobile_rounded" on:click={openInLargeList} on:keypress={openInLargeList}>
+                <a href="#Dajy" class="work_element_preview_box wep_box bottom mobile_left rounded mobile_rounded">
                     <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
                 </a>
             </div>
@@ -252,58 +310,137 @@
     </div>
 
     {#if workPresent_Visibility == 'visible'}
-        <button in:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 300, start: 0.75, easing: sineInOut }} class="close_button" on:click={closeInLargeList} style="scale: {close_button_scale};"><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
+        <button in:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} class="close_button" on:click={closeInLargeList}><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
     {/if}
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
+    <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" bind:this={workPresent_wrapper_bind} on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
-                <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
-                <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
-                <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
-            </WorkPresent>
-
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
-                 It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
-                  It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
-                   It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists.
-                    It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists." workElementVisibility={workPresent_Visibility} />
+        <div class="workPresent_wrapper" use:observeElement bind:this={workPresent_wrapper_bind} in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
+            
+            <div id="ART" class="classForIntersecObserver">
+                {#if ifExistsInArray(0) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                        <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
+                        <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
+                        <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
+                    </WorkPresent>
+                {/if}
+            </div>
                 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Dajy" class="classForIntersecObserver">
+                {#if ifExistsInArray(1) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet..." />
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Roe" class="classForIntersecObserver">
+                {#if ifExistsInArray(2) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Wappa" class="classForIntersecObserver">
+                {#if ifExistsInArray(3) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
+            
+            <div id="Architect" class="classForIntersecObserver">
+                {#if ifExistsInArray(4) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Toreno" class="classForIntersecObserver">
+                {#if ifExistsInArray(5) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Artsgone" class="classForIntersecObserver">
+                {#if ifExistsInArray(6) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Lexi" class="classForIntersecObserver">
+                {#if ifExistsInArray(7) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="LXY" class="classForIntersecObserver">
+                {#if ifExistsInArray(8) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Lanobi" class="classForIntersecObserver">
+                {#if ifExistsInArray(9) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Lexi2" class="classForIntersecObserver">
+                {#if ifExistsInArray(10) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="LXY2" class="classForIntersecObserver">
+                {#if ifExistsInArray(11) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Antic Museum" class="classForIntersecObserver">
+                {#if ifExistsInArray(12) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Anata" class="classForIntersecObserver">
+                {#if ifExistsInArray(13) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="A/R" class="classForIntersecObserver">
+                {#if ifExistsInArray(14) && someshit > 0}
+                    <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
+            <div id="Omic" class="classForIntersecObserver">
+                {#if ifExistsInArray(15) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="Nameless sadas" class="classForIntersecObserver">
+                {#if ifExistsInArray(16) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art" workElementVisibility={workPresent_Visibility}/>
+            <div id="MR. Gummy" class="classForIntersecObserver">
+                {#if ifExistsInArray(17) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art"/>
+                {/if}
+            </div>
 
-            <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText="" workElementVisibility={workPresent_Visibility}> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
+            <div id="Bena" class="classForIntersecObserver">
+                {#if ifExistsInArray(18) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
+                {/if}
+            </div>
 
-                <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W" workElementVisibility={workPresent_Visibility}/>
+            <div id="W(in) logo" class="classForIntersecObserver">
+                {#if ifExistsInArray(19) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
+                {/if}
+            </div>
+        
         </div>
     {/if}
     
@@ -385,6 +522,13 @@
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
         border-bottom: none;
+    }
+    .classForIntersecObserver{
+        /* background-color: var(--background_color_lightCyan); */
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        background-color: var(--background_color_lightYellow);
+        box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
     }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -623,8 +767,11 @@
     }
     .workPresent_wrapper{
         /* scroll-behavior: smooth; */
-        display: flex;
-        flex-direction: column;
+        /* display: flex;
+        flex-direction: column; */
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 100dvh;
         position: fixed;
         overflow-y: scroll;
         scroll-snap-type: block mandatory;

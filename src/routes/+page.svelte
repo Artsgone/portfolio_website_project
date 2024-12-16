@@ -34,19 +34,19 @@
     // import { writable } from 'svelte/store'
     // import { browser } from "$app/environment"
 
-    import { onMount, tick, onDestroy } from "svelte";
+    import { onMount } from "svelte";
     import { fade, fly } from 'svelte/transition';
     import { quintOut, sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
     $: innerHeight = 0;
-    let previousScreenHeight = 0;
-    $: sunsetInTheCloudsIMG_height = 0;
-    $: page4_totalHeight = 0;
-    let yellowBox_height = 0;
+    // let previousScreenHeight = 0;
+    // $: sunsetInTheCloudsIMG_height = 0;
+    // $: page4_totalHeight = 0;
+    // $: yellowBox_height = 100;
 
     onMount(() => {
-        yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
+        
         // previousScreenHeight = innerHeight;
         
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
@@ -86,20 +86,41 @@
         newY=newY;
     }
 
+    
+
+    let intersectingElementIndex
+    let listOfIntersectedElements = []
+    $: someshit = 0;
+
+    function ifExistsInArray(idOfElement) {
+        if (listOfIntersectedElements.includes(idOfElement)) {
+            return true
+        }
+        return false
+    }
+
     function observeElement() {
         const default_containers = document.querySelectorAll(".default_container")
         const content_containers = document.querySelectorAll(".content_container")
-        const listLenght = content_containers.length
+        const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
 
         const intersecObserver = new IntersectionObserver( entries => {
-        entries.forEach(entry => {
+        entries.forEach( entry => {
+            intersectingElementIndex = entry.target.containerIndex
+
             if (entry.isIntersecting) {
                 entry.target.classList.add("showOnScreen")
-                // entry.target.style.visibility = 'visible';
-                // entry.target.style.opacity = 1;
+                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+                // console.log(intersectingElementIndex, entry.target, 'is visible');
+                listOfIntersectedElements.push(intersectingElementIndex)
+                
+                someshit++
                 amountOfElementsObserved++
+                // yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
+
                 intersecObserver.unobserve(entry.target)
+
                 if (amountOfElementsObserved == listLenght) {
                     intersecObserver.disconnect()
                     // console.log("DISCONNECTED")
@@ -107,37 +128,25 @@
             }
         })
         },
-            { threshold: 0.1, }
+            { 
+                root: document.querySelector(".svelte_main"),
+                threshold: 0.1,
+                rootMargin: "250px",
+            }
         )
         
-        content_containers.forEach( container => {
+        default_containers.forEach( (container, indexOfContainer) => {
+            container.containerIndex = indexOfContainer
             intersecObserver.observe(container)
         })
-        // intersecObserver.observe(element)
     }
-
-    // function showIntersectingElement() {
-    //     const content_containers = document.querySelectorAll(".content_container")
-    //     content_containers.forEach( (container, containerIndex) => {
-    //         console.log(container, containerIndex)
-    //     })
-    // }
-
-	// let innerHeightChange;
-	// let innerHeightHasChanged = false;
-	
-    // $: if (!innerHeightHasChanged && previousScreenHeight > innerHeight) {
-    //     innerHeightChange = "100svh"
-    //     innerHeightHasChanged = true
-    // }
     
 </script>
 
 <svelte:window bind:innerHeight />
 <!-- bind:scrollY={y} on:scroll={updateY} -->
-<!-- use:observeElement -->
 <!-- style="--user_height: {innerHeightChange};" -->
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -146,9 +155,6 @@
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
-    <!-- {#if condition}
-         
-    {/if} -->
     <div class="default_container cyan">
         <Header title_Decor_ID = "mainpage" />
         <div class="content_container title_page">
@@ -163,90 +169,108 @@
         </div>
     </div>
     <div class="default_container greeting">
-        <div class="content_container greeting_page">
-            <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
-            <div class="text introducing">
-                 <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI</span> and <br> <span>web/graphic</span> designer. <br></p>
-            </div>
-        </div>
-    </div>
-    <div class="default_container greeting dwnCV">
-        <div class="content_container CV_download_page">
-            <div class="text cvDownload">
-                 <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
-            </div>
-            <div class="CV_downloadLink">
-                <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside"> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
-            </div>
-        </div>
-    </div>
-    <div class="default_container cyanSaturated">
-        <div class="content_container introductionToPhotos_page">
-            <div class="top_part page3">
-                <img class="MY" src={MY} alt="MY">
-                <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
-            </div>
-            <div class="bottom_part page3">
-                <img class="copyright_text" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
-                <div class="photo_collection_text lightgrayText">photo <br> collection</div>
-            </div>
-        </div>
-    </div>
-    <div class="default_container">
-        <div bind:clientHeight={page4_totalHeight} class="content_container page4">
-            <div class="left_part page4">
-                <div bind:clientHeight={sunsetInTheCloudsIMG_height} class="sunsetIMG_box">
-                    <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+        <!-- class:inViewport={isInViewport} -->
+         {#if ifExistsInArray(1) && someshit > 0}
+             <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
+                <div class="text introducing">
+                    <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI</span> and <br> <span>web/graphic</span> designer. <br></p>
                 </div>
             </div>
-            <div class="right_part page4" style="--yellowBox_height: {yellowBox_height}px">
-                <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
+         {/if}
+            <!-- <div class="content_container loadingState"></div> -->
+    </div>
+    <div class="default_container greeting dwnCV">
+        {#if ifExistsInArray(2) && someshit > 0}
+            <div class="content_container CV_download_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="text cvDownload">
+                    <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
+                </div>
+                <div class="CV_downloadLink">
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside"> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+                </div>
             </div>
-        </div>
+        {/if}
+    </div>
+    <div class="default_container cyanSaturated">
+        {#if ifExistsInArray(3) && someshit > 0}
+            <div class="content_container introductionToPhotos_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="top_part page3">
+                    <img class="MY" src={MY} alt="MY">
+                    <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
+                </div>
+                <div class="bottom_part page3">
+                    <img class="copyright_text" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
+                    <div class="photo_collection_text lightgrayText">photo <br> collection</div>
+                </div>
+            </div>
+        {/if}
     </div>
     <div class="default_container">
-        <div class="content_container page5">
-            <img class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
-            <div class="page5_gradient"></div>
-            <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
-            <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
-            <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
-        </div>
+        {#if ifExistsInArray(4) && someshit > 0}
+            <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="left_part page4">
+                    <div class="sunsetIMG_box">
+                        <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                    </div>
+                </div>
+                <div class="right_part page4" >
+                    <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
+                </div>
+            </div>
+        {/if}
     </div>
     <div class="default_container">
-        <div class="content_container page6">
-            <div class="left_part img_box">
-                <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
+        {#if ifExistsInArray(5) && someshit > 0}
+            <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <img class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
+                <div class="page5_gradient"></div>
+                <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
+                <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
+                <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
             </div>
-            <div class="right_part page6">
-                <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
-                <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
-            </div>
-        </div>
+        {/if}
     </div>
     <div class="default_container">
-        <div class="content_container page7">
-            <div class="image_wrapper_page7">
-                <img class="Violet_flowers" src={Violet_flowers} alt="Violet_flowers">
+        {#if ifExistsInArray(6) && someshit > 0}
+            <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="left_part img_box">
+                    <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
+                </div>
+                <div class="right_part page6">
+                    <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
+                    <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
+                </div>
             </div>
-            
-            <div class="text_wrapper_page7 firstLayer lightgrayText">
-                <p>Rusty steel, rough concrete</p>
-            </div>
-            <div class="text_wrapper_page7 secondLayer">
-                <p>Rusty steel, rough concrete</p>
-            </div>
-        </div>
+        {/if}
     </div>
     <div class="default_container">
-        <div class="content_container page8">
-            <div class="text_wrapper_page8 darkgrayText">
-                <p>Thoughts transparent as water in the ocean</p>
+        {#if ifExistsInArray(7) && someshit > 0}
+            <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="image_wrapper_page7">
+                    <img class="Violet_flowers" src={Violet_flowers} alt="Violet_flowers">
+                </div>
+                
+                <div class="text_wrapper_page7 firstLayer lightgrayText">
+                    <p>Rusty steel, rough concrete</p>
+                </div>
+                <div class="text_wrapper_page7 secondLayer">
+                    <p>Rusty steel, rough concrete</p>
+                </div>
             </div>
-            <div class="image_wrapper_page8">
-                <img class="Modern_building" src={Modern_building} alt="Modern_building">
+        {/if}
+    </div>
+    <div class="default_container">
+        {#if ifExistsInArray(8) && someshit > 0}
+            <div class="content_container page8" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="text_wrapper_page8 darkgrayText">
+                    <p>Thoughts transparent as water in the ocean</p>
+                </div>
+                <div class="image_wrapper_page8">
+                    <img class="Modern_building" src={Modern_building} alt="Modern_building">
+                </div>
             </div>
-        </div>
+        {/if}
     </div>
     <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
@@ -298,18 +322,14 @@
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         scroll-snap-align: center;
         scroll-snap-stop: always;
-
-        /* opacity: 0.5; */
-        /* transition: opacity 1s ease; */
     }
+    
     .content_container{
         width: 92.5%;
         height: 87.5%;
-        /* visibility: hidden;
-        opacity: 0.8;
-        transition: visibility .75s ease-out;
-        transition-behavior: allow-discrete; */
+        /* transition-behavior: allow-discrete; */
     }
+
     .darkgrayText{
         color: var(--text_color_gray90);
     }
@@ -509,7 +529,6 @@
         font-size: max(4vw, 3.5rem);
         /* line-height: var(--text_line_height_big); */
         text-wrap: balance;
-        /* word-spacing: max(1rem, 1vw); */
     }
     .span_CV{
         font-family: 'Subjectivity_Bold', system-ui, sans-serif;
@@ -610,7 +629,7 @@
             font-size: min(12.5vw, 4.5rem);
         }
         .span_CV::before{
-            filter: blur(15vw);
+            filter: blur(17.5vw);
         }
         .MainPage_cvDownloadDecor{
             height: min(2.25rem, 7.5vw);
@@ -762,6 +781,8 @@
         height: 90%;
         max-height: 75vh;
         z-index: 1;
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        border-radius: max(1vw, 1rem);
     }
     .sunsetInTheCloudsIMG{
         width: 100%;
@@ -791,8 +812,8 @@
     .right_part.page4::before{
         content: "";
         position: absolute;
-        /* height: max(5rem, 20vh); */
-        height: var(--yellowBox_height);
+        height: max(4rem, 22.5vh - 12.5%);
+        /* height: var(--yellowBox_height); */
         width: 100%;
         bottom: 0;
         background-color: var(--background_color_alternativeLightYellow);
@@ -804,7 +825,7 @@
         --page4_title_text_size: max(3vw, 2.85rem);
         font-size: var(--page4_title_text_size);
         line-height: var(--page4_title_text_size);
-        padding-block-start: 8vw;
+        padding-block-start: min(8vw, 15vh);
     }
 
     @media (width < 1000px) {
@@ -814,7 +835,7 @@
             gap: max(8vh, 4rem);
         }
         .page4_title_text{
-            padding-block-start: max(1.5rem, 2.75vh);
+            padding-block-start: max(1rem, 2.5vh);
             --page4_title_text_size: min(9vw, 2.65rem);
             font-size: var(--page4_title_text_size);
             line-height: var(--page4_title_text_size);
@@ -851,6 +872,7 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
     }
     .dandelion.IMG1{
         scale: -1 1;
@@ -905,6 +927,8 @@
     .left_part.img_box{
         min-height: 100%;
         width: 100%;
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        border-radius: max(1vw, 1rem);
     }
     .goldenLeaves{
         display: block;
@@ -965,12 +989,13 @@
     .image_wrapper_page7{
         max-width: 100%;
         min-height: 100%;
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
     }
     .Violet_flowers{
         width: 100%;
         height: 100%;
         object-fit: cover;
-        /* scale: -1 1; */
+        scale: -1 1;
     }
     
     .text_wrapper_page7{
@@ -980,9 +1005,11 @@
         justify-content: center;
 
         font-family: 'Misto';
+        text-align: end;
+        text-wrap: balance;
         font-size: max(4.5rem, 8vw);
         line-height: max(6rem, 10vw);
-        inset: 10%;
+        inset: 5% 10%;
     }
     .text_wrapper_page7.firstLayer{
         z-index: 2;
@@ -994,7 +1021,7 @@
     }
     @media (width < 1100px) {
         .text_wrapper_page7{
-            font-size: min(4.5rem, 11vw);
+            font-size: min(4.5rem, 11.5vw);
             line-height: min(6rem, 15vw);
         }
     }
@@ -1004,28 +1031,29 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
-        gap: max(5vw, 5vh);
+        gap: max(4vw, 5vh);
 
-        overflow: clip;
-        border-radius: max(1vw, 1rem);
         position: relative;
         isolation: isolate;
     }
     .image_wrapper_page8{
         max-width: 100%;
         min-height: 100%;
+        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        border-radius: max(1vw, 1rem);
+        overflow: clip;
     }
     .Modern_building{
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: max(1vw, 1rem);
     }
     .text_wrapper_page8{
         display: flex;
         align-items: center;
 
         font-family: 'Neutral_Normal';
+        text-wrap: balance;
         font-size: max(3rem, 3.25vw);
         line-height: max(3rem, 3.25vw);
     }

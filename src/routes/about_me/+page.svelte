@@ -65,11 +65,61 @@
         newY=newY;
     }
     
+    let intersectingElementIndex
+    let listOfIntersectedElements = []
+    $: someshit = 0;
+
+    function ifExistsInArray(idOfElement) {
+        if (listOfIntersectedElements.includes(idOfElement)) {
+            return true
+        }
+        return false
+    }
+
+    function observeElement() {
+        const default_containers = document.querySelectorAll(".default_container")
+        const content_containers = document.querySelectorAll(".content_container")
+        const listLenght = default_containers.length
+        let amountOfElementsObserved = 0;
+
+        const intersecObserver = new IntersectionObserver( entries => {
+        entries.forEach( entry => {
+            intersectingElementIndex = entry.target.containerIndex
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("showOnScreen")
+                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+                // console.log(intersectingElementIndex, entry.target, 'is visible');
+                listOfIntersectedElements.push(intersectingElementIndex)
+                // listOfIntersectedElements = listOfIntersectedElements
+                
+                someshit++
+                amountOfElementsObserved++
+                intersecObserver.unobserve(entry.target)
+                if (amountOfElementsObserved == listLenght) {
+                    intersecObserver.disconnect()
+                    // console.log("DISCONNECTED")
+                }
+            }
+        })
+        },
+            { 
+                root: document.querySelector(".svelte_main"),
+                threshold: 0.1,
+                rootMargin: "250px",
+            }
+        )
+        
+        default_containers.forEach( (container, indexOfContainer) => {
+            container.containerIndex = indexOfContainer
+            intersecObserver.observe(container)
+        })
+    }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight  />
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -92,18 +142,20 @@
         </div>
     </div>
     <div class="default_container">
-        <div class="content_container education_page">
-            <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
-            <div class="text education">
-                 <p class="darkgrayText">
-                    <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
-                    | Field - Cybernetic security |<br> <br>
-                   
-                    <span class="time_range grayText65">202x-202x</span> - <span class="university_name">... university</span> <br>
-                    | Field - ... |<br>
-                </p>
+        {#if ifExistsInArray(1) && someshit > 0}
+            <div class="content_container education_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
+                <div class="text education">
+                    <p class="darkgrayText">
+                        <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
+                        | Field - Cybernetic security |<br> <br>
+                    
+                        <span class="time_range grayText65">202x-202x</span> - <span class="university_name">... university</span> <br>
+                        | Field - ... |<br>
+                    </p>
+                </div>
             </div>
-        </div>
+        {/if}
     </div>
     <div class="default_container def_lang">
         {#if innerWidth > 1200}
@@ -112,63 +164,71 @@
             <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
         {/if}
         
-        <div class="content_container languages_page">
-            <p class="grayText65">LANGUAGES</p>
-            <div class="text languages">
-                <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
-                 <p class="darkgrayText">
-                    English - B2 / C1 <br>
-                    Czech - Fluent <br>
-                    Russian - Fluent
-                </p>
+        {#if ifExistsInArray(2) && someshit > 0}
+            <div class="content_container languages_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <p class="grayText65">LANGUAGES</p>
+                <div class="text languages">
+                    <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
+                    <p class="darkgrayText">
+                        English - B2 / C1 <br>
+                        Czech - Fluent <br>
+                        Russian - Fluent
+                    </p>
+                </div>
+                <p class="grayText65">LANGUAGES</p>
             </div>
-            <p class="grayText65">LANGUAGES</p>
-        </div>
+        {/if}
     </div>
     <div class="default_container def_skills_title noBorders">
-        <div class="content_container skills_title_page">
-            {#if innerWidth > 800}
-                <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
-            {:else}
-                 <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} alt="AboutMe_SkillsTitleSVG_Mobile">
-            {/if}
-            
-        </div>
+        {#if ifExistsInArray(3) && someshit > 0}
+            <div class="content_container skills_title_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                {#if innerWidth > 800}
+                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
+                {:else}
+                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} alt="AboutMe_SkillsTitleSVG_Mobile">
+                {/if}
+                
+            </div>
+        {/if}
     </div>
     <div class="default_container def_skills">
-        <div class="content_container skills_page">
-            <div class="skills_box">
-                {#if innerWidth > 800}
-                    <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
-                {:else}
-                    <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} alt="AboutMe_Skills_Mobile">
-                {/if}
+        {#if ifExistsInArray(4) && someshit > 0}
+            <div class="content_container skills_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <div class="skills_box">
+                    {#if innerWidth > 800}
+                        <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
+                    {:else}
+                        <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} alt="AboutMe_Skills_Mobile">
+                    {/if}
+                </div>
             </div>
-        </div>
+        {/if}
     </div>
     <div class="default_container">
-        <div class="content_container otherAbilities_page">
-            <p class="altyellowText vt">OTHER ABILITIES</p>
-            <div class="text otherAbilities">
-                <p class="rounded darkgrayText">
-                    <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                    Creative at designing things.
-                </p>
-                <p class="darkgrayText">
-                    <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
-                    Willing to learn and develope my skills anytime.
-                </p>
-                <p class="rounded darkgrayText">
-                    <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                    Aiming for hardwork to achieve the best result possible.
-                </p>
-                <p class="darkgrayText">
-                    <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
-                    Effective both on my own and in team.
-                </p>
+        {#if ifExistsInArray(5) && someshit > 0}
+            <div class="content_container otherAbilities_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <p class="altyellowText vt">OTHER ABILITIES</p>
+                <div class="text otherAbilities">
+                    <p class="rounded darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        Creative at designing things.
+                    </p>
+                    <p class="darkgrayText">
+                        <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
+                        Willing to learn and develope my skills anytime.
+                    </p>
+                    <p class="rounded darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        Aiming for hardwork to achieve the best result possible.
+                    </p>
+                    <p class="darkgrayText">
+                        <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
+                        Effective both on my own and in team.
+                    </p>
+                </div>
+                <p class="altyellowText vt">OTHER ABILITIES</p>
             </div>
-            <p class="altyellowText vt">OTHER ABILITIES</p>
-        </div>
+        {/if}
     </div>
     <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"

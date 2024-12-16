@@ -2,7 +2,7 @@
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
     export let workElementImage = ''
-    export let workElementVisibility = 'hidden';
+    // export let workElementVisibility = 'hidden';
     import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
 
     import { onMount } from "svelte";
@@ -89,9 +89,9 @@
 
 <svelte:window bind:innerWidth />
 
-{#if workElementVisibility = 'visible'}
-    <main id={workElementTitle}>
-        <div class="workPresentation_container">
+
+    <!-- <main > -->
+        <div class="workPresentation_container" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
                 style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 
@@ -111,8 +111,8 @@
                     {/if}
             </div>
         </div>
-    </main>
-{/if}
+    <!-- </main> -->
+
 
 <style>
     *{
@@ -123,17 +123,10 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
-    main{
-        visibility: var(--portfolio_item_visible);
-        /* position: fixed; */
-        inset: 0;
-        z-index: 9991;
-        scroll-snap-align: center;
-        scroll-snap-stop: always;
-    }
     .workPresentation_container{
         width: 100%;
-        height: 100dvh;
+        height: 100%;
+        z-index: 9991;
         display: flex;
         flex-direction: column;
         align-items: center;
