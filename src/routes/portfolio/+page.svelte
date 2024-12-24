@@ -35,6 +35,7 @@
     import Portfolio_workPreviewElement_Anata from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg'
     import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
     import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
+    import Portfolio_workPreviewElement_Travelin_Logo from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg'
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
@@ -42,9 +43,11 @@
     import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
     import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
     import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
+    import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
+    import scrollLeftAndRightButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
     import { onMount } from "svelte";
     import { fade, fly, scale } from 'svelte/transition';
@@ -59,6 +62,7 @@
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true;
+        largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -92,16 +96,11 @@
     
     let portfolio_loadingScreenShow = false;
     let workPresent_Visibility = 'hidden';
-    // let id = "";
 
     function openInLargeList(idOfElement){
-        // listOfIntersectedElements.push(idOfElement)
-        // someshit++
         const portfolio_works = document.querySelectorAll(".wep_box")
         portfolio_works.forEach( (work, workId) => {
             work.addEventListener("click", (e) => {
-                // listOfIntersectedElements.push(workId)
-                // someshit++
                 portfolio_loadingScreenShow = true;
                 workPresent_Visibility = 'visible';
             })
@@ -116,10 +115,83 @@
         portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
     }
-    function hide_LoadingScreen(){
-        if (portfolio_loadingScreenShow = true) {
-            portfolio_loadingScreenShow = false;
-        }
+    // function hide_LoadingScreen(){
+    //     if (portfolio_loadingScreenShow = true) {
+    //         portfolio_loadingScreenShow = false;
+    //     }
+    // }
+
+    let largeWork_preview_box_wrapper_WIDTH = 0
+
+    function boxScroll(numberOfImages) {
+        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box")
+        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left")
+        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right")
+        // const listLength = largeWorkImages.length
+        
+        let amountOfScrolledImages = 0
+        let numberOfChildElements = 0
+        
+        buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
+            largeWorkButton.addEventListener("click", (e) => {
+                largeWorkImages.forEach( (largeWork, largeWorkId) => {
+                    if (largeWorkId === largeWorkButtonId) {
+                        largeWork.scrollBy({ left: largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
+                        // console.log("Scroll:", largeWork.scrollLeft)
+
+                        numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+                        if ((largeWork.scrollLeft + largeWork_preview_box_wrapper_WIDTH * 2) >= largeWork.scrollWidth) {
+                            largeWorkButton.classList.add("visually_hidden")
+                            
+                        }
+                        buttons_left.forEach( (leftButton, leftButtonId) => {
+                            if (leftButtonId === largeWorkButtonId) {
+                                leftButton.classList.remove("visually_hidden")
+                            }
+                        })
+                    }
+                })
+            })
+
+        })
+        buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
+
+            if (amountOfScrolledImages == 0) {
+                largeWorkButton.classList.add("visually_hidden")
+            }
+            largeWorkButton.addEventListener("click", (e) => {
+                largeWorkImages.forEach( (largeWork, largeWorkId) => {
+                    if (largeWorkId === largeWorkButtonId) {
+                        largeWork.scrollBy({ left: -largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
+
+                        numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+                        
+                        if ((largeWork.scrollLeft - (largeWork.scrollWidth / numberOfChildElements) * 2) <= 0) {
+                            largeWorkButton.classList.add("visually_hidden")
+                            
+                        }
+                        buttons_right.forEach( (rightButton, rightButtonId) => {
+                            if (rightButtonId === largeWorkButtonId) {
+                                rightButton.classList.remove("visually_hidden")
+                            }
+                        })
+                    }
+                })
+            })
+
+        })
+        
+    }
+    let amountOfChildElementsList = [];
+    function checkForAmountOfChildren(params) {
+        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box")
+        lW_preview_boxes.forEach( box => {
+            const amountOfChildren = box.querySelectorAll(".largeWork_preview_box > *")
+            if (amountOfChildren.length > 1) {
+                box.classList.add("moreThanOneChild")
+                amountOfChildElementsList.push(amountOfChildren.length)
+            }
+        })
     }
 
     let intersectingElementIndex
@@ -135,8 +207,6 @@
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".classForIntersecObserver")
-        
-        // const content_containers = document.querySelectorAll(".content_container")
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
 
@@ -145,24 +215,64 @@
             intersectingElementIndex = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
-                // console.log(intersectingElementIndex, entry.target, 'is visible');
                 listOfIntersectedElements.push(intersectingElementIndex)
-
-                // listOfIntersectedElements = listOfIntersectedElements
-                
                 someshit++
                 amountOfElementsObserved++
                 intersecObserver.unobserve(entry.target)
                 if (amountOfElementsObserved == listLenght) {
                     intersecObserver.disconnect()
-                    console.log("DISCONNECTED")
+                    // console.log("DISCONNECTED")
                 }
             }
         })
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
+                threshold: 0.1,
+                rootMargin: "0px",
+            }
+        )
+        
+        default_containers.forEach( (container, indexOfContainer) => {
+            container.containerIndex = indexOfContainer
+            intersecObserver.observe(container)
+        })
+    }
+// ---------------------------------------------------------------------------------------------------------
+    let intersectingElementIndex_DF
+    let listOfIntersectedElements_DF = []
+    $: someshit_DF = 0;
+
+    function ifExistsInArray_DF(idOfElement) {
+        if (listOfIntersectedElements_DF.includes(idOfElement)) {
+            return true
+        }
+        return false
+    }
+    function observeDefaultCont() {
+        // const default_containers = document.querySelectorAll(".default_container")
+        const default_containers = document.querySelectorAll(".forInsObs")
+        const listLenght = default_containers.length
+        let amountOfElementsObserved = 0;
+
+        const intersecObserver = new IntersectionObserver( entries => {
+        entries.forEach( entry => {
+            intersectingElementIndex_DF = entry.target.containerIndex
+
+            if (entry.isIntersecting) {
+                listOfIntersectedElements_DF.push(intersectingElementIndex_DF)
+                someshit_DF++
+                amountOfElementsObserved++
+                intersecObserver.unobserve(entry.target)
+                if (amountOfElementsObserved == listLenght) {
+                    intersecObserver.disconnect()
+                    // console.log("DISCONNECTED")
+                }
+            }
+        })
+        },
+            {
+                root: document.querySelector(".svelte_main"),
                 threshold: 0.1,
                 rootMargin: "0px",
             }
@@ -182,7 +292,7 @@
         <LoadingScreen />
     {/if}
     {#if portfolio_loadingScreenShow}
-        <LoadingScreen fadeDuration=50 fadeDelay=100/>
+        <LoadingScreen fadeDuration=50 fadeDelay=50/>
     {/if}
 
     {#if y > (innerHeight / 1.1) && oldY > y}
@@ -203,110 +313,240 @@
         </div>
     </div>
     <div class="default_container endless">
-        <div class="content_container work_summary_page">
+        <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} data-sveltekit-preload-data="tap" use:openInLargeList>
-
-                <a href="#ART" class="work_element_preview_box wep_box top rounded">
-                    <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+            <div class="works_preview_grid" bind:this={works_preview_grid} use:openInLargeList use:observeDefaultCont>
+                <!-- data-sveltekit-preload-data="tap" -->
+                
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
+                    {#if ifExistsInArray_DF(0) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY" class="work_element_preview_box wep_box top mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
+                    {#if ifExistsInArray_DF(1) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Architect" class="work_element_preview_box wep_box top rounded mobile_left">
-                    <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                    {#if ifExistsInArray_DF(2) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
+                
+                
                 <div class="work_element_preview_box blank">
-                    <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
+                    <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview">
                 </div>
-                <a href="#Artsgone" class="work_element_preview_box wep_box bottom rounded">
-                    <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </a>
-                <a href="#Omic" class="work_element_preview_box wep_box bottom mobile_rounded mobile_left">
-                    <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </a>
-                <a href="#Lexi2" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
-                </a>
 
+                <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
+                    {#if ifExistsInArray_DF(3) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
+                    {#if ifExistsInArray_DF(4) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(5) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                
                     <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Anata" class="work_element_preview_box wep_box top rounded mobile_left">
-                    <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                
+                <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                    {#if ifExistsInArray_DF(6) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Bena" class="work_element_preview_box wep_box top">
-                    <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
+                    {#if ifExistsInArray_DF(7) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#MR. Gummy" class="work_element_preview_box wep_box top rounded mobile_left mobile_rounded ">
-                    <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                    {#if ifExistsInArray_DF(8) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
+
                 <div class="work_element_preview_box blank">
-                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
+                    <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview">
                 </div>
+
                     <!-- blank_________________________________________________ -->
-                        <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview"> </div>
+                        <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY2" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(9) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Antic Museum" class="work_element_preview_box wep_box bottom mobile_left">
-                    <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                    {#if ifExistsInArray_DF(10) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Nameless sadas" class="work_element_preview_box wep_box bottom mobile_left rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(11) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
 
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Roe" class="work_element_preview_box wep_box top rounded mobile_left">
-                    <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                    {#if ifExistsInArray_DF(12) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Wappa" class="work_element_preview_box wep_box top">
-                    <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
+                    {#if ifExistsInArray_DF(13) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#W(in) logo" class="work_element_preview_box wep_box top rounded mobile_left mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                    {#if ifExistsInArray_DF(14) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
+
                 <div class="work_element_preview_box blank">
-                     <img src={Portfolio_WorksPreviewDecor} alt="MainPage_MyPhotosDecorElement" class="work_element_preview">
+                    <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview">
                 </div>
+
+                    <!-- blank_________________________________________________ -->
+                        <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
+                    <!-- blank_________________________________________________ -->
+                <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(15) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                    {#if ifExistsInArray_DF(16) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(17) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+
+                <!-- next couple_______________________________________________________________________________________________________________________________________ -->
+
+                <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                    {#if ifExistsInArray_DF(18) && someshit_DF > 0}
+                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs top">
+                    {#if ifExistsInArray_DF(19) && someshit_DF > 0}
+                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                    {#if ifExistsInArray_DF(20) && someshit_DF > 0}
+                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
+                </a>
+
+                <div class="work_element_preview_box blank">
+                    <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview">
+                </div>
+
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#Toreno" class="work_element_preview_box wep_box bottom rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(21) && someshit_DF > 0}
+                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
-                <a href="#Lanobi" class="work_element_preview_box wep_box bottom mobile_left">
-                    <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                    {#if ifExistsInArray_DF(22) && someshit_DF > 0}
+                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#Dajy" class="work_element_preview_box wep_box bottom mobile_left rounded mobile_rounded">
-                    <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview">
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                    {#if ifExistsInArray_DF(23) && someshit_DF > 0}
+                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                    {/if}
                 </a>
             </div>
         </div>
     </div>
-    <div class="default_container endless" id="largeWorksID">
-        <div class="content_container work_summary_page largeWorks">
-            <p class="largeWorks_upperText">Other projects</p>
-            <div class="largeWorks_preview_grid">
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr"> </a>
-                <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box"> <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji"> </a>
+    <div class="default_container endless forInsObs" id="largeWorksID" use:observeDefaultCont>
+        {#if ifExistsInArray_DF(24) && someshit_DF > 0}
+            <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <p class="largeWorks_upperText">Other projects</p>
+                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
+                    <div class="largeWork_preview_box_wrapper">
+                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box" bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH}>
+                            <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr"> 
+                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper">
+                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
+                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper">
+                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper">
+                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
+                            <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper">
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
+                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper">
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
+                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        {:else}
+            <img class="largeWork_element_preview" src={Portfolio_WorksPreviewDecor} alt="Portfolio_TravelinWebsite">
+        {/if} 
     </div>
 
     {#if workPresent_Visibility == 'visible'}
@@ -440,6 +680,11 @@
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
                 {/if}
             </div>
+            <div id="Travelin" class="classForIntersecObserver">
+                {#if ifExistsInArray(20) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
+                {/if}
+            </div>
         
         </div>
     {/if}
@@ -509,6 +754,7 @@
     }
     .endless{
         height: auto;
+        min-height: 100vh;
     }
     .content_container{
         width: 92.5%;
@@ -525,7 +771,7 @@
     }
     .classForIntersecObserver{
         /* background-color: var(--background_color_lightCyan); */
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         scroll-snap-stop: always;
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
@@ -642,10 +888,11 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        
     }
     .work_element_preview_box:not(.blank){
         cursor: pointer;
+        /* isolation: isolate; */
+        /* z-index: 5; */
     }
     .work_element_preview_box::after{
         content: '- view detailed -';
@@ -657,15 +904,17 @@
         font-size: max(1.75vw, 1.25rem);
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
-        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
-        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 110%);
+        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.75);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
         scale: 0.95;
         filter: blur(max(2rem, 2vw));
     }
-    .work_element_preview_box.rounded::after{border-radius: 32.5%;}
+    .work_element_preview_box.rounded::after{
+        border-radius: 32.5%;
+    }
     /* .work_element_preview_box:not(.rounded)::after{} */
     .work_element_preview_box:not(.blank):hover::after{
         opacity: 1;
@@ -700,14 +949,14 @@
         box-sizing: content-box;
         position: absolute;
         width: 100%;
-        height: 112%;
+        height: 111%;
         background-color: var(--background_color_alternativeLightYellow);
         border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         z-index: -1;
     }
-    .works_preview_grid > :not(.rounded)::before{
+    /* .works_preview_grid > :not(.rounded)::before{
         content: '';
-    }
+    } */
     .rounded, .rounded::before{
         border-radius: 35%;
     }
@@ -847,16 +1096,42 @@
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
+    .largeWork_preview_box_wrapper{
+        position: relative;
+    }
+    .largeWork_preview_box_wrapper::before{
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 110%;
+        top: -5%;
+        background-color: var(--background_color_alternativeLightYellow);
+        border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        border-radius: max(3rem, 3vw);
+        z-index: -1;
+    }
     .largeWork_preview_box{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-auto-columns: 100%;
+        grid-auto-flow: column;
+        place-items: center;
+        scroll-snap-type: inline mandatory;
         border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         background-color: var(--background_color_lightYellow);
         border-radius: max(3rem, 3vw);
         position: relative;
     }
-    .largeWork_preview_box::after{
+    .largeWork_preview_box::-webkit-scrollbar{
+        display: none;
+    }
+    .largeWork_preview_box:is(.moreThanOneChild){
+        /* grid-template-columns: max(4vw, 4rem) repeat(2, calc(100% - max(8vw, 8rem))) max(4vw, 4rem); */
+        overflow-x: scroll;
+        overflow-y: clip;
+    }
+    .largeWork_preview_box:not(.moreThanOneChild)::after{
         content: '- view detailed -';
         position: absolute;
         inset: -0.2% 0 -0.2% 0;
@@ -866,37 +1141,65 @@
         font-size: max(1.75vw, 1.75rem);
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
-        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 95%);
-        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.9);
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 15%, hsla(35, 39%, 88%, 0.35) 110%);
+        backdrop-filter: blur(max(5rem, 5vw)) opacity(0.5);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
         scale: 0.95;
-        filter: blur(max(2rem, 2vw));
+        filter: blur(max(3rem, 3vw));
         border-radius: max(2.6rem, 2.6vw);
     }
-    .largeWork_preview_box:hover::after{
+    .largeWork_preview_box:not(.moreThanOneChild):hover::after{
         opacity: 1;
         visibility: visible;
         scale: 1;
         filter: blur(0rem);
         transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
     }
-
-    .largeWork_preview_box::before{
-        content: '';
-        box-sizing: content-box;
-        position: absolute;
-        width: 100%;
-        height: 112%;
-        background-color: var(--background_color_alternativeLightYellow);
-        border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
-        border-radius: max(3rem, 3vw);
-        z-index: -1;
-    }
-    
     .largeWork_preview_box:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+    }
+    
+    .scrollLeftAndRightButton{
+        position: absolute;
+        top: calc(50% - (max(3vw, 3.5rem) / 2));
+        margin-inline: max(0.25rem, 0.5vw);
+        z-index: 50;
+        width: max(3vw, 3.5rem);
+        aspect-ratio: 1;
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 10%, hsla(35, 39%, 88%, 0.35) 110%);
+        border: max(3px, 0.3vw) var(--background_color_alternativeLightYellow) solid;
+        border-radius: max(1rem, 1vw);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(max(1rem, 1vw));
+
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .scrollLeftAndRightButton:is(.visually_hidden){
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.1s ease, visibility 0.1s ease;
+    }
+    .largeWork_preview_box_wrapper:has(.largeWork_preview_box:not(.moreThanOneChild)) .scrollLeftAndRightButton {
+        /* opacity: 0; */
+        display: none;
+        /* transition: opacity 0.1s ease, visibility 0.1s ease; */
+    }
+    .largeWork_scrollButton{
+        width: 60%;
+        aspect-ratio: 1;
+    }
+    .scrollLeftAndRightButton.left{
+        left: max(0.5rem, 0.5vw);
+    }
+    .scrollLeftAndRightButton.right{
+        right: max(0.5rem, 0.5vw);
+        rotate: 180deg;
     }
 
     .largeWork_element_preview{
@@ -904,6 +1207,8 @@
         height: 45vh;
         max-height: 90%;
         object-fit: contain;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
         /* image-rendering: optimizeQuality; */
     }
 

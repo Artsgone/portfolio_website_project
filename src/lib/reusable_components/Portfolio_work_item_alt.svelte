@@ -15,6 +15,11 @@
 
     onMount(() => {;
         imageHeight = imageHeight;
+        if ((work_description_container_height - description_box_height) < 0) {
+        position = "start";
+        } else {
+            position = "center";
+        }
     });
 
     $: work_presentation_page_height = 0;
@@ -80,11 +85,6 @@
         fadeBar_displayMobile = "none";
     }
 
-    $: if ((work_description_container_height - description_box_height) < 0) {
-        position = "start";
-    } else {
-        position = "center";
-    }
 </script>
 
 <svelte:window bind:innerWidth />
