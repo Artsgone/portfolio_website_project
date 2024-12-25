@@ -121,13 +121,27 @@
     //     }
     // }
 
+    let amountOfChildElementsList = [];
+    function checkForAmountOfChildren() {
+        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box")
+        lW_preview_boxes.forEach( (box, boxId) => {
+            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview")
+            if (amountOfChildren.length > 1) {
+                box.classList.add("moreThanOneChild")
+                amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
+            }
+        })
+    }
+
     let largeWork_preview_box_wrapper_WIDTH = 0
 
     function boxScroll(numberOfImages) {
         const largeWorkImages = document.querySelectorAll(".largeWork_preview_box")
         const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left")
         const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right")
-        // const listLength = largeWorkImages.length
+        const listLength = largeWorkImages.length
+        var scrollElementsIndexes = new Array(listLength)
+        var scrollElementsIndexes_check = new Array(listLength)
         
         let amountOfScrolledImages = 0
         let numberOfChildElements = 0
@@ -136,13 +150,31 @@
             largeWorkButton.addEventListener("click", (e) => {
                 largeWorkImages.forEach( (largeWork, largeWorkId) => {
                     if (largeWorkId === largeWorkButtonId) {
-                        largeWork.scrollBy({ left: largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
-                        // console.log("Scroll:", largeWork.scrollLeft)
 
-                        numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
-                        if ((largeWork.scrollLeft + largeWork_preview_box_wrapper_WIDTH * 2) >= largeWork.scrollWidth) {
-                            largeWorkButton.classList.add("visually_hidden")
-                            
+                        numberOfChildElements = amountOfChildElementsList.at(largeWorkId)
+                        // console.log(numberOfChildElements)
+                        // console.log(amountOfChildElementsList)
+                        // largeWork.scrollBy({ left: largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
+                        amountOfScrolledImages = scrollElementsIndexes.at(largeWorkId) || 0
+                        if (amountOfScrolledImages < numberOfChildElements) {
+                            amountOfScrolledImages++
+                        }
+                        
+                        scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
+                        // console.log("List:", scrollElementsIndexes)
+
+                        largeWork.querySelectorAll(".largeWork_element_preview").forEach( (element, elementId) => {
+                            if (elementId == amountOfScrolledImages) {
+                                element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                            }
+                        })
+                        
+                        // console.log("Scroll:", largeWork.scrollLeft)
+                        // if ((largeWork.scrollLeft + largeWork_preview_box_wrapper_WIDTH * 2) >= largeWork.scrollWidth) {
+                        //     largeWorkButton.classList.add("visually_hidden")
+                        // }
+                        if (amountOfScrolledImages == numberOfChildElements - 1) {
+                            largeWorkButton.classList.add("visually_hidden") 
                         }
                         buttons_left.forEach( (leftButton, leftButtonId) => {
                             if (leftButtonId === largeWorkButtonId) {
@@ -162,13 +194,28 @@
             largeWorkButton.addEventListener("click", (e) => {
                 largeWorkImages.forEach( (largeWork, largeWorkId) => {
                     if (largeWorkId === largeWorkButtonId) {
-                        largeWork.scrollBy({ left: -largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
+                        // largeWork.scrollBy({ left: -largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
+                        numberOfChildElements = amountOfChildElementsList.at(largeWorkId)
 
-                        numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+                        amountOfScrolledImages = scrollElementsIndexes.at(largeWorkId) || 0
+                        if (amountOfScrolledImages > 0) {
+                            amountOfScrolledImages--
+                        }
                         
-                        if ((largeWork.scrollLeft - (largeWork.scrollWidth / numberOfChildElements) * 2) <= 0) {
-                            largeWorkButton.classList.add("visually_hidden")
-                            
+                        scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
+                        // console.log("List:", scrollElementsIndexes)
+
+                        largeWork.querySelectorAll(".largeWork_element_preview").forEach( (element, elementId) => {
+                            if (elementId == amountOfScrolledImages) {
+                                element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                            }
+                        })
+                        
+                        // if ((largeWork.scrollLeft - (largeWork.scrollWidth / numberOfChildElements) * 2) <= 0) {
+                        //     largeWorkButton.classList.add("visually_hidden") 
+                        // }
+                        if (amountOfScrolledImages == 0) {
+                            largeWorkButton.classList.add("visually_hidden") 
                         }
                         buttons_right.forEach( (rightButton, rightButtonId) => {
                             if (rightButtonId === largeWorkButtonId) {
@@ -181,17 +228,6 @@
 
         })
         
-    }
-    let amountOfChildElementsList = [];
-    function checkForAmountOfChildren(params) {
-        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box")
-        lW_preview_boxes.forEach( box => {
-            const amountOfChildren = box.querySelectorAll(".largeWork_preview_box > *")
-            if (amountOfChildren.length > 1) {
-                box.classList.add("moreThanOneChild")
-                amountOfChildElementsList.push(amountOfChildren.length)
-            }
-        })
     }
 
     let intersectingElementIndex
@@ -312,7 +348,13 @@
                     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"/>
         </div>
     </div>
-    <div class="default_container endless">
+    <div class="default_container linksToSections">
+        <div class="content_container sections_links">
+            <a href="#logosSection" class="anchorLink_toSections"> <span>01.</span> portfolio - logos</a>
+            <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - websites and banners</a>
+        </div>
+    </div>
+    <div class="default_container endless" id="logosSection">
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
@@ -491,16 +533,16 @@
             </div>
         </div>
     </div>
-    <div class="default_container endless forInsObs" id="largeWorksID" use:observeDefaultCont>
+    <div class="default_container endless forInsObs" id="largeWorksSection" use:observeDefaultCont>
         {#if ifExistsInArray_DF(24) && someshit_DF > 0}
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-                <p class="largeWorks_upperText">Other projects</p>
+                <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
                     <div class="largeWork_preview_box_wrapper">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box" bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH}>
-                            <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr"> 
+                            <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                         </a>
@@ -843,6 +885,45 @@
         }
     }
 
+
+    .default_container.linksToSections{
+        height: 30vh;
+        min-height: 20rem;
+    }
+    .content_container.sections_links{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr;
+        place-items: center;
+        height: 60%;
+        gap: min(2vh, 5vw);
+    }
+    .anchorLink_toSections{
+        font-size: max(1.5rem, 2vw);
+        text-wrap: balance;
+        text-decoration-color: var(--background_color_lightCyan);
+        /* text-decoration-thickness: max(0.1rem, 0.5vw); */
+        font-family: 'Subjectivity_Regular', system-ui, sans-serif;
+        color: var(--text_color_gray90);
+        text-align: center;
+    }
+    .anchorLink_toSections > span{
+        font-family: 'Neutral_Normal', system-ui, sans-serif;
+        font-size: max(1.75rem, 2.25vw);
+        color: var(--background_color_lightCyan);
+    }
+    
+    .anchorLink_toSections:is(:hover){
+        text-decoration-style: wavy;
+        text-decoration-thickness: max(0.1rem, 0.1vw);
+    }
+
+    @media (width < 800px) {
+        .content_container.sections_links{
+            grid-template-columns: 1fr;
+        }
+    }
+
     /* PREVIEW OF WORKS */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -954,9 +1035,6 @@
         border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         z-index: -1;
     }
-    /* .works_preview_grid > :not(.rounded)::before{
-        content: '';
-    } */
     .rounded, .rounded::before{
         border-radius: 35%;
     }
@@ -1015,9 +1093,6 @@
         }
     }
     .workPresent_wrapper{
-        /* scroll-behavior: smooth; */
-        /* display: flex;
-        flex-direction: column; */
         display: grid;
         grid-template-columns: 1fr;
         grid-auto-rows: 100dvh;
@@ -1078,16 +1153,17 @@
     }
 /* ----------------------------------------------------- */
 
-    .content_container.work_summary_page.largeWorks{
+    /* .content_container.work_summary_page.largeWorks{
         gap: 0 0;
-    }
+    } */
     .largeWorks_upperText{
-        font-family: "Brolimo", system-ui, sans-serif;
-        font-size: max(5rem, 7.5vw);
+        font-family: "Subjectivity_Regular", system-ui, sans-serif;
+        font-size: max(4rem, 5vw);
+        padding-block: max(1.5rem, 2vw);
         text-align: center;
         text-wrap: nowrap;
-        color: var(--background_color_alternativeLightYellow);
-        translate: 0 -30%;
+        color: var(--text_color_gray90);
+        translate: 0 -25%;
     }
     .largeWorks_preview_grid{
         display: grid;
@@ -1123,8 +1199,16 @@
         border-radius: max(3rem, 3vw);
         position: relative;
     }
-    .largeWork_preview_box::-webkit-scrollbar{
-        display: none;
+
+    .largeWork_preview_box::-webkit-scrollbar {
+        height: max(0.35rem, 0.5vh);
+    }
+    .largeWork_preview_box::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    .largeWork_preview_box::-webkit-scrollbar-thumb {
+        background-color: var(--background_color_alternativeLightYellow_Darker);
+        border-radius: 5rem;
     }
     .largeWork_preview_box:is(.moreThanOneChild){
         /* grid-template-columns: max(4vw, 4rem) repeat(2, calc(100% - max(8vw, 8rem))) max(4vw, 4rem); */
@@ -1141,8 +1225,8 @@
         font-size: max(1.75vw, 1.75rem);
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
-        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 15%, hsla(35, 39%, 88%, 0.35) 110%);
-        backdrop-filter: blur(max(5rem, 5vw)) opacity(0.5);
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 20%, hsla(35, 39%, 88%, 0.35) 110%);
+        backdrop-filter: blur(max(5rem, 5vw)) opacity(0.25);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
@@ -1220,8 +1304,10 @@
             gap: max(4rem, 5vw) max(1rem, 1vw);
         }
         .largeWorks_upperText{
-            font-size: min(5rem, 12vw);
-            translate: 0 -50%;
+            text-wrap: balance;
+            line-height: min(4rem, 11.5vw);
+            font-size: min(4rem, 11.5vw);
+            translate: 0 -40%;
         }
     }
 

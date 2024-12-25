@@ -27,7 +27,7 @@
     .arrowIcon{
         width: 60%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
     }
     .scrollUp_button:hover > .arrowIcon{
         animation: arrowIcon_animation .5s ease-in-out;

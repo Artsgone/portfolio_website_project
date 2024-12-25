@@ -10,8 +10,8 @@
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="Portfolio_Mount_Fuji.svg"
    inkscape:export-filename="Portfolio_Mount_Fuji.png"
-   inkscape:export-xdpi="500"
-   inkscape:export-ydpi="500"
+   inkscape:export-xdpi="250"
+   inkscape:export-ydpi="250"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -28,9 +28,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      showborder="true"
-     inkscape:zoom="2"
-     inkscape:cx="106.75"
-     inkscape:cy="169.75"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="-23.334524"
+     inkscape:cy="101.46982"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -71,13 +71,13 @@
        inkscape:collect="always"
        style="color-interpolation-filters:sRGB"
        id="filter574721"
-       x="-0.68438574"
-       y="-0.68438574"
-       width="2.3687715"
-       height="2.3687715">
+       x="-0.68403001"
+       y="-0.68403001"
+       width="2.36806"
+       height="2.36806">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="3.9571243"
+         stdDeviation="3.9550673"
          id="feGaussianBlur574719" />
     </filter>
     <filter
@@ -123,24 +123,24 @@
        inkscape:export-xdpi="400"
        inkscape:export-ydpi="400" />
     <circle
-       style="mix-blend-mode:normal;fill:#b8a3a9;fill-opacity:1;stroke:none;stroke-width:2;filter:url(#filter574721)"
+       style="opacity:0.5;mix-blend-mode:normal;fill:#b8a3a9;fill-opacity:1;stroke:none;stroke-width:2;filter:url(#filter574721)"
        id="circle568824"
        cx="53.61499"
        cy="275.28366"
        r="6.9384103"
-       transform="matrix(5.4747864,0,0,5.4747864,-299.34959,-1197.8579)" />
+       transform="matrix(5.4747864,0,0,5.4747864,-305.36,-1195.7264)" />
     <path
-       style="color:#000000;fill:#d4c7ca;fill-opacity:1;stroke-width:2;-inkscape-stroke:none;filter:url(#filter892)"
+       style="color:#000000;fill:#d4c7ca;fill-opacity:1;stroke-width:2;-inkscape-stroke:none;filter:url(#filter892);opacity:0.5"
        d="m 60.553401,275.28366 a 6.9384103,6.9384103 0 0 1 -6.938411,6.93841 6.9384103,6.9384103 0 0 1 -6.93841,-6.93841 6.9384103,6.9384103 0 0 1 6.93841,-6.93841 6.9384103,6.9384103 0 0 1 6.938411,6.93841 z"
        id="circle574723"
        transform="matrix(5.5274314,0,0,9.093734,-66.265992,-2214.8957)" />
     <path
-       style="color:#000000;fill:#bfacb2;fill-opacity:1;stroke-width:2;-inkscape-stroke:none;filter:url(#filter574837)"
+       style="color:#000000;opacity:0.5;fill:#bfacb2;fill-opacity:1;stroke-width:1.97793;-inkscape-stroke:none;filter:url(#filter574837)"
        d="m 60.553401,275.28366 a 6.9384103,6.9384103 0 0 1 -6.938411,6.93841 6.9384103,6.9384103 0 0 1 -6.93841,-6.93841 6.9384103,6.9384103 0 0 1 6.93841,-6.93841 6.9384103,6.9384103 0 0 1 6.938411,6.93841 z"
        id="circle574725"
-       transform="matrix(6.0153258,0,0,6.3967785,-117.61872,-1772.0038)" />
+       transform="matrix(7.8907471,0,0,4.9858323,-248.87031,-1377.2134)" />
     <circle
-       style="mix-blend-mode:normal;fill:#cdbdc1;fill-opacity:1;stroke:none;stroke-width:2;filter:url(#filter566727)"
+       style="mix-blend-mode:normal;fill:#cdbdc1;fill-opacity:1;stroke:none;stroke-width:2;filter:url(#filter566727);opacity:0.5"
        id="path566645"
        cx="53.61499"
        cy="275.28366"
