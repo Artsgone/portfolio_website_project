@@ -12,7 +12,8 @@
     import '$lib/styles_and_fonts/styles.css'
 
     // Large works
-    import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
+    import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
+    import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
 
     let pageLoaded = false;
     onMount(() => {
@@ -68,12 +69,12 @@
 
     <div class="default_container endless">
         <div class="content_container">
-            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </div>
+            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_TravelinPoster} alt="Portfolio_Mount_Fuji"> </div>
             
-            <div class="project_name"> Mount Fuji </div>
+            <div class="project_name"> Travelin </div>
             <div class="project_description_wrapper">
                 <p class="project_description"> 
-                    Standing at 3,776 meters, Mt. Fuji is the tallest peak in Japan, the result of volcanic activity that began approximately 100,000 years ago. Today, Mt. Fuji and the surrounding area are a popular recreational destination for hiking, camping and relaxation.
+                    Worlds greatest travel agency this is!
                 </p>
             </div>
         </div>
@@ -148,8 +149,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(var(--background_color_lightYellow) 50%, #683652 200%);
-        border: max(0.5rem, 0.5vw) #683652 solid;
+        background: radial-gradient(var(--background_color_lightYellow) 65%, hsl(216, 40%, 35%) 200%);
+        border: max(0.5rem, 0.5vw) hsl(204, 30%, 50%) dashed;
         z-index: -1;
         border-radius: max(1vw, 1rem);
     }
@@ -172,7 +173,7 @@
         hyphens: auto;
     }
     .project_description::first-letter{
-        color: #683652;
+        color: hsl(182, 28%, 50%);
         font-family: 'Misto', system-ui, sans-serif;
         initial-letter: 3 2;
         padding-right: max(0.5vw, 0.5rem);
@@ -181,8 +182,8 @@
     .project_image_wrapper{
         width: 100%;
         height: 100%;
-        border: max(0.5rem, 0.5vw) #988185 solid;
-        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(350, 10%, 55%) 200%);
+        border: max(0.5rem, 0.5vw) hsl(182, 30%, 75%) solid;
+        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(182, 28%, 50%) 200%);
         border-radius: max(1vw, 1rem);
 
         display: grid;

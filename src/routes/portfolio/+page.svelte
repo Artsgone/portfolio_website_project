@@ -54,7 +54,7 @@
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
-    let works_preview_grid;
+    let works_preview_grid_bind;
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
@@ -62,6 +62,7 @@
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true;
+        retrieveIntersectedElementsToSS()
         largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
     });
     beforeNavigate(({to, from}) => {
@@ -71,6 +72,7 @@
         } else {
             saveScrollY.updateScrollY(0)
         }
+        saveIntersectedElementsToSS()
     });
 
     afterNavigate(() => {
@@ -81,7 +83,7 @@
     $: y = 0;
     let svelte_main_element;
     let workPresent_wrapper_bind;
-    let workPresent_wrapper_bind_height = 0;
+    // let workPresent_wrapper_bind_height = 0;
     
     let newY = [];
     $: oldY = newY[1];
@@ -135,13 +137,12 @@
 
     let largeWork_preview_box_wrapper_WIDTH = 0
 
-    function boxScroll(numberOfImages) {
+    function boxScroll() {
         const largeWorkImages = document.querySelectorAll(".largeWork_preview_box")
         const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left")
         const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right")
         const listLength = largeWorkImages.length
         var scrollElementsIndexes = new Array(listLength)
-        var scrollElementsIndexes_check = new Array(listLength)
         
         let amountOfScrolledImages = 0
         let numberOfChildElements = 0
@@ -152,8 +153,6 @@
                     if (largeWorkId === largeWorkButtonId) {
 
                         numberOfChildElements = amountOfChildElementsList.at(largeWorkId)
-                        // console.log(numberOfChildElements)
-                        // console.log(amountOfChildElementsList)
                         // largeWork.scrollBy({ left: largeWork_preview_box_wrapper_WIDTH, behavior: "smooth" })
                         amountOfScrolledImages = scrollElementsIndexes.at(largeWorkId) || 0
                         if (amountOfScrolledImages < numberOfChildElements) {
@@ -279,6 +278,23 @@
     let listOfIntersectedElements_DF = []
     $: someshit_DF = 0;
 
+    function saveIntersectedElementsToSS() {
+        listOfIntersectedElements_DF.forEach( intersectedItem => {
+            if (intersectedItem == 24) {
+                // sessionStorage.setItem('intersectedElementsList', JSON.stringify(intersectedItem))
+                sessionStorage.setItem('intersectedElementsList', intersectedItem)
+            }
+        })
+        
+    }
+    function retrieveIntersectedElementsToSS() {
+        // let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
+        let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
+        listOfIntersectedElements_DF = listOfIntersectedElements_DF.concat(savedIntersectedElements)
+        // console.log(listOfIntersectedElements_DF)
+        someshit_DF++
+    }
+
     function ifExistsInArray_DF(idOfElement) {
         if (listOfIntersectedElements_DF.includes(idOfElement)) {
             return true
@@ -296,7 +312,10 @@
             intersectingElementIndex_DF = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                listOfIntersectedElements_DF.push(intersectingElementIndex_DF)
+                if (!listOfIntersectedElements_DF.includes(intersectingElementIndex_DF)) {
+                    listOfIntersectedElements_DF.push(intersectingElementIndex_DF)
+                }
+                
                 someshit_DF++
                 amountOfElementsObserved++
                 intersecObserver.unobserve(entry.target)
@@ -351,14 +370,14 @@
     <div class="default_container linksToSections">
         <div class="content_container sections_links">
             <a href="#logosSection" class="anchorLink_toSections"> <span>01.</span> portfolio - logos</a>
-            <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - websites and banners</a>
+            <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - posters and banners</a>
         </div>
     </div>
     <div class="default_container endless" id="logosSection">
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid} use:openInLargeList use:observeDefaultCont>
+            <div class="works_preview_grid" bind:this={works_preview_grid_bind} use:openInLargeList use:observeDefaultCont>
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
@@ -538,16 +557,15 @@
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="Travelin">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box" bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH}>
+                        <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box" bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH}>
                             <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
-                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="MountFuji">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
@@ -555,31 +573,27 @@
                             <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="TimerForWork">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="Postrrr">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="IDK">
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper">
+                    <div class="largeWork_preview_box_wrapper" id="UsefullPoster">
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
                         </a>
@@ -1199,7 +1213,9 @@
         border-radius: max(3rem, 3vw);
         position: relative;
     }
-
+    .largeWork_preview_box:not(.moreThanOneChild){
+        padding-bottom: max(0.35rem, 0.5vh);
+    }
     .largeWork_preview_box::-webkit-scrollbar {
         height: max(0.35rem, 0.5vh);
     }
@@ -1207,7 +1223,7 @@
         background-color: transparent;
     }
     .largeWork_preview_box::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_alternativeLightYellow_Darker);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
         border-radius: 5rem;
     }
     .largeWork_preview_box:is(.moreThanOneChild){

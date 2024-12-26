@@ -25,6 +25,7 @@
         justify-content: center;
         font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--text_size_medium_big);
+        text-wrap: balance;
         color: var(--text_color_gray5);
         border-radius: max(1vw, 1rem);
 

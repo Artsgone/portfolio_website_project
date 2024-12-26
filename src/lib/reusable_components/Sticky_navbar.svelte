@@ -3,12 +3,14 @@
     import { sineInOut } from 'svelte/easing';
 
     import backButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
+
+    export let anchorLinkToLargeWork = "#largeWorksSection"
 </script>
 
 <div class="sticky_navbar_container">
     <div class="sticky_navbar_wrapper" >
-        <a transition:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-50'}} href="/portfolio#largeWorksID" class="back_button"> 
-            <img class="backButtonArrow" src={backButtonArrow} alt="backButtonArrow"> Back 
+        <a transition:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-50'}} href="/portfolio{anchorLinkToLargeWork}" class="back_button"> 
+            <img class="backButtonArrow" src={backButtonArrow} alt="backButtonArrow">Back
         </a>
     </div>
 </div>
