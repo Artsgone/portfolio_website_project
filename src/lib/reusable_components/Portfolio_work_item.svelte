@@ -90,7 +90,7 @@
     <!-- <main > -->
         <!-- style="--portfolio_item_visible:{workElementVisibility};" -->
         <div class="workPresentation_container" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
+            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
             style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
                     <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">

@@ -3,14 +3,16 @@
     import { sineInOut } from 'svelte/easing';
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
-    export let closeInfoScreen;
+    // export let closeInfoScreen;
+    export let statusCode;
 
 </script>
 
 <div in:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 300, start: 0.9, easing: sineInOut }} class="loader_animation"> 
     <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> 
-    Your email has been sent! 
-    <button class="closeButton" on:click={closeInfoScreen}> <img class="Global_closeIcon" src={Global_closeIcon} alt="Global_closeIcon"> </button>
+    <!-- Your email has been sent!  -->
+     {statusCode}
+    <!-- <button class="closeButton" on:click={closeInfoScreen} on:keypress={closeInfoScreen}> <img class="Global_closeIcon" src={Global_closeIcon} alt="Global_closeIcon"> </button> -->
     
  </div>
 
@@ -19,7 +21,8 @@
         position: fixed;
         z-index: 9999;
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
-        inset: 25%;
+        /* inset: 25%; */
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -42,7 +45,7 @@
         animation: rotateInfinately 5s linear 0.5s infinite;
     }
     
-    .closeButton{
+    /* .closeButton{
         position: absolute;
         cursor: pointer;
         width: max(3.3rem, 3vw);
@@ -71,7 +74,7 @@
     }
     .closeButton:hover{
         animation: close_button_animation .5s ease-in-out;
-    }
+    } */
     
     @keyframes rotateInfinately{
         0%{
@@ -107,7 +110,7 @@
 
     @media (width < 1000px) {
         .loader_animation{
-            inset: 30% 10%;
+            /* inset: 30% 10%; */
             font-size: min(7vw, 1.75rem);
         }
     }

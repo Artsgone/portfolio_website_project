@@ -22,7 +22,7 @@
     import { onMount } from "svelte";
     import { fade, fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
-    import { afterNavigate, beforeNavigate } from '$app/navigation';
+    import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
     
     let previousScreenHeight = 0;
     let pageLoaded = false;
@@ -73,12 +73,15 @@
     let border_radius = "inherit"
     let arrow_rotation = "1"
 
-    function optionMenuShowToggle() {
+    function optionMenuDisplay() {
         if (!optionMenuShow) {
-            border_radius = "border-radius: max(1.9rem, 2.1vw) max(1.9rem, 2.1vw) 0 0;"
+            border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0; filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));"
             arrow_rotation = "-1"
             optionMenuShow = true
-        } else{
+        }
+    }
+    function optionMenuHide() {
+        if (optionMenuShow) {
             border_radius = "inherit"
             arrow_rotation = "1"
             optionMenuShow = false
@@ -86,22 +89,115 @@
     }
     
 
-    let optionText = ""
+    let optionText = "Not specified"
     const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design"]
+    let optionMenu
+    let afterClose = false
 
     function optionClicked() {
         const options = document.querySelectorAll(".tow_option")
-
+        
         options.forEach( (option, index) => {
             option.addEventListener("click", (e) => {
                 optionText = typeOfWorkList[index]
+                optionMenuHide()
+                afterClose = true
             })
-        });
+            // option.addEventListener("keydown", (e) => {
+            //     optionText = typeOfWorkList[index]
+            //     optionMenuHide()
+            //     afterClose = true
+            // })
+        })
+    }
+    function clickedOutsideOfOptionMenu() {
+        const itemtypeOfWork = document.querySelector(".form_item.itemtypeOfWork")
+
+        window.addEventListener("click", (e) => {
+            if (itemtypeOfWork != null) {
+                if (itemtypeOfWork.contains(e.target)) {
+                    if (optionMenuShow) {
+                        optionMenuHide()
+                    } else if (!afterClose) {
+                        optionMenuDisplay()
+                    }
+                } else if (optionMenu != null) {
+                    if (!optionMenu.contains(e.target) || optionMenu.contains(e.target)) {
+                        optionMenuHide()
+                    }
+                }
+                afterClose = false
+            }
+        })
+        window.addEventListener("keydown", (e) => {
+            if (itemtypeOfWork != null) {
+                if (itemtypeOfWork.contains(e.target)) {
+                    if (optionMenuShow) {
+                        optionMenuHide()
+                    } else if (!afterClose) {
+                        optionMenuDisplay()
+                    }
+                } else if (optionMenu != null) {
+                    if (!optionMenu.contains(e.target) || optionMenu.contains(e.target)) {
+                        optionMenuHide()
+                    }
+                }
+                afterClose = false
+            }
+        })
     }
 
-    function submitEmail() {
-        infoScreenShow = true   
+    let status = "";
+    const handleSubmit = async data => {
+        submitEmail()
+        status = 'Submitting...'
+        const formData = new FormData(data.currentTarget)
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: json
+        });
+        const result = await response.json();
+        if (result.success) {
+            // console.log(result);
+            status = result.message || "Success"
+            document.querySelector(".contact_form_grid").reset()
+            const interval = setInterval(() => {
+                closeSubmitInfo()
+            }, 1000)
+            return () => clearInterval(interval)
+            
+            // reloadPage()
+            // goto_pageReload = true
+        }
     }
+    function submitEmail() {
+        infoScreenShow = true
+    }
+    function closeSubmitInfo() {
+        infoScreenShow = false
+    }
+    // function resetform() {
+    //     document.querySelector(".contact_form_grid").reset()
+    // }
+
+    // let goto_pageReload = false
+    // function reloadPage() {
+    //     if (!goto_pageReload) {
+    //         const thisPage = window.location.pathname;
+    //         // console.log('goto ' + thisPage);
+    //         const interval = setInterval(() => {
+    //             goto('/').then( () => goto(thisPage + '#contactForm_container'))
+    //         }, 2000)
+    //         return () => clearInterval(interval)
+    //     }
+    // }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -111,8 +207,9 @@
         <LoadingScreen />
     {/if}
 
+    <!-- closeInfoScreen={() => {infoScreenShow = false}} -->
     {#if infoScreenShow}
-        <Info_screen closeInfoScreen={() => {infoScreenShow = false}} />
+        <Info_screen statusCode={status} />
     {/if}
 
     {#if y > (innerHeight / 1.1) && oldY > y}
@@ -132,7 +229,7 @@
                     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"/>
         </div>
     </div>
-    <div class="default_container">
+    <div class="default_container" id="contactForm_container">
         {#if innerWidth > 1000}
             <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor} alt="Contact_BackgroundDecor">
         {:else if innerWidth < 600}
@@ -140,47 +237,48 @@
         {:else}
             <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor_Mobile} alt="Contact_BackgroundDecor_Mobile">
         {/if}
-        <div class="content_container contact_page">
+        <div class="content_container contact_page" use:clickedOutsideOfOptionMenu>
             <p class="contact_title darkgrayText">Contact me</p>
-            <div class="contact_form_grid">
-                <input type="text" class="form_item itemName" placeholder="Your name:">
-                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius} on:keypress={optionMenuShowToggle} on:click={optionMenuShowToggle}>
-                    {#if optionText == ""}
-                        Type of work
+            <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
+                <input type="hidden" name="access_key" value="b8420fdb-0274-431b-b438-8f96dad35660">
+                <!-- Name _____ -->
+                <input name="name" type="text" minlength="2" maxlength="25" required class="form_item itemName" placeholder="Your name:">
+                <!-- Type of work _____ -->
+                <input name="type" type="hidden" value={optionText}>
+                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius}>
+                    {#if optionText == "Not specified"}
+                        Type of work: <strong>&nbsp -</strong>
                     {:else}
                         {optionText}
                     {/if}
                     
                     <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
                     {#if optionMenuShow}
-                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked>
+                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option">{item}</div>
+                                 <div class="tow_option" role="button" tabindex="0">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
                 </div>
-                <!-- <select name="Type of work" class="form_item itemtypeOfWork">
-                    <option value="0">Type of work</option>
-                    <option value="web_design">Web design</option>
-                    <option value="logo_design">Logo design</option>
-                    <option value="poster_design">Poster design</option>
-                    <option value="visual_identity">Visual identity</option>
-                </select> -->
-                <input type="text" class="form_item itemEmail" placeholder="Your email:">
-                <textarea rows={numberOfRows} class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
-                <button on:click={submitEmail} type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
-            </div>
+                <!-- email _____ -->
+                <input name="email" type="email" required class="form_item itemEmail" placeholder="Your email:">
+                <!-- text from client _____ -->
+                <textarea name="message" minlength="25" rows="3" required class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
+                <!-- submit _____ -->
+                <!-- on:click={resetform} -->
+                <button type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
+            </form>
             <div class="links_bottom_part">
                 <div class="links">
                     <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Telegram_Icon" src={Telegram_Icon} alt="Telegram_Icon"> 
                         <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
                     </a>
-                    <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
+                    <a href="https://www.instagram.com/" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
                         <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
                     </a>
                 </div>
-                <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin@gmail.com">artemdamin@gmail.com</a>
+                <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin.contact@gmail.com">artemdamin.contact@gmail.com</a>
             </div>
         </div>
     </div>
@@ -365,9 +463,9 @@
     }
     .form_item{
         color: var(--text_color_gray90);
-        font-family: 'Neutral_Normal', system-ui, sans-serif;
+        font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         letter-spacing: max(0.05vw, 0.07rem);
-        font-size: max(1vw, 0.9rem);
+        font-size: max(1.25vw, 1.25rem);
         padding: max(1.25vw, 1.1rem) max(2vw, 1.75rem);
         border-radius: max(1.9rem, 2.1vw);
         border: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
@@ -378,7 +476,7 @@
     }
     .form_item.itemUserText{
         grid-area: 2 / 1 / 4 / 4;
-        line-height: max(1.5rem, 2vh);
+        line-height: max(1.5rem, 3vh);
         resize: none;
     }
     .form_item.itemUserText::-webkit-scrollbar {
@@ -388,7 +486,7 @@
         background-color: transparent;
     }
     .form_item.itemUserText::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_lightCyanSaturated);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
         border-radius: 5rem;
     }
 
@@ -399,7 +497,7 @@
         cursor: pointer;
         
         color: var(--text_color_gray90);
-        transition: border-radius 0.15s ease-in-out;
+        transition: border-radius 0.15s ease-in-out, filter 0.15s ease-in-out;
     }
 
     .Global_arrowDropdownMenu{
@@ -418,6 +516,7 @@
         color: var(--text_color_gray90);
         border-radius: 0 0 max(1.5rem, 2vw) max(1.5rem, 2vw);
         outline: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
+        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));
 
         display: grid;
         grid-template-columns: 1fr;
@@ -466,7 +565,7 @@
         /* border: max(4px, 0.250vw) var(--cyan_outline) solid; */
         border: none;
         cursor: pointer;
-        z-index: 1;
+        z-index: 50;
     }
     .submitButtonArrow{
         height: 45%;
@@ -589,7 +688,7 @@
         }
         .emailAdress_Text{
             font-size: var(--text_size_extra_small);
-            font-size: max(1.15rem, 1.25vw);
+            font-size: min(1.1rem, 4.25vw);
         }
     }  
     @media (width < 950px) {
@@ -610,7 +709,7 @@
         }
         
         .form_item{
-            font-size: max(1vw, 0.85rem);
+            font-size: min(4.35vw, 1.25rem);
             padding: max(1vw, 0.9rem) max(2vw, 1.75rem);
         }
         .form_item.itemUserText{
@@ -625,12 +724,12 @@
             grid-auto-rows: max(3.25rem, 5.5vh);
         }
     }
-    @media (width < 650px) {
+    @media (width < 750px) {
         .content_container.contact_page{
             gap: 3vh;
         }
         .contact_title{
-            font-size: 23vw;
+            font-size: min(23vw, 7.5rem);
             text-align: center;
             text-wrap: wrap;
             line-height: max(8vh, 17vw);

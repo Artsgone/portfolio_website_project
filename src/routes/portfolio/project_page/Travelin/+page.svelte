@@ -62,7 +62,7 @@
     {/if}
 
     {#if y < (innerHeight / 10) || oldY > y}
-        <Sticky_navbar anchorLinkToLargeWork="#MountFuji" />
+        <Sticky_navbar anchorLinkToLargeWork="#Travelin" />
     {/if}
 
     

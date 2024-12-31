@@ -92,7 +92,7 @@
 
     <!-- <main > -->
         <div class="workPresentation_container" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keypress={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
+            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
                 style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 
                 <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}

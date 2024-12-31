@@ -63,7 +63,7 @@
         }
         pageLoaded = true;
         retrieveIntersectedElementsToSS()
-        largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
+        // largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -134,8 +134,19 @@
             }
         })
     }
+    let amountOfChildElementsList_fullScreen = [];
+    function checkForAmountOfChildren_fullScreen() {
+        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
+        lW_preview_boxes.forEach( (box, boxId) => {
+            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.fullScreenPreview")
+            if (amountOfChildren.length > 1) {
+                box.classList.add("moreThanOneChild")
+                amountOfChildElementsList_fullScreen.splice(boxId, 1, amountOfChildren.length)
+            }
+        })
+    }
 
-    let largeWork_preview_box_wrapper_WIDTH = 0
+    // let largeWork_preview_box_wrapper_WIDTH = 0
 
     function boxScroll() {
         const largeWorkImages = document.querySelectorAll(".largeWork_preview_box")
@@ -203,9 +214,9 @@
                         
                         scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
                         // console.log("List:", scrollElementsIndexes)
-
                         largeWork.querySelectorAll(".largeWork_element_preview").forEach( (element, elementId) => {
                             if (elementId == amountOfScrolledImages) {
+                                // console.log(elementId)
                                 element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
                             }
                         })
@@ -213,6 +224,88 @@
                         // if ((largeWork.scrollLeft - (largeWork.scrollWidth / numberOfChildElements) * 2) <= 0) {
                         //     largeWorkButton.classList.add("visually_hidden") 
                         // }
+                        if (amountOfScrolledImages == 0) {
+                            largeWorkButton.classList.add("visually_hidden") 
+                        }
+                        buttons_right.forEach( (rightButton, rightButtonId) => {
+                            if (rightButtonId === largeWorkButtonId) {
+                                rightButton.classList.remove("visually_hidden")
+                            }
+                        })
+                    }
+                })
+            })
+
+        })
+        
+    }
+    function boxScroll_fullScreen() {
+        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
+        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.fullScreenButton")
+        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.fullScreenButton")
+        const listLength = largeWorkImages.length
+        var scrollElementsIndexes = new Array(listLength)
+        
+        let amountOfScrolledImages = 0
+        let numberOfChildElements = 0
+        
+        buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
+            largeWorkButton.addEventListener("click", (e) => {
+                largeWorkImages.forEach( (largeWork, largeWorkId) => {
+                    if (largeWorkId === largeWorkButtonId) {
+
+                        numberOfChildElements = amountOfChildElementsList_fullScreen.at(largeWorkId)
+
+                        amountOfScrolledImages = scrollElementsIndexes.at(largeWorkId) || 0
+                        if (amountOfScrolledImages < numberOfChildElements) {
+                            amountOfScrolledImages++
+                        }
+                        
+                        scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
+                        // console.log("List:", scrollElementsIndexes)
+
+                        largeWork.querySelectorAll(".largeWork_element_preview.fullScreenPreview").forEach( (element, elementId) => {
+                            if (elementId == amountOfScrolledImages) {
+                                element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                            }
+                        })
+                        if (amountOfScrolledImages == numberOfChildElements - 1) {
+                            largeWorkButton.classList.add("visually_hidden") 
+                        }
+                        buttons_left.forEach( (leftButton, leftButtonId) => {
+                            if (leftButtonId === largeWorkButtonId) {
+                                leftButton.classList.remove("visually_hidden")
+                            }
+                        })
+                    }
+                })
+            })
+
+        })
+        buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
+
+            if (amountOfScrolledImages == 0) {
+                largeWorkButton.classList.add("visually_hidden")
+            }
+            largeWorkButton.addEventListener("click", (e) => {
+                largeWorkImages.forEach( (largeWork, largeWorkId) => {
+                    if (largeWorkId === largeWorkButtonId) {
+                        numberOfChildElements = amountOfChildElementsList_fullScreen.at(largeWorkId)
+
+                        amountOfScrolledImages = scrollElementsIndexes.at(largeWorkId) || 0
+                        if (amountOfScrolledImages > 0) {
+                            amountOfScrolledImages--
+                        }
+                        
+                        scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
+                        
+                        largeWork.querySelectorAll(".largeWork_element_preview.fullScreenPreview").forEach( (element, elementId) => {
+                            if (elementId == amountOfScrolledImages) {
+                                // console.log(elementId)
+                                element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                            }
+                        })
+
                         if (amountOfScrolledImages == 0) {
                             largeWorkButton.classList.add("visually_hidden") 
                         }
@@ -279,11 +372,13 @@
     $: someshit_DF = 0;
 
     function saveIntersectedElementsToSS() {
+        let elementsToSave = []
         listOfIntersectedElements_DF.forEach( intersectedItem => {
-            if (intersectedItem == 24) {
-                // sessionStorage.setItem('intersectedElementsList', JSON.stringify(intersectedItem))
-                sessionStorage.setItem('intersectedElementsList', intersectedItem)
+            if (intersectedItem >= 24) {
+                elementsToSave.push(intersectedItem)
+                // sessionStorage.setItem('intersectedElementsList', intersectedItem)
             }
+            sessionStorage.setItem('intersectedElementsList', JSON.stringify(elementsToSave))
         })
         
     }
@@ -371,6 +466,7 @@
         <div class="content_container sections_links">
             <a href="#logosSection" class="anchorLink_toSections"> <span>01.</span> portfolio - logos</a>
             <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - posters and banners</a>
+            <a href="#fullScreenWorksSection" class="anchorLink_toSections"> <span>03.</span> portfolio - websites</a>
         </div>
     </div>
     <div class="default_container endless" id="logosSection">
@@ -560,7 +656,8 @@
                     <div class="largeWork_preview_box_wrapper" id="Travelin">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box" bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH}>
+                        <!-- bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH} -->
+                        <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
                             <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                         </a>
@@ -571,14 +668,15 @@
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
                             <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
                             <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper" id="TimerForWork">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper" id="Postrrr">
@@ -590,7 +688,7 @@
                     </div>
                     <div class="largeWork_preview_box_wrapper" id="IDK">
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_TravelinWebsite">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper" id="UsefullPoster">
@@ -603,6 +701,31 @@
         {:else}
             <img class="largeWork_element_preview" src={Portfolio_WorksPreviewDecor} alt="Portfolio_TravelinWebsite">
         {/if} 
+    </div>
+    <div class="default_container endless forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
+        {#if ifExistsInArray_DF(25) && someshit_DF > 0}
+            <div class="content_container work_summary_page fullscreenWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <p class="largeWorks_upperText">Portfolio - websites</p>
+                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen>
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
+                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_Mount_Fuji">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
+                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {/if}
     </div>
 
     {#if workPresent_Visibility == 'visible'}
@@ -901,7 +1024,7 @@
 
 
     .default_container.linksToSections{
-        height: 30vh;
+        height: 40vh;
         min-height: 20rem;
     }
     .content_container.sections_links{
@@ -910,7 +1033,7 @@
         grid-auto-rows: 1fr;
         place-items: center;
         height: 60%;
-        gap: min(2vh, 5vw);
+        gap: min(5vh, 7.5vw);
     }
     .anchorLink_toSections{
         font-size: max(1.5rem, 2vw);
@@ -920,6 +1043,9 @@
         font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         color: var(--text_color_gray90);
         text-align: center;
+    }
+    .anchorLink_toSections:last-child{
+        grid-column: 1 / 3;
     }
     .anchorLink_toSections > span{
         font-family: 'Neutral_Normal', system-ui, sans-serif;
@@ -935,6 +1061,9 @@
     @media (width < 800px) {
         .content_container.sections_links{
             grid-template-columns: 1fr;
+        }
+        .anchorLink_toSections:last-child{
+            grid-column: 1 / 2;
         }
     }
 
@@ -1325,6 +1454,29 @@
             font-size: min(4rem, 11.5vw);
             translate: 0 -40%;
         }
+    }
+
+    /* Fullscreen works */
+
+    .fullScreenWorks_preview_grid{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-auto-rows: 1fr;
+        gap: max(4rem, 5vw) max(1rem, 1vw);
+    }
+    .largeWork_preview_box_wrapper.fullScreenWrapper::before{
+        height: 106%;
+        top: -3%;
+    }
+    .largeWork_element_preview.fullScreenPreview{
+        width: 90%;
+        height: 75vh;
+        max-height: 90%;
+        object-fit: contain;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        /* image-rendering: optimizeQuality; */
     }
 
     /* General media ------------------------------------------------------------------------------------------------------------*/
