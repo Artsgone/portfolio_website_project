@@ -40,11 +40,15 @@
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
-    import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TimerForWork.png'
+    import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png'
+    import Portfolio_TFW_register from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png'
+    import Portfolio_TFW_main_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png'
+    import Portfolio_TFW_register_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png'
     import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
     import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
     import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
     import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
+    import Porftolio_AccountManager from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -100,7 +104,7 @@
     let portfolio_loadingScreenShow = false;
     let workPresent_Visibility = 'hidden';
 
-    function openInLargeList(idOfElement){
+    function openInLargeList(){
         const portfolio_works = document.querySelectorAll(".wep_box")
         portfolio_works.forEach( (work, workId) => {
             work.addEventListener("click", (e) => {
@@ -117,6 +121,9 @@
     function closeInLargeList(){
         portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
+        listOfIntersectedElements.length = 0
+        someshit = 0
+        // console.log(listOfIntersectedElements)
     }
     // function hide_LoadingScreen(){
     //     if (portfolio_loadingScreenShow = true) {
@@ -126,14 +133,17 @@
 
     let amountOfChildElementsList = [];
     function checkForAmountOfChildren() {
-        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box")
+        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
         lW_preview_boxes.forEach( (box, boxId) => {
-            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview")
+            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.halfScreenPreview")
             if (amountOfChildren.length > 1) {
                 box.classList.add("moreThanOneChild")
                 amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
+            } else {
+                amountOfChildElementsList.splice(boxId, 1, 0)
             }
         })
+        // console.log(amountOfChildElementsList)
     }
     let amountOfChildElementsList_fullScreen = [];
     function checkForAmountOfChildren_fullScreen() {
@@ -143,16 +153,19 @@
             if (amountOfChildren.length > 1) {
                 box.classList.add("moreThanOneChild")
                 amountOfChildElementsList_fullScreen.splice(boxId, 1, amountOfChildren.length)
+            } else {
+                amountOfChildElementsList_fullScreen.splice(boxId, 1, 0)
             }
         })
+        // console.log("Fullscreen", amountOfChildElementsList_fullScreen)
     }
 
     // let largeWork_preview_box_wrapper_WIDTH = 0
 
     function boxScroll() {
-        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box")
-        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left")
-        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right")
+        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
+        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.halfScreenButton")
+        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.halfScreenButton")
         const listLength = largeWorkImages.length
         var scrollElementsIndexes = new Array(listLength)
         
@@ -174,7 +187,7 @@
                         scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
                         // console.log("List:", scrollElementsIndexes)
 
-                        largeWork.querySelectorAll(".largeWork_element_preview").forEach( (element, elementId) => {
+                        largeWork.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
                             if (elementId == amountOfScrolledImages) {
                                 element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
                             }
@@ -215,7 +228,7 @@
                         
                         scrollElementsIndexes.splice(largeWorkId, 1, amountOfScrolledImages)
                         // console.log("List:", scrollElementsIndexes)
-                        largeWork.querySelectorAll(".largeWork_element_preview").forEach( (element, elementId) => {
+                        largeWork.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
                             if (elementId == amountOfScrolledImages) {
                                 // console.log(elementId)
                                 element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
@@ -660,49 +673,53 @@
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
-                    <div class="largeWork_preview_box_wrapper" id="TravelinBanner">
-                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <!-- bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH} -->
-                        <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
-                            <img class="largeWork_element_preview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                        <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
+                            <!-- <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite"> -->
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper" id="MountFuji">
-                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper" id="TimerForWork">
-                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TimerForWork">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper" id="Postrrr">
-                        <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="Postrrr">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper" id="IDK">
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_Mount_Fuji} alt="Portfolio_TravelinWebsite">
+                    <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="IDK">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_TravelinWebsite">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper" id="UsefullPoster">
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box">
-                            <img class="largeWork_element_preview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="UsefullPoster">
+                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         {:else}
@@ -718,16 +735,25 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
+                            <!-- <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite"> -->
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
+                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} alt="Porftolio_AccountManager">
                         </a>
                     </div>
                 </div>
@@ -1165,11 +1191,12 @@
     .work_element_preview{
         width: 80%;
         max-height: 80%;
+        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
     }
 
     .work_element_preview_box.rounded > .work_element_preview{
-        width: 75%;
-        max-height: 65%;
+        width: 80%;
+        max-height: 70%;
     }
 
     .works_preview_grid > .blank{
@@ -1372,7 +1399,7 @@
         overflow-x: scroll;
         overflow-y: clip;
     }
-    .largeWork_preview_box:not(.moreThanOneChild)::after{
+    .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
         content: '- view detailed -';
         position: absolute;
         inset: -0.2% 0 -0.2% 0;
@@ -1450,6 +1477,7 @@
         object-fit: contain;
         scroll-snap-align: center;
         scroll-snap-stop: always;
+        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
         /* image-rendering: optimizeQuality; */
     }
 

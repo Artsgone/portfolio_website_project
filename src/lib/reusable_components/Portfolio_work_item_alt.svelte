@@ -157,6 +157,7 @@
     .Portfolio_workPreviewElement{
         width: max(20rem, 80%);
         max-height: 80vh;
+        filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_alternativeLightYellow));
     }
     
     .work_description_container{
