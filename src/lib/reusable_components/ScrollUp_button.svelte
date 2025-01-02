@@ -23,9 +23,10 @@
         backdrop-filter: blur(5px) invert(25%);
         background-color: var(--background_color_lightCyan_lowerOpacity);
         box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        padding: 0;
     }
     .arrowIcon{
-        width: 60%;
+        width: 55%;
         aspect-ratio: 1;
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
     }

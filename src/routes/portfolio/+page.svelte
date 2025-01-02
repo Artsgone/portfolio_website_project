@@ -36,6 +36,7 @@
     import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
     import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
     import Portfolio_workPreviewElement_Travelin_Logo from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg'
+    import Portfolio_workPreviewElement_Tari from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg'
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
@@ -419,6 +420,12 @@
                     // console.log("DISCONNECTED")
                 }
             }
+            // else {
+            //     if (listOfIntersectedElements_DF.includes(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
+            //         const indexToRemoveFromList = listOfIntersectedElements_DF.indexOf(intersectingElementIndex_DF)
+            //         listOfIntersectedElements_DF.splice(indexToRemoveFromList, 1)
+            //     }
+            // }
         })
         },
             {
@@ -609,14 +616,14 @@
                         <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs top">
+                <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
                     {#if ifExistsInArray_DF(19) && someshit_DF > 0}
-                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if ifExistsInArray_DF(20) && someshit_DF > 0}
-                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
 
@@ -653,7 +660,7 @@
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
-                    <div class="largeWork_preview_box_wrapper" id="Travelin">
+                    <div class="largeWork_preview_box_wrapper" id="TravelinBanner">
                         <button class="scrollLeftAndRightButton left"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <!-- bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH} -->
@@ -782,9 +789,9 @@
                 {/if}
             </div>
 
-            <div id="Lexi" class="classForIntersecObserver">
+            <div id="Lemmy" class="classForIntersecObserver">
                 {#if ifExistsInArray(7) && someshit > 0}
-                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lexi" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lemmy" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
@@ -862,6 +869,11 @@
             <div id="Travelin" class="classForIntersecObserver">
                 {#if ifExistsInArray(20) && someshit > 0}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
+                {/if}
+            </div>
+            <div id="Tari" class="classForIntersecObserver">
+                {#if ifExistsInArray(21) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Tari} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
                 {/if}
             </div>
         

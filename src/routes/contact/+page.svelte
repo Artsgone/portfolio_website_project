@@ -242,12 +242,12 @@
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
                 <input type="hidden" name="access_key" value="b8420fdb-0274-431b-b438-8f96dad35660">
                 <!-- Name _____ -->
-                <input name="name" type="text" minlength="2" maxlength="25" required class="form_item itemName" placeholder="Your name:">
+                <input name="name" type="text" minlength="2" maxlength="25" autocomplete="name" required class="form_item itemName" placeholder="Your name:">
                 <!-- Type of work _____ -->
                 <input name="type" type="hidden" value={optionText}>
                 <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius}>
                     {#if optionText == "Not specified"}
-                        Type of work: <strong>&nbsp -</strong>
+                        Type of work: -
                     {:else}
                         {optionText}
                     {/if}
@@ -262,7 +262,7 @@
                     {/if}
                 </div>
                 <!-- email _____ -->
-                <input name="email" type="email" required class="form_item itemEmail" placeholder="Your email:">
+                <input name="email" type="email" autocomplete="email" required class="form_item itemEmail" placeholder="Your email:">
                 <!-- text from client _____ -->
                 <textarea name="message" minlength="25" rows="3" required class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
                 <!-- submit _____ -->
@@ -446,7 +446,7 @@
     }
     .contact_title{
         font-family: 'Brolimo', system-ui, sans-serif;
-        font-size: max(12.5vw, 7.5rem);
+        font-size: max(10vw, 7.5rem);
         margin: 0;
         align-self: flex-start;
         text-wrap: nowrap;
@@ -474,8 +474,11 @@
     .form_item:focus-visible{
         outline: max(0.2rem, 0.2vw) var(--background_color_lightCyan) solid;
     }
+    .form_item:not(:focus-visible):user-invalid{
+        outline: max(0.2rem, 0.2vw) hsl(0, 50%, 55%) solid;
+    }
     .form_item.itemUserText{
-        grid-area: 2 / 1 / 4 / 4;
+        grid-area: 2 / 1 / 5 / 4;
         line-height: max(1.5rem, 3vh);
         resize: none;
     }
@@ -553,6 +556,10 @@
         background-color: var(--cyan_outline_bright);
         color: var(--text_color_gray5);
     }
+    /* .tow_option:active{
+        background-color: var(--cyan_outline_bright);
+        color: red;
+    } */
 
     .submitButton{
         position: absolute;
@@ -568,7 +575,7 @@
         z-index: 50;
     }
     .submitButtonArrow{
-        height: 45%;
+        height: 50%;
         aspect-ratio: 1;
         rotate: 180deg;
         
@@ -678,7 +685,7 @@
             gap: 2.5vw 1vw;
         }
         .form_item.itemUserText{
-            grid-area: 3 / 1 / 5 / 3;
+            grid-area: 3 / 1 / 6 / 3;
         }
         .form_item.itemEmail{
             grid-area: 2 / 1 / 3 / 3;
@@ -732,7 +739,7 @@
             font-size: min(23vw, 7.5rem);
             text-align: center;
             text-wrap: wrap;
-            line-height: max(8vh, 17vw);
+            line-height: max(8vh, 15vw);
         }
         .contact_form_grid{
             gap: 1.5vh;

@@ -25,7 +25,7 @@
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
-        if ( from?.url.pathname == "/portfolio/project_page/mount_Fuji" && to?.url.pathname == undefined ) {
+        if ( from?.url.pathname == "/portfolio/project_page/Travelin" && to?.url.pathname == undefined ) {
             saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
@@ -62,7 +62,7 @@
     {/if}
 
     {#if y < (innerHeight / 10) || oldY > y}
-        <Sticky_navbar anchorLinkToLargeWork="#Travelin" />
+        <Sticky_navbar anchorLinkToLargeWork="#TravelinBanner" />
     {/if}
 
     
