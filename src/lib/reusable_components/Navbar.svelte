@@ -72,7 +72,7 @@
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         border-radius: 10rem;
         font-size: max(1.5rem, 1.6vw);
-        padding-block: max(1vw, 0.8rem);
+        padding-block: max(1vw, 1rem);
         transition: translate 0.15s ease-out, box-shadow 2s ease-out;
     }
     .navbar_list > a:focus-visible{
@@ -103,7 +103,7 @@
         transition: translate 0.15s ease-out, box-shadow 0.25s ease-out;
     }
     
-    @container (inline-size < 800px) {
+    @container (inline-size < 1100px) {
         .navbar_inner{
             flex-direction: column;
             gap: max(1.5rem, 3vw);
@@ -116,22 +116,23 @@
             border-radius: 1.85rem;
         }
         .navbar_list > a{
-            font-size: min(7vw, 1.5rem);
-            padding-block: 0.75rem;
-            padding-block: max(0.25rem, 1.25vw);
+            font-size: min(7vw, 1.75rem);
+            /* padding-block: 0.75rem; */
+            padding-block: max(0.75rem, 1.75vw);
         }
     }
     @container (inline-size < 500px) {
         .navbar_inner{
             gap: 1.6rem;
             /* margin-bottom: 5vh; */
-            margin-bottom: 1.5vh;
+            margin-bottom: 2.5vh;
         }
         .navbar_list{
             width: 100%;
-            min-width: 15rem;
+            /* min-width: 15rem; */
         }
         .navbar_list > a{
+            font-size: min(7vw, 1.5rem);
             padding-block: 0.8rem 0.75rem;
         }
         .navbar_list > a:hover{
@@ -142,11 +143,11 @@
 
     @media (height < 750px) and (width < 950px) {
         .navbar_list > a{
-            font-size: min(6vw, 1.75rem);
+            font-size: min(6vw, 1.6rem);
             padding-block: 0.55rem;
         }
         .navbar_list::before{
-            height: 105%;
+            height: 102.5%;
             border-radius: 1.65rem;
         }
     }

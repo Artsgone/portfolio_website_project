@@ -182,7 +182,7 @@
     <div class="default_container def_skills_title noBorders">
         {#if ifExistsInArray(3) && someshit > 0}
             <div class="content_container skills_title_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-                {#if innerWidth > 800}
+                {#if innerWidth > 1000}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
                 {:else}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} alt="AboutMe_SkillsTitleSVG_Mobile">
@@ -214,7 +214,7 @@
                         Creative at designing things.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
+                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Willing to learn and develope my skills anytime.
                     </p>
                     <p class="rounded darkgrayText">
@@ -222,7 +222,7 @@
                         Aiming for hardwork to achieve the best result possible.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Square" src={AboutMe_OtherPE_Square} alt="AboutMe_OtherPE_Square">
+                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Effective both on my own and in team.
                     </p>
                 </div>
@@ -342,7 +342,7 @@
         z-index: 999;
     }
 
-    @media (width < 800px){
+    @media (width < 1200px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;
@@ -358,7 +358,7 @@
             line-height: max(17.5vw, 7rem);
         }
     }
-    @media (width < 500px){
+    @media (width < 575px){
         #AboutMe_titlePageSVG{
             width: 90%;
             translate: 2% 2%;
@@ -520,10 +520,11 @@
 
     @media (width < 800px) {
         #AboutMe_SkillsTitleSVG{
-            width: 100%;
+            width: min(100%, 30rem);
         }
         .default_container.def_skills_title{
             height: 40vh;
+            scroll-snap-align: start;
         }
     }
 
@@ -591,22 +592,22 @@
         position: relative;
     }
 
-    .AboutMe_OtherPE_Rounded, .AboutMe_OtherPE_Square{
+    .AboutMe_OtherPE_Rounded{
         position: absolute;
         top: 50%;
         translate: -140% -62.5%;
     }
 
-    .AboutMe_OtherPE_Square{
+    /* .AboutMe_OtherPE_Square{
         width: max(2.5vw, 1.75rem);
-    }
+    } */
     .AboutMe_OtherPE_Rounded{
         width: max(2.25vw, 1.5rem);
     }
 
     @media (width < 1100px) {
         .content_container.otherAbilities_page > p {
-            font-size: 9vh;
+            font-size: min(9vh, 6vw);
         }
     }
     @media (width < 1000px) {
@@ -619,7 +620,7 @@
         }
     }
     @media (width < 800px) {
-        .AboutMe_OtherPE_Rounded, .AboutMe_OtherPE_Square{
+        .AboutMe_OtherPE_Rounded{
             top: 0;
             translate: -10% -125%;
             opacity: 0.75;

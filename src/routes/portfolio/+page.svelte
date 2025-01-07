@@ -1020,15 +1020,15 @@
         z-index: 999;
     }
 
-    @media (width < 942px){
+    @media (width < 1200px){
         #Portfolio_TitleDecor{
             width: 65%;
         }
         .title_name{
-            font-size: max(18vw, 6.5rem);
+            font-size: max(20vw, 7rem);
         }
     }
-    @media (width < 500px){
+    @media (width < 575px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;

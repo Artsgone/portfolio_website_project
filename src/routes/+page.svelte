@@ -393,7 +393,7 @@
         text-wrap: nowrap;
     }
 
-    @media (width < 800px){
+    @media (width < 1200px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;
@@ -410,7 +410,7 @@
             line-height: max(17.5vw, 6rem);
         }
     }
-    @media (width < 500px){
+    @media (width < 575px){
         #MainPage_titlePageSVG{
             width: 100%;
             top: 14%;
@@ -714,13 +714,16 @@
         z-index: 1;
     }
     
-    @media (width < 1300px) {
+    @media (width < 1400px) {
         .earLikeThing{
             width: 40%;
             height: min(17.5rem, 85%);
         }
+        .MY{
+            height: 60%;
+            width: 60%;
+        } 
     }
-
     @media (width < 800px) {
         .MY{
             height: 35%;
@@ -916,7 +919,7 @@
         gap: max(3vw, 5vh);
     }
     .right_part.page6{
-        width: 50%;
+        width: max(50%, 8.5rem);
         height: 100%;
         display: flex;
         flex-direction: column;

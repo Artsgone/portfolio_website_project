@@ -90,7 +90,7 @@
     
 
     let optionText = "Not specified"
-    const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design"]
+    const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design", "Other"]
     let optionMenu
     let afterClose = false
 
@@ -381,7 +381,7 @@
         z-index: 999;
     }
 
-    @media (width < 942px){
+    @media (width < 1200px){
         /* .content_container.title_page{
             justify-content: center;
             gap: 15vh;
@@ -391,10 +391,10 @@
             translate: 15% 10%;
         }
         .title_name{
-            font-size: max(18vw, 7.5rem);
+            font-size: max(22vw, 8rem);
         }
     }
-    @media (width < 500px){
+    @media (width < 575px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;

@@ -70,7 +70,7 @@
     }
     .footer_container{
         width: 100%;
-        height: max(40vw, 57.5vh);
+        /* height: max(37.5vw, 47.5vh); */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -90,8 +90,9 @@
         overflow-y: hidden;
         height: 100%;
         width: 95%;
+        gap: max(3rem, 3.5vw);
         padding-top: max(3.5vw, 2.5rem);
-        container: footer / size;
+        /* container: footer / size; */
     }
     .footer_top {
         width: 100%;
@@ -147,8 +148,8 @@
         background-repeat: no-repeat;
         
         z-index: -1;
-}
-.navbar_list > a:hover{
+    }
+    .navbar_list > a:hover{
         translate: 0 max(0.5rem, 0.40vw);
         box-shadow: inset 0 0 max(1.25rem, 1.25vw) max(0.3rem, 0.3vw) var(--background_color_lightCyanSaturated),
                     0 max(0.5rem, 0.5vw) max(1rem, 1vw) max(0.2rem, 0.2vw) var(--background_color_lightCyanSaturated);
@@ -229,26 +230,34 @@
         }
     }
     .footer_Decor{
-        width: max(24rem, 60%);
+        width: max(25rem, 60%);
         align-self: flex-end;
         grid-area: 1 / 2 / 3 / 4;
-        z-index: -2;
+        /* z-index: -1; */
     }
 
-    @container footer (inline-size < 790px) {
+    @media(width < 950px) {
         .authorName::before{
             height: 157.5%;
             padding-bottom: 0.75rem;
         }
         .navbar_list::before{
-            height: 100%;
+            height: 102.5%;
+        }
+        .footer_Decor{
+            display: none;
+        }
+        .footer_bottom{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr max(5rem, 5vw);
+        }
+        .navbar_list > a:hover{
+            box-shadow: none;
         }
     }
-    @container footer (inline-size < 650px) {
+    @media (width < 700px) {
         .titleName{
-            font-family: 'Brolimo', system-ui, sans-serif;
-            font-size: max(16vw, 3.5rem);
-            text-wrap: nowrap;
+            font-size: min(20vw, 5rem);
         }
         .footer_top{
             gap: 0;
@@ -257,9 +266,11 @@
             width: max(25%, 11.5rem);
         }
 
-        .authorName::before{
-            height: 157.5%;
-            padding-bottom: 0.75rem;
+        .authorName{
+            font-size: min(5vw, 1rem);
+        }
+        .navbar_list > a{
+            font-size: min(4vw, 1rem);
         }
         .navbar_list > a.first {
             border-radius: 10rem 0 0 10rem;
@@ -288,69 +299,6 @@
         .navbar_list > a:hover{
             translate: 0 0;
             box-shadow: none;
-        }
-    }
-
-    @media (width < 850px) {
-        .footer_Decor{
-            display: none;
-        }
-        .footer_bottom{
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr max(5rem, 5vw);
-        }
-        .navbar_list > a:hover{
-            box-shadow: none;
-        }
-    }
-    @media (width < 370px) {
-        .content_container.footer{
-            padding-top: max(7.5vw, 1.5rem);
-        }
-        .footer_top{
-            flex-direction: column;
-            gap: 1.25vh;
-        }
-        .navbar_list::before{
-            display: none;
-        }
-        .navbar_list:nth-child(2)::before{
-            border-inline: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
-        }
-        .navbar_list{
-            width: 100% !important;
-        }
-        .navbar_list > a {
-            border-radius: 10rem !important;
-            font-size: max(1.7vw, 1rem);
-            padding-block: max(.5vw, 0.3rem);
-        }
-        .navbar_list > a.second{
-            border-inline: max(2.5px, 0.125vw) var(--text_color_gray90) solid;
-        }
-
-        .authorName{
-            font-size: 1.85vh;
-            padding-block: max(1vw, 0.75rem);
-            padding-inline: max(2vw, 1.5rem);
-            box-shadow: inset 0px max(3vw, 2rem) var(--background_color_darkestCyan), inset 0px calc(max(3vw, 2rem) + max(2px, 0.09vw)) var(--text_color_gray90);
-        }
-        .authorName::before{
-            font-size: 1.85vh;
-            padding-bottom: max(0.65rem, 0.85vw);
-            border-radius: max(1.75rem, 2.2vw);
-            width: 100%;
-            height: 165%;
-        }
-    }
-    @media (height > 750px) {
-        .footer_container{
-            height: max(40vw, 45vh);
-        }
-    }
-    @media (height > 750px) and (width > 750px) and (width < 1200px) {
-        .footer_container{
-            height: max(40vw, 42.5vh);
         }
     }
     
