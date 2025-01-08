@@ -257,7 +257,7 @@
     }
     @media (width < 700px) {
         .titleName{
-            font-size: min(20vw, 5rem);
+            font-size: min(16vw, 5rem);
         }
         .footer_top{
             gap: 0;

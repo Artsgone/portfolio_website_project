@@ -687,22 +687,19 @@
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TimerForWork">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_TimerForWork">
+                        <a href="/portfolio/project_page/tomato_Poster" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="Postrrr">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
+                        <a href="/portfolio/project_page/action_Postrrr" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
                         </a>
                     </div>
@@ -734,7 +731,7 @@
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} alt="Portfolio_TimerForWork">
@@ -744,7 +741,7 @@
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
                             <!-- <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite"> -->
                         </a>
@@ -752,7 +749,7 @@
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box fullScreenBox">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
                             <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} alt="Porftolio_AccountManager">
                         </a>
                     </div>
@@ -1166,7 +1163,7 @@
         font-size: max(1.75vw, 1.25rem);
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
-        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 110%);
+        background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 125%);
         backdrop-filter: blur(max(1rem, 1vw)) opacity(0.75);
         opacity: 0;
         visibility: hidden;

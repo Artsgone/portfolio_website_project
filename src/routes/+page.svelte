@@ -629,7 +629,7 @@
             font-size: min(12.5vw, 4.5rem);
         }
         .span_CV::before{
-            filter: blur(17.5vw);
+            filter: blur(max(17.5vw, 3rem));
         }
         .MainPage_cvDownloadDecor{
             height: min(2.25rem, 7.5vw);
@@ -648,7 +648,7 @@
         .CV_downloadLinkInside{
             gap: min(2rem, 5vw);
             padding: max(1rem, 1vw) max(3rem, 3vw);
-            font-size: min(6vw, 1.45rem);
+            font-size: min(6vw, 1.75rem);
             border-radius: max(2rem, 2vw);
             border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
         }
@@ -732,6 +732,7 @@
         } 
         .earLikeThing{
             height: 55%;
+            max-height: 20vh;
             width: 50%;
             max-width: none;
         }
@@ -740,11 +741,7 @@
         } 
         .photo_collection_text{
             text-align: center;
-            font-size: min(20vw, 6.5rem);
-        } 
-        .top_part.page3, .bottom_part.page3{
-            border: none;
-            padding-bottom: 0;
+            font-size: min(19vw, 6rem);
         }
         .copyright_text{
             display: none;
@@ -753,7 +750,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4rem;
+            gap: 5vh;
             height: 60%;
         }
         .bottom_part.page3{

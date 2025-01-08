@@ -12,7 +12,7 @@
     import '$lib/styles_and_fonts/styles.css'
 
     // Large works
-    import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
+    import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
 
     let pageLoaded = false;
     onMount(() => {
@@ -24,7 +24,7 @@
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
-        if ( from?.url.pathname == "/portfolio/project_page/mount_Fuji" && to?.url.pathname == undefined ) {
+        if ( from?.url.pathname == "/portfolio/project_page/tomato_Poster" && to?.url.pathname == undefined ) {
             saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
@@ -61,19 +61,19 @@
     {/if}
 
     {#if y < (innerHeight / 10) || oldY > y}
-        <Sticky_navbar anchorLinkToLargeWork="#MountFuji" />
+        <Sticky_navbar anchorLinkToLargeWork="#TomatoPoster" />
     {/if}
 
     
 
     <div class="default_container endless">
         <div class="content_container">
-            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji"> </div>
+            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes"> </div>
             
-            <div class="project_name"> Mount Fuji </div>
+            <div class="project_name"> Eating advice banner </div>
             <div class="project_description_wrapper">
                 <p class="project_description"> 
-                    Standing at 3,776 meters, Mt. Fuji is the tallest peak in Japan, the result of volcanic activity that began approximately 100,000 years ago. Today, Mt. Fuji and the surrounding area are a popular recreational destination for hiking, camping and relaxation.
+                    About your health we care ...not
                 </p>
             </div>
         </div>
@@ -148,8 +148,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(var(--background_color_lightYellow) 65%, #683652 200%);
-        border: max(0.5rem, 0.5vw) #683652 dashed;
+        background: radial-gradient(var(--background_color_lightYellow) 65%, hsl(44, 60%, 61%) 200%);
+        border: max(0.5rem, 0.5vw) hsl(44, 63%, 64%) dashed;
         z-index: -1;
         border-radius: max(1vw, 1rem);
     }
@@ -172,7 +172,7 @@
         hyphens: auto;
     }
     .project_description::first-letter{
-        color: #683652;
+        color: hsl(44, 74%, 43%);
         font-family: 'Misto', system-ui, sans-serif;
         initial-letter: 3 2;
         padding-right: max(0.5vw, 0.5rem);
@@ -181,8 +181,8 @@
     .project_image_wrapper{
         width: 100%;
         height: 100%;
-        border: max(0.5rem, 0.5vw) #988185 solid;
-        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(350, 10%, 55%) 200%);
+        border: max(0.5rem, 0.5vw) hsl(44, 64%, 76%) solid;
+        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(44, 40%, 68%) 200%);
         border-radius: max(1vw, 1rem);
 
         display: grid;

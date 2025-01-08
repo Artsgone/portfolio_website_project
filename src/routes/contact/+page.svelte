@@ -480,6 +480,7 @@
     .form_item.itemUserText{
         grid-area: 2 / 1 / 5 / 4;
         line-height: max(1.5rem, 3vh);
+        padding-inline-end: max(5vw, 3.5rem);
         resize: none;
     }
     .form_item.itemUserText::-webkit-scrollbar {
@@ -736,10 +737,11 @@
             gap: 3vh;
         }
         .contact_title{
+            /* min(23vw, 12.5vh) */
             font-size: min(23vw, 7.5rem);
             text-align: center;
             text-wrap: wrap;
-            line-height: max(8vh, 15vw);
+            line-height: min(10vh, 17vw);
         }
         .contact_form_grid{
             gap: 1.5vh;
@@ -764,7 +766,7 @@
             margin: 0;
         }
     }
-    @media (height < 700px) {
+    @media (height < 700px) and (width < 800px) {
         .contact_form_grid{
             grid-auto-rows: 0.8fr;
         }
