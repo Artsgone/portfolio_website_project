@@ -8,7 +8,7 @@
 
 </script>
 
-<div in:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 300, start: 0.9, easing: sineInOut }} class="loader_animation"> 
+<div in:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-100' }} out:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '100' }} class="loader_animation"> 
     <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> 
     <!-- Your email has been sent!  -->
      {statusCode}

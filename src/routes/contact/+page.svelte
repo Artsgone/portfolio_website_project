@@ -168,6 +168,7 @@
             // console.log(result);
             status = result.message || "Success"
             document.querySelector(".contact_form_grid").reset()
+            optionText = "Not specified"
             const interval = setInterval(() => {
                 closeSubmitInfo()
             }, 1000)

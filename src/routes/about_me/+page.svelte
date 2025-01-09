@@ -68,6 +68,7 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
+    let intervalForLoading = 250
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -78,41 +79,50 @@
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".default_container")
-        const content_containers = document.querySelectorAll(".content_container")
-        const listLenght = default_containers.length
-        let amountOfElementsObserved = 0;
+        // const listLenght = default_containers.length
+        // let amountOfElementsObserved = 0;
 
-        const intersecObserver = new IntersectionObserver( entries => {
-        entries.forEach( entry => {
-            intersectingElementIndex = entry.target.containerIndex
+        // const intersecObserver = new IntersectionObserver( entries => {
+        // entries.forEach( entry => {
+        //     intersectingElementIndex = entry.target.containerIndex
 
-            if (entry.isIntersecting) {
-                entry.target.classList.add("showOnScreen")
-                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
-                // console.log(intersectingElementIndex, entry.target, 'is visible');
-                listOfIntersectedElements.push(intersectingElementIndex)
-                // listOfIntersectedElements = listOfIntersectedElements
+        //     if (entry.isIntersecting) {
+        //         // entry.target.classList.add("showOnScreen")
+        //         // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        //         // console.log(intersectingElementIndex, entry.target, 'is visible');
+        //         if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
+        //             listOfIntersectedElements.push(intersectingElementIndex)
+        //         }
+        //         // listOfIntersectedElements = listOfIntersectedElements
                 
-                someshit++
-                amountOfElementsObserved++
-                intersecObserver.unobserve(entry.target)
-                if (amountOfElementsObserved == listLenght) {
-                    intersecObserver.disconnect()
-                    // console.log("DISCONNECTED")
-                }
-            }
-        })
-        },
-            { 
-                root: document.querySelector(".svelte_main"),
-                threshold: 0.1,
-                rootMargin: "250px",
-            }
-        )
+        //         someshit++
+        //         amountOfElementsObserved++
+        //         intersecObserver.unobserve(entry.target)
+        //         if (amountOfElementsObserved == listLenght) {
+        //             intersecObserver.disconnect()
+        //             // console.log("DISCONNECTED")
+        //         }
+        //     }
+        // })
+        // },
+        //     { 
+        //         root: document.querySelector(".svelte_main"),
+        //         threshold: 0.1,
+        //         rootMargin: "250px",
+        //     }
+        // )
         
         default_containers.forEach( (container, indexOfContainer) => {
-            container.containerIndex = indexOfContainer
-            intersecObserver.observe(container)
+            // container.containerIndex = indexOfContainer
+            // intersecObserver.observe(container)
+
+            setTimeout(function () {
+                if (!listOfIntersectedElements.includes(indexOfContainer)) {
+                    listOfIntersectedElements.push(indexOfContainer)
+                    // console.log(indexOfContainer, 'is visible');
+                    someshit++
+                }
+            }, indexOfContainer * intervalForLoading);
         })
     }
 </script>

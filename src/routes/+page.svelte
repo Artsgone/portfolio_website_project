@@ -91,6 +91,8 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
+    let intervalForLoading = 250
+    let imagesLoaded = false
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -101,7 +103,6 @@
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".default_container")
-        const content_containers = document.querySelectorAll(".content_container")
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
 
@@ -110,17 +111,20 @@
             intersectingElementIndex = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                entry.target.classList.add("showOnScreen")
-                // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+                // entry.target.classList.add("showOnScreen")
                 // console.log(intersectingElementIndex, entry.target, 'is visible');
-                listOfIntersectedElements.push(intersectingElementIndex)
-                
+                if (!listOfIntersectedElements.includes(intersectingElementIndex) && intersectingElementIndex < 4) {
+                    listOfIntersectedElements.push(intersectingElementIndex)
+                }
                 someshit++
                 amountOfElementsObserved++
-                // yellowBox_height = page4_totalHeight - sunsetInTheCloudsIMG_height;
 
                 intersecObserver.unobserve(entry.target)
 
+                if (intersectingElementIndex >= 4 && imagesLoaded == false) {
+                    startLoadingImages()
+                    imagesLoaded = true
+                }
                 if (amountOfElementsObserved == listLenght) {
                     intersecObserver.disconnect()
                     // console.log("DISCONNECTED")
@@ -137,7 +141,24 @@
         
         default_containers.forEach( (container, indexOfContainer) => {
             container.containerIndex = indexOfContainer
-            intersecObserver.observe(container)
+            // if (indexOfContainer < 5) {
+                intersecObserver.observe(container)
+            // }
+        })
+    }
+
+    function startLoadingImages() {
+        const default_containers = document.querySelectorAll(".default_container")
+        default_containers.forEach( (container, indexOfContainer) => {
+
+            setTimeout(function () {
+                if (!listOfIntersectedElements.includes(indexOfContainer) && indexOfContainer > 3) {
+                    listOfIntersectedElements.push(indexOfContainer)
+                    // console.log(indexOfContainer, 'is visible');
+                    someshit++
+                }
+            }, indexOfContainer * intervalForLoading);
+
         })
     }
     

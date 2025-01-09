@@ -357,7 +357,10 @@
             intersectingElementIndex = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                listOfIntersectedElements.push(intersectingElementIndex)
+                if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
+                    listOfIntersectedElements.push(intersectingElementIndex)
+                }
+                
                 someshit++
                 amountOfElementsObserved++
                 intersecObserver.unobserve(entry.target)
@@ -968,7 +971,7 @@
     }
     .endless{
         height: auto;
-        min-height: 100vh;
+        min-height: 150vh;
     }
     .content_container{
         width: 92.5%;
