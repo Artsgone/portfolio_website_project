@@ -9,13 +9,8 @@
     export let footer_Decor_ID = ""
     export let snap_align = 'end'
 
-    import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
-    import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
-    import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
-    import Contact_FooterDecor from '$lib/svg_files/Contact/Contact_FooterDecor.svg'
-
-    import '$lib/styles_and_fonts/fonts.css'
-    import '$lib/styles_and_fonts/styles.css'
+    // import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/styles.css'
 
     let authorName_element = false;
     function animate_troll(){
@@ -24,7 +19,7 @@
 </script>
 
 <footer class="footer_container">
-    <div class="content_container footer" style="scroll-snap-align: {snap_align};">
+    <div class="content_container footer" style="scroll-snap-align: {snap_align};" data-sveltekit-preload-code="hover">
         <nav class="footer_top">
             <div class="navbar_list">
                 <a class="first" href="/{linkAddress1}">{firstLink}</a>
@@ -44,7 +39,8 @@
                 <!-- web by Artem Damin -->
                 artem damin by web
             </div>
-            {#if footer_Decor_ID === "mainpage"}
+            <img class="footer_Decor" src={footer_Decor_ID} alt="footer_Decor">
+            <!-- {#if footer_Decor_ID === "mainpage"}
                     <img class="footer_Decor" src={MainPage_FooterDecor} alt="footer_Decor">
                 {:else if footer_Decor_ID === "aboutme"}
                     <img class="footer_Decor" src={AboutMe_FooterDecor} alt="footer_Decor">
@@ -52,7 +48,7 @@
                     <img class="footer_Decor" src={Portfolio_FooterDecor} alt="footer_Decor">
                 {:else}
                     <img class="footer_Decor" src={Contact_FooterDecor} alt="footer_Decor">
-                {/if}
+                {/if} -->
         </div>
     </div>
 </footer>

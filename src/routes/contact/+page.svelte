@@ -6,9 +6,10 @@
     import Info_screen from '$lib/reusable_components/Info_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
-    import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
+    import Contact_OutlineTitleDecor from '$lib/svg_files/Contact/Contact_OutlineTitleDecor.svg'
     import Contact_TitleDecor from '$lib/svg_files/Contact/Contact_TitleDecor.svg'
     import Contact_BackgroundDecor from '$lib/svg_files/Contact/Contact_BackgroundDecor.svg'
     import Contact_BackgroundDecor_Mobile from '$lib/svg_files/Contact/Contact_BackgroundDecor_Mobile.svg'
@@ -18,6 +19,7 @@
     import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
     import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
     import submitButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
+    import Contact_FooterDecor from '$lib/svg_files/Contact/Contact_FooterDecor.svg'
 
     import { onMount } from "svelte";
     import { fade, fly } from 'svelte/transition';
@@ -218,7 +220,7 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header title_Decor_ID = "contact" />
+        <Header headerDecorSVG={Contact_OutlineTitleDecor} />
         <div class="content_container title_page">
             {#if pageLoaded}
                 <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
@@ -272,10 +274,10 @@
             </form>
             <div class="links_bottom_part">
                 <div class="links">
-                    <a href="https://web.telegram.org/" class="link lightgrayText"> <img class="Telegram_Icon" src={Telegram_Icon} alt="Telegram_Icon"> 
+                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon" src={Telegram_Icon} alt="Telegram_Icon"> 
                         <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
                     </a>
-                    <a href="https://www.instagram.com/" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
+                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
                         <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
                     </a>
                 </div>
@@ -285,7 +287,7 @@
     </div>
     <Footer firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"
-    titleName = "Contact" footer_Decor_ID = "contact"/>
+    titleName="Contact" footer_Decor_ID={Contact_FooterDecor} />
 </main>
 
 <style>

@@ -5,9 +5,10 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
-    import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
+    import AboutMe_OutlineTitleDecorSVG from '$lib/svg_files/AboutMe/AboutMe_OutlineTitleDecorSVG.svg'
     import AboutMe_titlePageSVG from '$lib/svg_files/AboutMe/AboutMe_TitleDecorSVG.svg'
     import AboutMe_EducationSVG from '$lib/svg_files/AboutMe/AboutMe_EducationSVG.svg'
     import AboutMe_BackgroundSVG from '$lib/svg_files/AboutMe/AboutMe_LanguagesDecorSVG.svg'
@@ -18,7 +19,8 @@
     import AboutMe_Skills from '$lib/svg_files/AboutMe/AboutMe_Skills.svg'
     import AboutMe_Skills_Mobile from '$lib/svg_files/AboutMe/AboutMe_Skills_Mobile.svg'
     import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
-    import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
+    // import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
+    import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
 
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
@@ -68,7 +70,7 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
-    let intervalForLoading = 250
+    let intervalForLoading = 100
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -139,7 +141,7 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header title_Decor_ID = "aboutme" />
+        <Header headerDecorSVG={AboutMe_OutlineTitleDecorSVG} />
         <div class="content_container title_page">
             {#if pageLoaded}
                 <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
@@ -242,7 +244,7 @@
     </div>
     <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
-    titleName = "About me" footer_Decor_ID = "aboutme"/>
+    titleName="About me" footer_Decor_ID={AboutMe_FooterDecor}/>
 </main>
 
 <style>

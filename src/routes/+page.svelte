@@ -6,6 +6,7 @@
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
 //
+    import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
@@ -14,26 +15,24 @@
     import MainPage_cvDownloadDecor from '$lib/svg_files/MainPage/MainPage_cvDownloadDecor.svg'
     import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin.png'
     import MY from '$lib/svg_files/MainPage/MY.svg'
+    import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
 //
     import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.jpg'
     import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.jpg'
     import goldenLeaves from '$lib/compressed_images/golden_leaves.jpg'
-    import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
-    import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
-    import Street from '$lib/compressed_images/Street.jpg'
-    import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
+    // import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
+    // import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
+    // import Street from '$lib/compressed_images/Street.jpg'
+    // import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
     import Violet_flowers from '$lib/compressed_images/Violet_flowers.jpg'
     import Modern_building from '$lib/compressed_images/Modern_building.jpg'
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
-    import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 //
     // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    // import { writable } from 'svelte/store'
-    // import { browser } from "$app/environment"
-
     import { onMount } from "svelte";
     import { fade, fly } from 'svelte/transition';
     import { quintOut, sineInOut } from 'svelte/easing';
@@ -91,7 +90,7 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
-    let intervalForLoading = 250
+    let intervalForLoading = 100
     let imagesLoaded = false
 
     function ifExistsInArray(idOfElement) {
@@ -177,7 +176,7 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header title_Decor_ID = "mainpage" />
+        <Header headerDecorSVG={MainPage_titlePageDecor} />
         <div class="content_container title_page">
             {#if pageLoaded}
                 <div  class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
@@ -232,7 +231,7 @@
             <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG" loading="eager" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
                 <div class="right_part page4" >
@@ -244,9 +243,9 @@
     <div class="default_container">
         {#if ifExistsInArray(5) && someshit > 0}
             <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-                <img class="dandelion IMG1" src={dandelionIMG} alt="dandelionIMG">
+                <img class="dandelion IMG1" loading="eager" src={dandelionIMG} alt="dandelionIMG">
                 <div class="page5_gradient"></div>
-                <img class="dandelion IMG2" src={dandelionIMG} alt="dandelionIMG">
+                <img class="dandelion IMG2" loading="eager" src={dandelionIMG} alt="dandelionIMG">
                 <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
                 <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
             </div>
@@ -256,7 +255,7 @@
         {#if ifExistsInArray(6) && someshit > 0}
             <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="left_part img_box">
-                    <img class="goldenLeaves" src={goldenLeaves} alt="goldenLeaves">
+                    <img class="goldenLeaves" loading="eager" src={goldenLeaves} alt="goldenLeaves">
                 </div>
                 <div class="right_part page6">
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
@@ -269,7 +268,7 @@
         {#if ifExistsInArray(7) && someshit > 0}
             <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers" src={Violet_flowers} alt="Violet_flowers">
+                    <img class="Violet_flowers" loading="eager" src={Violet_flowers} alt="Violet_flowers">
                 </div>
                 
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
@@ -288,14 +287,14 @@
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building" src={Modern_building} alt="Modern_building">
+                    <img class="Modern_building" loading="eager" src={Modern_building} alt="Modern_building">
                 </div>
             </div>
         {/if}
     </div>
     <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-    titleName = "Main page" footer_Decor_ID = "mainpage"/>
+    titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
 </main>
 
 <style >
@@ -802,7 +801,8 @@
         height: 90%;
         max-height: 75vh;
         z-index: 1;
-        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
     }
     .sunsetInTheCloudsIMG{
@@ -837,7 +837,7 @@
         /* height: var(--yellowBox_height); */
         width: 100%;
         bottom: 0;
-        background-color: var(--background_color_alternativeLightYellow);
+        /* background-color: var(--background_color_alternativeLightYellow); */
         background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_Darker) 125%);
         border-radius: max(1rem, 1vw);
     }
@@ -893,7 +893,8 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
-        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
     }
     .dandelion.IMG1{
         scale: -1 1;
@@ -948,7 +949,8 @@
     .left_part.img_box{
         min-height: 100%;
         width: 100%;
-        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
     }
     .goldenLeaves{
@@ -1010,7 +1012,8 @@
     .image_wrapper_page7{
         max-width: 100%;
         min-height: 100%;
-        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
     }
     .Violet_flowers{
         width: 100%;
@@ -1060,7 +1063,8 @@
     .image_wrapper_page8{
         max-width: 100%;
         min-height: 100%;
-        background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%);
+        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
         overflow: clip;
     }

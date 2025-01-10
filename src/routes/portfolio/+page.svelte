@@ -5,13 +5,15 @@
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
-    import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
     import WorkPresent from '$lib/reusable_components/Portfolio_work_item.svelte'
     import WorkPresentAlt from '$lib/reusable_components/Portfolio_work_item_alt.svelte'
     // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import Portfolio_TitleDecor from '$lib/svg_files/Portfolio/Portfolio_TitleDecor.svg'
+    import Portfolio_OutlineTitleDecor from '$lib/svg_files/Portfolio/Portfolio_OutlineTitleDecor.svg'
+    import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
 
     // image to left
     import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
@@ -108,18 +110,18 @@
         const portfolio_works = document.querySelectorAll(".wep_box")
         portfolio_works.forEach( (work, workId) => {
             work.addEventListener("click", (e) => {
-                portfolio_loadingScreenShow = true;
+                // portfolio_loadingScreenShow = true;
                 workPresent_Visibility = 'visible';
             })
         })
         
-        const interval = setInterval(() => {
-			portfolio_loadingScreenShow = false
-		}, 500);
-		return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+		// 	portfolio_loadingScreenShow = false
+		// }, 500);
+		// return () => clearInterval(interval);
     }
     function closeInLargeList(){
-        portfolio_loadingScreenShow = false;
+        // portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
         listOfIntersectedElements.length = 0
         someshit = 0
@@ -387,6 +389,7 @@
     let intersectingElementIndex_DF
     let listOfIntersectedElements_DF = []
     $: someshit_DF = 0;
+    let indexToRemoveFromList = 0
 
     function saveIntersectedElementsToSS() {
         let elementsToSave = []
@@ -430,18 +433,21 @@
                 
                 someshit_DF++
                 amountOfElementsObserved++
-                intersecObserver.unobserve(entry.target)
-                if (amountOfElementsObserved == listLenght) {
-                    intersecObserver.disconnect()
-                    // console.log("DISCONNECTED")
+                if (intersectingElementIndex_DF >= 24) {
+                    intersecObserver.unobserve(entry.target)
+                }
+                // intersecObserver.unobserve(entry.target)
+                // if (amountOfElementsObserved == listLenght) {
+                //     intersecObserver.disconnect()
+                //     // console.log("DISCONNECTED")
+                // }
+            }
+            else {
+                if (listOfIntersectedElements_DF.includes(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
+                    indexToRemoveFromList = listOfIntersectedElements_DF.indexOf(intersectingElementIndex_DF)
+                    listOfIntersectedElements_DF.splice(indexToRemoveFromList, 1)
                 }
             }
-            // else {
-            //     if (listOfIntersectedElements_DF.includes(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
-            //         const indexToRemoveFromList = listOfIntersectedElements_DF.indexOf(intersectingElementIndex_DF)
-            //         listOfIntersectedElements_DF.splice(indexToRemoveFromList, 1)
-            //     }
-            // }
         })
         },
             {
@@ -473,7 +479,7 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header title_Decor_ID = "portfolio"/>
+        <Header headerDecorSVG={Portfolio_OutlineTitleDecor} />
         <div class="content_container title_page">
             {#if pageLoaded}
                 <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
@@ -496,7 +502,7 @@
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid_bind} use:openInLargeList use:observeDefaultCont>
+            <div class="works_preview_grid" bind:this={works_preview_grid_bind} use:openInLargeList use:observeDefaultCont data-sveltekit-preload-data="tap">
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
@@ -675,7 +681,7 @@
         {#if ifExistsInArray_DF(24) && someshit_DF > 0}
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
-                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
+                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -730,7 +736,7 @@
         {#if ifExistsInArray_DF(25) && someshit_DF > 0}
             <div class="content_container work_summary_page fullscreenWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
-                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen>
+                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -910,7 +916,7 @@
     
         <Footer firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
-    titleName = "Portfolio" footer_Decor_ID = "portfolio" snap_align="none"/>
+    titleName="Portfolio" footer_Decor_ID={Portfolio_FooterDecor} snap_align="none"/>
 </main>
 
 <style>

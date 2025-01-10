@@ -1,10 +1,6 @@
 <script>
     import A_Logo from '$lib/svg_files/A_Logo.svg'
-    export let title_Decor_ID = ""
-    import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
-    import AboutMe_OutlineTitleDecorSVG from '$lib/svg_files/AboutMe/AboutMe_OutlineTitleDecorSVG.svg'
-    import Portfolio_OutlineTitleDecor from '$lib/svg_files/Portfolio/Portfolio_OutlineTitleDecor.svg'
-    import Contact_OutlineTitleDecor from '$lib/svg_files/Contact/Contact_OutlineTitleDecor.svg'
+    export let headerDecorSVG = ""
 </script>
 
 <header class="header">
@@ -13,15 +9,7 @@
             <img id="A_Logo" src={A_Logo} alt="A_Logo">
         </div>
         <div class="inner_header right">
-            {#if title_Decor_ID === "mainpage"}
-                <img class="title_Decor" src={MainPage_titlePageDecor} alt="title_Decor">
-            {:else if title_Decor_ID === "aboutme"}
-                <img class="title_Decor" src={AboutMe_OutlineTitleDecorSVG} alt="title_Decor">
-            {:else if title_Decor_ID === "portfolio"}
-                <img class="title_Decor" src={Portfolio_OutlineTitleDecor} alt="title_Decor">
-            {:else}
-                <img class="title_Decor" src={Contact_OutlineTitleDecor} alt="title_Decor">
-            {/if}
+            <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
         </div>
     </div>
 </header>
