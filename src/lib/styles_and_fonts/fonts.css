@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
     font-family: 'Neutral_Normal';
     font-style: normal;
     src: url('/src/lib/fonts/NeutralFace.otf');
@@ -45,14 +45,14 @@
     font-style: normal;
     src: url('/src/lib/fonts/Misto/Misto.woff2');
     font-display: swap;
-} */
-/* @font-face {
+}
+@font-face {
     font-family: 'Vetrino';
     font-style: normal;
     src: url('/src/lib/fonts/Vetrino.otf');
     font-display: swap;
 }
-@font-face {
+/* @font-face {
     font-family: 'Butler_Medium';
     font-style: normal;
     src: url('/src/lib/fonts/Butler/Butler-Medium.woff'),

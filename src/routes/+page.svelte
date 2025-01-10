@@ -28,7 +28,7 @@
     import Modern_building from '$lib/compressed_images/Modern_building.jpg'
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
-    // import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 //
     // import { navigating } from '$app/stores'

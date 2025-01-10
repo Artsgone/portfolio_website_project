@@ -6,7 +6,7 @@
     import Info_screen from '$lib/reusable_components/Info_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
-    // import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
 
     import Contact_OutlineTitleDecor from '$lib/svg_files/Contact/Contact_OutlineTitleDecor.svg'
