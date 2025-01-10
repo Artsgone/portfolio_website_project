@@ -6,8 +6,8 @@
     export let linkAddress2 = ""
     export let linkAddress3 = ""
 
-    // import '$lib/styles_and_fonts/fonts.css'
-    // import '$lib/styles_and_fonts/styles.css'
+    import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/styles.css'
     // import NavbarDecorHover1 from '$lib/svg_files/GlobalSVGs/Global_Decor_Navbar.svg'
     // import NavbarDecorHover2 from '$lib/svg_files/GlobalSVGs/Global_Decor1_Navbar.svg'
 
