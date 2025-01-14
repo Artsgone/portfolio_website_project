@@ -277,8 +277,8 @@
     @media (width < 1000px) {
         .content_container.work_presentation_page{
             grid-template-columns: 1fr;
-            grid-template-rows: 1.5fr 1fr;
-            gap: max(2rem + 2.5vh, 3.5vw) 0;
+            grid-template-rows: 1.4fr 1fr;
+            gap: max(1rem + 2.5vh, 3.5vw) 0;
             overflow-x: clip;
             overflow-clip-margin: 1rem;
 
@@ -304,9 +304,10 @@
 
             font-family: 'Subjectivity_Regular', system-ui, sans-serif;
             font-size: max(1.5vw, 1.4rem);
+            text-align: center;
         }
         .Global_tapIcon{
-            width: 15%;
+            width: min(25%, 4rem);
             aspect-ratio: 1;
         }
         .content_container.work_presentation_page::before{
@@ -339,10 +340,12 @@
             backdrop-filter: blur(5px);
             z-index: 500;
         }
-
+        .workPreviewElement_Box{
+            min-height: 45dvh;
+        }
         .Portfolio_workPreviewElement{
             max-height: 40vh;
-            width: max(25rem, 75%);
+            width: max(70%, 25rem);
         }
 
         .work_description_container{
@@ -379,8 +382,11 @@
         } */
     }
     @media (width < 500px) {
+        .workPreviewElement_Box{
+            min-height: 35dvh;
+        }
         .Portfolio_workPreviewElement{
-            width: max(10rem, 100%);
+            width: 100%;
         }
         .description_box{
             width: 100%;

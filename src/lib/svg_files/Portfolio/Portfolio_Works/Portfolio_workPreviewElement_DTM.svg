@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40.301311mm"
+   height="15.436303mm"
+   viewBox="0 0 40.301311 15.436303"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="Portfolio_workPreviewElement_DTM.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#000000"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#4c4c4c"
+     inkscape:document-units="px"
+     borderlayer="false"
+     showborder="false"
+     inkscape:zoom="4.2885512"
+     inkscape:cx="73.451379"
+     inkscape:cy="35.792974"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-184.89766,-42.324005)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Britannic Bold';-inkscape-font-specification:'Britannic Bold, ';stroke-width:0.264583"
+       x="189.31255"
+       y="69.250237"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Britannic Bold';-inkscape-font-specification:'Britannic Bold, ';stroke-width:0.264583"
+         x="189.31255"
+         y="69.250237" /></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:7.05556px;line-height:1;font-family:'Neutral Face';-inkscape-font-specification:'Neutral Face Bold';stroke-width:0.264583"
+       x="197.70311"
+       y="72.643478"
+       id="text2"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="stroke-width:0.264583"
+         x="197.70311"
+         y="72.643478" /></text>
+    <g
+       id="g6"
+       transform="translate(0.12156388)">
+      <rect
+         style="fill:#000000;stroke:#800080;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+         id="rect5"
+         width="1.604077"
+         height="12.638271"
+         x="191.66731"
+         y="43.697601"
+         ry="0" />
+      <path
+         id="path3"
+         style="fill:#000000;stroke:#800080;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+         d="m 192.46917,43.646924 a 6.3700376,6.3700376 0 0 0 -6.37016,6.369637 h 1.60404 a 4.7659607,4.7659607 0 0 1 4.76612,-4.7656 4.7659607,4.7659607 0 0 1 4.7656,4.7656 4.7659607,4.7659607 0 0 1 -4.7656,4.766117 4.7659607,4.7659607 0 0 1 -0.80202,-0.07235 v 1.619023 a 6.3700376,6.3700376 0 0 0 0.80202,0.05736 6.3700376,6.3700376 0 0 0 6.37015,-6.370154 6.3700376,6.3700376 0 0 0 -6.37015,-6.369637 z" />
+    </g>
+    <g
+       id="g7">
+      <rect
+         style="fill:#000000;stroke:#008080;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+         id="rect1"
+         width="1.604077"
+         height="12.638271"
+         x="205.84549"
+         y="43.697601"
+         ry="0" />
+      <path
+         id="circle3"
+         style="fill:#000000;stroke:#008080;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+         d="m 206.64763,43.646924 a 6.3700376,6.3700376 0 0 0 -6.37016,6.369637 h 1.60404 a 4.7659607,4.7659607 0 0 1 4.76612,-4.7656 4.7659607,4.7659607 0 0 1 4.7656,4.7656 h 1.60455 a 6.3700376,6.3700376 0 0 0 -6.37015,-6.369637 z m -0.80202,11.063407 v 1.619023 a 6.3700376,6.3700376 0 0 0 0.80202,0.05736 6.3700376,6.3700376 0 0 0 0.80202,-0.05219 v -1.61954 a 4.7659607,4.7659607 0 0 1 -0.80202,0.0677 4.7659607,4.7659607 0 0 1 -0.80202,-0.07235 z" />
+    </g>
+    <g
+       id="g9"
+       transform="translate(-0.78573085)">
+      <rect
+         style="fill:#000000;stroke:#000000;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+         id="rect1-5"
+         width="1.604077"
+         height="12.739826"
+         x="223.05771"
+         y="43.697567"
+         ry="0" />
+      <g
+         id="g8">
+        <rect
+           style="fill:#000000;stroke:#000000;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+           id="rect4"
+           width="1.604077"
+           height="12.688809"
+           x="215.12949"
+           y="43.697567"
+           ry="0" />
+        <path
+           id="ellipse5"
+           style="fill:#000000;stroke:#000000;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-dasharray:none;stroke-opacity:0.301961"
+           d="m 215.12953,43.697567 a 4.7660775,4.7624998 0 0 0 4.76612,4.7625 4.7660775,4.7624998 0 0 0 4.76612,-4.7625 h -1.60404 a 3.1620059,3.1596322 0 0 1 -3.16208,3.159497 3.1620059,3.1596322 0 0 1 -3.16208,-3.159497 z" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -26,6 +26,9 @@
     import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
     import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
     import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
+    import Portfolio_workPreviewElement_DTM from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_DTM.svg'
+    import Portfolio_workPreviewElement_Eroy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Eroy.svg'
+    import Portfolio_workPreviewElement_LLL from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LLL.svg'
     import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
     // image to right
     import Portfolio_workPreviewElement_Logo_Ww from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg'
@@ -42,12 +45,21 @@
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
+    
     import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png'
     import Portfolio_TFW_register from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png'
     import Portfolio_TFW_main_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png'
     import Portfolio_TFW_register_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png'
+    import Portfolio_TFW_EditProject from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png'
+    import TFW_accountDetails from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png'
+
+    import Portfolio_Endimo_main from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png'
+    import Portfolio_Endimo_cart from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png'
+    import Portfolio_Endimo_about from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png'
+    import Portfolio_Endimo_contact from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png'
+
     import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
-    import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
+    // import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
     import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
     import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
     import Porftolio_AccountManager from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png'
@@ -656,22 +668,22 @@
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if ifExistsInArray_DF(21) && someshit_DF > 0}
-                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if ifExistsInArray_DF(22) && someshit_DF > 0}
-                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if ifExistsInArray_DF(23) && someshit_DF > 0}
-                        <img src={Portfolio_WorksPreviewDecor} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
             </div>
@@ -742,17 +754,21 @@
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={TFW_accountDetails} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} alt="Portfolio_TimerForWork">
                             <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_EditProject} alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite">
-                            <!-- <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite"> -->
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_main} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_cart} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_about} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_contact} alt="Portfolio_Endimo_main">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
@@ -900,12 +916,27 @@
             </div>
             <div id="Travelin" class="classForIntersecObserver">
                 {#if ifExistsInArray(20) && someshit > 0}
-                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
                 {/if}
             </div>
             <div id="Tari" class="classForIntersecObserver">
                 {#if ifExistsInArray(21) && someshit > 0}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Tari} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
+                {/if}
+            </div>
+            <div id="DTM" class="classForIntersecObserver">
+                {#if ifExistsInArray(22) && someshit > 0}
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_DTM} workElementTitle="DTM" workElementText="This piece of art is a piece of DTM"/>
+                {/if}
+            </div>
+            <div id="Eroy" class="classForIntersecObserver">
+                {#if ifExistsInArray(23) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Eroy} workElementTitle="Eroy" workElementText="This piece of art is a piece of Eroy"/>
+                {/if}
+            </div>
+            <div id="ANV" class="classForIntersecObserver">
+                {#if ifExistsInArray(24) && someshit > 0}
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LLL} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
         
@@ -1068,8 +1099,9 @@
 
 
     .default_container.linksToSections{
-        height: 40vh;
-        min-height: 20rem;
+        height: max-content;
+        min-height: fit-content;
+        padding-block: max(10vh, 5vw);
     }
     .content_container.sections_links{
         display: grid;
@@ -1077,7 +1109,7 @@
         grid-auto-rows: 1fr;
         place-items: center;
         height: 60%;
-        gap: min(5vh, 7.5vw);
+        gap: min(7.5vh, 10vw);
     }
     .anchorLink_toSections{
         font-size: max(1.5rem, 2vw);

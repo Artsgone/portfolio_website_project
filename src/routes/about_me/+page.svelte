@@ -160,10 +160,10 @@
                 <div class="text education">
                     <p class="darkgrayText">
                         <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
-                        | Field - Cybernetic security |<br> <br>
+                        | Field - Cybernetic security |<br>
                     
-                        <span class="time_range grayText65">202x-202x</span> - <span class="university_name">... university</span> <br>
-                        | Field - ... |<br>
+                        <!-- <span class="time_range grayText65">202x-202x</span> - <span class="university_name">... university</span> <br>
+                        | Field - ... |<br> -->
                     </p>
                 </div>
             </div>
@@ -393,7 +393,7 @@
     .content_container.education_page{
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: 1fr 1.65fr;
+        grid-auto-columns: 1fr 1.4fr;
         align-content: center;
         align-items: center;
         justify-items: center;
@@ -475,7 +475,7 @@
     }
     .content_container.languages_page > p {
         font-family: 'Brolimo', system-ui, sans-serif;
-        color: hsl(171, 22%, 82%);
+        color: hsl(171, 22%, 80%);
         font-size: max(3.3vw, 2.25rem);
         text-align: center;
         text-wrap: nowrap;
