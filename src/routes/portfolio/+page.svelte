@@ -42,6 +42,8 @@
     import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
     import Portfolio_workPreviewElement_Travelin_Logo from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg'
     import Portfolio_workPreviewElement_Tari from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg'
+    // font
+    import Portfolio_workPreviewElement_GeometryFontType from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg'
     
     // Large works
     import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
@@ -724,14 +726,14 @@
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
                         </a>
                     </div>
-                    <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="IDK">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="GeometryFontType">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_TravelinWebsite">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} alt="Portfolio_workPreviewElement_GeometryFontType">
                         </a>
                     </div>
-                    <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="UsefullPoster">
+                    <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="UsefullPoster">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
@@ -899,7 +901,7 @@
 
             <div id="MR. Gummy" class="classForIntersecObserver">
                 {#if ifExistsInArray(17) && someshit > 0}
-                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummy" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummie" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
@@ -936,7 +938,7 @@
             </div>
             <div id="ANV" class="classForIntersecObserver">
                 {#if ifExistsInArray(24) && someshit > 0}
-                    <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LLL} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_LLL} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
         
@@ -1101,7 +1103,7 @@
     .default_container.linksToSections{
         height: max-content;
         min-height: fit-content;
-        padding-block: max(10vh, 5vw);
+        padding-block: max(10vh, 6.5vw);
     }
     .content_container.sections_links{
         display: grid;
@@ -1391,6 +1393,11 @@
         grid-template-rows: 1fr;
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
+    }
+    .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
+        grid-column: 1 / 3;
+        place-self: center;
+        min-width: 50vw;
     }
     .largeWork_preview_box_wrapper{
         position: relative;
