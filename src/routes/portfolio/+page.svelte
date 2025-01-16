@@ -1533,6 +1533,10 @@
             grid-auto-rows: 1fr;
             gap: max(4rem, 5vw) max(1rem, 1vw);
         }
+        .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
+            grid-column: 1 / 2;
+            width: 100%;
+        }
         .largeWorks_upperText{
             text-wrap: balance;
             line-height: min(4rem, 11.5vw);
