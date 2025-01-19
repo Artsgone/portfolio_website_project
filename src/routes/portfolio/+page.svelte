@@ -510,6 +510,7 @@
             <a href="#logosSection" class="anchorLink_toSections"> <span>01.</span> portfolio - logos</a>
             <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - posters and banners</a>
             <a href="#fullScreenWorksSection" class="anchorLink_toSections"> <span>03.</span> portfolio - websites</a>
+            <a href="#fontsSection" class="anchorLink_toSections"> <span>03.</span> portfolio - fonts</a>
         </div>
     </div>
     <div class="default_container endless" id="logosSection">
@@ -780,6 +781,18 @@
                             <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} alt="Porftolio_AccountManager">
                         </a>
                     </div>
+                </div>
+            </div>
+        {/if}
+    </div>
+    <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
+        {#if ifExistsInArray_DF(26) && someshit_DF > 0}
+            <div class="content_container work_summary_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+                <p class="largeWorks_upperText">Portfolio - fonts</p>
+                <div class="fontPresentationWrapper">
+                    <p class="fontPresentation">Definity</p>
+                    <p class="fontPresentation">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae delectus esse quidem mollitia placeat.</p>
+                    <p class="fontPresentation">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae delectus esse quidem mollitia placeat.</p>
                 </div>
             </div>
         {/if}
@@ -1122,7 +1135,7 @@
         color: var(--text_color_gray90);
         text-align: center;
     }
-    .anchorLink_toSections:last-child{
+    .anchorLink_toSections:nth-child(odd):last-child{
         grid-column: 1 / 3;
     }
     .anchorLink_toSections > span{
@@ -1566,6 +1579,48 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
         /* image-rendering: optimizeQuality; */
+    }
+/* fonts ___________________________________________________________________ */
+    .default_container.fontsContainer{
+        min-height: 50vh;
+    }
+    /* .content_container.work_summary_page{
+        height: auto;
+    } */
+    .fontPresentationWrapper{
+        display: grid;
+        grid-template-columns: 1fr;
+        /* grid-auto-rows: max-content; */
+        background-color: hsla(0, 100%, 50%, 0.85);
+        border-radius: max(1rem, 1vw);
+        padding-inline: max(2.5rem, 2.5vw);
+        padding-block: max(5rem, 5vw);
+        gap: max(5vh, 5vw);
+    }
+    .fontPresentation{
+        font-family: 'Definity';
+        color: var(--text_color_gray5);
+        word-break: break-all;
+        /* line-break: anywhere; */
+        text-wrap: pretty;
+        hyphens: auto;
+    }
+    .fontPresentation:nth-child(1){
+        font-size: max(5rem, 12vw);
+        line-height: max(5rem, 10vw);
+        letter-spacing: max(-0.5rem, -0.5vw);
+    }
+    .fontPresentation:nth-child(3){
+        font-size: max(2.25rem, 4vw);
+        line-height: max(2.75rem, 5vw);
+        letter-spacing: max(-0.25rem, -0.15vw);
+        word-spacing: max(0.3rem, 0.5vw);
+    }
+    .fontPresentation:nth-child(2){
+        font-size: max(1.5rem, 2.25vw);
+        line-height: max(2rem, 3vw);
+        letter-spacing: max(-0.1rem, -0.1vw);
+        word-spacing: max(0.25rem, 0.25vw);
     }
 
     /* General media ------------------------------------------------------------------------------------------------------------*/
