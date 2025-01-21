@@ -70,7 +70,7 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
-    let intervalForLoading = 100
+    let intervalForLoading = 50
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -122,7 +122,7 @@
                 if (!listOfIntersectedElements.includes(indexOfContainer)) {
                     listOfIntersectedElements.push(indexOfContainer)
                     // console.log(indexOfContainer, 'is visible');
-                    someshit++
+                    someshit = indexOfContainer
                 }
             }, indexOfContainer * intervalForLoading);
         })
@@ -154,7 +154,7 @@
         </div>
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(1) && someshit > 0}
+        {#if ifExistsInArray(1) || someshit == 1}
             <div class="content_container education_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
                 <div class="text education">
@@ -176,7 +176,7 @@
             <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
         {/if}
         
-        {#if ifExistsInArray(2) && someshit > 0}
+        {#if ifExistsInArray(2) || someshit == 2}
             <div class="content_container languages_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="grayText65">LANGUAGES</p>
                 <div class="text languages">
@@ -192,7 +192,7 @@
         {/if}
     </div>
     <div class="default_container def_skills_title noBorders">
-        {#if ifExistsInArray(3) && someshit > 0}
+        {#if ifExistsInArray(3) || someshit == 3}
             <div class="content_container skills_title_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 {#if innerWidth > 1000}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
@@ -204,7 +204,7 @@
         {/if}
     </div>
     <div class="default_container def_skills">
-        {#if ifExistsInArray(4) && someshit > 0}
+        {#if ifExistsInArray(4) || someshit == 4}
             <div class="content_container skills_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
@@ -217,7 +217,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(5) && someshit > 0}
+        {#if ifExistsInArray(5) || someshit == 5}
             <div class="content_container otherAbilities_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="altyellowText vt">OTHER ABILITIES</p>
                 <div class="text otherAbilities">
@@ -338,9 +338,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
         position: relative;
-        /* outline: 2px red solid; */
+        /* outline: max(0.25rem, 0.5vw) var(--background_color_lightCyanSaturated) solid; */
+        /* border-radius: max(1rem, 1vw); */
     }
     #AboutMe_titlePageSVG{
         width: var(--element_size_title_decor_about_me);
@@ -348,7 +348,7 @@
         translate: 25% 2.5%;
     }
     .title_name{
-        font-size: max(15vw, 5.5rem);
+        font-size: var(--text_size_title_ultrabig);
         font-family: 'Brolimo', system-ui, sans-serif;
         text-wrap: nowrap;
         z-index: 999;
@@ -359,18 +359,12 @@
             justify-content: space-evenly;
             gap: 8.5vh;
         }
-        #AboutMe_titlePageSVG{
-            width: max(65%, 22rem);
-            translate: -1% 5%;
-        }
         .title_name{
             text-wrap: balance;
             text-align: center;
-            font-size: max(22.5vw, 9rem);
-            line-height: max(17.5vw, 7rem);
         }
     }
-    @media (width < 575px){
+    @media (width < 700px){
         #AboutMe_titlePageSVG{
             width: 90%;
             translate: 2% 2%;
@@ -402,18 +396,17 @@
     #AboutMe_EducationSVG{
         width: max(15rem, 60%);
         max-height: 50vh;
-        translate: -2% 0;
     }
     .text.education{
         justify-self: start;
     }
     .text.education > p{
         font-family: 'Subjectivity_Medium', system-ui, sans-serif;
-        font-size: max(2vw, 1.55rem);
-        line-height: max(2.4vw, 1.85rem);
-        letter-spacing: -0.5px;
+        font-size: var(--text_size_medium);
+        line-height: var(--text_line_height_medium);
     }
     .text.education > p > span.university_name{
+        font-size: max(2.25vw, 2rem);
         font-family: 'Subjectivity_Bold', system-ui, sans-serif;
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
@@ -422,7 +415,6 @@
     }
     .text.education > p > span.time_range{
         font-family: 'Neutral_Normal', system-ui, sans-serif;
-        letter-spacing: 0px;
     }
 
     @media (width < 1100px) {
@@ -434,18 +426,24 @@
             width: min(65%, 20rem);
             max-height: 40vh;
         }
+        .text.education{
+            padding-inline: 0.5rem;
+        }
         .text.education > p{
             text-align: center;
-            font-size: min(5.75vw, 1.65rem);
-            line-height: min(7.5vw, 2.25rem);
+            font-size: min(5.5vw, 1.8rem);
+            line-height: min(8vw, 2.5rem);
         }
         .text.education{
             justify-self: center;
         }
     }
-    @media (width < 500px) {
+    @media (width < 600px) {
         .content_container.education_page{
             gap: 0;
+        }
+        .text.education > p > span.university_name{
+            font-size: min(6.5vw, 2rem);
         }
     }
 
@@ -479,13 +477,13 @@
         font-size: max(3.3vw, 2.25rem);
         text-align: center;
         text-wrap: nowrap;
+        filter: blur(0.1rem);
     }
-    .content_container.languages_page > p:not(p:nth-last-child(1)){
-        align-self: flex-start;
-    }
+    /* .content_container.languages_page > p:not(p:nth-last-child(1)){
+        align-self: flex-end;
+    } */
     .content_container.languages_page > p:nth-last-child(1){
         scale: -1 -1;
-        align-self: flex-end;
     }
     .text.languages{
         position: relative;
@@ -512,11 +510,11 @@
             line-height: min(11vw, 3rem);
         }
     }
-    @media (height < 800px) {
+    /* @media (height < 800px) {
         .content_container.languages_page > p {
             visibility: hidden;
         }
-    }
+    } */
 
     /* PAGE 4(1) SKILLS TITLE */ 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */

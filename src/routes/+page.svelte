@@ -39,14 +39,8 @@
     
     let pageLoaded = false;
     $: innerHeight = 0;
-    // let previousScreenHeight = 0;
-    // $: sunsetInTheCloudsIMG_height = 0;
-    // $: page4_totalHeight = 0;
-    // $: yellowBox_height = 100;
 
     onMount(() => {
-        
-        // previousScreenHeight = innerHeight;
         
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
@@ -85,12 +79,10 @@
         newY=newY;
     }
 
-    
-
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
-    let intervalForLoading = 100
+    let intervalForLoading = 50
     let imagesLoaded = false
 
     function ifExistsInArray(idOfElement) {
@@ -115,7 +107,7 @@
                 if (!listOfIntersectedElements.includes(intersectingElementIndex) && intersectingElementIndex < 4) {
                     listOfIntersectedElements.push(intersectingElementIndex)
                 }
-                someshit++
+                someshit = intersectingElementIndex
                 amountOfElementsObserved++
 
                 intersecObserver.unobserve(entry.target)
@@ -134,7 +126,7 @@
             { 
                 root: document.querySelector(".svelte_main"),
                 threshold: 0.1,
-                rootMargin: "250px",
+                rootMargin: "100px",
             }
         )
         
@@ -154,7 +146,7 @@
                 if (!listOfIntersectedElements.includes(indexOfContainer) && indexOfContainer > 3) {
                     listOfIntersectedElements.push(indexOfContainer)
                     // console.log(indexOfContainer, 'is visible');
-                    someshit++
+                    someshit = indexOfContainer
                 }
             }, indexOfContainer * intervalForLoading);
 
@@ -162,6 +154,10 @@
     }
     
 </script>
+
+<!-- <svelte:head> 
+    <link rel="preload" as="style" href="src\lib\styles_and_fonts\styles.css" crossorigin="anonymous">
+</svelte:head> -->
 
 <svelte:window bind:innerHeight />
 <!-- bind:scrollY={y} on:scroll={updateY} -->
@@ -190,18 +186,21 @@
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
-         {#if ifExistsInArray(1) && someshit > 0}
+         {#if ifExistsInArray(1) || someshit == 1}
              <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
-                    <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UI</span> and <br> <span>graphic</span> designer. <br></p>
+                    <p class="lightgrayText">
+                        My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>Graphic</span> design. <br> <br> 
+                        I am committed to <span>elegant</span> and <span>easy</span> to understand design and I strive for <span>perfection</span> in this field.
+                    </p>
                 </div>
             </div>
          {/if}
             <!-- <div class="content_container loadingState"></div> -->
     </div>
     <div class="default_container greeting dwnCV">
-        {#if ifExistsInArray(2) && someshit > 0}
+        {#if ifExistsInArray(2) || someshit == 2}
             <div class="content_container CV_download_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="text cvDownload">
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
@@ -213,7 +212,7 @@
         {/if}
     </div>
     <div class="default_container cyanSaturated">
-        {#if ifExistsInArray(3) && someshit > 0}
+        {#if ifExistsInArray(3) || someshit == 3}
             <div class="content_container introductionToPhotos_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="top_part page3">
                     <img class="MY" src={MY} alt="MY">
@@ -227,7 +226,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(4) && someshit > 0}
+        {#if ifExistsInArray(4) || someshit == 4}
             <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
@@ -241,7 +240,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(5) && someshit > 0}
+        {#if ifExistsInArray(5) || someshit == 5}
             <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img class="dandelion IMG1" loading="eager" src={dandelionIMG} alt="dandelionIMG">
                 <div class="page5_gradient"></div>
@@ -252,7 +251,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(6) && someshit > 0}
+        {#if ifExistsInArray(6) || someshit == 6}
             <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="left_part img_box">
                     <img class="goldenLeaves" loading="eager" src={goldenLeaves} alt="goldenLeaves">
@@ -265,7 +264,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(7) && someshit > 0}
+        {#if ifExistsInArray(7) || someshit == 7}
             <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="image_wrapper_page7">
                     <img class="Violet_flowers" loading="eager" src={Violet_flowers} alt="Violet_flowers">
@@ -281,7 +280,7 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(8) && someshit > 0}
+        {#if ifExistsInArray(8) || someshit == 8}
             <div class="content_container page8" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
@@ -395,16 +394,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        height: 100%;
     }
     .title_page_name{
         position: relative;
         display: flex;
+        /* align-items: center; */
+        justify-content: center;
     }
     #MainPage_titlePageSVG{
         width: var(--element_size_title_decor_main_page);
         position: absolute;
-        left: 19%;
+        /* left: 19%; */
     }
     .title_name{
         font-size: var(--text_size_title_ultrabig);
@@ -418,19 +418,12 @@
             justify-content: space-evenly;
             gap: 8.5vh;
         }
-        #MainPage_titlePageSVG{
-            width: max(80%, 21rem);
-            top: 15%;
-            left: 12.5%;
-        }
         .title_name{
             text-wrap: balance;
             text-align: center;
-            font-size: max(22.5vw, 8rem);
-            line-height: max(17.5vw, 6rem);
         }
     }
-    @media (width < 575px){
+    @media (width < 700px){
         #MainPage_titlePageSVG{
             width: 100%;
             top: 14%;
@@ -459,10 +452,9 @@
     .content_container.greeting_page{
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: 1fr 1.1fr;
+        grid-auto-columns: 1fr 1.2fr;
         align-content: center;
         justify-items: center;
-        gap: 1vw;
     }
     #MainPage_greetingPageSVG{
         width: max(10rem, 75%);
@@ -473,12 +465,13 @@
         display: flex;
         flex-direction: column;
         align-self: center;
+        width: 80%;
     }
     .text.introducing > p{
         font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium);
-        letter-spacing: -0.5px;
+        text-wrap: pretty;
     }
     .text.introducing > p > span{
         font-family: 'Subjectivity_Bold', system-ui, sans-serif;
@@ -492,40 +485,38 @@
     @media (width < 1100px) {
         .content_container.greeting_page{
             grid-auto-flow: row;
-            grid-auto-rows: 1fr 1fr;
+            grid-auto-rows: 1fr 2fr;
         }
         #MainPage_greetingPageSVG{
             width: max(27.5rem, 60%);
+            max-height: 45vh;
         }
         .text.introducing > p{
             text-align: center;
-        }
-    }
-    @media (500px < width < 1100px) {
-        .text.introducing > p{
-            text-align: center;
-            font-size: var(--text_size_medium_big_media1);
-            line-height: var(--text_line_height_medium_media1);
+            text-wrap: pretty;
+            font-size: max(2vw, 1.3rem);
+            line-height: max(3.5vw, 2rem);
         }
         .text.introducing > p > span{
-            font-size: var(--text_size_medium_big_media1);
+            font-size: max(2.5vw, 1.5rem);
         }
     }
     @media (width < 500px) {
-        .content_container.greeting_page{
-            gap: 0;
+        .text.introducing{
+            width: 100%;
         }
         #MainPage_greetingPageSVG{
             width: 100%;
         }
-    }
-    @media (width < 350px) {
+        .text.introducing{
+            padding-inline: max(1rem, 1vw);
+        }
         .text.introducing > p{
-            font-size: max(1.75vw, 1.25rem);
-            line-height: max(2.25vw, 2rem);
+            font-size: min(4.5vw, 1.3rem);
+            line-height: min(7.5vw, 2rem);
         }
         .text.introducing > p > span{
-            font-size: max(2vw, 1.5rem);
+            font-size: min(5.5vw, 1.5rem);
         }
     }
 
@@ -547,8 +538,6 @@
     .text.cvDownload > p{
         font-family: 'Brolimo', system-ui, sans-serif;
         font-size: max(4vw, 3.5rem);
-        /* line-height: var(--text_line_height_big); */
-        text-wrap: balance;
     }
     .span_CV{
         font-family: 'Subjectivity_Bold', system-ui, sans-serif;
@@ -588,16 +577,16 @@
         gap: max(2rem, 2vw);
         
         width: 100%;
-        padding: max(1rem, 1vw) max(3.25rem, 3.25vw);
+        padding: max(1rem, 1vw) max(4rem, 4vw);
         text-wrap: balance;
         text-decoration: none;
         font-family: "Neutral_Normal", system-ui, sans-serif;
-        font-size: max(2vw, 1.75rem);
+        font-size: max(1.75vw, 1.75rem);
         color: var(--background_color_lightCyan);
         text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
         backdrop-filter: blur(max(0.6rem, 0.6vw));
         /* background: radial-gradient(var(--background_color_darkCyan) 1%, var(--background_color_darkGray) 150%); */
-        border-radius: max(2rem, 2vw);
+        border-radius: max(5rem, 5vw);
         border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
         transition: all 0.15s ease-out;
     }
@@ -618,7 +607,7 @@
         content: '';
         position: absolute;
         top: max(0.6rem, 0.45vw);
-        border-radius: max(1.9rem, 1.9vw);
+        border-radius: max(2rem, 2vw);
         width: 100%;
         height: 115%;
         border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
@@ -628,19 +617,11 @@
         background-size: 100% 100%;
         background-position: center top;
         background-repeat: no-repeat;
-        /* transition: background-size 1s ease-out; */
     }
-    /* .CV_downloadLink:hover::before{
-        background-size: 100% 100%;
-        transition: background-size 0.25s ease-out;
-    } */
 
     @media (width < 670px) {
         .content_container.CV_download_page{
             grid-template-rows: 1fr 1.5fr;
-        }
-        .CV_downloadLink{
-            width: 75%;
         }
         .text.cvDownload > p{
             font-size: min(9vw, 3.5rem);

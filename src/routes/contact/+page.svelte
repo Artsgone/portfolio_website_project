@@ -379,29 +379,19 @@
         translate: 25% 7.5%;
     }
     .title_name{
-        font-size: max(15vw, 7rem);
+        font-size: var(--text_size_title_ultrabig);
         font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
     }
 
     @media (width < 1200px){
-        /* .content_container.title_page{
-            justify-content: center;
-            gap: 15vh;
-        } */
-        #Contact_TitleDecor{
-            width: max(55%, 18rem);
-            translate: 15% 10%;
-        }
-        .title_name{
-            font-size: max(22vw, 8rem);
-        }
-    }
-    @media (width < 575px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;
         }
+    }
+    @media (width < 700px){
+        
         #Contact_TitleDecor{
             width: 85%;
             translate: 0% 10%;

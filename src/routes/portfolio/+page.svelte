@@ -377,7 +377,7 @@
                     listOfIntersectedElements.push(intersectingElementIndex)
                 }
                 
-                someshit++
+                someshit = intersectingElementIndex
                 amountOfElementsObserved++
                 intersecObserver.unobserve(entry.target)
                 if (amountOfElementsObserved == listLenght) {
@@ -445,7 +445,7 @@
                     listOfIntersectedElements_DF.push(intersectingElementIndex_DF)
                 }
                 
-                someshit_DF++
+                someshit_DF = intersectingElementIndex_DF
                 amountOfElementsObserved++
                 if (intersectingElementIndex_DF >= 24) {
                     intersecObserver.unobserve(entry.target)
@@ -521,7 +521,7 @@
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
-                    {#if ifExistsInArray_DF(0) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(0) || someshit_DF == 0}
                         <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -529,12 +529,12 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
-                    {#if ifExistsInArray_DF(1) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(1) || someshit_DF == 1}
                         <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(2) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(2) || someshit_DF == 2}
                         <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -548,17 +548,17 @@
                 </div>
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
-                    {#if ifExistsInArray_DF(3) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(3) || someshit_DF == 3}
                         <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
-                    {#if ifExistsInArray_DF(4) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(4) || someshit_DF == 4}
                         <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(5) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(5) || someshit_DF == 5}
                         <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -567,17 +567,17 @@
 
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(6) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(6) || someshit_DF == 6}
                         <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(7) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(7) || someshit_DF == 7}
                         <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(8) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(8) || someshit_DF == 8}
                         <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -590,17 +590,17 @@
                         <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(9) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(9) || someshit_DF == 9}
                         <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(10) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(10) || someshit_DF == 10}
                         <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(11) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(11) || someshit_DF == 11}
                         <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -608,17 +608,17 @@
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(12) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(12) || someshit_DF == 12}
                         <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(13) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(13) || someshit_DF == 13}
                         <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(14) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(14) || someshit_DF == 14}
                         <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -631,17 +631,17 @@
                         <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(15) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(15) || someshit_DF == 15}
                         <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(16) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(16) || someshit_DF == 16}
                         <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(17) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(17) || someshit_DF == 17}
                         <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -649,17 +649,17 @@
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(18) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(18) || someshit_DF == 18}
                         <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(19) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(19) || someshit_DF == 19}
                         <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(20) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(20) || someshit_DF == 20}
                         <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -672,12 +672,12 @@
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(21) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(21) || someshit_DF == 21}
                         <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(22) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(22) || someshit_DF == 22}
                         <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -685,7 +685,7 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(23) && someshit_DF > 0}
+                    {#if ifExistsInArray_DF(23) || someshit_DF == 23}
                         <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -693,7 +693,7 @@
         </div>
     </div>
     <div class="default_container endless forInsObs" id="largeWorksSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(24) && someshit_DF > 0}
+        {#if ifExistsInArray_DF(24) || someshit_DF == 24}
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren data-sveltekit-preload-data="tap">
@@ -748,7 +748,7 @@
         {/if} 
     </div>
     <div class="default_container endless forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(25) && someshit_DF > 0}
+        {#if ifExistsInArray_DF(25) || someshit_DF == 25}
             <div class="content_container work_summary_page fullscreenWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen data-sveltekit-preload-data="tap">
@@ -786,7 +786,7 @@
         {/if}
     </div>
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(26) && someshit_DF > 0}
+        {#if ifExistsInArray_DF(26) || someshit_DF == 26}
             <div class="content_container work_summary_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
@@ -808,7 +808,7 @@
         <div class="workPresent_wrapper" use:observeElement bind:this={workPresent_wrapper_bind} in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
             
             <div id="ART" class="classForIntersecObserver">
-                {#if ifExistsInArray(0) && someshit > 0}
+                {#if ifExistsInArray(0) || someshit == 0}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
@@ -818,140 +818,140 @@
             </div>
                 
             <div id="Dajy" class="classForIntersecObserver">
-                {#if ifExistsInArray(1) && someshit > 0}
+                {#if ifExistsInArray(1) || someshit == 1}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet..." />
                 {/if}
             </div>
 
             <div id="Roe" class="classForIntersecObserver">
-                {#if ifExistsInArray(2) && someshit > 0}
+                {#if ifExistsInArray(2) || someshit == 2}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Wappa" class="classForIntersecObserver">
-                {#if ifExistsInArray(3) && someshit > 0}
+                {#if ifExistsInArray(3) || someshit == 3}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
             
             <div id="Architect" class="classForIntersecObserver">
-                {#if ifExistsInArray(4) && someshit > 0}
+                {#if ifExistsInArray(4) || someshit == 4}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Toreno" class="classForIntersecObserver">
-                {#if ifExistsInArray(5) && someshit > 0}
+                {#if ifExistsInArray(5) || someshit == 5}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Artsgone" class="classForIntersecObserver">
-                {#if ifExistsInArray(6) && someshit > 0}
+                {#if ifExistsInArray(6) || someshit == 6}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lemmy" class="classForIntersecObserver">
-                {#if ifExistsInArray(7) && someshit > 0}
+                {#if ifExistsInArray(7) || someshit == 7}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lemmy" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY" class="classForIntersecObserver">
-                {#if ifExistsInArray(8) && someshit > 0}
+                {#if ifExistsInArray(8) || someshit == 8}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lanobi" class="classForIntersecObserver">
-                {#if ifExistsInArray(9) && someshit > 0}
+                {#if ifExistsInArray(9) || someshit == 9}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lexi2" class="classForIntersecObserver">
-                {#if ifExistsInArray(10) && someshit > 0}
+                {#if ifExistsInArray(10) || someshit == 10}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY2" class="classForIntersecObserver">
-                {#if ifExistsInArray(11) && someshit > 0}
+                {#if ifExistsInArray(11) || someshit == 11}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Antic Museum" class="classForIntersecObserver">
-                {#if ifExistsInArray(12) && someshit > 0}
+                {#if ifExistsInArray(12) || someshit == 12}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Anata" class="classForIntersecObserver">
-                {#if ifExistsInArray(13) && someshit > 0}
+                {#if ifExistsInArray(13) || someshit == 13}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="A/R" class="classForIntersecObserver">
-                {#if ifExistsInArray(14) && someshit > 0}
+                {#if ifExistsInArray(14) || someshit == 14}
                     <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Omic" class="classForIntersecObserver">
-                {#if ifExistsInArray(15) && someshit > 0}
+                {#if ifExistsInArray(15) || someshit == 15}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
                 {/if}
             </div>
 
             <div id="Nameless sadas" class="classForIntersecObserver">
-                {#if ifExistsInArray(16) && someshit > 0}
+                {#if ifExistsInArray(16) || someshit == 16}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="MR. Gummy" class="classForIntersecObserver">
-                {#if ifExistsInArray(17) && someshit > 0}
+                {#if ifExistsInArray(17) || someshit == 17}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummie" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Bena" class="classForIntersecObserver">
-                {#if ifExistsInArray(18) && someshit > 0}
+                {#if ifExistsInArray(18) || someshit == 18}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
                 {/if}
             </div>
 
             <div id="W(in) logo" class="classForIntersecObserver">
-                {#if ifExistsInArray(19) && someshit > 0}
+                {#if ifExistsInArray(19) || someshit == 19}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
                 {/if}
             </div>
             <div id="Travelin" class="classForIntersecObserver">
-                {#if ifExistsInArray(20) && someshit > 0}
+                {#if ifExistsInArray(20) || someshit == 20}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
                 {/if}
             </div>
             <div id="Tari" class="classForIntersecObserver">
-                {#if ifExistsInArray(21) && someshit > 0}
+                {#if ifExistsInArray(21) || someshit == 21}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Tari} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
                 {/if}
             </div>
             <div id="DTM" class="classForIntersecObserver">
-                {#if ifExistsInArray(22) && someshit > 0}
+                {#if ifExistsInArray(22) || someshit == 22}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_DTM} workElementTitle="DTM" workElementText="This piece of art is a piece of DTM"/>
                 {/if}
             </div>
             <div id="Eroy" class="classForIntersecObserver">
-                {#if ifExistsInArray(23) && someshit > 0}
+                {#if ifExistsInArray(23) || someshit == 23}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Eroy} workElementTitle="Eroy" workElementText="This piece of art is a piece of Eroy"/>
                 {/if}
             </div>
             <div id="ANV" class="classForIntersecObserver">
-                {#if ifExistsInArray(24) && someshit > 0}
+                {#if ifExistsInArray(24) || someshit == 24}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_LLL} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
@@ -1068,24 +1068,19 @@
         translate: 0 2%;
     }
     .title_name{
-        font-size: max(15vw, 6.25rem);
+        font-size: var(--text_size_title_ultrabig);
         font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
     }
 
     @media (width < 1200px){
-        #Portfolio_TitleDecor{
-            width: 65%;
-        }
-        .title_name{
-            font-size: max(20vw, 7rem);
-        }
-    }
-    @media (width < 575px){
         .content_container.title_page{
             justify-content: space-evenly;
             gap: 8.5vh;
         }
+    }
+    @media (width < 700px){
+        
         #Portfolio_TitleDecor{
             width: 95%;
             translate: 0% 7%;

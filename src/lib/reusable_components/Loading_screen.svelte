@@ -1,14 +1,37 @@
 <script>
-    import { fade, slide } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
+
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
+    import Global_loadingAnimationWebp from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.webp'
 
     export let fadeDuration = 500;
     export let fadeDelay = 0;
 
-</script>
+    let visibilityLoading = false
+    loaded()
+    function loaded() {
+        const interval = setInterval(() => {
+            visibilityLoading = true;
+        }, 500);
+        return () => clearInterval(interval);
+    }
+    
 
-<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineInOut}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: sineInOut}} class="loader_animation"> <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> </div>
+</script>
+<svelte:head> 
+    <link rel="preload" as="image" href={Global_loadingAnimationWebp} type="image/webp">
+</svelte:head>
+
+<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineInOut}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: sineInOut}} class="loader_animation">
+    
+    {#if !visibilityLoading}
+        <img class="loadingSpinner" src={Global_loadingAnimation} alt="*">
+    {:else}
+         <img class="loadingSpinner" src={Global_loadingAnimationWebp} alt="*">
+    {/if}
+    
+</div>
 
 <style>
     .loader_animation{
