@@ -26,7 +26,7 @@
         padding: 0;
     }
     .arrowIcon{
-        width: 55%;
+        width: 52.5%;
         aspect-ratio: 1;
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
     }

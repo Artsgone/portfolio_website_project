@@ -790,9 +790,10 @@
             <div class="content_container work_summary_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
-                    <p class="fontPresentation">Definity</p>
-                    <p class="fontPresentation">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae delectus esse quidem mollitia placeat.</p>
-                    <p class="fontPresentation">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae delectus esse quidem mollitia placeat.</p>
+                    <p class="fontPresentation">Definity?</p>
+                    <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
+                    <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
+                    <p class="fontPresentation">Definity is a definite version of a minimalistic font!</p>
                 </div>
             </div>
         {/if}
@@ -1296,7 +1297,7 @@
     .Global_closeIcon{
         width: 60%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
     }
     .close_button:hover > .Global_closeIcon{
         animation: closeIcon_animation .5s ease-in-out;
@@ -1591,36 +1592,46 @@
         display: grid;
         grid-template-columns: 1fr;
         /* grid-auto-rows: max-content; */
-        background-color: hsla(0, 100%, 50%, 0.85);
-        border-radius: max(1rem, 1vw);
-        padding-inline: max(2.5rem, 2.5vw);
-        padding-block: max(5rem, 5vw);
-        gap: max(5vh, 5vw);
+        border: max(0.5rem, 0.5vw) hsla(0, 100%, 50%, 0.85) solid;
+        /* border-radius: max(1rem, 1vw); */
+        gap: max(3vh, 3vw);
     }
     .fontPresentation{
-        font-family: 'Definity';
-        color: var(--text_color_gray5);
+        /* font-family: 'Definity'; */
+        font-family: 'DefinityV2';
+        color: var(--text_color_gray90);
         word-break: break-all;
         /* line-break: anywhere; */
         text-wrap: pretty;
         hyphens: auto;
+        padding-inline: max(2.5rem, 2.5vw);
+        text-align: center;
     }
     .fontPresentation:nth-child(1){
         font-size: max(5rem, 12vw);
         line-height: max(5rem, 10vw);
         letter-spacing: max(-0.5rem, -0.5vw);
+        background-color: hsla(0, 100%, 50%, 0.85);
+        color: var(--text_color_gray5);
+        padding-block: max(1rem, 1vw);
+        text-wrap: balance;
     }
     .fontPresentation:nth-child(3){
         font-size: max(2.25rem, 4vw);
         line-height: max(2.75rem, 5vw);
         letter-spacing: max(-0.25rem, -0.15vw);
-        word-spacing: max(0.3rem, 0.5vw);
+        word-spacing: max(0.75rem, 0.75vw);
     }
-    .fontPresentation:nth-child(2){
+    .fontPresentation:nth-child(even){
         font-size: max(1.5rem, 2.25vw);
         line-height: max(2rem, 3vw);
         letter-spacing: max(-0.1rem, -0.1vw);
-        word-spacing: max(0.25rem, 0.25vw);
+        word-spacing: max(0.5rem, 0.5vw);
+    }
+    .fontPresentation:last-child{
+        background-color: hsla(0, 0%, 0%, 0.85);
+        color: var(--text_color_gray5);
+        padding-block: max(1rem, 1vw);
     }
 
     /* General media ------------------------------------------------------------------------------------------------------------*/

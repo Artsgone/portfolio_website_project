@@ -13,7 +13,7 @@
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
     import MainPage_MyPhotosDecorElement from '$lib/svg_files/MainPage/MainPage_MyPhotosDecorElement.svg'
     import MainPage_cvDownloadDecor from '$lib/svg_files/MainPage/MainPage_cvDownloadDecor.svg'
-    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin.png'
+    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin_q.png'
     import MY from '$lib/svg_files/MainPage/MY.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
 //
@@ -194,7 +194,7 @@
              <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
-                    <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UX/UI</span> and <br> <span>web/graphic</span> designer. <br></p>
+                    <p class="lightgrayText">My name is <span>Artem Damin</span>. <br> I am a <span>UI</span> and <br> <span>graphic</span> designer. <br></p>
                 </div>
             </div>
          {/if}
