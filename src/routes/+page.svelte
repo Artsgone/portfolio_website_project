@@ -190,7 +190,7 @@
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
-         {#if ifExistsInArray(2) || someshit == 2}
+         {#if ifExistsInArray(1) || someshit == 1}
              <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
