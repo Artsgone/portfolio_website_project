@@ -12,8 +12,7 @@
     import '$lib/styles_and_fonts/styles.css'
 
     // Large works
-    import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
-    import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
+    import Portfolio_workPreviewElement_GeometryFontType from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg'
 
     let pageLoaded = false;
     onMount(() => {
@@ -25,7 +24,7 @@
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
-        if ( from?.url.pathname == "/portfolio/project_page/Travelin" && to?.url.pathname == undefined ) {
+        if ( from?.url.pathname == "/portfolio/project_page/ABC_poster" && to?.url.pathname == undefined ) {
             saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
@@ -62,16 +61,16 @@
     {/if}
 
     <div class="default_container endless">
-        {#if y < (50) || oldY > y}
-            <Sticky_navbar anchorLinkToLargeWork="#TravelinBanner" />
+        {#if y < (innerHeight / 10) || oldY > y}
+            <Sticky_navbar anchorLinkToLargeWork="#GeometryFontType" />
         {/if}
         <div class="content_container">
-            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_TravelinPoster} alt="Portfolio_Mount_Fuji"> </div>
+            <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_workPreviewElement_GeometryFontType} alt="Portfolio_workPreviewElement_GeometryFontType"> </div>
             
-            <div class="project_name"> Travelin </div>
+            <div class="project_name"> Geometry letter poster </div>
             <div class="project_description_wrapper">
                 <p class="project_description"> 
-                    This poster is meant to be an advertisment displayed in subway trains.
+                    A good poster design it was!
                 </p>
             </div>
         </div>
@@ -121,7 +120,7 @@
         display: grid;
         grid-template-columns: 1.75fr 1fr;
         place-items: center;
-        gap: max(7.5vh, 2.5rem) max(2vw, 2rem);
+        gap: max(15svh, 5rem) max(2vw, 2rem);
         position: relative;
     }
 
@@ -140,7 +139,6 @@
         display: grid;
         align-items: center;
         justify-content: center;
-        /* padding-block: max(5vh, 1rem); */
         position: relative;
         isolation: isolate;
     }
@@ -148,8 +146,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(var(--background_color_lightYellow) 65%, hsl(216, 40%, 35%) 200%);
-        border: max(0.5rem, 0.5vw) hsl(204, 30%, 50%) dashed;
+        background: radial-gradient(var(--background_color_lightYellow) 65%, hsl(0, 34%, 59%) 200%);
+        border: max(0.5rem, 0.5vw) hsl(0, 56%, 58%) dashed;
         z-index: -1;
         border-radius: max(1vw, 1rem);
     }
@@ -160,7 +158,6 @@
         display: flex;
         justify-content: center;
         border-radius: max(1vw, 1rem);
-        /* padding-block: max(5vh, 1rem); */
     }
     .project_description{
         font-family: 'Subjectivity_Regular', system-ui, sans-serif;
@@ -172,7 +169,7 @@
         hyphens: auto;
     }
     .project_description::first-letter{
-        color: hsl(182, 28%, 50%);
+        color: hsl(0, 74%, 38%);
         font-family: 'Misto', system-ui, sans-serif;
         initial-letter: 3 2;
         padding-right: max(0.5vw, 0.5rem);
@@ -181,8 +178,6 @@
     .project_image_wrapper{
         width: 100%;
         height: 100%;
-        /* border: max(0.5rem, 0.5vw) hsl(182, 30%, 75%) solid; */
-        /* background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(182, 28%, 50%) 200%); */
         border-radius: max(1vw, 1rem);
 
         display: grid;
@@ -191,7 +186,6 @@
     .project_image{
         width: 100%;
         max-height: 80svh;
-        object-fit: contain;
         filter: drop-shadow(0 max(.5rem, .5vw) max(.5rem, .5vw) var(--background_color_alternativeLightYellow));
     }
 

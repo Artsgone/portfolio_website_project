@@ -60,13 +60,10 @@
         <ScrollUpButton scrollToTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
-    {#if y < (innerHeight / 10) || oldY > y}
-        <Sticky_navbar anchorLinkToLargeWork="#Postrrr" />
-    {/if}
-
-    
-
     <div class="default_container endless">
+        {#if y < (innerHeight / 10) || oldY > y}
+            <Sticky_navbar anchorLinkToLargeWork="#Postrrr" />
+        {/if}
         <div class="content_container">
             <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr"> </div>
             
@@ -123,16 +120,18 @@
         display: grid;
         grid-template-columns: 1.75fr 1fr;
         place-items: center;
-        gap: max(7.5vh, 2.5rem) max(2vw, 2rem);
+        gap: max(15svh, 5rem) max(2vw, 2rem);
         position: relative;
     }
 
     .project_name{
         /* --_text_size: max(6vw, 4.5rem); */
-        --_text_size: clamp(4rem, 5vw + 0.5rem, 12.5rem);
+        --_text_size: clamp(3rem, 4vw + 0.5rem, 12.5rem);
         font-family: 'Brolimo', system-ui, sans-serif;
         font-size: var(--_text_size);
         line-height: var(--_text_size);
+        padding-block: max(5vh, 2rem);
+        padding-inline: max(2vw, 1.75rem);
         text-wrap: balance;
         text-align: center;
         height: 100%;
@@ -181,25 +180,25 @@
     .project_image_wrapper{
         width: 100%;
         height: 100%;
-        border: max(0.5rem, 0.5vw) hsl(0, 0%, 77%) solid;
-        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(0, 0%, 77%) 200%);
+        /* border: max(0.5rem, 0.5vw) hsl(0, 0%, 77%) solid;
+        background: radial-gradient(var(--background_color_lightYellow) 60%, hsl(0, 0%, 77%) 200%); */
         border-radius: max(1vw, 1rem);
 
         display: grid;
         place-items: center;
     }
     .project_image{
-        width: 90%;
-        height: 90%;
-        max-height: 75svh;
+        width: 100%;
+        max-height: 80svh;
         object-fit: contain;
+        filter: drop-shadow(0 max(.5rem, .5vw) max(.5rem, .5vw) var(--background_color_alternativeLightYellow));
     }
 
     @media (width < 1000px) {
         .content_container{
             display: grid;
             grid-template-columns: 1fr;
-            gap: 5vh 0;
+            gap: 7.5svh 0;
             width: 87.5%;
         }
         .project_image_wrapper{
@@ -207,8 +206,6 @@
         }
 
         .project_name{
-            padding-block-end: max(3vh, 1.5rem);
-            padding-block-start: max(4vh, 1.75rem);
             place-self: start;
         }
         .project_description_wrapper{

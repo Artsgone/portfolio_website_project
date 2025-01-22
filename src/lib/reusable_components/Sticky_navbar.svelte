@@ -31,6 +31,7 @@
     }
 
     .sticky_navbar_container{
+        top: 0;
         width: 100%;
         height: max(12.5vh, 5rem);
         position: fixed;

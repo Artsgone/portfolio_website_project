@@ -34,8 +34,8 @@
     // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { onMount } from "svelte";
-    import { fade, fly } from 'svelte/transition';
-    import { quintOut, sineInOut } from 'svelte/easing';
+    import { fade } from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
     $: innerHeight = 0;
@@ -70,7 +70,7 @@
     
     let newY = [];
     $: oldY = newY[1];
-    function updateY(event){
+    function updateY(){
         y = svelte_main_element.scrollTop;
         newY.push(y);
         if(newY.length > 5) {
@@ -108,6 +108,7 @@
                     listOfIntersectedElements.push(intersectingElementIndex)
                 }
                 someshit = intersectingElementIndex
+                // console.log(someshit)
                 amountOfElementsObserved++
 
                 intersecObserver.unobserve(entry.target)
@@ -155,17 +156,20 @@
     
 </script>
 
-<!-- <svelte:head> 
-    <link rel="preload" as="style" href="src\lib\styles_and_fonts\styles.css" crossorigin="anonymous">
-</svelte:head> -->
+<!-- <svelte:head>  -->
+    <!-- <link rel="preload" as="style" href="src/lib/styles_and_fonts/styles.css" crossorigin="anonymous"> -->
+    <!-- <link rel="preload" as="font" href="/src/lib/fonts/BrolimoRegular.ttf" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/src/lib/fonts/NeutralFace.otf" type="font/otf" crossorigin="anonymous"> -->
+<!-- </svelte:head> -->
 
 <svelte:window bind:innerHeight />
 <!-- bind:scrollY={y} on:scroll={updateY} -->
 <!-- style="--user_height: {innerHeightChange};" -->
+{#if !pageLoaded}
+    <LoadingScreen />
+{/if}
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
-    {#if !pageLoaded}
-        <LoadingScreen />
-    {/if}
+    
 
     {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
@@ -186,7 +190,7 @@
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
-         {#if ifExistsInArray(1) || someshit == 1}
+         {#if ifExistsInArray(2) || someshit == 2}
              <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
@@ -398,6 +402,7 @@
     .title_page_name{
         position: relative;
         display: flex;
+        height: max-content;
         /* align-items: center; */
         justify-content: center;
     }

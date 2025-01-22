@@ -39,16 +39,7 @@
                 <!-- web by Artem Damin -->
                 artem damin by web
             </div>
-            <img class="footer_Decor" src={footer_Decor_ID} alt="footer_Decor">
-            <!-- {#if footer_Decor_ID === "mainpage"}
-                    <img class="footer_Decor" src={MainPage_FooterDecor} alt="footer_Decor">
-                {:else if footer_Decor_ID === "aboutme"}
-                    <img class="footer_Decor" src={AboutMe_FooterDecor} alt="footer_Decor">
-                {:else if footer_Decor_ID === "portfolio"}
-                    <img class="footer_Decor" src={Portfolio_FooterDecor} alt="footer_Decor">
-                {:else}
-                    <img class="footer_Decor" src={Contact_FooterDecor} alt="footer_Decor">
-                {/if} -->
+            <img class="footer_Decor" loading="lazy" src={footer_Decor_ID} alt="footer_Decor">
         </div>
     </div>
 </footer>

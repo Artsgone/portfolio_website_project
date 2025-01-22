@@ -8,8 +8,6 @@
 
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
-    // import NavbarDecorHover1 from '$lib/svg_files/GlobalSVGs/Global_Decor_Navbar.svg'
-    // import NavbarDecorHover2 from '$lib/svg_files/GlobalSVGs/Global_Decor1_Navbar.svg'
 
 </script>
 
@@ -17,8 +15,6 @@
     <div class="navbar_inner" data-sveltekit-preload-code="hover">
         <div class="navbar_list">
             <a href="/{linkAddress1}">{firstLink}</a>
-            <!-- <img class="NavbarDecorHover1" src={NavbarDecorHover1} alt="NavbarDecorHover1">
-            <img class="NavbarDecorHover2" src={NavbarDecorHover2} alt="NavbarDecorHover2"> -->
         </div>
         <div class="navbar_list">
             <a href="/{linkAddress2}">{secondLink}</a>

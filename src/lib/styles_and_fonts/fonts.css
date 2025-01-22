@@ -2,7 +2,7 @@
     font-family: 'Neutral_Normal';
     font-style: normal;
     src: url('/src/lib/fonts/NeutralFace.otf');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Neutral_Bold';
@@ -14,7 +14,7 @@
     font-family: 'Brolimo';
     font-style: normal;
     src: url('/src/lib/fonts/BrolimoRegular.ttf');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Subjectivity_Thin';

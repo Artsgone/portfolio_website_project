@@ -75,7 +75,7 @@
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
-    let works_preview_grid_bind;
+    // let works_preview_grid_bind;
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
@@ -103,7 +103,7 @@
     $: innerHeight = 0;
     $: y = 0;
     let svelte_main_element;
-    let workPresent_wrapper_bind;
+    // let workPresent_wrapper_bind;
     // let workPresent_wrapper_bind_height = 0;
     
     let newY = [];
@@ -117,7 +117,7 @@
         newY=newY;
     }
     
-    let portfolio_loadingScreenShow = false;
+    // let portfolio_loadingScreenShow = false;
     let workPresent_Visibility = 'hidden';
 
     function openInLargeList(){
@@ -480,13 +480,14 @@
 
 <svelte:window bind:innerHeight />
 
+{#if !pageLoaded}
+    <LoadingScreen />
+{/if}
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
-    {#if !pageLoaded}
-        <LoadingScreen />
-    {/if}
-    {#if portfolio_loadingScreenShow}
+    
+    <!-- {#if portfolio_loadingScreenShow}
         <LoadingScreen fadeDuration=50 fadeDelay=50/>
-    {/if}
+    {/if} -->
 
     {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
@@ -517,11 +518,11 @@
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" bind:this={works_preview_grid_bind} use:openInLargeList use:observeDefaultCont data-sveltekit-preload-data="tap">
+            <div class="works_preview_grid" use:openInLargeList use:observeDefaultCont data-sveltekit-preload-data="tap">
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
-                    {#if ifExistsInArray_DF(0) || someshit_DF == 0}
+                    {#if ifExistsInArray_DF(0) || someshit_DF == 2}
                         <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -529,7 +530,7 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
-                    {#if ifExistsInArray_DF(1) || someshit_DF == 1}
+                    {#if ifExistsInArray_DF(1) || someshit_DF == 2}
                         <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -730,7 +731,7 @@
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="GeometryFontType">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                        <a href="/portfolio/project_page/ABC_poster" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} alt="Portfolio_workPreviewElement_GeometryFontType">
                         </a>
                     </div>
@@ -805,7 +806,7 @@
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement bind:this={workPresent_wrapper_bind} in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if ifExistsInArray(0) || someshit == 0}
@@ -1545,6 +1546,9 @@
         .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
             grid-column: 1 / 2;
             width: 100%;
+        }
+        .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
+            display: none;
         }
         .largeWorks_upperText{
             text-wrap: balance;

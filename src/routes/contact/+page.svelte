@@ -205,11 +205,11 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
+{#if !pageLoaded}
+    <LoadingScreen />
+{/if}
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
-    {#if !pageLoaded}
-        <LoadingScreen />
-    {/if}
-
+    
     <!-- closeInfoScreen={() => {infoScreenShow = false}} -->
     {#if infoScreenShow}
         <Info_screen statusCode={status} />

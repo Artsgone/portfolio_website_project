@@ -131,11 +131,11 @@
 
 <svelte:window bind:innerWidth bind:innerHeight  />
 
+{#if !pageLoaded}
+    <LoadingScreen />
+{/if}
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
-    {#if !pageLoaded}
-        <LoadingScreen />
-    {/if}
-
+    
     {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
