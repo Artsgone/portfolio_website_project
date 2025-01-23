@@ -127,7 +127,7 @@
             { 
                 root: document.querySelector(".svelte_main"),
                 threshold: 0.1,
-                rootMargin: "100px",
+                rootMargin: "250px",
             }
         )
         
@@ -156,21 +156,21 @@
     
 </script>
 
-<!-- <svelte:head>  -->
+<svelte:head> 
     <!-- <link rel="preload" as="style" href="src/lib/styles_and_fonts/styles.css" crossorigin="anonymous"> -->
     <!-- <link rel="preload" as="font" href="/src/lib/fonts/BrolimoRegular.ttf" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" as="font" href="/src/lib/fonts/NeutralFace.otf" type="font/otf" crossorigin="anonymous"> -->
-<!-- </svelte:head> -->
+    <title>Artem Damin - Art's page</title>
+    <meta name="description" content="A personal web-portfolio of Artem Damin" />
+</svelte:head>
 
 <svelte:window bind:innerHeight />
-<!-- bind:scrollY={y} on:scroll={updateY} -->
-<!-- style="--user_height: {innerHeightChange};" -->
-{#if !pageLoaded}
-    <LoadingScreen />
-{/if}
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
-    
 
+
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
+    {#if !pageLoaded}
+        <LoadingScreen />
+    {/if}
     {#if y > (innerHeight / 1.1) && oldY > y}
         <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
@@ -326,7 +326,7 @@
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
     }
-    
+
 
     *, *::before, *::after {
         margin: 0;
@@ -720,7 +720,7 @@
         z-index: 1;
     }
     
-    @media (width < 1400px) {
+    @media (width < 1200px) {
         .earLikeThing{
             width: 40%;
             height: min(17.5rem, 85%);

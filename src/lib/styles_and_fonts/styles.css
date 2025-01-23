@@ -27,7 +27,7 @@
     --text_color_gray5: #f2f2f2ff;
     --text_color_gray40: #666666ff;
     --text_color_gray50: #a5a5a5;
-    --text_color_gray65: #b0b0b0;
+    --text_color_gray65: hsl(0, 0%, 85%);
     --text_color_gray90: #1f1f1f;
     /* --text_color_gray_bright: #ece2d4ff; */
     --text_color_yellow60: #e1ddc6ff;

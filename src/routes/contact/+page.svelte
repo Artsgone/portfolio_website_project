@@ -95,6 +95,8 @@
     const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design", "Other"]
     let optionMenu
     let afterClose = false
+    $: userInput = ''
+    let mouseEnteredButton = false
 
     function optionClicked() {
         const options = document.querySelectorAll(".tow_option")
@@ -203,13 +205,17 @@
     // }
 </script>
 
+<svelte:head>
+    <title>Artem Damin - Contact me</title>
+    <meta name="description" content="Contact me, Artem Damin." />
+</svelte:head>
 <svelte:window bind:innerWidth bind:innerHeight />
 
-{#if !pageLoaded}
-    <LoadingScreen />
-{/if}
+
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
-    
+    {#if !pageLoaded}
+        <LoadingScreen />
+    {/if}
     <!-- closeInfoScreen={() => {infoScreenShow = false}} -->
     {#if infoScreenShow}
         <Info_screen statusCode={status} />
@@ -245,7 +251,7 @@
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
                 <input type="hidden" name="access_key" value="b8420fdb-0274-431b-b438-8f96dad35660">
                 <!-- Name _____ -->
-                <input name="name" type="text" minlength="2" maxlength="25" autocomplete="name" required class="form_item itemName" placeholder="Your name:">
+                <input name="name" type="text" minlength="2" maxlength="25" autocomplete="name" required class="form_item itemName" placeholder="Your name:" bind:value={userInput}>
                 <!-- Type of work _____ -->
                 <input name="type" type="hidden" value={optionText}>
                 <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius}>
@@ -270,7 +276,7 @@
                 <textarea name="message" minlength="25" rows="3" required class="form_item itemUserText" placeholder="What could I do for you?"></textarea>
                 <!-- submit _____ -->
                 <!-- on:click={resetform} -->
-                <button type="submit" class="submitButton"><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
+                <button type="submit" class="submitButton" on:mouseenter={() => (mouseEnteredButton = true)} class:animateButton={mouseEnteredButton} disabled={!userInput}><img class="submitButtonArrow" src={submitButtonArrow} alt="submitButtonArrow"></button>
             </form>
             <div class="links_bottom_part">
                 <div class="links">
@@ -313,6 +319,9 @@
     main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    }
+    button:disabled{
+        background: radial-gradient(var(--text_color_gray50) 25%, var(--text_color_gray65) 100%);
     }
     
 
@@ -574,8 +583,12 @@
         rotate: 180deg;
         
     }
-    .submitButton:hover > .submitButtonArrow{
+    .submitButton:not(:disabled):hover > .submitButtonArrow{
         animation: arrowIcon_animation .5s ease-in-out;
+    }
+    .submitButton.animateButton:is(:disabled) > .submitButtonArrow{
+        animation: arrowIcon_animation_Disabled 2s ease-in-out;
+        /* animation: name duration timing-function delay iteration-count direction fill-mode; */
     }
     @keyframes arrowIcon_animation{
         0%, 100% {
@@ -589,6 +602,22 @@
         }
         90%{
             translate: -5% 0;
+        }
+    }
+    @keyframes arrowIcon_animation_Disabled{
+        0%, 100% {
+            rotate: 0;
+            translate: 0;
+        }
+        25%{
+            rotate: 0deg;
+            translate: max(-0.25rem, -0.25vw) max(-0.25rem, -0.25vw);
+        }
+        50%{
+            rotate: 90deg;
+        }
+        75%{
+            rotate: 0deg;
         }
     }
 

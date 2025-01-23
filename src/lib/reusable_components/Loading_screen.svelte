@@ -8,14 +8,17 @@
     export let fadeDuration = 250;
     export let fadeDelay = 0;
 
+    // let displayLoadingImage = false
+    // function loadFallback() {
+    //     displayLoadingImage = true
+    // }
 </script>
-<!-- <svelte:head> 
-    <link rel="preload" as="image" href="/src/lib/svg_files/GlobalSVGs/Global_loadingAnimation.webp" type="image/webp">
-</svelte:head> -->
 
-<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineInOut}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: sineInOut}} class="loader_animation">
-    <!-- <img class="loadingSpinner" loading="eager" src={Global_loadingAnimationWebp} alt="*"> -->
-    <img class="loadingSpinner" src={Global_loadingAnimation} alt="*">
+<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineInOut}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: sineInOut}} class="loader_animation" fetchpriority="high">
+    <!-- <img class="loadingSpinner" src={Global_loadingAnimationWebp} fetchpriority="high" alt="*"> -->
+    <!-- <img fetchpriority="high" class="loadingSpinner" class:renderOut={displayLoadingImage} src={Global_loadingAnimation} alt="*" on:error={loadFallback}> -->
+    <object class="loadingSpinner" data={Global_loadingAnimation} type="image/svg+xml" aria-label="loading"></object>
+    
 </div>
 
 <style>
@@ -37,9 +40,20 @@
     }
     .loadingSpinner{
         width: max(10rem, 12.5vw);
+        transform-origin: center;
+        translate: 0 -2.5%;
+        animation: loadingSpinner 2s ease-out alternate both infinite, scaleSpinner 1s ease-out forwards infinite;
+    }
+
+    /* .loadingSpinnerPlaceholder{
+        background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
+        width: max(7.5rem, 10vw);
+        border-radius: 25%;
+        aspect-ratio: 1;
         translate: 0 -2.5%;
         animation: loadingSpinner 2s ease-in-out alternate both infinite, scaleSpinner 1s ease-out forwards infinite;
-    }
+    } */
+
     @keyframes loadingSpinner{
         0%{
             rotate: 0deg;

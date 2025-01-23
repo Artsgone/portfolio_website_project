@@ -129,10 +129,6 @@
             })
         })
         
-        // const interval = setInterval(() => {
-		// 	portfolio_loadingScreenShow = false
-		// }, 500);
-		// return () => clearInterval(interval);
     }
     function closeInLargeList(){
         // portfolio_loadingScreenShow = false;
@@ -408,7 +404,7 @@
     function saveIntersectedElementsToSS() {
         let elementsToSave = []
         listOfIntersectedElements_DF.forEach( intersectedItem => {
-            if (intersectedItem >= 24) {
+            if (intersectedItem == 24) {
                 elementsToSave.push(intersectedItem)
                 // sessionStorage.setItem('intersectedElementsList', intersectedItem)
             }
@@ -421,7 +417,7 @@
         let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
         listOfIntersectedElements_DF = listOfIntersectedElements_DF.concat(savedIntersectedElements)
         // console.log(listOfIntersectedElements_DF)
-        someshit_DF++
+        someshit_DF = 1
     }
 
     function ifExistsInArray_DF(idOfElement) {
@@ -478,13 +474,17 @@
     }
 </script>
 
+<svelte:head>
+    <title>Artem Damin - Portfolio</title>
+    <meta name="description" content="This is my personal portfolio." />
+</svelte:head>
 <svelte:window bind:innerHeight />
 
-{#if !pageLoaded}
-    <LoadingScreen />
-{/if}
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element}>
     
+    {#if !pageLoaded}
+        <LoadingScreen />
+    {/if}
     <!-- {#if portfolio_loadingScreenShow}
         <LoadingScreen fadeDuration=50 fadeDelay=50/>
     {/if} -->
@@ -511,7 +511,7 @@
             <a href="#logosSection" class="anchorLink_toSections"> <span>01.</span> portfolio - logos</a>
             <a href="#largeWorksSection" class="anchorLink_toSections"> <span>02.</span> portfolio - posters and banners</a>
             <a href="#fullScreenWorksSection" class="anchorLink_toSections"> <span>03.</span> portfolio - websites</a>
-            <a href="#fontsSection" class="anchorLink_toSections"> <span>03.</span> portfolio - fonts</a>
+            <a href="#fontsSection" class="anchorLink_toSections"> <span>04.</span> portfolio - fonts</a>
         </div>
     </div>
     <div class="default_container endless" id="logosSection">
@@ -522,7 +522,7 @@
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
-                    {#if ifExistsInArray_DF(0) || someshit_DF == 2}
+                    {#if ifExistsInArray_DF(0) || someshit_DF == 3}
                         <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -530,12 +530,12 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
-                    {#if ifExistsInArray_DF(1) || someshit_DF == 2}
+                    {#if ifExistsInArray_DF(1) || someshit_DF == 3}
                         <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(2) || someshit_DF == 2}
+                    {#if ifExistsInArray_DF(2) || someshit_DF == 3}
                         <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" transition:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>

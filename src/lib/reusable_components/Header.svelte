@@ -1,16 +1,22 @@
 <script>
     import A_Logo from '$lib/svg_files/A_Logo.svg'
     export let headerDecorSVG = ""
+    let innerWidth = 0
 </script>
+
+<svelte:window bind:innerWidth />
 
 <header class="header">
     <div class="header_inside">
         <div class="inner_header left">
             <img id="A_Logo" src={A_Logo} alt="A_Logo">
         </div>
-        <div class="inner_header right">
-            <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
-        </div>
+        {#if innerWidth > 800}
+            <div class="inner_header right">
+                <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
+            </div>
+        {/if}
+        
     </div>
 </header>
 
@@ -57,10 +63,13 @@
             display: grid;
             place-content: center;
         }
+        /* .inner_header.right{
+            display: none;
+        }
         .title_Decor{
             display: none;
             width: 0;
-        }
+        } */
         #A_Logo{
             width: min(12.5vh, 5rem);
             padding-block: 3.5vh 0;
