@@ -134,7 +134,7 @@
         // portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
         listOfIntersectedElements.length = 0
-        someshit = 0
+        someshit = -1
         // console.log(listOfIntersectedElements)
     }
     // function hide_LoadingScreen(){
@@ -350,7 +350,7 @@
 
     let intersectingElementIndex
     let listOfIntersectedElements = []
-    $: someshit = 0;
+    $: someshit = -1;
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -806,11 +806,11 @@
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 200, start: 0.85, easing: sineInOut }} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-500" }} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if ifExistsInArray(0) || someshit == 0}
-                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} fadeAnimation_Delay=250 workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.

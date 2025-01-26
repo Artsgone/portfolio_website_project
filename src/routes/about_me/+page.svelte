@@ -419,7 +419,7 @@
         white-space: nowrap;
     }
     .text.education > p > span.time_range{
-        font-family: 'Neutral_Normal', system-ui, sans-serif;
+        font-family: 'Neutral_Bold', system-ui, sans-serif;
     }
 
     @media (width < 1100px) {

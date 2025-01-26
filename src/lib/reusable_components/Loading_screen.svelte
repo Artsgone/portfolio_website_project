@@ -6,7 +6,7 @@
     // import Global_loadingAnimationWebp from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.webp'
 
     export let fadeDuration = 250;
-    export let fadeDelay = 0;
+    export let fadeDelay = 100;
 
     // let displayLoadingImage = false
     // function loadFallback() {

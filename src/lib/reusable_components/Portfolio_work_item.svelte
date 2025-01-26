@@ -9,7 +9,8 @@
     import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
 
-    let imageHeight;
+    let imageHeight
+    export let fadeAnimation_Delay = 0
 
     onMount(() => {;
         imageHeight = imageHeight;
@@ -81,7 +82,6 @@
     } else {
         fadeBar_displayMobile = "none";
     }
-
 </script>
 
 <svelte:window bind:innerWidth />
@@ -89,7 +89,7 @@
     <!-- id={workElementTitle} -->
     <!-- <main > -->
         <!-- style="--portfolio_item_visible:{workElementVisibility};" -->
-        <div class="workPresentation_container" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        <div class="workPresentation_container" in:fade={{ delay: fadeAnimation_Delay|0, duration: 500, easing: sineInOut}}>
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
             style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
