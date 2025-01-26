@@ -472,6 +472,18 @@
             intersecObserver.observe(container)
         })
     }
+
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".largeWork_element_preview")
+        lazyLoadedImages.forEach(image => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", () => {
+                isLoaded()
+            })
+        })
+    }
 </script>
 
 <svelte:head>
@@ -697,13 +709,13 @@
         {#if ifExistsInArray_DF(24) || someshit_DF == 24}
             <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
-                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren data-sveltekit-preload-data="tap">
+                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <!-- bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH} -->
                         <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinPoster} alt="Portfolio_Postttrrr">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinPoster} loading="lazy" alt="Portfolio_Postttrrr">
                             <!-- <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinWebsite} alt="Portfolio_TravelinWebsite"> -->
                         </a>
                     </div>
@@ -711,28 +723,28 @@
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} alt="Portfolio_Mount_Fuji">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} loading="lazy" alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/tomato_Poster" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} alt="Portfolio_FakePoster_LowRes">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} loading="lazy" alt="Portfolio_FakePoster_LowRes">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="Postrrr">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/action_Postrrr" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} alt="Portfolio_Postttrrr">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} loading="lazy" alt="Portfolio_Postttrrr">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="GeometryFontType">
                         <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="/portfolio/project_page/ABC_poster" class="largeWork_preview_box halfScreenBox">
-                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} alt="Portfolio_workPreviewElement_GeometryFontType">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
                         </a>
                     </div>
                     <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="UsefullPoster">
@@ -744,42 +756,40 @@
                     </div> -->
                 </div>
             </div>
-        {:else}
-            <img class="largeWork_element_preview" src={Portfolio_WorksPreviewDecor} alt="Portfolio_TravelinWebsite">
         {/if} 
     </div>
     <div class="default_container endless forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
         {#if ifExistsInArray_DF(25) || someshit_DF == 25}
             <div class="content_container work_summary_page fullscreenWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
-                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen data-sveltekit-preload-data="tap">
+                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={TFW_accountDetails} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_EditProject} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={TFW_accountDetails} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_EditProject} loading="lazy" alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_main} alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_cart} alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_about} alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_contact} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_main} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_cart} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_about} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_contact} loading="lazy" alt="Portfolio_Endimo_main">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} alt="Porftolio_AccountManager">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} loading="lazy" alt="Porftolio_AccountManager">
                         </a>
                     </div>
                 </div>
@@ -1025,7 +1035,7 @@
     }
     .endless{
         height: auto;
-        min-height: 150vh;
+        min-height: 200vh;
     }
     .content_container{
         width: 92.5%;
@@ -1534,6 +1544,13 @@
         scroll-snap-stop: always;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
         /* image-rendering: optimizeQuality; */
+        opacity: 0;
+        scale: 1.1;
+    }
+    *:is(.isLoaded){
+        opacity: 1;
+        scale: 1;
+        transition: opacity 0.75s ease-in, scale 0.5s ease-in;
     }
 
     @media (width < 1000px) {

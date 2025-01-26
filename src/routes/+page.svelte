@@ -82,8 +82,8 @@
     let intersectingElementIndex
     let listOfIntersectedElements = []
     $: someshit = 0;
-    let intervalForLoading = 50
-    let imagesLoaded = false
+    // let intervalForLoading = 50
+    // let imagesLoaded = false
 
     function ifExistsInArray(idOfElement) {
         if (listOfIntersectedElements.includes(idOfElement)) {
@@ -104,7 +104,9 @@
             if (entry.isIntersecting) {
                 // entry.target.classList.add("showOnScreen")
                 // console.log(intersectingElementIndex, entry.target, 'is visible');
-                if (!listOfIntersectedElements.includes(intersectingElementIndex) && intersectingElementIndex < 4) {
+
+                // && intersectingElementIndex < 4
+                if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
                     listOfIntersectedElements.push(intersectingElementIndex)
                 }
                 someshit = intersectingElementIndex
@@ -113,10 +115,10 @@
 
                 intersecObserver.unobserve(entry.target)
 
-                if (intersectingElementIndex >= 4 && imagesLoaded == false) {
-                    startLoadingImages()
-                    imagesLoaded = true
-                }
+                // if (intersectingElementIndex >= 4 && imagesLoaded == false) {
+                //     startLoadingImages()
+                //     imagesLoaded = true
+                // }
                 if (amountOfElementsObserved == listLenght) {
                     intersecObserver.disconnect()
                     // console.log("DISCONNECTED")
@@ -139,25 +141,42 @@
         })
     }
 
-    function startLoadingImages() {
-        const default_containers = document.querySelectorAll(".default_container")
-        default_containers.forEach( (container, indexOfContainer) => {
+    // function startLoadingImages() {
+    //     const default_containers = document.querySelectorAll(".default_container")
+    //     default_containers.forEach( (container, indexOfContainer) => {
 
-            setTimeout(function () {
-                if (!listOfIntersectedElements.includes(indexOfContainer) && indexOfContainer > 3) {
-                    listOfIntersectedElements.push(indexOfContainer)
-                    // console.log(indexOfContainer, 'is visible');
-                    someshit = indexOfContainer
-                }
-            }, indexOfContainer * intervalForLoading);
+    //         setTimeout(function () {
+    //             if (!listOfIntersectedElements.includes(indexOfContainer) && indexOfContainer > 3) {
+    //                 listOfIntersectedElements.push(indexOfContainer)
+    //                 // console.log(indexOfContainer, 'is visible');
+    //                 someshit = indexOfContainer
+    //             }
+    //         }, indexOfContainer * intervalForLoading);
 
+    //     })
+    // }
+    
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+        
+        lazyLoadedImages.forEach((image, imageIndex) => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+
+            image.addEventListener("load", () => {
+                isLoaded()
+                console.log("runs")
+            })
+            
+            
         })
     }
     
 </script>
 
 <svelte:head> 
-    <!-- <link rel="preload" as="style" href="src/lib/styles_and_fonts/styles.css" crossorigin="anonymous"> -->
+    <!-- <link rel="preload" as="style" href="src/lib/styles_and_fonts/fonts.css" crossorigin="anonymous"> -->
     <!-- <link rel="preload" as="font" href="/src/lib/fonts/BrolimoRegular.ttf" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" as="font" href="/src/lib/fonts/NeutralFace.otf" type="font/otf" crossorigin="anonymous"> -->
     <title>Artem Damin - Art's page</title>
@@ -231,10 +250,10 @@
     </div>
     <div class="default_container">
         {#if ifExistsInArray(4) || someshit == 4}
-            <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+            <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG" loading="eager" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
                 <div class="right_part page4" >
@@ -245,10 +264,14 @@
     </div>
     <div class="default_container">
         {#if ifExistsInArray(5) || someshit == 5}
-            <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
-                <img class="dandelion IMG1" loading="eager" src={dandelionIMG} alt="dandelionIMG">
+            <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+                <div class="dandelion_img_box">
+                    <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
+                </div>
                 <div class="page5_gradient"></div>
-                <img class="dandelion IMG2" loading="eager" src={dandelionIMG} alt="dandelionIMG">
+                <div class="dandelion_img_box">
+                    <img class="dandelion IMG2 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
+                </div>
                 <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
                 <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
             </div>
@@ -256,9 +279,9 @@
     </div>
     <div class="default_container">
         {#if ifExistsInArray(6) || someshit == 6}
-            <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+            <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
                 <div class="left_part img_box">
-                    <img class="goldenLeaves" loading="eager" src={goldenLeaves} alt="goldenLeaves">
+                    <img class="goldenLeaves forLazyLoad" loading="lazy" src={goldenLeaves} alt="goldenLeaves">
                 </div>
                 <div class="right_part page6">
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
@@ -269,9 +292,9 @@
     </div>
     <div class="default_container">
         {#if ifExistsInArray(7) || someshit == 7}
-            <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+            <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers" loading="eager" src={Violet_flowers} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" loading="lazy" src={Violet_flowers} alt="Violet_flowers">
                 </div>
                 
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
@@ -285,12 +308,12 @@
     </div>
     <div class="default_container">
         {#if ifExistsInArray(8) || someshit == 8}
-            <div class="content_container page8" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+            <div class="content_container page8" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
                 <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building" loading="eager" src={Modern_building} alt="Modern_building">
+                    <img class="Modern_building forLazyLoad" loading="lazy" src={Modern_building} alt="Modern_building">
                 </div>
             </div>
         {/if}
@@ -325,6 +348,15 @@
     main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    }
+
+    .forLazyLoad{
+        opacity: 0;
+    }
+    *:is(.isLoaded){
+        opacity: 1;
+        filter: blur(0);
+        transition: all 0.5s ease-in;
     }
 
 
@@ -787,7 +819,11 @@
         height: 90%;
         max-height: 75vh;
         z-index: 1;
-        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        background-image: url(/src/lib/compressed_images/sunset_inthe_clouds_HighlyCompressed.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
     }
@@ -795,6 +831,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
         border-radius: max(1rem, 1vw);
     }
     .left_part.page4::before{
@@ -875,18 +912,25 @@
         border-radius: max(1rem, 1vw);
         overflow: clip;
     }
+    .dandelion_img_box{
+        background-image: url(/src/lib/compressed_images/Sunflower_HighlyCompressed.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
     .dandelion{
         height: 100%;
         width: 100%;
         object-fit: cover;
-        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        object-position: center;
+        /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
     }
     .dandelion.IMG1{
         scale: -1 1;
     } 
     .page5_title_text{
-        font-family: 'Misto', system-ui, sans-serif;
+        font-family: 'Misto', Verdana, sans-serif;
         text-align: center;
         font-size: max(7.5vw, 5rem);
         line-height: max(6.5vw, 4rem);
@@ -935,7 +979,11 @@
     .left_part.img_box{
         min-height: 100%;
         width: 100%;
-        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        background-image: url(/src/lib/compressed_images/golden_leaves_HeavilyCompressed.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
     }
@@ -998,7 +1046,11 @@
     .image_wrapper_page7{
         max-width: 100%;
         min-height: 100%;
-        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        background-image: url(/src/lib/compressed_images/Violet_flowers_HighlyCompressed.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
     }
     .Violet_flowers{
@@ -1014,7 +1066,7 @@
         align-items: center;
         justify-content: center;
 
-        font-family: 'Misto';
+        font-family: 'Misto', Verdana, sans-serif;
         text-align: end;
         text-wrap: balance;
         font-size: max(4.5rem, 8vw);
@@ -1049,7 +1101,11 @@
     .image_wrapper_page8{
         max-width: 100%;
         min-height: 100%;
-        background-color: var(--background_color_alternativeLightYellow_lowerOpacity);
+        background-image: url(/src/lib/compressed_images/Modern_building_compressed.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
         overflow: clip;

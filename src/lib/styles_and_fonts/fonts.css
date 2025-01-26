@@ -44,7 +44,7 @@
     font-family: 'Misto';
     font-style: normal;
     src: url('/src/lib/fonts/Misto/Misto.woff2');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Definity';
