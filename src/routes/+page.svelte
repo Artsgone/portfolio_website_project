@@ -918,6 +918,9 @@
         background-size: cover;
         background-position: center;
     }
+    .dandelion_img_box:has(.dandelion.IMG1){
+        scale: -1 1;
+    }
     .dandelion{
         height: 100%;
         width: 100%;
@@ -926,9 +929,6 @@
         /* background-color: var(--background_color_alternativeLightYellow); */
         /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
     }
-    .dandelion.IMG1{
-        scale: -1 1;
-    } 
     .page5_title_text{
         font-family: 'Misto', Verdana, sans-serif;
         text-align: center;

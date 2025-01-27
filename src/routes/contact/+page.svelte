@@ -92,9 +92,10 @@
     
 
     let optionText = "Not specified"
-    const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design", "Other"]
+    const typeOfWorkList = ["Web design", "Logo design", "Poster design", "Visual identity", "Product design", "Other type of project"]
     let optionMenu
     let afterClose = false
+    let optionChosenIs = false
     $: userInput = ''
     let mouseEnteredButton = false
 
@@ -104,6 +105,7 @@
         options.forEach( (option, index) => {
             option.addEventListener("click", (e) => {
                 optionText = typeOfWorkList[index]
+                optionChosenIs = true
                 optionMenuHide()
                 afterClose = true
             })
@@ -254,7 +256,7 @@
                 <input name="name" type="text" minlength="2" maxlength="25" autocomplete="name" required class="form_item itemName" placeholder="Your name:" bind:value={userInput}>
                 <!-- Type of work _____ -->
                 <input name="type" type="hidden" value={optionText}>
-                <div tabindex="0" role="option" aria-selected="false" class="form_item itemtypeOfWork" style={border_radius}>
+                <div tabindex="0" role="menu" class="form_item itemtypeOfWork" style={border_radius} class:optionChosen={optionChosenIs}>
                     {#if optionText == "Not specified"}
                         Type of work: -
                     {:else}
@@ -265,7 +267,7 @@
                     {#if optionMenuShow}
                         <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option" role="button" tabindex="0">0{i + 1}. {item}</div>
+                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 200, easing: sineInOut, y: '-10'}} role="option" aria-selected="false">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
@@ -502,8 +504,11 @@
         align-items: center;
         cursor: pointer;
         
-        color: var(--text_color_gray90);
+        color: var(--text_color_gray40);
         transition: border-radius 0.15s ease-in-out, filter 0.15s ease-in-out;
+    }
+    .form_item.itemtypeOfWork:is(.optionChosen){
+        color: var(--text_color_gray90);
     }
 
     .Global_arrowDropdownMenu{

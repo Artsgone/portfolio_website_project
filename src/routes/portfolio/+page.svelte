@@ -1543,14 +1543,11 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
-        /* image-rendering: optimizeQuality; */
         opacity: 0;
-        scale: 1.1;
     }
     *:is(.isLoaded){
         opacity: 1;
-        scale: 1;
-        transition: opacity 0.75s ease-in, scale 0.5s ease-in;
+        transition: opacity 0.5s ease-in;
     }
 
     @media (width < 1000px) {

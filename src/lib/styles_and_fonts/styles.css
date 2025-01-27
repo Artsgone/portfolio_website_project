@@ -25,7 +25,7 @@
     --cyan_outline_bright: hsl(172, 20%, 75%);
     --cyan_outline: hsl(172, 20%, 52%);
     --text_color_gray5: #f2f2f2ff;
-    --text_color_gray40: #666666ff;
+    --text_color_gray40: rgb(120, 120, 120);
     --text_color_gray50: #a5a5a5;
     --text_color_gray65: hsl(0, 0%, 85%);
     --text_color_gray90: #1f1f1f;
