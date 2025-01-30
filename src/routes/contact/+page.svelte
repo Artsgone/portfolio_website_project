@@ -256,7 +256,7 @@
                 <input name="name" type="text" minlength="2" maxlength="25" autocomplete="name" required class="form_item itemName" placeholder="Your name:" bind:value={userInput}>
                 <!-- Type of work _____ -->
                 <input name="type" type="hidden" value={optionText}>
-                <div tabindex="0" role="menu" class="form_item itemtypeOfWork" style={border_radius} class:optionChosen={optionChosenIs}>
+                <div tabindex="0" role="button" class="form_item itemtypeOfWork" style={border_radius} class:optionChosen={optionChosenIs}>
                     {#if optionText == "Not specified"}
                         Type of work: -
                     {:else}
@@ -265,9 +265,9 @@
                     
                     <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
                     {#if optionMenuShow}
-                        <div class="typeOfWork_optionMenu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked bind:this={optionMenu}>
+                        <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 200, easing: sineInOut, y: '-10'}} role="option" aria-selected="false">0{i + 1}. {item}</div>
+                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 200, easing: sineInOut, y: '-10'}} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}

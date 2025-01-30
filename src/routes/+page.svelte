@@ -333,7 +333,7 @@
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
-        scroll-snap-type: block mandatory;
+        scroll-snap-type: block proximity;
         /* interpolate-size: allow-keywords; */
     }
     :global(body)::-webkit-scrollbar {
@@ -419,6 +419,12 @@
             transition: height 0.5s ease-in;
             height: 100vh;
         } */
+        /* .default_container{
+            scroll-snap-stop: always;
+        } */
+        main.svelte_main{
+            scroll-snap-type: block mandatory;
+        }
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
