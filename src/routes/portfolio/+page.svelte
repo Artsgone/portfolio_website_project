@@ -407,7 +407,7 @@
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: 0.5,
+                threshold: 0.3,
                 rootMargin: "0px",
             }
         )
@@ -496,7 +496,10 @@
                 image.classList.add("isLoaded")
             }
             image.addEventListener("load", () => {
-                isLoaded()
+                const interval = setInterval(() => {
+                	isLoaded()
+                }, 500);
+                return () => clearInterval(interval)
             })
         })
     }
@@ -758,7 +761,7 @@
                 </div>
             </div>
         {:else}
-            <div class="content_container work_summary_page fullscreenWorks">
+            <div class="content_container work_summary_page fullscreenWorks fakeSections">
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper">
@@ -824,7 +827,7 @@
                 </div>
             </div>
         {:else}
-            <div class="content_container work_summary_page largeWorks">
+            <div class="content_container work_summary_page largeWorks fakeSections">
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper">
@@ -1237,6 +1240,9 @@
         justify-content: space-evenly;
         flex-direction: column;
         position: relative;
+    }
+    .content_container.work_summary_page.fakeSections{
+        opacity: 0;
     }
 
     /* For logos */
