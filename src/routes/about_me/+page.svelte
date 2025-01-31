@@ -100,7 +100,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: 1,
+                threshold: 0.5,
                 rootMargin: "0px",
             }
         )

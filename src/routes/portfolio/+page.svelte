@@ -407,7 +407,7 @@
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: 1,
+                threshold: 0.5,
                 rootMargin: "0px",
             }
         )
