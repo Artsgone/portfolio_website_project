@@ -496,10 +496,9 @@
                 image.classList.add("isLoaded")
             }
             image.addEventListener("load", () => {
-                const interval = setInterval(() => {
-                	isLoaded()
-                }, 500);
-                return () => clearInterval(interval)
+                setTimeout(function () {
+                    isLoaded()
+                }, 400)
             })
         })
     }

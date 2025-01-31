@@ -150,8 +150,9 @@
                 image.classList.add("isLoaded")
             }
             image.addEventListener("load", () => {
-                isLoaded()
-                // console.log("runs")
+                setTimeout(function () {
+                    isLoaded()
+                }, 400)
             })
         })
     }

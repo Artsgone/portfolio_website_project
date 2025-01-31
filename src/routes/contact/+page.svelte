@@ -175,11 +175,13 @@
             status = result.message || "Success"
             document.querySelector(".contact_form_grid").reset()
             optionText = "Not specified"
-            const interval = setInterval(() => {
+            // const interval = setInterval(() => {
+                
+            // }, 1000)
+            // return () => clearInterval(interval)
+            setTimeout(function () {
                 closeSubmitInfo()
             }, 1000)
-            return () => clearInterval(interval)
-            
             // reloadPage()
             // goto_pageReload = true
         }
