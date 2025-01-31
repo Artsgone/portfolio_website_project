@@ -23,13 +23,13 @@
     import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
 
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { writable } from "svelte/store";
+    import { fade, fly } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { sineInOut } from 'svelte/easing';
     
     $: innerWidth = 0
 	// $: innerHeight = 0
-    let previousScreenHeight = 0;
 
     let pageLoaded = false;
     onMount(() => {
@@ -37,7 +37,6 @@
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
-        // previousScreenHeight = innerHeight;
         pageLoaded = true;
     });
     beforeNavigate(({to, from}) => {
@@ -68,64 +67,63 @@
     }
     
     let intersectingElementIndex
-    let listOfIntersectedElements = []
-    $: someshit = 0;
-    let intervalForLoading = 50
-
-    function ifExistsInArray(idOfElement) {
-        if (listOfIntersectedElements.includes(idOfElement)) {
-            return true
-        }
-        return false
-    }
+    // let listOfIntersectedElements = []
+    const listOfIntersectedElementsSetter = writable(new Set())
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".default_container")
-        // const listLenght = default_containers.length
-        // let amountOfElementsObserved = 0;
+        const listLenght = default_containers.length
+        let amountOfElementsObserved = 0;
 
-        // const intersecObserver = new IntersectionObserver( entries => {
-        // entries.forEach( entry => {
-        //     intersectingElementIndex = entry.target.containerIndex
-
-        //     if (entry.isIntersecting) {
-        //         // entry.target.classList.add("showOnScreen")
-        //         // entry.target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
-        //         // console.log(intersectingElementIndex, entry.target, 'is visible');
-        //         if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
-        //             listOfIntersectedElements.push(intersectingElementIndex)
-        //         }
-        //         // listOfIntersectedElements = listOfIntersectedElements
+        const intersecObserver = new IntersectionObserver( entries => {
+            entries.forEach( entry => {
+                intersectingElementIndex = entry.target.containerIndex
                 
-        //         someshit++
-        //         amountOfElementsObserved++
-        //         intersecObserver.unobserve(entry.target)
-        //         if (amountOfElementsObserved == listLenght) {
-        //             intersecObserver.disconnect()
-        //             // console.log("DISCONNECTED")
-        //         }
-        //     }
-        // })
-        // },
-        //     { 
-        //         root: document.querySelector(".svelte_main"),
-        //         threshold: 0.1,
-        //         rootMargin: "250px",
-        //     }
-        // )
+                if (entry.isIntersecting) {
+                    listOfIntersectedElementsSetter.update(set => {
+                        if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
+                            set.add(intersectingElementIndex) 
+                        }
+                        amountOfElementsObserved++
+
+                        intersecObserver.unobserve(entry.target)
+                        
+                        if (amountOfElementsObserved == listLenght - 1) {
+                            intersecObserver.disconnect()
+                            // console.log("ended")
+                        }
+                        return set
+                    })
+                }
+                    
+            })
+        },
+            { 
+                root: document.querySelector(".svelte_main"),
+                threshold: 1,
+                rootMargin: "0px",
+            }
+        )
         
         default_containers.forEach( (container, indexOfContainer) => {
+            container.containerIndex = indexOfContainer
+            if (indexOfContainer > 0) {
+                intersecObserver.observe(container)
+            }
+        })
+        // default_containers.forEach( (container, indexOfContainer) => {
             // container.containerIndex = indexOfContainer
             // intersecObserver.observe(container)
-
-            setTimeout(function () {
-                if (!listOfIntersectedElements.includes(indexOfContainer)) {
-                    listOfIntersectedElements.push(indexOfContainer)
-                    // console.log(indexOfContainer, 'is visible');
-                    someshit = indexOfContainer
-                }
-            }, indexOfContainer * intervalForLoading);
-        })
+            
+            // setTimeout(function () {
+            //     listOfIntersectedElementsSetter.update(set => {
+            //         if (!$listOfIntersectedElementsSetter.has(indexOfContainer)) {
+            //             set.add(indexOfContainer) 
+            //         }
+            //         return set
+            //     })
+            // }, indexOfContainer * intervalForLoading); 
+        // })
     }
 </script>
 
@@ -159,8 +157,8 @@
         </div>
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(1) || someshit == 1}
-            <div class="content_container education_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(1)}
+            <div class="content_container education_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
                 <div class="text education">
                     <p class="darkgrayText">
@@ -181,8 +179,8 @@
             <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
         {/if}
         
-        {#if ifExistsInArray(2) || someshit == 2}
-            <div class="content_container languages_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(2)}
+            <div class="content_container languages_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <p class="grayText65">LANGUAGES</p>
                 <div class="text languages">
                     <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
@@ -197,8 +195,8 @@
         {/if}
     </div>
     <div class="default_container def_skills_title noBorders">
-        {#if ifExistsInArray(3) || someshit == 3}
-            <div class="content_container skills_title_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(3)}
+            <div class="content_container skills_title_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 {#if innerWidth > 1000}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
                 {:else}
@@ -209,8 +207,8 @@
         {/if}
     </div>
     <div class="default_container def_skills">
-        {#if ifExistsInArray(4) || someshit == 4}
-            <div class="content_container skills_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(4)}
+            <div class="content_container skills_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
                         <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
@@ -222,8 +220,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(5) || someshit == 5}
-            <div class="content_container otherAbilities_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(5)}
+            <div class="content_container otherAbilities_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <p class="altyellowText vt">OTHER ABILITIES</p>
                 <div class="text otherAbilities">
                     <p class="rounded darkgrayText">

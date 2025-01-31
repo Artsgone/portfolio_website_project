@@ -71,6 +71,7 @@
     import scrollLeftAndRightButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
     import { onMount } from "svelte";
+    import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
@@ -95,7 +96,6 @@
         }
         saveIntersectedElementsToSS()
     });
-
     afterNavigate(() => {
         pageLoaded = true;
     });
@@ -103,8 +103,6 @@
     $: innerHeight = 0;
     $: y = 0;
     let svelte_main_element;
-    // let workPresent_wrapper_bind;
-    // let workPresent_wrapper_bind_height = 0;
     
     let newY = [];
     $: oldY = newY[1];
@@ -133,15 +131,8 @@
     function closeInLargeList(){
         // portfolio_loadingScreenShow = false;
         workPresent_Visibility = 'hidden';
-        listOfIntersectedElements.length = 0
-        someshit = -1
-        // console.log(listOfIntersectedElements)
+        listOfIntersectedElementsSetter.update(set => (set.clear(), set))
     }
-    // function hide_LoadingScreen(){
-    //     if (portfolio_loadingScreenShow = true) {
-    //         portfolio_loadingScreenShow = false;
-    //     }
-    // }
 
     let amountOfChildElementsList = [];
     function checkForAmountOfChildren() {
@@ -384,15 +375,7 @@
     }
 
     let intersectingElementIndex
-    let listOfIntersectedElements = []
-    $: someshit = -1;
-
-    function ifExistsInArray(idOfElement) {
-        if (listOfIntersectedElements.includes(idOfElement)) {
-            return true
-        }
-        return false
-    }
+    const listOfIntersectedElementsSetter = writable(new Set())
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".classForIntersecObserver")
@@ -404,23 +387,27 @@
             intersectingElementIndex = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
-                    listOfIntersectedElements.push(intersectingElementIndex)
-                }
-                
-                someshit = intersectingElementIndex
-                amountOfElementsObserved++
-                intersecObserver.unobserve(entry.target)
-                if (amountOfElementsObserved == listLenght) {
-                    intersecObserver.disconnect()
-                    // console.log("DISCONNECTED")
-                }
+                listOfIntersectedElementsSetter.update(set => {
+
+                    if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
+                        set.add(intersectingElementIndex) 
+                    }
+                    amountOfElementsObserved++
+
+                    intersecObserver.unobserve(entry.target)
+                    
+                    if (amountOfElementsObserved == listLenght) {
+                        intersecObserver.disconnect()
+                        // console.log("DISCONNECTED")
+                    }
+                    return set
+                })
             }
         })
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: 0.1,
+                threshold: 1,
                 rootMargin: "0px",
             }
         )
@@ -432,65 +419,59 @@
     }
 // ---------------------------------------------------------------------------------------------------------
     let intersectingElementIndex_DF
+    const listOfIntersectedElementsSetter_DF = writable(new Set())
     let listOfIntersectedElements_DF = []
-    $: someshit_DF = -1;
-    let indexToRemoveFromList = 0
 
     function saveIntersectedElementsToSS() {
+        let elementsToSaveDefault = [ 24, 25, 26 ]
         let elementsToSave = []
-        listOfIntersectedElements_DF.forEach( intersectedItem => {
-            if (intersectedItem == 25) {
-                elementsToSave.push(intersectedItem)
-                // sessionStorage.setItem('intersectedElementsList', intersectedItem)
+
+        elementsToSaveDefault.forEach( elementToSave => {
+            if ($listOfIntersectedElementsSetter_DF.has(elementToSave)) {
+                elementsToSave.push(elementToSave)
             }
-            sessionStorage.setItem('intersectedElementsList', JSON.stringify(elementsToSave))
         })
-        
+        sessionStorage.setItem('intersectedElementsList', JSON.stringify(elementsToSave))
     }
     function retrieveIntersectedElementsToSS() {
         // let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
         let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
         listOfIntersectedElements_DF = listOfIntersectedElements_DF.concat(savedIntersectedElements)
-        // console.log(listOfIntersectedElements_DF)
-        someshit_DF = -2
+
+        listOfIntersectedElementsSetter_DF.update(set => {
+            listOfIntersectedElements_DF.forEach(intersecItem => set.add(intersecItem))
+            return set
+        })
+        
     }
 
-    function ifExistsInArray_DF(idOfElement) {
-        if (listOfIntersectedElements_DF.includes(idOfElement)) {
-            return true
-        }
-        return false
-    }
     function observeDefaultCont() {
-        // const default_containers = document.querySelectorAll(".default_container")
         const default_containers = document.querySelectorAll(".forInsObs")
         const listLenght = default_containers.length
-        let amountOfElementsObserved = 0;
+        // let amountOfElementsObserved = 0;
 
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
 
             if (entry.isIntersecting) {
-                if (!listOfIntersectedElements_DF.includes(intersectingElementIndex_DF)) {
-                    listOfIntersectedElements_DF.push(intersectingElementIndex_DF)
-                }
-                
-                someshit_DF = intersectingElementIndex_DF
-                amountOfElementsObserved++
-                if (intersectingElementIndex_DF >= 24) {
-                    intersecObserver.unobserve(entry.target)
-                }
-                // intersecObserver.unobserve(entry.target)
-                // if (amountOfElementsObserved == listLenght) {
-                //     intersecObserver.disconnect()
-                //     // console.log("DISCONNECTED")
-                // }
+                listOfIntersectedElementsSetter_DF.update(set => {
+
+                    if (!$listOfIntersectedElementsSetter_DF.has(intersectingElementIndex_DF)) {
+                        set.add(intersectingElementIndex_DF)
+                    }
+                    if (intersectingElementIndex_DF >= 24) {
+                        intersecObserver.unobserve(entry.target)
+                    }
+                    return set
+                })
             }
             else {
-                if (listOfIntersectedElements_DF.includes(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
-                    indexToRemoveFromList = listOfIntersectedElements_DF.indexOf(intersectingElementIndex_DF)
-                    listOfIntersectedElements_DF.splice(indexToRemoveFromList, 1)
+                if ($listOfIntersectedElementsSetter_DF.has(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
+                    listOfIntersectedElementsSetter_DF.update(set => {
+                        set.delete(intersectingElementIndex_DF)
+                        return set
+                    })
                 }
             }
         })
@@ -569,7 +550,7 @@
                 <!-- data-sveltekit-preload-data="tap" -->
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
-                    {#if ifExistsInArray_DF(0) || someshit_DF == 3}
+                    {#if $listOfIntersectedElementsSetter_DF.has(0)}
                         <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -577,12 +558,12 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
-                    {#if ifExistsInArray_DF(1) || someshit_DF == 3}
+                    {#if $listOfIntersectedElementsSetter_DF.has(1)}
                         <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(2) || someshit_DF == 3}
+                    {#if $listOfIntersectedElementsSetter_DF.has(2)}
                         <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -596,17 +577,17 @@
                 </div>
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
-                    {#if ifExistsInArray_DF(3) || someshit_DF == 3}
+                    {#if $listOfIntersectedElementsSetter_DF.has(3)}
                         <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
-                    {#if ifExistsInArray_DF(4) || someshit_DF == 4}
+                    {#if $listOfIntersectedElementsSetter_DF.has(4)}
                         <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(5) || someshit_DF == 5}
+                    {#if $listOfIntersectedElementsSetter_DF.has(5)}
                         <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -615,17 +596,17 @@
 
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(6) || someshit_DF == 6}
+                    {#if $listOfIntersectedElementsSetter_DF.has(6)}
                         <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(7) || someshit_DF == 7}
+                    {#if $listOfIntersectedElementsSetter_DF.has(7)}
                         <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(8) || someshit_DF == 8}
+                    {#if $listOfIntersectedElementsSetter_DF.has(8)}
                         <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -638,17 +619,17 @@
                         <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(9) || someshit_DF == 9}
+                    {#if $listOfIntersectedElementsSetter_DF.has(9)}
                         <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(10) || someshit_DF == 10}
+                    {#if $listOfIntersectedElementsSetter_DF.has(10)}
                         <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(11) || someshit_DF == 11}
+                    {#if $listOfIntersectedElementsSetter_DF.has(11)}
                         <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -656,17 +637,17 @@
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(12) || someshit_DF == 12}
+                    {#if $listOfIntersectedElementsSetter_DF.has(12)}
                         <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(13) || someshit_DF == 13}
+                    {#if $listOfIntersectedElementsSetter_DF.has(13)}
                         <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(14) || someshit_DF == 14}
+                    {#if $listOfIntersectedElementsSetter_DF.has(14)}
                         <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -679,17 +660,17 @@
                         <div class="work_element_preview_box blank"> <img src={Portfolio_WorksPreviewDecor} alt="" class="work_element_preview"> </div>
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(15) || someshit_DF == 15}
+                    {#if $listOfIntersectedElementsSetter_DF.has(15)}
                         <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(16) || someshit_DF == 16}
+                    {#if $listOfIntersectedElementsSetter_DF.has(16)}
                         <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(17) || someshit_DF == 17}
+                    {#if $listOfIntersectedElementsSetter_DF.has(17)}
                         <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -697,17 +678,17 @@
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
-                    {#if ifExistsInArray_DF(18) || someshit_DF == 18}
+                    {#if $listOfIntersectedElementsSetter_DF.has(18)}
                         <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
-                    {#if ifExistsInArray_DF(19) || someshit_DF == 19}
+                    {#if $listOfIntersectedElementsSetter_DF.has(19)}
                         <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
-                    {#if ifExistsInArray_DF(20) || someshit_DF == 20}
+                    {#if $listOfIntersectedElementsSetter_DF.has(20)}
                         <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -720,12 +701,12 @@
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(21) || someshit_DF == 21}
+                    {#if $listOfIntersectedElementsSetter_DF.has(21)}
                         <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
-                    {#if ifExistsInArray_DF(22) || someshit_DF == 22}
+                    {#if $listOfIntersectedElementsSetter_DF.has(22)}
                         <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -733,7 +714,7 @@
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
-                    {#if ifExistsInArray_DF(23) || someshit_DF == 23}
+                    {#if $listOfIntersectedElementsSetter_DF.has(23)}
                         <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
                     {/if}
                 </a>
@@ -741,8 +722,8 @@
         </div>
     </div>
     <div class="default_container endless flsWS forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(24) || someshit_DF == 24}
-            <div class="content_container work_summary_page fullscreenWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter_DF.has(24)}
+            <div class="content_container work_summary_page fullscreenWorks" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
@@ -776,11 +757,32 @@
                     </div>
                 </div>
             </div>
+        {:else}
+            <div class="content_container work_summary_page fullscreenWorks">
+                <p class="largeWorks_upperText">Portfolio - websites</p>
+                <div class="fullScreenWorks_preview_grid">
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                </div>
+            </div>
         {/if}
     </div>
     <div class="default_container endless hlfsWS forInsObs" id="largeWorksSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(25) || someshit_DF == 25}
-            <div class="content_container work_summary_page largeWorks" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter_DF.has(25)}
+            <div class="content_container work_summary_page largeWorks" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
@@ -821,12 +823,43 @@
                     </div>
                 </div>
             </div>
+        {:else}
+            <div class="content_container work_summary_page largeWorks">
+                <p class="largeWorks_upperText">Portfolio - banners</p>
+                <div class="largeWorks_preview_grid">
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                    <div class="largeWork_preview_box_wrapper halfScreenWrapper">
+                        <a href="#blank" class="largeWork_preview_box halfScreenBox">
+                            <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                        </a>
+                    </div>
+                </div>
+            </div>
         {/if} 
     </div>
     
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
-        {#if ifExistsInArray_DF(26) || someshit_DF == 26}
-            <div class="content_container work_summary_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter_DF.has(26)}
+            <div class="content_container work_summary_page" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
                     <p class="fontPresentation">Definity?</p>
@@ -847,7 +880,7 @@
         <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
             
             <div id="ART" class="classForIntersecObserver">
-                {#if ifExistsInArray(0) || someshit == 0}
+                {#if $listOfIntersectedElementsSetter.has(0)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} fadeAnimation_Delay=250 workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
@@ -857,140 +890,140 @@
             </div>
                 
             <div id="Dajy" class="classForIntersecObserver">
-                {#if ifExistsInArray(1) || someshit == 1}
+                {#if $listOfIntersectedElementsSetter.has(1)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Dd_NEW} workElementTitle="Dajy" workElementText="Some logo that has no use yet..." />
                 {/if}
             </div>
 
             <div id="Roe" class="classForIntersecObserver">
-                {#if ifExistsInArray(2) || someshit == 2}
+                {#if $listOfIntersectedElementsSetter.has(2)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Roe} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Wappa" class="classForIntersecObserver">
-                {#if ifExistsInArray(3) || someshit == 3}
+                {#if $listOfIntersectedElementsSetter.has(3)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Ww} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
             
             <div id="Architect" class="classForIntersecObserver">
-                {#if ifExistsInArray(4) || someshit == 4}
+                {#if $listOfIntersectedElementsSetter.has(4)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Architect} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Toreno" class="classForIntersecObserver">
-                {#if ifExistsInArray(5) || someshit == 5}
+                {#if $listOfIntersectedElementsSetter.has(5)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Logo_Tt} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Artsgone" class="classForIntersecObserver">
-                {#if ifExistsInArray(6) || someshit == 6}
+                {#if $listOfIntersectedElementsSetter.has(6)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Artsgone} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lemmy" class="classForIntersecObserver">
-                {#if ifExistsInArray(7) || someshit == 7}
+                {#if $listOfIntersectedElementsSetter.has(7)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi} workElementTitle="Lemmy" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY" class="classForIntersecObserver">
-                {#if ifExistsInArray(8) || someshit == 8}
+                {#if $listOfIntersectedElementsSetter.has(8)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_LXY} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lanobi" class="classForIntersecObserver">
-                {#if ifExistsInArray(9) || someshit == 9}
+                {#if $listOfIntersectedElementsSetter.has(9)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Lexi_V2} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lexi2" class="classForIntersecObserver">
-                {#if ifExistsInArray(10) || someshit == 10}
+                {#if $listOfIntersectedElementsSetter.has(10)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Lexi_alternate} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY2" class="classForIntersecObserver">
-                {#if ifExistsInArray(11) || someshit == 11}
+                {#if $listOfIntersectedElementsSetter.has(11)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_LXY_alt} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Antic Museum" class="classForIntersecObserver">
-                {#if ifExistsInArray(12) || someshit == 12}
+                {#if $listOfIntersectedElementsSetter.has(12)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Museum} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Anata" class="classForIntersecObserver">
-                {#if ifExistsInArray(13) || someshit == 13}
+                {#if $listOfIntersectedElementsSetter.has(13)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Anata} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="A/R" class="classForIntersecObserver">
-                {#if ifExistsInArray(14) || someshit == 14}
+                {#if $listOfIntersectedElementsSetter.has(14)}
                     <WorkPresent workElementImage={New_LOGO_AR} workElementTitle="A/R" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Omic" class="classForIntersecObserver">
-                {#if ifExistsInArray(15) || someshit == 15}
+                {#if $listOfIntersectedElementsSetter.has(15)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Omic} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
                 {/if}
             </div>
 
             <div id="Nameless sadas" class="classForIntersecObserver">
-                {#if ifExistsInArray(16) || someshit == 16}
+                {#if $listOfIntersectedElementsSetter.has(16)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Nameless} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="MR. Gummy" class="classForIntersecObserver">
-                {#if ifExistsInArray(17) || someshit == 17}
+                {#if $listOfIntersectedElementsSetter.has(17)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_MrGummy} workElementTitle="MR. Gummie" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Bena" class="classForIntersecObserver">
-                {#if ifExistsInArray(18) || someshit == 18}
+                {#if $listOfIntersectedElementsSetter.has(18)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Bena} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
                 {/if}
             </div>
 
             <div id="W(in) logo" class="classForIntersecObserver">
-                {#if ifExistsInArray(19) || someshit == 19}
+                {#if $listOfIntersectedElementsSetter.has(19)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Ww_additional} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
                 {/if}
             </div>
             <div id="Travelin" class="classForIntersecObserver">
-                {#if ifExistsInArray(20) || someshit == 20}
+                {#if $listOfIntersectedElementsSetter.has(20)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_Travelin_Logo} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
                 {/if}
             </div>
             <div id="Tari" class="classForIntersecObserver">
-                {#if ifExistsInArray(21) || someshit == 21}
+                {#if $listOfIntersectedElementsSetter.has(21)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Tari} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
                 {/if}
             </div>
             <div id="DTM" class="classForIntersecObserver">
-                {#if ifExistsInArray(22) || someshit == 22}
+                {#if $listOfIntersectedElementsSetter.has(22)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_DTM} workElementTitle="DTM" workElementText="This piece of art is a piece of DTM"/>
                 {/if}
             </div>
             <div id="Eroy" class="classForIntersecObserver">
-                {#if ifExistsInArray(23) || someshit == 23}
+                {#if $listOfIntersectedElementsSetter.has(23)}
                     <WorkPresentAlt workElementImage={Portfolio_workPreviewElement_Eroy} workElementTitle="Eroy" workElementText="This piece of art is a piece of Eroy"/>
                 {/if}
             </div>
             <div id="ANV" class="classForIntersecObserver">
-                {#if ifExistsInArray(24) || someshit == 24}
+                {#if $listOfIntersectedElementsSetter.has(24)}
                     <WorkPresent workElementImage={Portfolio_workPreviewElement_LLL} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
@@ -1063,12 +1096,6 @@
     }
     .endless{
         height: auto;
-    }
-    .endless.flsWS{
-        min-height: 300svh;
-    }
-    .endless.hlfsWS{
-        min-height: 200svh;
     }
     .content_container{
         width: 92.5%;
@@ -1632,9 +1659,6 @@
     .default_container.fontsContainer{
         min-height: 50vh;
     }
-    /* .content_container.work_summary_page{
-        height: auto;
-    } */
     .fontPresentationWrapper{
         display: grid;
         grid-template-columns: 1fr;
@@ -1644,7 +1668,6 @@
         gap: max(3vh, 3vw);
     }
     .fontPresentation{
-        /* font-family: 'Definity'; */
         font-family: 'DefinityV2';
         color: var(--text_color_gray90);
         word-break: break-all;

@@ -34,14 +34,14 @@
     // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { onMount } from "svelte";
-    import { fade } from 'svelte/transition';
+    import { writable } from "svelte/store";
+    import { fade, fly, scale } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     
     let pageLoaded = false;
     $: innerHeight = 0;
 
     onMount(() => {
-        
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
@@ -80,17 +80,7 @@
     }
 
     let intersectingElementIndex
-    let listOfIntersectedElements = []
-    $: someshit = 0;
-    // let intervalForLoading = 50
-    // let imagesLoaded = false
-
-    function ifExistsInArray(idOfElement) {
-        if (listOfIntersectedElements.includes(idOfElement)) {
-            return true
-        }
-        return false
-    }
+    const listOfIntersectedElementsSetter = writable(new Set())
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".default_container")
@@ -98,46 +88,42 @@
         let amountOfElementsObserved = 0;
 
         const intersecObserver = new IntersectionObserver( entries => {
-        entries.forEach( entry => {
-            intersectingElementIndex = entry.target.containerIndex
+            entries.forEach( entry => {
+                intersectingElementIndex = entry.target.containerIndex
+                
+                if (entry.isIntersecting) {
+                    listOfIntersectedElementsSetter.update(set => {
+                        // entry.target.classList.add("showOnScreen")
+                        // console.log(intersectingElementIndex, entry.target, 'is visible');
+                        if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
+                            set.add(intersectingElementIndex) 
+                        }
+                        amountOfElementsObserved++
 
-            if (entry.isIntersecting) {
-                // entry.target.classList.add("showOnScreen")
-                // console.log(intersectingElementIndex, entry.target, 'is visible');
-
-                // && intersectingElementIndex < 4
-                if (!listOfIntersectedElements.includes(intersectingElementIndex)) {
-                    listOfIntersectedElements.push(intersectingElementIndex)
+                        intersecObserver.unobserve(entry.target)
+                        
+                        if (amountOfElementsObserved == listLenght - 1) {
+                            intersecObserver.disconnect()
+                            // console.log("DISCONNECTED")
+                        }
+                        return set
+                    })
                 }
-                someshit = intersectingElementIndex
-                // console.log(someshit)
-                amountOfElementsObserved++
-
-                intersecObserver.unobserve(entry.target)
-
-                // if (intersectingElementIndex >= 4 && imagesLoaded == false) {
-                //     startLoadingImages()
-                //     imagesLoaded = true
-                // }
-                if (amountOfElementsObserved == listLenght) {
-                    intersecObserver.disconnect()
-                    // console.log("DISCONNECTED")
-                }
-            }
-        })
+                    
+            })
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: 0.1,
-                rootMargin: "250px",
+                threshold: 1,
+                rootMargin: "0px",
             }
         )
         
         default_containers.forEach( (container, indexOfContainer) => {
             container.containerIndex = indexOfContainer
-            // if (indexOfContainer < 5) {
+            if (indexOfContainer > 0) {
                 intersecObserver.observe(container)
-            // }
+            }
         })
     }
 
@@ -163,13 +149,10 @@
             function isLoaded() {
                 image.classList.add("isLoaded")
             }
-
             image.addEventListener("load", () => {
                 isLoaded()
-                console.log("runs")
+                // console.log("runs")
             })
-            
-            
         })
     }
     
@@ -209,8 +192,8 @@
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
-         {#if ifExistsInArray(1) || someshit == 1}
-             <div class="content_container greeting_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+         {#if $listOfIntersectedElementsSetter.has(1)}
+             <div class="content_container greeting_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
                     <p class="lightgrayText">
@@ -223,20 +206,20 @@
             <!-- <div class="content_container loadingState"></div> -->
     </div>
     <div class="default_container greeting dwnCV">
-        {#if ifExistsInArray(2) || someshit == 2}
-            <div class="content_container CV_download_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(2)}
+            <div class="content_container CV_download_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <div class="text cvDownload">
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
-                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside"> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:scale={{ delay: 500, duration: 100, easing: sineInOut, start: 0.75}}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
                 </div>
             </div>
         {/if}
     </div>
     <div class="default_container cyanSaturated">
-        {#if ifExistsInArray(3) || someshit == 3}
-            <div class="content_container introductionToPhotos_page" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}}>
+        {#if $listOfIntersectedElementsSetter.has(3)}
+            <div class="content_container introductionToPhotos_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
                 <div class="top_part page3">
                     <img class="MY" src={MY} alt="MY">
                     <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
@@ -249,8 +232,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(4) || someshit == 4}
-            <div class="content_container page4" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+        {#if $listOfIntersectedElementsSetter.has(4)}
+            <div class="content_container page4" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
                         <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
@@ -263,8 +246,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(5) || someshit == 5}
-            <div class="content_container page5" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+        {#if $listOfIntersectedElementsSetter.has(5)}
+            <div class="content_container page5" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
                 <div class="dandelion_img_box">
                     <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
                 </div>
@@ -278,8 +261,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(6) || someshit == 6}
-            <div class="content_container page6" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+        {#if $listOfIntersectedElementsSetter.has(6)}
+            <div class="content_container page6" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
                 <div class="left_part img_box">
                     <img class="goldenLeaves forLazyLoad" loading="lazy" src={goldenLeaves} alt="goldenLeaves">
                 </div>
@@ -291,8 +274,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(7) || someshit == 7}
-            <div class="content_container page7" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+        {#if $listOfIntersectedElementsSetter.has(7)}
+            <div class="content_container page7" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
                 <div class="image_wrapper_page7">
                     <img class="Violet_flowers forLazyLoad" loading="lazy" src={Violet_flowers} alt="Violet_flowers">
                 </div>
@@ -307,8 +290,8 @@
         {/if}
     </div>
     <div class="default_container">
-        {#if ifExistsInArray(8) || someshit == 8}
-            <div class="content_container page8" transition:fade={{ delay: 0, duration: 500, easing: sineInOut}} use:lazyLoadedImagesFunc>
+        {#if $listOfIntersectedElementsSetter.has(8)}
+            <div class="content_container page8" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
                 <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
@@ -333,7 +316,7 @@
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
-        scroll-snap-type: block proximity;
+        scroll-snap-type: block mandatory;
         /* interpolate-size: allow-keywords; */
     }
     :global(body)::-webkit-scrollbar {
@@ -355,8 +338,7 @@
     }
     *:is(.isLoaded){
         opacity: 1;
-        filter: blur(0);
-        transition: all 0.5s ease-in;
+        transition: opacity 0.5s ease-in;
     }
 
 
@@ -419,12 +401,6 @@
             transition: height 0.5s ease-in;
             height: 100vh;
         } */
-        /* .default_container{
-            scroll-snap-stop: always;
-        } */
-        main.svelte_main{
-            scroll-snap-type: block mandatory;
-        }
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
