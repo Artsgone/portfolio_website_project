@@ -498,7 +498,7 @@
             image.addEventListener("load", () => {
                 setTimeout(function () {
                     isLoaded()
-                }, 400)
+                }, 300)
             })
         })
     }
@@ -526,12 +526,14 @@
     <div class="default_container cyan">
         <Header headerDecorSVG={Portfolio_OutlineTitleDecor} />
         <div class="content_container title_page">
-            {#if pageLoaded}
-                <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
-                    <div class="title_name darkgrayText">Portfolio</div>
-                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} alt="Portfolio_TitleDecor">
-                </div>
-            {/if}
+            
+            <div class="title_page_name">
+                <div class="title_name darkgrayText">Portfolio</div>
+                {#if pageLoaded}
+                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} transition:fade={{ delay: 250, duration: 400, easing: sineInOut }} alt="Portfolio_TitleDecor">
+                {/if}
+            </div>
+            
             <Navbar firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
                     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"/>
         </div>

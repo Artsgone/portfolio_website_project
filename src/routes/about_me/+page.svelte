@@ -26,7 +26,7 @@
     import { writable } from "svelte/store";
     import { fade, fly } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { sineInOut } from 'svelte/easing';
+    import { sineInOut, sineOut, sineIn } from 'svelte/easing';
     
     $: innerWidth = 0
 	// $: innerHeight = 0
@@ -146,19 +146,21 @@
     <div class="default_container cyan">
         <Header headerDecorSVG={AboutMe_OutlineTitleDecorSVG} />
         <div class="content_container title_page">
-            {#if pageLoaded}
-                <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
-                    <div class="title_name darkgrayText">About me</div>
-                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} alt="AboutMe_titlePageSVG">
-                </div>
-            {/if}
+            
+            <div class="title_page_name" >
+                <div class="title_name darkgrayText">About me</div>
+                {#if pageLoaded}
+                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} transition:fade={{ delay: 250, duration: 400, easing: sineInOut }} alt="AboutMe_titlePageSVG">
+                {/if}
+            </div>
+            
             <Navbar firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
                     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"/>
         </div>
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(1)}
-            <div class="content_container education_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container education_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
                 <div class="text education">
                     <p class="darkgrayText">
@@ -180,7 +182,7 @@
         {/if}
         
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container languages_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container languages_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <p class="grayText65">LANGUAGES</p>
                 <div class="text languages">
                     <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
@@ -196,7 +198,7 @@
     </div>
     <div class="default_container def_skills_title noBorders">
         {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container skills_title_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container skills_title_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 {#if innerWidth > 1000}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
                 {:else}
@@ -208,7 +210,7 @@
     </div>
     <div class="default_container def_skills">
         {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container skills_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container skills_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
                         <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
@@ -221,7 +223,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container otherAbilities_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container otherAbilities_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <p class="altyellowText vt">OTHER ABILITIES</p>
                 <div class="text otherAbilities">
                     <p class="rounded darkgrayText">

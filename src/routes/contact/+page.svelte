@@ -232,12 +232,14 @@
     <div class="default_container cyan">
         <Header headerDecorSVG={Contact_OutlineTitleDecor} />
         <div class="content_container title_page">
-            {#if pageLoaded}
-                <div class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
-                    <div class="title_name darkgrayText">Contact</div>
-                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} alt="Contact_TitleDecor">
-                </div>
-            {/if}
+            
+            <div class="title_page_name">
+                <div class="title_name darkgrayText">Contact</div>
+                {#if pageLoaded}
+                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} alt="Contact_TitleDecor">
+                {/if}
+            </div>
+            
             <Navbar firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
                     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"/>
         </div>
@@ -662,7 +664,7 @@
         font-size: var(--text_size_extra_small);
         letter-spacing: 0.07rem;
         background-color: var(--background_color_lightCyanSaturated);
-        box-shadow: inset -0.2rem 0.2rem max(1rem, 1vw) max(0.75rem, 0.75vw) var(--background_color_lightCyan);
+        box-shadow: inset -0.2rem 0.2rem max(1rem, 1vw) max(0.75rem, 0.5vw) var(--cyan_outline_bright);
         border-radius: 50rem;
         width: 100%;
         padding: max(1.25vw, 1.15rem) max(2vw, 1.75rem);   
@@ -671,14 +673,16 @@
         align-items: center;
         justify-content: space-between;
         gap: max(1.5rem, 1.75vw);
-        transition: translate 0.15s ease-out, box-shadow 0.2s ease-in-out;
+        transition: translate 0.2s ease-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
         position: relative;
     }
     .links > a:hover{
         translate: 3% -9%;
+        background-color: var(--background_color_lightCyan);
     }
     .links > a:focus-visible{
         translate: 3% -9%;
+        background-color: var(--background_color_lightCyan);
     }
     a::after{
         content: "";

@@ -98,6 +98,17 @@
                     0 max(0.5rem, 0.5vw) max(1rem, 1vw) max(0.2rem, 0.2vw) var(--background_color_lightCyanSaturated);
         transition: translate 0.15s ease-out, box-shadow 0.25s ease-out;
     }
+    .navbar_list > a:active{
+        animation: buttonActiveAnim 0.3s ease-out;
+    }
+    @keyframes buttonActiveAnim {
+        0%, 100% {
+            scale: 1;
+        }
+        50% {
+            scale: 1.05;
+        }
+    }
     
     @container (inline-size < 1100px) {
         .navbar_inner{

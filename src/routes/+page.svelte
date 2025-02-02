@@ -36,7 +36,7 @@
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
-    import { sineInOut } from 'svelte/easing';
+    import { sineInOut, sineOut } from 'svelte/easing';
     
     let pageLoaded = false;
     $: innerHeight = 0;
@@ -181,12 +181,14 @@
     <div class="default_container cyan">
         <Header headerDecorSVG={MainPage_titlePageDecor} />
         <div class="content_container title_page">
-            {#if pageLoaded}
-                <div  class="title_page_name" transition:fade={{ delay: 200, duration: 400, easing: sineInOut}}>
-                    <div class="title_name darkgrayText">Art's page</div>
-                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} alt="MainPage_titlePageSVG">
-                </div>
-            {/if}
+            
+            <div  class="title_page_name">
+                <div class="title_name darkgrayText">Art's page</div>
+                {#if pageLoaded}
+                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} alt="MainPage_titlePageSVG">
+                {/if}
+            </div>
+            
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
                     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
         </div>
@@ -194,7 +196,7 @@
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
          {#if $listOfIntersectedElementsSetter.has(1)}
-             <div class="content_container greeting_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+             <div class="content_container greeting_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
                     <p class="lightgrayText">
@@ -208,19 +210,19 @@
     </div>
     <div class="default_container greeting dwnCV">
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container CV_download_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container CV_download_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <div class="text cvDownload">
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
-                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:scale={{ delay: 500, duration: 100, easing: sineInOut, start: 0.75}}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 250, easing: sineInOut, y: "1vh", opacity: 0.25 }}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
                 </div>
             </div>
         {/if}
     </div>
     <div class="default_container cyanSaturated">
         {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container introductionToPhotos_page" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }}>
+            <div class="content_container introductionToPhotos_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <div class="top_part page3">
                     <img class="MY" src={MY} alt="MY">
                     <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
@@ -234,7 +236,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container page4" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page4" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
                         <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
@@ -248,7 +250,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container page5" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page5" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
                 <div class="dandelion_img_box">
                     <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
                 </div>
@@ -263,7 +265,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(6)}
-            <div class="content_container page6" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page6" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
                 <div class="left_part img_box">
                     <img class="goldenLeaves forLazyLoad" loading="lazy" src={goldenLeaves} alt="goldenLeaves">
                 </div>
@@ -276,7 +278,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(7)}
-            <div class="content_container page7" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page7" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
                 <div class="image_wrapper_page7">
                     <img class="Violet_flowers forLazyLoad" loading="lazy" src={Violet_flowers} alt="Violet_flowers">
                 </div>
@@ -292,7 +294,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(8)}
-            <div class="content_container page8" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "2.5vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page8" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "10vh" }} use:lazyLoadedImagesFunc>
                 <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
