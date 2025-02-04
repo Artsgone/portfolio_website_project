@@ -17,14 +17,14 @@
     import MY from '$lib/svg_files/MainPage/MY.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
 //
-    import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.jpg'
-    import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.jpg'
-    import goldenLeaves from '$lib/compressed_images/golden_leaves.jpg'
+    import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.webp'
+    import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.webp'
+    import goldenLeaves from '$lib/compressed_images/golden_leaves.webp'
     // import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
     // import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
     // import Street from '$lib/compressed_images/Street.jpg'
     // import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
-    import Violet_flowers from '$lib/compressed_images/Violet_flowers.jpg'
+    import Violet_flowers from '$lib/compressed_images/Violet_flowers.webp'
     import Modern_building from '$lib/compressed_images/Modern_building.jpg'
 //
     // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
@@ -66,17 +66,20 @@
     });
 
     let svelte_main_element;
-    $: y = 0;
+    let y = 0;
     
     let newY = [];
     $: oldY = newY[1];
     function updateY(){
         y = svelte_main_element.scrollTop;
-        newY.push(y);
-        if(newY.length > 5) {
-            newY.shift();
+        if (y % 5 == 0) {
+            newY.push(y);
+            console.log(y)
+            if(newY.length > 5) {
+                newY.shift();
+            }
+            newY=newY;
         }
-        newY=newY;
     }
 
     let intersectingElementIndex

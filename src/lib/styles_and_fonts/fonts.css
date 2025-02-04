@@ -17,12 +17,6 @@
     font-display: block;
 }
 @font-face {
-    font-family: 'Subjectivity_Thin';
-    font-style: normal;
-    src: url('/src/lib/fonts/Subjectivity/Subjectivity-Light.woff2');
-    font-display: swap;
-}
-@font-face {
     font-family: 'Subjectivity_Regular';
     font-style: normal;
     src: url('/src/lib/fonts/Subjectivity/Subjectivity-Regular.woff2');
@@ -46,35 +40,21 @@
     src: url('/src/lib/fonts/Misto/Misto.woff2');
     font-display: block;
 }
-@font-face {
+/* @font-face {
     font-family: 'Definity';
     font-style: normal;
     src: url('/src/lib/fonts/Definity.woff2');
     font-display: swap;
-}
+} */
 @font-face {
     font-family: 'DefinityV2';
     font-style: normal;
     src: url('/src/lib/fonts/DefinityV2.woff2');
     font-display: swap;
 }
-@font-face {
+/* @font-face {
     font-family: 'Vetrino';
     font-style: normal;
     src: url('/src/lib/fonts/Vetrino.otf');
-    font-display: swap;
-}
-/* @font-face {
-    font-family: 'Butler_Medium';
-    font-style: normal;
-    src: url('/src/lib/fonts/Butler/Butler-Medium.woff'),
-        url('/src/lib/fonts/Butler/Butler-Medium.woff2');
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Butler_Light';
-    font-style: normal;
-    src: url('/src/lib/fonts/Butler/Butler-Light.woff'),
-        url('/src/lib/fonts/Butler/Butler-Light.woff2');
     font-display: swap;
 } */

@@ -9,11 +9,11 @@
 <header class="header">
     <div class="header_inside">
         <div class="inner_header left">
-            <img id="A_Logo" src={A_Logo} alt="A_Logo">
+            <img id="A_Logo" src={A_Logo} loading="lazy" alt="A_Logo">
         </div>
         {#if innerWidth > 800}
             <div class="inner_header right">
-                <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
+                <img class="title_Decor" src={headerDecorSVG} loading="lazy" alt="title_Decor">
             </div>
         {/if}
         

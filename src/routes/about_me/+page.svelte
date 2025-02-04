@@ -52,18 +52,21 @@
     });
 
     $: innerHeight = 0;
-    $: y = 0;
+    let y = 0;
     let svelte_main_element;
     
     let newY = [];
     $: oldY = newY[1];
-    function updateY(event){
+    function updateY(){
         y = svelte_main_element.scrollTop;
-        newY.push(y);
-        if(newY.length > 5) {
-            newY.shift();
+        if (y % 5 == 0) {
+            newY.push(y);
+            console.log(y)
+            if(newY.length > 5) {
+                newY.shift();
+            }
+            newY=newY;
         }
-        newY=newY;
     }
     
     let intersectingElementIndex
@@ -161,7 +164,7 @@
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(1)}
             <div class="content_container education_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
-                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
+                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_EducationSVG">
                 <div class="text education">
                     <p class="darkgrayText">
                         <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
@@ -200,9 +203,9 @@
         {#if $listOfIntersectedElementsSetter.has(3)}
             <div class="content_container skills_title_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 {#if innerWidth > 1000}
-                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
+                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG">
                 {:else}
-                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} alt="AboutMe_SkillsTitleSVG_Mobile">
+                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG_Mobile">
                 {/if}
                 
             </div>
@@ -213,9 +216,9 @@
             <div class="content_container skills_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
-                        <img id="AboutMe_Skills" src={AboutMe_Skills} alt="AboutMe_Skills">
+                        <img id="AboutMe_Skills" src={AboutMe_Skills} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills">
                     {:else}
-                        <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} alt="AboutMe_Skills_Mobile">
+                        <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills_Mobile">
                     {/if}
                 </div>
             </div>

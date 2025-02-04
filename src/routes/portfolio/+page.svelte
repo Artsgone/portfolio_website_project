@@ -101,18 +101,21 @@
     });
     
     $: innerHeight = 0;
-    $: y = 0;
+    let y = 0;
     let svelte_main_element;
     
     let newY = [];
     $: oldY = newY[1];
-    function updateY(event){
+    function updateY(){
         y = svelte_main_element.scrollTop;
-        newY.push(y);
-        if(newY.length > 5) {
-            newY.shift();
+        if (y % 5 == 0) {
+            newY.push(y);
+            console.log(y)
+            if(newY.length > 5) {
+                newY.shift();
+            }
+            newY=newY;
         }
-        newY=newY;
     }
     
     // let portfolio_loadingScreenShow = false;
