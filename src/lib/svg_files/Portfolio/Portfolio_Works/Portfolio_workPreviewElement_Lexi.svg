@@ -46,9 +46,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="93.514871"
-     inkscape:cx="2.8284271"
-     inkscape:zoom="2.8284271"
+     inkscape:cy="96.125"
+     inkscape:cx="6.375"
+     inkscape:zoom="4"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -74,25 +74,21 @@
      inkscape:groupmode="layer"
      inkscape:label="Слой 1"
      transform="translate(-38.618832,-19.166272)">
-    <rect
-       style="opacity:1;fill:#43c37c;fill-opacity:1;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-opacity:0.170347"
+    <path
        id="rect1"
-       width="106.903"
-       height="120.41591"
-       x="38.618832"
-       y="19.166271"
-       ry="7.7781744" />
+       style="opacity:1;fill:#43c37c;fill-opacity:1;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-opacity:0.170347"
+       d="M 46.396176 19.166272 C 42.087075 19.166272 38.618832 22.634515 38.618832 26.943616 L 38.618832 79.373304 L 92.070004 79.373304 L 92.070004 19.166272 L 46.396176 19.166272 z M 92.070004 79.373304 L 92.070004 139.58229 L 137.74383 139.58229 C 142.05294 139.58229 145.52118 136.11405 145.52118 131.80494 L 145.52118 79.373304 L 92.070004 79.373304 z " />
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-opacity:0.170347"
-       id="rect3"
+       id="rect7"
        width="53.4515"
        height="60.207954"
        x="92.070335"
-       y="19.166271"
+       y="19.166286"
        ry="0" />
     <rect
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.7;stroke-opacity:0.170347"
-       id="rect2"
+       id="rect8"
        width="53.4515"
        height="60.207954"
        x="38.618835"

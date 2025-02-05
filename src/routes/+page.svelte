@@ -38,22 +38,22 @@
     import { fade, fly, scale } from 'svelte/transition';
     import { sineInOut, sineOut } from 'svelte/easing';
     
-    let pageLoaded = false;
-    $: innerHeight = 0;
+    let pageLoaded = false
+    $: innerHeight = 0
 
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
-        pageLoaded = true;
+        pageLoaded = true
         // const interval = setInterval(() => {
 		// 	pageFullyLoaded = true;
 		// }, 5000);
 		// return () => clearInterval(interval);
     });
     beforeNavigate(({to, from}) => {
-        pageLoaded = false;
+        pageLoaded = false
         // console.log("To: " + to?.url.pathname + ", from: " + from?.url.pathname)
         if ( from?.url.pathname == "/" && to?.url.pathname == undefined ) {
             saveScrollY.updateScrollY(svelte_main_element.scrollTop)
@@ -62,23 +62,22 @@
         }
     });
     afterNavigate(() => {
-        pageLoaded = true;
+        pageLoaded = true
     });
 
-    let svelte_main_element;
-    let y = 0;
+    let svelte_main_element
+    let y = 0
     
-    let newY = [];
-    $: oldY = newY[1];
+    let newY = []
+    $: oldY = newY[1]
     function updateY(){
-        y = svelte_main_element.scrollTop;
-        if (y % 5 == 0) {
-            newY.push(y);
-            console.log(y)
+        y = svelte_main_element.scrollTop
+        if (y % 4 == 0) {
+            newY.push(y)
             if(newY.length > 5) {
-                newY.shift();
+                newY.shift()
             }
-            newY=newY;
+            newY=newY
         }
     }
 
@@ -98,19 +97,17 @@
                     listOfIntersectedElementsSetter.update(set => {
                         // entry.target.classList.add("showOnScreen")
                         // console.log(intersectingElementIndex, entry.target, 'is visible');
-                        if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
-                            set.add(intersectingElementIndex) 
-                        }
-                        amountOfElementsObserved++
-
-                        intersecObserver.unobserve(entry.target)
-                        
-                        if (amountOfElementsObserved == listLenght - 1) {
-                            intersecObserver.disconnect()
-                            // console.log("DISCONNECTED")
-                        }
+                        set.add(intersectingElementIndex)
                         return set
                     })
+                    amountOfElementsObserved++
+
+                    intersecObserver.unobserve(entry.target)
+                    
+                    if (amountOfElementsObserved == listLenght - 1) {
+                        intersecObserver.disconnect()
+                        // console.log("DISCONNECTED")
+                    }
                 }
                     
             })
@@ -129,26 +126,11 @@
             }
         })
     }
-
-    // function startLoadingImages() {
-    //     const default_containers = document.querySelectorAll(".default_container")
-    //     default_containers.forEach( (container, indexOfContainer) => {
-
-    //         setTimeout(function () {
-    //             if (!listOfIntersectedElements.includes(indexOfContainer) && indexOfContainer > 3) {
-    //                 listOfIntersectedElements.push(indexOfContainer)
-    //                 // console.log(indexOfContainer, 'is visible');
-    //                 someshit = indexOfContainer
-    //             }
-    //         }, indexOfContainer * intervalForLoading);
-
-    //     })
-    // }
     
     function lazyLoadedImagesFunc() {
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
         
-        lazyLoadedImages.forEach((image, imageIndex) => {
+        lazyLoadedImages.forEach((image) => {
             function isLoaded() {
                 image.classList.add("isLoaded")
             }
@@ -182,19 +164,17 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header headerDecorSVG={MainPage_titlePageDecor} />
-        <div class="content_container title_page">
-            
-            <div  class="title_page_name">
-                <div class="title_name darkgrayText">Art's page</div>
-                {#if pageLoaded}
+        {#if pageLoaded}
+            <Header headerDecorSVG={MainPage_titlePageDecor} />
+            <div class="content_container title_page">
+                <div  class="title_page_name">
+                    <div class="title_name darkgrayText">Art's page</div>
                     <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} alt="MainPage_titlePageSVG">
-                {/if}
+                </div>
+                <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
+                        linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
             </div>
-            
-            <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
-                    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
-        </div>
+        {/if}
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->

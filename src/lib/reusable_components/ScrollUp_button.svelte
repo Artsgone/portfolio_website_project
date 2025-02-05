@@ -15,14 +15,15 @@
         aspect-ratio: 1;
         z-index: 999;
         bottom: 7.5%;
-        right: min(10%, calc(4rem + 2vw));
+        right: min(7.5%, 3rem + 2vw);
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
         border: none;
         border-radius: 30%;
         /* overflow: clip; */
         backdrop-filter: blur(5px) invert(25%);
         background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
+        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));
         padding: 0;
     }
     .arrowIcon{
@@ -68,12 +69,12 @@
             translate: 0 -20%;
         }
     }
-    @keyframes scrollUp_button_animation{
+    /* @keyframes scrollUp_button_animation{
         0%, 100% {
             box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
         }
         50%{
             box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
         }
-    }
+    } */
 </style>

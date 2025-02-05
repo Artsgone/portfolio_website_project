@@ -55,21 +55,20 @@
         numberOfRows = 2
     }
 
-    $: innerHeight = 0;
-    let y = 0;
-    let svelte_main_element;
+    $: innerHeight = 0
+    let y = 0
+    let svelte_main_element
     
-    let newY = [];
-    $: oldY = newY[1];
+    let newY = []
+    $: oldY = newY[1]
     function updateY(){
         y = svelte_main_element.scrollTop;
-        if (y % 5 == 0) {
-            newY.push(y);
-            console.log(y)
+        if (y % 4 == 0) {
+            newY.push(y)
             if(newY.length > 5) {
-                newY.shift();
+                newY.shift()
             }
-            newY=newY;
+            newY=newY
         }
     }
     

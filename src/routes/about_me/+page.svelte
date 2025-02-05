@@ -31,16 +31,16 @@
     $: innerWidth = 0
 	// $: innerHeight = 0
 
-    let pageLoaded = false;
+    let pageLoaded = false
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
-        pageLoaded = true;
+        pageLoaded = true
     });
     beforeNavigate(({to, from}) => {
-        pageLoaded = false;
+        pageLoaded = false
         if ( from?.url.pathname == "/about_me" && to?.url.pathname == undefined ) {
             saveScrollY.updateScrollY(svelte_main_element.scrollTop)
         } else {
@@ -48,24 +48,23 @@
         }
     });
     afterNavigate(() => {
-        pageLoaded = true;
+        pageLoaded = true
     });
 
-    $: innerHeight = 0;
-    let y = 0;
-    let svelte_main_element;
+    $: innerHeight = 0
+    let y = 0
+    let svelte_main_element
     
-    let newY = [];
-    $: oldY = newY[1];
+    let newY = []
+    $: oldY = newY[1]
     function updateY(){
         y = svelte_main_element.scrollTop;
-        if (y % 5 == 0) {
-            newY.push(y);
-            console.log(y)
+        if (y % 4 == 0) {
+            newY.push(y)
             if(newY.length > 5) {
-                newY.shift();
+                newY.shift()
             }
-            newY=newY;
+            newY=newY
         }
     }
     
@@ -84,13 +83,10 @@
                 
                 if (entry.isIntersecting) {
                     listOfIntersectedElementsSetter.update(set => {
-                        if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
-                            set.add(intersectingElementIndex) 
-                        }
-                        amountOfElementsObserved++
-
-                        intersecObserver.unobserve(entry.target)
+                        set.add(intersectingElementIndex)
                         
+                        amountOfElementsObserved++
+                        intersecObserver.unobserve(entry.target)
                         if (amountOfElementsObserved == listLenght - 1) {
                             intersecObserver.disconnect()
                             // console.log("ended")

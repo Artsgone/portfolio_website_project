@@ -100,26 +100,25 @@
         pageLoaded = true;
     });
     
-    $: innerHeight = 0;
-    let y = 0;
-    let svelte_main_element;
+    $: innerHeight = 0
+    let y = 0
+    let svelte_main_element
     
-    let newY = [];
-    $: oldY = newY[1];
+    let newY = []
+    $: oldY = newY[1]
     function updateY(){
-        y = svelte_main_element.scrollTop;
-        if (y % 5 == 0) {
-            newY.push(y);
-            console.log(y)
+        y = svelte_main_element.scrollTop
+        if (y % 4 == 0) {
+            newY.push(y)
             if(newY.length > 5) {
-                newY.shift();
+                newY.shift()
             }
-            newY=newY;
+            newY=newY
         }
     }
     
     // let portfolio_loadingScreenShow = false;
-    let workPresent_Visibility = 'hidden';
+    let workPresent_Visibility = 'hidden'
 
     function openInLargeList(){
         const portfolio_works = document.querySelectorAll(".wep_box")
@@ -177,17 +176,17 @@
         scrollElementsIndexes.fill(0, 0)
 
         let indexedLargeWorkImages = []
-        largeWorkImages.forEach( (largeWorkImage, indexOfImage) => {
+        largeWorkImages.forEach( (largeWorkImage) => {
             // largeWorkImage.imageIndex = indexOfImage
             indexedLargeWorkImages.push(largeWorkImage)
         })
         let indexedLargeWorkRightButtons = []
-        buttons_right.forEach( (largeWorkButton, indexOfRightButton) => {
+        buttons_right.forEach( (largeWorkButton) => {
             // largeWorkButton.leftButtonIndex = indexOfRightButton
             indexedLargeWorkRightButtons.push(largeWorkButton)
         })
         let indexedLargeWorkLeftButtons = []
-        buttons_left.forEach( (largeWorkButton, indexOfLeftButton) => {
+        buttons_left.forEach( (largeWorkButton) => {
             // largeWorkButton.leftButtonIndex = indexOfLeftButton
             indexedLargeWorkLeftButtons.push(largeWorkButton)
         })
@@ -265,17 +264,17 @@
         scrollElementsIndexes.fill(0, 0)
 
         let indexedLargeWorkImages = []
-        largeWorkImages.forEach( (largeWorkImage, indexOfImage) => {
+        largeWorkImages.forEach( (largeWorkImage) => {
             // largeWorkImage.imageIndex = indexOfImage
             indexedLargeWorkImages.push(largeWorkImage)
         })
         let indexedLargeWorkRightButtons = []
-        buttons_right.forEach( (largeWorkButton, indexOfRightButton) => {
+        buttons_right.forEach( (largeWorkButton) => {
             // largeWorkButton.leftButtonIndex = indexOfRightButton
             indexedLargeWorkRightButtons.push(largeWorkButton)
         })
         let indexedLargeWorkLeftButtons = []
-        buttons_left.forEach( (largeWorkButton, indexOfLeftButton) => {
+        buttons_left.forEach( (largeWorkButton) => {
             // largeWorkButton.leftButtonIndex = indexOfLeftButton
             indexedLargeWorkLeftButtons.push(largeWorkButton)
         })
@@ -391,10 +390,7 @@
 
             if (entry.isIntersecting) {
                 listOfIntersectedElementsSetter.update(set => {
-
-                    if (!$listOfIntersectedElementsSetter.has(intersectingElementIndex)) {
-                        set.add(intersectingElementIndex) 
-                    }
+                    set.add(intersectingElementIndex)
                     amountOfElementsObserved++
 
                     intersecObserver.unobserve(entry.target)
@@ -456,32 +452,29 @@
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
-
-            if (entry.isIntersecting) {
+            if ((entry.isIntersecting && intersectingElementIndex_DF > 23) || (entry.intersectionRatio >= 0.1 && intersectingElementIndex_DF <= 23)) {
                 listOfIntersectedElementsSetter_DF.update(set => {
-
-                    if (!$listOfIntersectedElementsSetter_DF.has(intersectingElementIndex_DF)) {
-                        set.add(intersectingElementIndex_DF)
-                    }
+                    set.add(intersectingElementIndex_DF)
                     if (intersectingElementIndex_DF >= 24) {
                         intersecObserver.unobserve(entry.target)
                     }
                     return set
                 })
             }
-            else {
-                if ($listOfIntersectedElementsSetter_DF.has(intersectingElementIndex_DF) && intersectingElementIndex_DF < 24) {
-                    listOfIntersectedElementsSetter_DF.update(set => {
-                        set.delete(intersectingElementIndex_DF)
-                        return set
-                    })
+            else { 
+                if (entry.intersectionRatio <= 0.5 && intersectingElementIndex_DF <= 23) {
+                    $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
+                    // listOfIntersectedElementsSetter_DF.update(set => {
+                    //     set.delete(intersectingElementIndex_DF)
+                    //     return set
+                    // })
                 }
             }
         })
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: 0.1,
+                threshold: [0, 0.1, 0.5],
                 rootMargin: "0px",
             }
         )
@@ -1365,9 +1358,9 @@
         overflow: clip;
         backdrop-filter: blur(5px) invert(25%);
         background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-
-        transition: scale 0.15s ease-out, box-shadow 0.2s ease-in-out;
+        /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
+        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));
+        transition: scale 0.15s ease-out;
     }
     
     .Global_closeIcon{
@@ -1396,14 +1389,14 @@
             scale: 0.85;
         }
     }
-    @keyframes close_button_animation{
+    /* @keyframes close_button_animation{
         0%, 100% {
             box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
         }
         50%{
             box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
         }
-    }
+    } */
     .workPresent_wrapper{
         display: grid;
         grid-template-columns: 1fr;
@@ -1612,13 +1605,13 @@
         object-fit: contain;
         scroll-snap-align: center;
         scroll-snap-stop: always;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(max(1vw, 1rem));
+        /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(max(1vw, 1rem)); */
         opacity: 0;
     }
     *:is(.isLoaded){
         opacity: 1;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(0);
-        transition: opacity 0.75s ease-in, filter 0.5s ease-in;
+        /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(0); */
+        transition: opacity 0.5s ease-in;
     }
 
     @media (width < 1000px) {
