@@ -20,7 +20,7 @@
         border: none;
         border-radius: 30%;
         /* overflow: clip; */
-        backdrop-filter: blur(5px) invert(25%);
+        backdrop-filter: blur(0.1rem);
         background-color: var(--background_color_lightCyan_lowerOpacity);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));

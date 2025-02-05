@@ -1,13 +1,13 @@
 <script lang="js">
-    import Navbar from '$lib/reusable_components/Navbar.svelte'
-    import Header from '$lib/reusable_components/Header.svelte'
-    import Footer from '$lib/reusable_components/Footer.svelte'
+    // import Navbar from '$lib/reusable_components/Navbar.svelte'
+    // import Header from '$lib/reusable_components/Header.svelte'
+    // import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    // import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
 //
-    import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
-    import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
+    // import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
+    // import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
     import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
     import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
@@ -17,40 +17,52 @@
     import MY from '$lib/svg_files/MainPage/MY.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
 //
-    import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.webp'
-    import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.webp'
-    import goldenLeaves from '$lib/compressed_images/golden_leaves.webp'
+    // import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.webp'
+    // import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.webp'
+    // import goldenLeaves from '$lib/compressed_images/golden_leaves.webp'
+    // import Violet_flowers from '$lib/compressed_images/Violet_flowers.webp'
+    // import Modern_building from '$lib/compressed_images/Modern_building.jpg'
     // import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
     // import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
     // import Street from '$lib/compressed_images/Street.jpg'
     // import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
-    import Violet_flowers from '$lib/compressed_images/Violet_flowers.webp'
-    import Modern_building from '$lib/compressed_images/Modern_building.jpg'
 //
-    // import noise_light from '$lib/svg_files/GlobalSVGs/noise-light.png'
-    import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/fonts.css'
+    import('$lib/styles_and_fonts/fonts.css')
     import '$lib/styles_and_fonts/styles.css'
+    // import('$lib/styles_and_fonts/styles.css')
 //
     // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
-    import { sineInOut, sineOut } from 'svelte/easing';
+    import { sineInOut, sineOut, elasticOut } from 'svelte/easing';
     
     let pageLoaded = false
     $: innerHeight = 0
+    let Header
+    let Navbar
+    let Footer
+    let ScrollUpButtonLazy
+    let MainPage_titlePageDecorLazy
+    let MainPage_titlePageSVGLazy
 
-    onMount(() => {
+    onMount(async() => {
+        Header = (await import('$lib/reusable_components/Header.svelte')).default
+        Navbar = (await import('$lib/reusable_components/Navbar.svelte')).default
+        Footer = (await import('$lib/reusable_components/Footer.svelte')).default
+        ScrollUpButtonLazy = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
+        MainPage_titlePageSVGLazy = (await import('$lib/svg_files/MainPage/MainPage_titlePageSVG.svg')).default
+        MainPage_titlePageDecorLazy = (await import('$lib/svg_files/MainPage/MainPage_titlePageDecor.svg')).default
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true
         // const interval = setInterval(() => {
-		// 	pageFullyLoaded = true;
-		// }, 5000);
-		// return () => clearInterval(interval);
+        // }, 1000);
+        // return () => clearInterval(interval);
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false
@@ -64,6 +76,19 @@
     afterNavigate(() => {
         pageLoaded = true
     });
+
+    let sunsetInTheClouds
+    let dandelions
+    let goldenLeaves
+    let violetFlowers
+    let modernBuilding
+    async function lazyImageImport() {
+        sunsetInTheClouds = (await import('$lib/compressed_images/sunset_inthe_clouds.webp')).default
+        dandelions = (await import('$lib/compressed_images/IMG_20210627_185235-min.webp')).default
+        goldenLeaves = (await import('$lib/compressed_images/golden_leaves.webp')).default
+        violetFlowers = (await import('$lib/compressed_images/Violet_flowers.webp')).default
+        modernBuilding = (await import('$lib/compressed_images/Modern_building.jpg')).default
+    }
 
     let svelte_main_element
     let y = 0
@@ -114,7 +139,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: 0.3,
+                threshold: 0.2,
                 rootMargin: "0px",
             }
         )
@@ -127,9 +152,10 @@
         })
     }
     
+    
     function lazyLoadedImagesFunc() {
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
-        
+        // console.log(lazyLoadedImages.length)
         lazyLoadedImages.forEach((image) => {
             function isLoaded() {
                 image.classList.add("isLoaded")
@@ -137,7 +163,7 @@
             image.addEventListener("load", () => {
                 setTimeout(function () {
                     isLoaded()
-                }, 400)
+                }, 250)
             })
         })
     }
@@ -155,31 +181,35 @@
 <svelte:window bind:innerHeight />
 
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement use:lazyImageImport>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
     {#if y > (innerHeight / 1.1) && oldY > y}
-        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
+        <!-- <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/> -->
+        <svelte:component this={ScrollUpButtonLazy} scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })} />
     {/if}
 
     <div class="default_container cyan">
-        {#if pageLoaded}
-            <Header headerDecorSVG={MainPage_titlePageDecor} />
-            <div class="content_container title_page">
-                <div  class="title_page_name">
-                    <div class="title_name darkgrayText">Art's page</div>
-                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} alt="MainPage_titlePageSVG">
-                </div>
-                <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
-                        linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
+        <!-- <Header headerDecorSVG={MainPage_titlePageDecor} /> -->
+        <svelte:component this={Header} headerDecorSVG={MainPage_titlePageDecorLazy} />
+        <div class="content_container title_page">
+            <div  class="title_page_name">
+                <div class="title_name darkgrayText">Art's page</div>
+                {#if pageLoaded}
+                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVGLazy} transition:scale={{ delay: 200, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="MainPage_titlePageSVG">
+                {/if}
             </div>
-        {/if}
+            <!-- <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
+                    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/> -->
+            <svelte:component this={Navbar} firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
+            linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
+        </div>
     </div>
     <div class="default_container greeting">
         <!-- class:inViewport={isInViewport} -->
          {#if $listOfIntersectedElementsSetter.has(1)}
-             <div class="content_container greeting_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+             <div class="content_container greeting_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                 <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 <div class="text introducing">
                     <p class="lightgrayText">
@@ -193,19 +223,19 @@
     </div>
     <div class="default_container greeting dwnCV">
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container CV_download_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container CV_download_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                 <div class="text cvDownload">
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
-                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 250, easing: sineInOut, y: "1vh", opacity: 0.25 }}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 2100, duration: 100, easing: sineInOut, y: "1vh", opacity: 1 }}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
                 </div>
             </div>
         {/if}
     </div>
     <div class="default_container cyanSaturated">
         {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container introductionToPhotos_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container introductionToPhotos_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                 <div class="top_part page3">
                     <img class="MY" src={MY} alt="MY">
                     <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
@@ -219,10 +249,10 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container page4" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page4" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheCloudsIMG} alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheClouds} alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
                 <div class="right_part page4" >
@@ -233,13 +263,13 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container page5" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page5" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
+                    <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelions} alt="dandelionIMG">
                 </div>
                 <div class="page5_gradient"></div>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG2 forLazyLoad" loading="lazy" src={dandelionIMG} alt="dandelionIMG">
+                    <img class="dandelion IMG2 forLazyLoad" loading="lazy" src={dandelions} alt="dandelionIMG">
                 </div>
                 <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
                 <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
@@ -248,7 +278,7 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(6)}
-            <div class="content_container page6" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page6" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                 <div class="left_part img_box">
                     <img class="goldenLeaves forLazyLoad" loading="lazy" src={goldenLeaves} alt="goldenLeaves">
                 </div>
@@ -261,9 +291,9 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(7)}
-            <div class="content_container page7" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page7" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" loading="lazy" src={Violet_flowers} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" loading="lazy" src={violetFlowers} alt="Violet_flowers">
                 </div>
                 
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
@@ -277,17 +307,21 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(8)}
-            <div class="content_container page8" in:fly={{ delay: 0, duration: 400, easing: sineInOut, y: "10vh" }} use:lazyLoadedImagesFunc>
+            <div class="content_container page8" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                 <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" loading="lazy" src={Modern_building} alt="Modern_building">
+                    <img class="Modern_building forLazyLoad" loading="lazy" src={modernBuilding} alt="Modern_building">
                 </div>
             </div>
         {/if}
     </div>
-    <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
+    <!-- <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
+    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
+    titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
+
+    <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
     titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
 </main>
