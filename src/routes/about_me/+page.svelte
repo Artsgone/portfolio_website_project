@@ -24,9 +24,9 @@
 
     import { onMount } from 'svelte';
     import { writable } from "svelte/store";
-    import { fade, fly } from 'svelte/transition';
+    import { fade, fly, scale } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { sineInOut, sineOut, sineIn } from 'svelte/easing';
+    import { sineInOut, sineOut, elasticOut } from 'svelte/easing';
     
     $: innerWidth = 0
 	// $: innerHeight = 0
@@ -68,7 +68,6 @@
         }
     }
     
-    let intersectingElementIndex
     // let listOfIntersectedElements = []
     const listOfIntersectedElementsSetter = writable(new Set())
 
@@ -76,6 +75,7 @@
         const default_containers = document.querySelectorAll(".default_container")
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
+        let intersectingElementIndex
 
         const intersecObserver = new IntersectionObserver( entries => {
             entries.forEach( entry => {
@@ -149,7 +149,7 @@
             <div class="title_page_name" >
                 <div class="title_name darkgrayText">About me</div>
                 {#if pageLoaded}
-                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} transition:fade={{ delay: 250, duration: 400, easing: sineInOut }} alt="AboutMe_titlePageSVG">
+                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_titlePageSVG">
                 {/if}
             </div>
             
@@ -159,8 +159,8 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(1)}
-            <div class="content_container education_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
-                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_EducationSVG">
+            <div class="content_container education_page">
+                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_EducationSVG">
                 <div class="text education">
                     <p class="darkgrayText">
                         <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
@@ -181,11 +181,11 @@
         {/if}
         
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container languages_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container languages_page">
                 <p class="grayText65">LANGUAGES</p>
                 <div class="text languages">
                     <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
-                    <p class="darkgrayText">
+                    <p class="darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                         English - B2 / C1 <br>
                         Czech - Fluent <br>
                         Russian - Fluent
@@ -197,7 +197,7 @@
     </div>
     <div class="default_container def_skills_title noBorders">
         {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container skills_title_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container skills_title_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                 {#if innerWidth > 1000}
                     <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG">
                 {:else}
@@ -209,7 +209,7 @@
     </div>
     <div class="default_container def_skills">
         {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container skills_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container skills_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
                         <img id="AboutMe_Skills" src={AboutMe_Skills} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills">
@@ -222,9 +222,9 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container otherAbilities_page" in:fly={{ delay: 0, duration: 400, easing: sineOut, y: "10vh" }}>
+            <div class="content_container otherAbilities_page">
                 <p class="altyellowText vt">OTHER ABILITIES</p>
-                <div class="text otherAbilities">
+                <div class="text otherAbilities" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                     <p class="rounded darkgrayText">
                         <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Creative at designing things.

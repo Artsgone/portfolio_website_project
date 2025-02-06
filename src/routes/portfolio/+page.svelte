@@ -10,61 +10,58 @@
 
     import WorkPresent from '$lib/reusable_components/Portfolio_work_item.svelte'
     import WorkPresentAlt from '$lib/reusable_components/Portfolio_work_item_alt.svelte'
-    // import WorkItemDetailed from '$lib/reusable_components/+portfolio_item_detailed.svelte'
     import Portfolio_TitleDecor from '$lib/svg_files/Portfolio/Portfolio_TitleDecor.svg'
     import Portfolio_OutlineTitleDecor from '$lib/svg_files/Portfolio/Portfolio_OutlineTitleDecor.svg'
     import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
 
     // image to left
-    import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
-    import Portfolio_workPreviewElement_Omic from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Omic.svg'
-    import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
-    import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
-    import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
-    import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
-    import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
-    import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
-    import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
-    import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
-    import Portfolio_workPreviewElement_DTM from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_DTM.svg'
-    import Portfolio_workPreviewElement_Eroy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Eroy.svg'
-    import Portfolio_workPreviewElement_LLL from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LLL.svg'
-    import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
-    // image to right
-    import Portfolio_workPreviewElement_Logo_Ww from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg'
-    import Portfolio_workPreviewElement_Ww_additional from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Ww_additional.svg'
-    import Portfolio_workPreviewElement_Logo_Tt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Tt.svg'
-    import Portfolio_workPreviewElement_Lexi from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi.svg'
-    import Portfolio_workPreviewElement_Lexi_V2 from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_V2.svg'
-    import Portfolio_workPreviewElement_LXY_alt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY_alt.svg'
-    import Portfolio_workPreviewElement_Anata from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg'
-    import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
-    import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
-    import Portfolio_workPreviewElement_Travelin_Logo from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg'
-    import Portfolio_workPreviewElement_Tari from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg'
-    // font
-    import Portfolio_workPreviewElement_GeometryFontType from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg'
+    // import Portfolio_workPreviewElement_ART from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg'
+    // import Portfolio_workPreviewElement_Omic from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Omic.svg'
+    // import Portfolio_workPreviewElement_Roe from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg'
+    // import Portfolio_workPreviewElement_Architect from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg'
+    // import Portfolio_workPreviewElement_Artsgone from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg'
+    // import Portfolio_workPreviewElement_LXY from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg'
+    // import Portfolio_workPreviewElement_Lexi_alternate from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg'
+    // import Portfolio_workPreviewElement_Museum from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg'
+    // import Portfolio_workPreviewElement_Nameless from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg'
+    // import Portfolio_workPreviewElement_Bena from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg'
+    // import Portfolio_workPreviewElement_DTM from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_DTM.svg'
+    // import Portfolio_workPreviewElement_Eroy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Eroy.svg'
+    // import Portfolio_workPreviewElement_LLL from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LLL.svg'
+    // import New_LOGO_AR from '$lib/svg_files/New_LOGO_AR.svg'
+    // // image to right
+    // import Portfolio_workPreviewElement_Logo_Ww from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg'
+    // import Portfolio_workPreviewElement_Ww_additional from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Ww_additional.svg'
+    // import Portfolio_workPreviewElement_Logo_Tt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Tt.svg'
+    // import Portfolio_workPreviewElement_Lexi from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi.svg'
+    // import Portfolio_workPreviewElement_Lexi_V2 from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_V2.svg'
+    // import Portfolio_workPreviewElement_LXY_alt from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY_alt.svg'
+    // import Portfolio_workPreviewElement_Anata from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg'
+    // import Portfolio_workPreviewElement_MrGummy from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg'
+    // import Portfolio_workPreviewElement_Dd_NEW from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg'
+    // import Portfolio_workPreviewElement_Travelin_Logo from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg'
+    // import Portfolio_workPreviewElement_Tari from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg'
+    // // font
+    // import Portfolio_workPreviewElement_GeometryFontType from '$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg'
     
     // Large works
-    import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
-    
-    import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png'
-    import Portfolio_TFW_register from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png'
-    import Portfolio_TFW_main_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png'
-    import Portfolio_TFW_register_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png'
-    import Portfolio_TFW_EditProject from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png'
-    import TFW_accountDetails from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png'
+    // import Portfolio_TimerForWork from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png'
+    // import Portfolio_TFW_register from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png'
+    // import Portfolio_TFW_main_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png'
+    // import Portfolio_TFW_register_mobile from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png'
+    // import Portfolio_TFW_EditProject from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png'
+    // import TFW_accountDetails from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png'
 
-    import Portfolio_Endimo_main from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png'
-    import Portfolio_Endimo_cart from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png'
-    import Portfolio_Endimo_about from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png'
-    import Portfolio_Endimo_contact from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png'
+    // import Portfolio_Endimo_main from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png'
+    // import Portfolio_Endimo_cart from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png'
+    // import Portfolio_Endimo_about from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png'
+    // import Portfolio_Endimo_contact from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png'
 
-    import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
-    // import Portfolio_TravelinWebsite from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinWebsite.png'
-    import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
-    import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
-    import Porftolio_AccountManager from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png'
+    // import Portfolio_Mount_Fuji from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png'
+    // import Portfolio_Postttrrr from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png'
+    // import Portfolio_TravelinPoster from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png'
+    // import Portfolio_FakePoster_LowRes from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png'
+    // import Porftolio_AccountManager from '$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -73,18 +70,62 @@
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
-    import { sineInOut } from 'svelte/easing';
+    import { elasticOut, sineInOut, sineOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     // let works_preview_grid_bind;
     let pageLoaded = false;
-    onMount(() => {
+    onMount(async() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true;
         retrieveIntersectedElementsToSS()
+        Portfolio_workPreviewElement_ART = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_ART.svg')).default
+        Portfolio_workPreviewElement_Omic = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Omic.svg')).default
+        Portfolio_workPreviewElement_Roe = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Roe.svg')).default
+        Portfolio_workPreviewElement_Architect = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Architect.svg')).default
+        Portfolio_workPreviewElement_Artsgone = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Artsgone.svg')).default
+        Portfolio_workPreviewElement_LXY = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY.svg')).default
+        Portfolio_workPreviewElement_Lexi_alternate = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_alternate.svg')).default
+        Portfolio_workPreviewElement_Museum = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Museum.svg')).default
+        Portfolio_workPreviewElement_Nameless = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Nameless.svg')).default
+        Portfolio_workPreviewElement_Bena = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Bena.svg')).default
+        Portfolio_workPreviewElement_DTM = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_DTM.svg')).default
+        Portfolio_workPreviewElement_Eroy = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Eroy.svg')).default
+        Portfolio_workPreviewElement_LLL = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LLL.svg')).default
+        New_LOGO_AR = (await import('$lib/svg_files/New_LOGO_AR.svg')).default
+        Portfolio_workPreviewElement_Logo_Ww = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Ww.svg')).default
+        Portfolio_workPreviewElement_Ww_additional = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Ww_additional.svg')).default
+        Portfolio_workPreviewElement_Logo_Tt = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Logo_Tt.svg')).default
+        Portfolio_workPreviewElement_Lexi = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi.svg')).default
+        Portfolio_workPreviewElement_Lexi_V2 = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Lexi_V2.svg')).default
+        Portfolio_workPreviewElement_LXY_alt = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_LXY_alt.svg')).default
+        Portfolio_workPreviewElement_Anata = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Anata.svg')).default
+        Portfolio_workPreviewElement_MrGummy = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_MrGummy.svg')).default
+        Portfolio_workPreviewElement_Dd_NEW = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Dd_NEW.svg')).default
+        Portfolio_workPreviewElement_Travelin_Logo = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg')).default
+        Portfolio_workPreviewElement_Tari = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg')).default
+        Portfolio_workPreviewElement_GeometryFontType = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg')).default
+
+        Portfolio_TimerForWork = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png')).default
+        Portfolio_TFW_register = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png')).default
+        Portfolio_TFW_main_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png')).default
+        Portfolio_TFW_register_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png')).default
+        Portfolio_TFW_EditProject = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png')).default
+        TFW_accountDetails = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png')).default
+
+        Portfolio_Endimo_main = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png')).default
+        Portfolio_Endimo_cart = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png')).default
+        Portfolio_Endimo_about = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png')).default
+        Portfolio_Endimo_contact = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png')).default
+
+        Portfolio_Mount_Fuji = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png')).default
+        Portfolio_Postttrrr = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png')).default
+        Portfolio_TravelinPoster = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png')).default
+        Portfolio_FakePoster_LowRes = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png')).default
+        Porftolio_AccountManager = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png')).default
         // largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
     });
     beforeNavigate(({to, from}) => {
@@ -99,6 +140,51 @@
     afterNavigate(() => {
         pageLoaded = true;
     });
+
+    let Portfolio_workPreviewElement_ART
+    let Portfolio_workPreviewElement_Omic
+    let Portfolio_workPreviewElement_Roe
+    let Portfolio_workPreviewElement_Architect
+    let Portfolio_workPreviewElement_Artsgone
+    let Portfolio_workPreviewElement_LXY
+    let Portfolio_workPreviewElement_Lexi_alternate
+    let Portfolio_workPreviewElement_Museum
+    let Portfolio_workPreviewElement_Nameless
+    let Portfolio_workPreviewElement_Bena
+    let Portfolio_workPreviewElement_DTM
+    let Portfolio_workPreviewElement_Eroy
+    let Portfolio_workPreviewElement_LLL
+    let New_LOGO_AR
+    let Portfolio_workPreviewElement_Logo_Ww
+    let Portfolio_workPreviewElement_Ww_additional
+    let Portfolio_workPreviewElement_Logo_Tt
+    let Portfolio_workPreviewElement_Lexi
+    let Portfolio_workPreviewElement_Lexi_V2
+    let Portfolio_workPreviewElement_LXY_alt
+    let Portfolio_workPreviewElement_Anata
+    let Portfolio_workPreviewElement_MrGummy
+    let Portfolio_workPreviewElement_Dd_NEW
+    let Portfolio_workPreviewElement_Travelin_Logo
+    let Portfolio_workPreviewElement_Tari
+    let Portfolio_workPreviewElement_GeometryFontType
+
+    let Portfolio_TimerForWork
+    let Portfolio_TFW_register
+    let Portfolio_TFW_main_mobile
+    let Portfolio_TFW_register_mobile
+    let Portfolio_TFW_EditProject
+    let TFW_accountDetails
+
+    let Portfolio_Endimo_main
+    let Portfolio_Endimo_cart
+    let Portfolio_Endimo_about
+    let Portfolio_Endimo_contact
+
+    let Portfolio_Mount_Fuji
+    let Portfolio_Postttrrr
+    let Portfolio_TravelinPoster
+    let Portfolio_FakePoster_LowRes
+    let Porftolio_AccountManager
     
     $: innerHeight = 0
     let y = 0
@@ -376,13 +462,13 @@
         
     }
 
-    let intersectingElementIndex
     const listOfIntersectedElementsSetter = writable(new Set())
 
     function observeElement() {
         const default_containers = document.querySelectorAll(".classForIntersecObserver")
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
+        let intersectingElementIndex
 
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
@@ -417,9 +503,9 @@
         })
     }
 // ---------------------------------------------------------------------------------------------------------
-    let intersectingElementIndex_DF
+    
     const listOfIntersectedElementsSetter_DF = writable(new Set())
-    let listOfIntersectedElements_DF = []
+    
 
     function saveIntersectedElementsToSS() {
         let elementsToSaveDefault = [ 24, 25, 26 ]
@@ -433,6 +519,7 @@
         sessionStorage.setItem('intersectedElementsList', JSON.stringify(elementsToSave))
     }
     function retrieveIntersectedElementsToSS() {
+        let listOfIntersectedElements_DF = []
         // let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
         let savedIntersectedElements = JSON.parse(sessionStorage.getItem('intersectedElementsList'))
         listOfIntersectedElements_DF = listOfIntersectedElements_DF.concat(savedIntersectedElements)
@@ -446,13 +533,14 @@
 
     function observeDefaultCont() {
         const default_containers = document.querySelectorAll(".forInsObs")
-        const listLenght = default_containers.length
+        // const listLenght = default_containers.length
         // let amountOfElementsObserved = 0;
+        let intersectingElementIndex_DF
 
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
-            if ((entry.isIntersecting && intersectingElementIndex_DF > 23) || (entry.intersectionRatio >= 0.1 && intersectingElementIndex_DF <= 23)) {
+            if ((entry.isIntersecting && intersectingElementIndex_DF > 23) || (entry.intersectionRatio >= 0.5 && intersectingElementIndex_DF <= 23)) {
                 listOfIntersectedElementsSetter_DF.update(set => {
                     set.add(intersectingElementIndex_DF)
                     if (intersectingElementIndex_DF >= 24) {
@@ -462,19 +550,19 @@
                 })
             }
             else { 
-                if (entry.intersectionRatio <= 0.5 && intersectingElementIndex_DF <= 23) {
-                    $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
-                    // listOfIntersectedElementsSetter_DF.update(set => {
-                    //     set.delete(intersectingElementIndex_DF)
-                    //     return set
-                    // })
+                if (entry.intersectionRatio <= 0.25 && intersectingElementIndex_DF <= 23) {
+                    // $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
+                    listOfIntersectedElementsSetter_DF.update(set => {
+                        set.delete(intersectingElementIndex_DF)
+                        return set
+                    })
                 }
             }
         })
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: [0, 0.1, 0.5],
+                threshold: [0, 0.25, 0.5],
                 rootMargin: "0px",
             }
         )
@@ -526,7 +614,7 @@
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Portfolio</div>
                 {#if pageLoaded}
-                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} transition:fade={{ delay: 250, duration: 400, easing: sineInOut }} alt="Portfolio_TitleDecor">
+                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Portfolio_TitleDecor">
                 {/if}
             </div>
             
@@ -723,7 +811,7 @@
     </div>
     <div class="default_container endless flsWS forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(24)}
-            <div class="content_container work_summary_page fullscreenWorks" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
+            <div class="content_container work_summary_page fullscreenWorks" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
@@ -782,7 +870,7 @@
     </div>
     <div class="default_container endless hlfsWS forInsObs" id="largeWorksSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(25)}
-            <div class="content_container work_summary_page largeWorks" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
+            <div class="content_container work_summary_page largeWorks" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
@@ -859,7 +947,7 @@
     
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(26)}
-            <div class="content_container work_summary_page" in:fly={{ delay: 0, duration: 500, easing: sineInOut, y: "-10vh"}}>
+            <div class="content_container work_summary_page" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
                     <p class="fontPresentation">Definity?</p>
@@ -872,12 +960,12 @@
     </div>
 
     {#if workPresent_Visibility == 'visible'}
-        <button in:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '-100'}} out:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} class="close_button" on:click={closeInLargeList}><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
+        <button in:fly={{ delay: 300, duration: 1250, easing: elasticOut, y: '-7.5vh'}} out:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} class="close_button" on:click={closeInLargeList}><img src={Global_closeIcon} class="Global_closeIcon" alt="X"> </button>
     {/if}
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 1500, start: 0.9, easing: elasticOut, opacity: 1 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
@@ -1201,6 +1289,7 @@
         font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         color: var(--text_color_gray90);
         text-align: center;
+        transition: scale 0.75s var(--wiggleTransition);
     }
     .anchorLink_toSections:nth-child(odd):last-child{
         grid-column: 1 / 3;
@@ -1212,6 +1301,7 @@
     }
     
     .anchorLink_toSections:is(:hover){
+        scale: 1.05;
         text-decoration-style: wavy;
         text-decoration-thickness: max(0.1rem, 0.1vw);
     }
@@ -1356,7 +1446,7 @@
         border: none;
         border-radius: 30%;
         overflow: clip;
-        backdrop-filter: blur(5px) invert(25%);
+        backdrop-filter: blur(max(0.5vw, 0.5rem));
         background-color: var(--background_color_lightCyan_lowerOpacity);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));
@@ -1366,7 +1456,7 @@
     .Global_closeIcon{
         width: 60%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkCyanSaturated));
     }
     .close_button:hover > .Global_closeIcon{
         animation: closeIcon_animation .5s ease-in-out;

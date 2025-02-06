@@ -1,19 +1,19 @@
 @font-face {
     font-family: 'Neutral_Normal';
     font-style: normal;
-    src: url('/src/lib/fonts/NeutralFace.otf');
+    src: url('/src/lib/fonts/NeutralFace.woff2');
     font-display: block;
 }
 @font-face {
     font-family: 'Neutral_Bold';
     font-style: normal;
-    src: url('/src/lib/fonts/NeutralFace-Bold.otf');
+    src: url('/src/lib/fonts/NeutralFace-Bold.woff2');
     font-display: swap;
 }
 @font-face {
     font-family: 'Brolimo';
     font-style: normal;
-    src: url('/src/lib/fonts/BrolimoRegular.ttf');
+    src: url('/src/lib/fonts/BrolimoRegular.woff2');
     font-display: block;
 }
 @font-face {
@@ -40,12 +40,6 @@
     src: url('/src/lib/fonts/Misto/Misto.woff2');
     font-display: block;
 }
-/* @font-face {
-    font-family: 'Definity';
-    font-style: normal;
-    src: url('/src/lib/fonts/Definity.woff2');
-    font-display: swap;
-} */
 @font-face {
     font-family: 'DefinityV2';
     font-style: normal;
@@ -55,6 +49,6 @@
 /* @font-face {
     font-family: 'Vetrino';
     font-style: normal;
-    src: url('/src/lib/fonts/Vetrino.otf');
+    src: url('/src/lib/fonts/Vetrino.woff2');
     font-display: swap;
 } */

@@ -8,18 +8,15 @@
     --background_color_darkGray: #0c0c0c;
 
     --background_color_lightCyan: hsl(172, 20%, 70%);
+    --background_color_lightCyan_lowerOpacity075: hsla(172, 23%, 77%, 0.75);
     --background_color_lightCyan_lowerOpacity: hsla(172, 23%, 77%, 0.5);
     --background_color_lightCyan_lowerOpacity025: hsla(172, 23%, 77%, 0.25);
 
     --background_color_lightCyanSaturated: hsl(172, 20%, 60%);
-
     --background_color_darkCyan: hsl(172, 20%, 47%);
-
     --background_color_darkCyanSaturated: hsl(172, 25%, 39%);
     --background_color_darkAsHellCyanSaturated: hsl(172, 24%, 28%);
-
     --background_color_darkestCyan: hsl(172, 20%, 60%);
-
     --element_color_darkerCyan: hsl(172, 22%, 71%);
 
     --cyan_outline_bright: hsl(172, 20%, 75%);
@@ -29,7 +26,6 @@
     --text_color_gray50: #a5a5a5;
     --text_color_gray65: hsl(0, 0%, 85%);
     --text_color_gray90: #1f1f1f;
-    /* --text_color_gray_bright: #ece2d4ff; */
     --text_color_yellow60: #e1ddc6ff;
     --text_color_transparent: #00000000;
 
@@ -44,24 +40,18 @@
     --element_size_title_decor_contact: max(31vw, 20rem);
     
     /* FONT SIZES */
-
-    /* Default */
     --text_size_title_ultrabig: max(15vw, 9rem);
-    
     --text_size_big: max(4vw, 2.75rem);
     --text_line_height_big: max(4vw, 2.5rem);
-
     --text_size_medium_big: max(2vw, 1.75rem);
     --text_line_height_medium_big: max(2vw, 1.75rem);
-
     --text_size_medium: max(1.85vw, 1.5rem);
     --text_line_height_medium: max(2.75vw, 2.4rem);
-
     --text_size_medium_small: max(2vw, 1.5rem);
-
     --text_size_small: max(1.4vw, 1.25rem);
     --text_line_small: max(2vw, 1.75rem);
-
     --text_size_extra_small: max(1rem, 1.15vw);
 
+    /* Animation */
+    --wiggleTransition: linear(0, 0.011 0.9%, 0.042 1.8%, 0.098 2.8%, 0.171 3.8%, 0.345 5.7%, 0.862 10.7%, 0.987 12.1%, 1.094 13.5%, 1.18 14.9%, 1.24 16.2%, 1.28 17.5%, 1.304 18.9%, 1.306 20.8%, 1.278 22.8%, 1.223 25%, 1.056 30.2%, 0.986 32.8%, 0.932 35.7%, 0.907 38.6%, 0.905 40.6%, 0.914 42.7%, 1.003 52.6%, 1.028 58.2%, 1.027 62.6%, 0.992 77.7%, 1);
 }

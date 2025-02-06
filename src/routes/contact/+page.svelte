@@ -22,11 +22,11 @@
     import Contact_FooterDecor from '$lib/svg_files/Contact/Contact_FooterDecor.svg'
 
     import { onMount } from "svelte";
-    import { fade, fly } from 'svelte/transition';
-    import { sineInOut } from 'svelte/easing';
+    import { fade, fly, scale } from 'svelte/transition';
+    import { elasticOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
     
-    let previousScreenHeight = 0;
+    // let previousScreenHeight = 0;
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
@@ -238,7 +238,7 @@
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Contact</div>
                 {#if pageLoaded}
-                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} transition:fade={{ delay: 250, duration: 400, easing: sineInOut}} alt="Contact_TitleDecor">
+                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Contact_TitleDecor">
                 {/if}
             </div>
             
@@ -271,9 +271,9 @@
                     
                     <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
                     {#if optionMenuShow}
-                        <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 200, easing: sineInOut, y: '-25'}} out:fade={{ delay: 0, duration: 200, easing: sineInOut}} use:optionClicked bind:this={optionMenu}>
+                        <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-2.5vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 200, easing: sineInOut, y: '-10'}} role="menuitem">0{i + 1}. {item}</div>
+                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh'}} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
@@ -642,11 +642,11 @@
     .emailAdress_Text{
         font-family: 'Neutral_Normal', system-ui, sans-serif;
         font-size: var(--text_size_small);
-        background-image: linear-gradient(hsl(169, 14%, 85%) 0%, hsl(169, 14%, 85%) 65%, var(--background_color_lightCyan) 100%);
+        background-image: linear-gradient(hsl(169, 20%, 90%) 0%, hsl(169, 20%, 90%) 65%, var(--background_color_lightCyan) 100%);
         background-size: 0% 100%;
         background-position: left bottom;
         background-repeat: no-repeat;
-        transition: background-size 0.2s ease-out;
+        transition: background-size 0.5s linear(0, 0.5 23.1%, 1 44.7%, 0.892 51.9%, 0.866 55.2%, 0.858 58.5%, 0.864 61.4%, 0.883 64.5%, 1 77.4%, 0.983 81%, 0.978 84.5%, 1);
         text-decoration: none;
         color: var(--text_color_gray90);
     }
@@ -675,7 +675,7 @@
         align-items: center;
         justify-content: space-between;
         gap: max(1.5rem, 1.75vw);
-        transition: translate 0.2s ease-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
+        transition: translate 0.75s var(--wiggleTransition), box-shadow 0.2s ease-in-out, background-color 0.3s ease-in-out;
         position: relative;
     }
     .links > a:hover{
@@ -701,7 +701,7 @@
     }
     .Contact_ArrowForLinks{
         width: max(1.25vw, 1rem);
-        transition: rotate 0.15s ease-out;
+        transition: rotate 0.75s var(--wiggleTransition);
     }
     .Telegram_Icon{
         width: max(1.5vw, 1.25rem);

@@ -111,8 +111,7 @@
         border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
-        transition: translate 0.15s ease-out, box-shadow 2s ease-out;
-        
+        transition: translate 0.75s var(--wiggleTransition), box-shadow 2s ease-out;
     }
     .navbar_list > a:focus-visible{
         outline: 0.20rem var(--background_color_alternativeLightYellow) solid;
@@ -140,19 +139,13 @@
         translate: 0 max(0.5rem, 0.40vw);
         box-shadow: inset 0 0 max(1.25rem, 1.25vw) max(0.3rem, 0.3vw) var(--background_color_lightCyanSaturated),
                     0 max(0.5rem, 0.5vw) max(1rem, 1vw) max(0.2rem, 0.2vw) var(--background_color_lightCyanSaturated);
-        transition: translate 0.15s ease-out, box-shadow 0.25s ease-out;
+        transition: translate 0.75s var(--wiggleTransition), box-shadow 0.25s ease-out;
     }
     .navbar_list > a:active{
-        animation: buttonActiveAnim 0.3s ease-out;
+        scale: 1.05;
+        transition: scale 1s var(--wiggleTransition);
     }
-    @keyframes buttonActiveAnim {
-        0%, 100% {
-            scale: 1;
-        }
-        50% {
-            scale: 1.05;
-        }
-    }
+    
     .titleName{
         font-family: 'Brolimo', system-ui, sans-serif;
         font-size: max(11.25vw, 3.5rem);
