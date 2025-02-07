@@ -80,14 +80,19 @@
     function optionMenuDisplay() {
         if (!optionMenuShow) {
             border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0; filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));"
-            arrow_rotation = "-1"
+            arrow_rotation = "180deg"
             optionMenuShow = true
         }
     }
     function optionMenuHide() {
         if (optionMenuShow) {
             border_radius = "inherit"
-            arrow_rotation = "1"
+            if (optionChosenIs) {
+                arrow_rotation = "270deg"
+            } else {
+                arrow_rotation = "0deg"
+            }
+            
             optionMenuShow = false
         }
     }
@@ -269,11 +274,11 @@
                         {optionText}
                     {/if}
                     
-                    <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="scale: {arrow_rotation};"> 
+                    <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="rotate: {arrow_rotation};"> 
                     {#if optionMenuShow}
                         <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-2.5vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh'}} role="menuitem">0{i + 1}. {item}</div>
+                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
@@ -521,7 +526,7 @@
         position: absolute;
         height: 50%;
         right: 6%;
-        transition: scale 0.25s ease;
+        transition: rotate 1s var(--wiggleTransition);
     }
     .typeOfWork_optionMenu{
         box-sizing: border-box;
@@ -541,6 +546,7 @@
         align-items: center;
         max-height: 350%;
         overflow-y: scroll;
+        overflow-x: clip;
         overscroll-behavior: none;
     }
     .typeOfWork_optionMenu::-webkit-scrollbar {
@@ -561,12 +567,14 @@
         height: 100%;
         z-index: 999;
         cursor: pointer;
-        transition: background-color 0.1s ease, color 0.1s ease;
+        border-radius: max(1rem, 1vw);
+        transition: background-color 0.1s ease, color 0.05s ease, scale 1s var(--wiggleTransition);
     }
     .tow_option:nth-child(2n){
         background-color: var(--background_color_lightCyan_lowerOpacity025);
     }
     .tow_option:hover{
+        scale: 0.95;
         background-color: var(--cyan_outline_bright);
         color: var(--text_color_gray5);
     }
@@ -582,24 +590,29 @@
         border-radius: 50%;
         inset: auto min(0.9rem, 2.5vw) min(0.9rem, 2.5vw) auto;
 
-        background: radial-gradient(var(--background_color_lightCyanSaturated) 25%, var(--background_color_lightCyan) 100%);
+        background: radial-gradient(var(--background_color_lightCyanSaturated) 25%, var(--cyan_outline_bright) 100%);
         /* border: max(4px, 0.250vw) var(--cyan_outline) solid; */
         border: none;
         cursor: pointer;
+        transition: scale 1s var(--wiggleTransition), filter 0.15s ease-in-out;
         z-index: 50;
     }
     .submitButtonArrow{
         height: 50%;
         aspect-ratio: 1;
         rotate: 180deg;
-        
+        transition: translate 1s var(--wiggleTransition), scale 1s var(--wiggleTransition);
     }
     .submitButton:not(:disabled):hover > .submitButtonArrow{
-        animation: arrowIcon_animation .5s ease-in-out;
+        translate: 10% 0;
+        scale: 1.05;
+    }
+    .submitButton:not(:disabled):hover{
+        scale: 1.05;
+        filter: drop-shadow(0 max(.1rem, .1vw) max(.35rem, .35vw) var(--cyan_outline_bright))
     }
     .submitButton.animateButton:is(:disabled) > .submitButtonArrow{
         animation: arrowIcon_animation_Disabled 2s ease-in-out;
-        /* animation: name duration timing-function delay iteration-count direction fill-mode; */
     }
     @keyframes arrowIcon_animation{
         0%, 100% {

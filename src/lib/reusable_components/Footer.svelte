@@ -111,7 +111,7 @@
         border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
-        transition: translate 0.75s var(--wiggleTransition), box-shadow 2s ease-out;
+        transition: translate 0.75s var(--wiggleTransition), box-shadow 2s ease-out, scale 1s var(--wiggleTransition);
     }
     .navbar_list > a:focus-visible{
         outline: 0.20rem var(--background_color_alternativeLightYellow) solid;

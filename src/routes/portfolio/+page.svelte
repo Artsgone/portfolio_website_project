@@ -70,7 +70,7 @@
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
-    import { elasticOut, sineInOut, sineOut } from 'svelte/easing';
+    import { elasticOut, quadOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     // let works_preview_grid_bind;
@@ -550,7 +550,7 @@
                 })
             }
             else { 
-                if (entry.intersectionRatio <= 0.25 && intersectingElementIndex_DF <= 23) {
+                if (entry.intersectionRatio <= 0.3 && intersectingElementIndex_DF <= 23) {
                     // $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
                     listOfIntersectedElementsSetter_DF.update(set => {
                         set.delete(intersectingElementIndex_DF)
@@ -562,7 +562,7 @@
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: [0, 0.25, 0.5],
+                threshold: [0, 0.3, 0.5],
                 rootMargin: "0px",
             }
         )
@@ -582,7 +582,7 @@
             image.addEventListener("load", () => {
                 setTimeout(function () {
                     isLoaded()
-                }, 300)
+                }, 250)
             })
         })
     }
@@ -639,7 +639,7 @@
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(0)}
-                        <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -647,12 +647,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(1)}
-                        <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(2)}
-                        <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -666,17 +666,17 @@
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(3)}
-                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(4)}
-                        <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(5)}
-                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 
@@ -685,17 +685,17 @@
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(6)}
-                        <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(7)}
-                        <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(8)}
-                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
 
@@ -708,17 +708,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(9)}
-                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(10)}
-                        <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(11)}
-                        <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
 
@@ -726,17 +726,17 @@
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(12)}
-                        <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(13)}
-                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(14)}
-                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
 
@@ -749,17 +749,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(15)}
-                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(16)}
-                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(17)}
-                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
 
@@ -767,17 +767,17 @@
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(18)}
-                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(19)}
-                        <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(20)}
-                        <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
 
@@ -790,12 +790,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(21)}
-                        <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(22)}
-                        <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -803,7 +803,7 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(23)}
-                        <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: sineInOut}}>
+                        <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
                     {/if}
                 </a>
             </div>
@@ -811,7 +811,7 @@
     </div>
     <div class="default_container endless flsWS forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(24)}
-            <div class="content_container work_summary_page fullscreenWorks" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
+            <div class="content_container work_summary_page fullscreenWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
@@ -870,7 +870,7 @@
     </div>
     <div class="default_container endless hlfsWS forInsObs" id="largeWorksSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(25)}
-            <div class="content_container work_summary_page largeWorks" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
+            <div class="content_container work_summary_page largeWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
                 <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
@@ -947,7 +947,7 @@
     
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
         {#if $listOfIntersectedElementsSetter_DF.has(26)}
-            <div class="content_container work_summary_page" in:fade={{ delay: 0, duration: 300, easing: sineOut }}>
+            <div class="content_container work_summary_page" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
                     <p class="fontPresentation">Definity?</p>
@@ -965,7 +965,7 @@
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 1500, start: 0.9, easing: elasticOut, opacity: 1 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 1500, start: 0.95, easing: elasticOut, opacity: 1 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
@@ -1383,8 +1383,8 @@
         backdrop-filter: blur(max(1rem, 1vw)) opacity(0.75);
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
-        scale: 0.95;
+        transition: opacity 0.75s var(--bezierTransition), visibility 0s ease 0.75s, scale 0.75s var(--bezierTransition), filter 0.75s var(--bezierTransition);
+        scale: 1.1;
         filter: blur(max(2rem, 2vw));
     }
     .work_element_preview_box.rounded::after{
@@ -1396,7 +1396,7 @@
         visibility: visible;
         scale: 1;
         filter: blur(0rem);
-        transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
+        transition: opacity 0.25s var(--bezierTransition), visibility 0s var(--bezierTransition) 0s, scale 0.25s var(--bezierTransition), filter 0.1s var(--bezierTransition);
     }
     .work_element_preview_box:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
@@ -1450,43 +1450,22 @@
         background-color: var(--background_color_lightCyan_lowerOpacity);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));
-        transition: scale 0.15s ease-out;
+        transition: scale 1s var(--wiggleTransition);
     }
     
     .Global_closeIcon{
         width: 60%;
         aspect-ratio: 1;
         filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkCyanSaturated));
+        transition: rotate 1s var(--wiggleTransition);
     }
     .close_button:hover > .Global_closeIcon{
-        animation: closeIcon_animation .5s ease-in-out;
+        rotate: 90deg;
     }
     .close_button:hover{
-        animation: close_button_animation .5s ease-in-out;
+        scale: 1.1;
     }
-
-    @keyframes closeIcon_animation{
-        0%, 100% {
-            rotate: 0deg;
-            scale: 1;
-        }
-        25%{
-            rotate: 5deg;
-            scale: 0.85;
-        }
-        65%{
-            rotate: -10deg;
-            scale: 0.85;
-        }
-    }
-    /* @keyframes close_button_animation{
-        0%, 100% {
-            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-        }
-        50%{
-            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
-        }
-    } */
+    
     .workPresent_wrapper{
         display: grid;
         grid-template-columns: 1fr;
@@ -1664,7 +1643,13 @@
 
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.25s ease, visibility 0.25s ease;
+        transition: opacity 0.25s ease, visibility 0.25s ease, scale 0.75s var(--wiggleTransition);
+    }
+    .scrollLeftAndRightButton:hover{
+        scale: 1.1;
+    }
+    .scrollLeftAndRightButton:active{
+        scale: 1;
     }
     .scrollLeftAndRightButton:is(.visually_hidden){
         opacity: 0;

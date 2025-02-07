@@ -70,7 +70,7 @@
         font-size: max(1.5rem, 1.6vw);
         padding-block: max(1vw, 1rem);
         translate: 0 0;
-        transition: translate 0.75s var(--wiggleTransition), box-shadow 2s ease-out;
+        transition: translate 0.75s var(--wiggleTransition), box-shadow 2s ease-out, scale 1s var(--wiggleTransition);
     }
     .navbar_list > a:focus-visible{
         outline: 0.20rem var(--background_color_alternativeLightYellow) solid;

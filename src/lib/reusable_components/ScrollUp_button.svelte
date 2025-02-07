@@ -5,7 +5,10 @@
     export let scrollToTop;
 </script>
 
-<button transition:fly={{ delay: 300, duration: 1250, easing: elasticOut, y: '15vh'}} class="scrollUp_button" on:click={scrollToTop}> <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp"></button>
+<button in:fly={{ delay: 300, duration: 1250, easing: elasticOut, y: '5vh' }} out:fly={{ delay: 300, duration: 250, easing: sineInOut, y: '15vh'}} 
+class="scrollUp_button" on:click={scrollToTop}> 
+    <img class="arrowIcon" src={Global_arrowScrollUp} alt="MainPage_arrowScrollUp">
+</button>
 
 <style>
     .scrollUp_button{
@@ -16,57 +19,33 @@
         z-index: 999;
         bottom: 7.5%;
         right: min(7.5%, 3rem + 2vw);
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+        outline: max(0.25rem, 0.25vw) var(--cyan_outline_bright) solid;
         border: none;
         border-radius: 30%;
         /* overflow: clip; */
-        backdrop-filter: blur(max(0.5vw, 0.5rem));
-        background-color: var(--background_color_lightCyan_lowerOpacity);
+        backdrop-filter: blur(max(1vw, 1rem));
+        background-color: var(--background_color_lightCyan_lowerOpacity075);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, 0.5vw) var(--background_color_lightCyanSaturated));
         padding: 0;
+        transition: scale 1s var(--wiggleTransition);
     }
     .arrowIcon{
         width: 52.5%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkAsHellCyanSaturated));
+        transition: translate 1s var(--wiggleTransition);
     }
     .scrollUp_button:hover > .arrowIcon{
-        animation: arrowIcon_animation .5s ease-in-out;
+        translate: 0 -15%;
+        transition: translate 1s var(--wiggleTransition);
     }
     .scrollUp_button:hover{
-        animation: scrollUp_button_animation .5s ease-in-out;
+        scale: 1.1;
+        transition: scale 1s var(--wiggleTransition);
     }
-
-    @keyframes arrowIcon_animation{
-        0%, 100% {
-            translate: 0 0%;
-        }
-        50%{
-            translate: 0 -15%;
-        }
-        60%{
-            translate: 0 -20%;
-        }
-        90%{
-            translate: 0 5%;
-        }
-    }
-    @keyframes arrowIcon_animation_click{
-        0%{
-            translate: 0 0%;
-        }
-        50%{
-            translate: 0 -17.5%;
-        }
-        60%{
-            translate: 0 -20%;
-        }
-        90%{
-            translate: 0 -15%;
-        }
-        100%{
-            translate: 0 -20%;
-        }
+    .scrollUp_button:active{
+        scale: 1;
+        transition: scale 1s var(--wiggleTransition);
     }
 </style>

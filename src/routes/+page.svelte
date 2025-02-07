@@ -9,24 +9,8 @@
     import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
-
-    // import MainPage_greetingPageSVG from '$lib/svg_files/MainPage/MainPage_greetingPageSVG.svg'
-    // import MainPage_earLikeThingSVG from '$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg'
-    // import MainPage_YellowHighlight from '$lib/svg_files/MainPage/MainPage_YellowHighlight.svg'
-    // import MainPage_MyPhotosDecorElement from '$lib/svg_files/MainPage/MainPage_MyPhotosDecorElement.svg'
-    // import MainPage_cvDownloadDecor from '$lib/svg_files/MainPage/MainPage_cvDownloadDecor.svg'
-    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin_q.png'
-    // import MY from '$lib/svg_files/MainPage/MY.svg'
 //
-    // import sunsetInTheCloudsIMG from '$lib/compressed_images/sunset_inthe_clouds.webp'
-    // import dandelionIMG from '$lib/compressed_images/IMG_20210627_185235-min.webp'
-    // import goldenLeaves from '$lib/compressed_images/golden_leaves.webp'
-    // import Violet_flowers from '$lib/compressed_images/Violet_flowers.webp'
-    // import Modern_building from '$lib/compressed_images/Modern_building.jpg'
-    // import Bridge_1 from '$lib/compressed_images/Bridge_1.jpg'
-    // import Bridge_2 from '$lib/compressed_images/Bridge_2.jpg'
-    // import Street from '$lib/compressed_images/Street.jpg'
-    // import WeatheredOut_house from '$lib/compressed_images/WeatheredOut_house.jpg'
+    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin_q.png'
 //
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
@@ -37,7 +21,7 @@
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
     import { fade, fly, scale } from 'svelte/transition';
-    import { sineInOut, sineOut, elasticOut, quadOut } from 'svelte/easing';
+    import { elasticOut } from 'svelte/easing';
     
     let pageLoaded = false
     $: innerHeight = 0
@@ -104,13 +88,15 @@
     let newY = []
     $: oldY = newY[1]
     function updateY(){
-        y = svelte_main_element.scrollTop
-        if (y % 4 == 0) {
-            newY.push(y)
-            if(newY.length > 5) {
-                newY.shift()
+        if (pageLoaded) {
+            y = svelte_main_element.scrollTop
+            if (y % 4 == 0) {
+                newY.push(y)
+                if(newY.length > 5) {
+                    newY.shift()
+                }
+                newY=newY
             }
-            newY=newY
         }
     }
 
@@ -163,15 +149,18 @@
     
     function lazyLoadedImagesFunc() {
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
-        // console.log(lazyLoadedImages.length)
+        let timeOutTime = 0
         lazyLoadedImages.forEach((image) => {
+            if (!image.classList.contains("SVG")) {
+                timeOutTime = 350
+            }
             function isLoaded() {
                 image.classList.add("isLoaded")
             }
             image.addEventListener("load", () => {
                 setTimeout(function () {
                     isLoaded()
-                }, 250)
+                }, timeOutTime)
             })
         })
     }
@@ -209,16 +198,18 @@
                 {/if}
             </div>
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
-                    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
+            linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
+            
             <!-- <svelte:component this={Navbar} firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
             linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/> -->
         </div>
     </div>
     <div class="default_container greeting">
-        <!-- class:inViewport={isInViewport} -->
          {#if $listOfIntersectedElementsSetter.has(1)}
-             <div class="content_container greeting_page" in:fade={{ delay: 0, duration: 500, easing: quadOut }}>
-                <img id="MainPage_greetingPageSVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+             <div class="content_container greeting_page" use:lazyLoadedImagesFunc>
+                <div class="wrapper_greetingSVG" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
+                </div>
                 <div class="text introducing">
                     <p class="lightgrayText">
                         My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>Graphic</span> design. <br> <br> 
@@ -227,29 +218,30 @@
                 </div>
             </div>
          {/if}
-            <!-- <div class="content_container loadingState"></div> -->
     </div>
     <div class="default_container greeting dwnCV">
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container CV_download_page" in:fade={{ delay: 0, duration: 500, easing: quadOut }}>
+            <div class="content_container CV_download_page" use:lazyLoadedImagesFunc>
                 <div class="text cvDownload" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
-                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.5 }}> Download <img class="MainPage_cvDownloadDecor" src={MainPage_cvDownloadDecor} alt="MainPage_cvDownloadDecor"></a>
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.5 }}>
+                         Download <img class="MainPage_cvDownloadDecor forLazyLoad SVG" src={MainPage_cvDownloadDecor} alt=">">
+                    </a>
                 </div>
             </div>
         {/if}
     </div>
     <div class="default_container cyanSaturated">
         {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container introductionToPhotos_page" in:fade={{ delay: 0, duration: 500, easing: quadOut }}>
+            <div class="content_container introductionToPhotos_page" use:lazyLoadedImagesFunc>
                 <div class="top_part page3" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
-                    <img class="MY" src={MainPage_MY} alt="MY">
-                    <img class="earLikeThing" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
+                    <img class="MY forLazyLoad SVG" src={MainPage_MY} alt="MY">
+                    <img class="earLikeThing forLazyLoad SVG" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
                 </div>
                 <div class="bottom_part page3" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
-                    <img class="copyright_text" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
+                    <img class="copyright_text forLazyLoad SVG" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
                     <div class="photo_collection_text lightgrayText">photo <br> collection</div>
                 </div>
             </div>
@@ -292,7 +284,7 @@
                 </div>
                 <div class="right_part page6" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
-                    <img class="MainPage_YellowHighlight" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
+                    <img class="MainPage_YellowHighlight forLazyLoad" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
                 </div>
             </div>
         {/if}
@@ -339,7 +331,6 @@
         margin: 0;
         padding: 0;
         background-color: var(--text_color_gray90);
-        /* -webkit-font-smoothing: antialiased; */
     }
     main.svelte_main{
         overflow-y: scroll;
@@ -366,7 +357,7 @@
     }
     *:is(.isLoaded){
         opacity: 1;
-        transition: opacity 0.5s ease-in;
+        transition: opacity 1s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
 
 
@@ -419,16 +410,6 @@
     }
 
     @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-            height: var(--user_height);
-            height: 100dvh;
-        } */
-        /* .default_container{
-            height: var(--user_height, 100vh);
-            transition: height 0.5s ease-in;
-            height: 100vh;
-        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -503,7 +484,14 @@
         align-content: center;
         justify-items: center;
     }
-    #MainPage_greetingPageSVG{
+    .wrapper_greetingSVG{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .MainPage_greetingPageSVG{
         width: max(10rem, 75%);
         max-height: 70vh;
         align-self: center;
@@ -515,13 +503,13 @@
         width: 80%;
     }
     .text.introducing > p{
-        font-family: 'Subjectivity_Medium', system-ui, sans-serif;
+        font-family: 'Subjectivity_Medium', Tahoma, Verdana, sans-serif;
         font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium);
         text-wrap: pretty;
     }
     .text.introducing > p > span{
-        font-family: 'Subjectivity_Bold', system-ui, sans-serif;
+        font-family: 'Subjectivity_Bold', Tahoma, Verdana, sans-serif;
         background: linear-gradient(-177.5deg, var(--element_background_color_lightestCyan), var(--background_color_darkCyanSaturated));
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -534,7 +522,7 @@
             grid-auto-flow: row;
             grid-auto-rows: 1fr 2fr;
         }
-        #MainPage_greetingPageSVG{
+        .MainPage_greetingPageSVG{
             width: max(27.5rem, 60%);
             max-height: 45vh;
         }
@@ -552,7 +540,7 @@
         .text.introducing{
             width: 100%;
         }
-        #MainPage_greetingPageSVG{
+        .MainPage_greetingPageSVG{
             width: 100%;
         }
         .text.introducing{

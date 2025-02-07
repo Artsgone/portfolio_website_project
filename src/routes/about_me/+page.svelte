@@ -124,6 +124,17 @@
             // }, indexOfContainer * intervalForLoading); 
         // })
     }
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+        lazyLoadedImages.forEach((image) => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", () => {
+                isLoaded()
+            })
+        })
+    }
 </script>
 
 <svelte:head>
@@ -159,8 +170,10 @@
     </div>
     <div class="default_container">
         {#if $listOfIntersectedElementsSetter.has(1)}
-            <div class="content_container education_page">
-                <img id="AboutMe_EducationSVG" src={AboutMe_EducationSVG} in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_EducationSVG">
+            <div class="content_container education_page" use:lazyLoadedImagesFunc>
+                <div class="wrapper_educationSVG" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+                    <img class="AboutMe_EducationSVG forLazyLoad" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
+                </div>
                 <div class="text education">
                     <p class="darkgrayText">
                         <span class="time_range grayText65">2020-2024</span> - <span class="university_name">Smíchovská SPSaG</span> <br>
@@ -174,17 +187,16 @@
         {/if}
     </div>
     <div class="default_container def_lang">
-        {#if innerWidth > 1200}
-            <img id="AboutMe_BackgroundSVG" src={AboutMe_BackgroundSVG} alt="AboutMe_BackgroundSVG">
-        {:else}
-            <img id="AboutMe_BackgroundLanguagesMobile" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
-        {/if}
-        
         {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container languages_page">
+            {#if innerWidth > 1200}
+                <img use:lazyLoadedImagesFunc class="AboutMe_BackgroundSVG forLazyLoad" src={AboutMe_BackgroundSVG} alt="AboutMe_BackgroundSVG">
+            {:else}
+                <img use:lazyLoadedImagesFunc class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
+            {/if}
+            <div class="content_container languages_page" use:lazyLoadedImagesFunc>
                 <p class="grayText65">LANGUAGES</p>
                 <div class="text languages">
-                    <img class="AboutMe_LanguagesYellowHighlight" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
+                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
                     <p class="darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                         English - B2 / C1 <br>
                         Czech - Fluent <br>
@@ -199,11 +211,10 @@
         {#if $listOfIntersectedElementsSetter.has(3)}
             <div class="content_container skills_title_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                 {#if innerWidth > 1000}
-                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG">
+                    <img use:lazyLoadedImagesFunc class="AboutMe_SkillsTitleSVG forLazyLoad" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
                 {:else}
-                    <img id="AboutMe_SkillsTitleSVG" src={AboutMe_SkillsTitleSVG_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG_Mobile">
+                    <img use:lazyLoadedImagesFunc class="AboutMe_SkillsTitleSVG forLazyLoad" src={AboutMe_SkillsTitleSVG_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG_Mobile">
                 {/if}
-                
             </div>
         {/if}
     </div>
@@ -212,9 +223,9 @@
             <div class="content_container skills_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
                 <div class="skills_box">
                     {#if innerWidth > 800}
-                        <img id="AboutMe_Skills" src={AboutMe_Skills} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills">
+                        <img use:lazyLoadedImagesFunc class="AboutMe_Skills forLazyLoad" src={AboutMe_Skills} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills">
                     {:else}
-                        <img id="AboutMe_Skills_Mobile" src={AboutMe_Skills_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills_Mobile">
+                        <img use:lazyLoadedImagesFunc class="AboutMe_Skills_Mobile forLazyLoad" src={AboutMe_Skills_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills_Mobile">
                     {/if}
                 </div>
             </div>
@@ -224,21 +235,21 @@
         {#if $listOfIntersectedElementsSetter.has(5)}
             <div class="content_container otherAbilities_page">
                 <p class="altyellowText vt">OTHER ABILITIES</p>
-                <div class="text otherAbilities" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
+                <div class="text otherAbilities" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Creative at designing things.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Willing to learn and develope my skills anytime.
                     </p>
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Aiming for hardwork to achieve the best result possible.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
                         Effective both on my own and in team.
                     </p>
                 </div>
@@ -274,6 +285,13 @@
     main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    }
+    .forLazyLoad{
+        opacity: 0;
+    }
+    *:is(.isLoaded){
+        opacity: 1;
+        transition: opacity 1s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     
     *, *::before, *::after {
@@ -397,7 +415,14 @@
         justify-items: center;
         gap: 3vw;
     }
-    #AboutMe_EducationSVG{
+    .wrapper_educationSVG{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .AboutMe_EducationSVG{
         width: max(15rem, 60%);
         max-height: 50vh;
     }
@@ -426,7 +451,7 @@
             grid-auto-flow: row;
             grid-auto-rows: 1fr 1fr;
         }
-        #AboutMe_EducationSVG{
+        .AboutMe_EducationSVG{
             width: min(65%, 20rem);
             max-height: 40vh;
         }
@@ -459,11 +484,11 @@
         position: relative;
         z-index: 0;
     }
-    #AboutMe_BackgroundSVG{
+    .AboutMe_BackgroundSVG{
         position: absolute;
         width: 100%;
     }
-    #AboutMe_BackgroundLanguagesMobile{
+    .AboutMe_BackgroundLanguagesMobile{
         width: min(100%, 40rem);
         max-height: 100vh;
         position: absolute;
@@ -528,12 +553,12 @@
         align-items: center;
         justify-content: center;
     }
-    #AboutMe_SkillsTitleSVG{
+    .AboutMe_SkillsTitleSVG{
         width: max(40rem, 65%);
     }
 
     @media (width < 800px) {
-        #AboutMe_SkillsTitleSVG{
+        .AboutMe_SkillsTitleSVG{
             width: min(100%, 30rem);
         }
         .default_container.def_skills_title{
@@ -557,11 +582,11 @@
         width: max(50rem, 65%);
         height: 100%;
     }
-    #AboutMe_Skills{
+    .AboutMe_Skills{
         width: 100%;
         max-height: 85vh;
     }
-    #AboutMe_Skills_Mobile{
+    .AboutMe_Skills_Mobile{
         width: 100%;
         max-height: 85vh;
     }
