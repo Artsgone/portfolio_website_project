@@ -3,7 +3,6 @@
     import Header from '$lib/reusable_components/Header.svelte'
     // import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
-    // import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
 //
     import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
@@ -14,13 +13,11 @@
 //
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
-    // import('$lib/styles_and_fonts/styles.css')
 //
-    // import { navigating } from '$app/stores'
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { onMount } from "svelte";
     import { writable } from "svelte/store";
-    import { fade, fly, scale } from 'svelte/transition';
+    import { fly, scale } from 'svelte/transition';
     import { elasticOut } from 'svelte/easing';
     
     let pageLoaded = false
@@ -88,15 +85,13 @@
     let newY = []
     $: oldY = newY[1]
     function updateY(){
-        if (pageLoaded) {
-            y = svelte_main_element.scrollTop
-            if (y % 4 == 0) {
-                newY.push(y)
-                if(newY.length > 5) {
-                    newY.shift()
-                }
-                newY=newY
+        y = svelte_main_element.scrollTop
+        if (y % 4 == 0) {
+            newY.push(y)
+            if(newY.length > 5) {
+                newY.shift()
             }
+            newY=newY
         }
     }
 

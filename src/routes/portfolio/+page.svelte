@@ -969,7 +969,7 @@
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
-                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} fadeAnimation_Delay=250 workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} fadeAnimation_Delay=100 workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
@@ -1442,12 +1442,11 @@
         z-index: 9999;
         top: min(5%, 1rem + 2vw);
         right: min(7.5%, 3rem + 2vw);
-        outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
+        outline: max(0.25rem, 0.25vw) var(--cyan_outline_bright) solid;
         border: none;
         border-radius: 30%;
-        overflow: clip;
-        backdrop-filter: blur(max(0.5vw, 0.5rem));
-        background-color: var(--background_color_lightCyan_lowerOpacity);
+        backdrop-filter: blur(max(0.5vw, 0.5rem)) brightness(90%);
+        background-color: var(--background_color_lightCyan_lowerOpacity075);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_lightCyanSaturated));
         transition: scale 1s var(--wiggleTransition);
@@ -1456,7 +1455,7 @@
     .Global_closeIcon{
         width: 60%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkCyanSaturated));
+        filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkAsHellCyanSaturated));
         transition: rotate 1s var(--wiggleTransition);
     }
     .close_button:hover > .Global_closeIcon{

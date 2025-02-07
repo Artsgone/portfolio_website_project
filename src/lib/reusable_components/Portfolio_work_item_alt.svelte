@@ -6,8 +6,8 @@
     import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
 
     import { onMount } from "svelte";
-    import { fade } from 'svelte/transition';
-    import { quadOut, sineInOut, sineOut } from 'svelte/easing';
+    import { fade, scale } from 'svelte/transition';
+    import { elasticOut, sineInOut } from 'svelte/easing';
 
     let imageHeight;
 
@@ -85,13 +85,24 @@
         fadeBar_displayMobile = "none";
     }
 
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+        lazyLoadedImages.forEach((image) => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", () => {
+                isLoaded()
+            })
+        })
+    }
 </script>
 
 <svelte:window bind:innerWidth />
 
 
     <!-- <main > -->
-        <div class="workPresentation_container" transition:fade={{ delay: 0, duration: 400, easing: sineOut}}>
+        <div class="workPresentation_container">
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
                 style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
                 
@@ -103,8 +114,8 @@
                         <p class="work_description">{workElementText} <slot/> </p>
                     </div>
                 </div>
-                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                        <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1 }} use:lazyLoadedImagesFunc>
+                        <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
                     </div>
                     {#if enableScrollAllow && description_box_height > 300}
                         <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
@@ -122,6 +133,13 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
+    }
+    .forLazyLoad{
+        opacity: 0;
+    }
+    *:is(.isLoaded){
+        opacity: 1;
+        transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     .workPresentation_container{
         width: 100%;

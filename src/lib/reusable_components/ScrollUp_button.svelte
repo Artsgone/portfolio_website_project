@@ -23,7 +23,7 @@ class="scrollUp_button" on:click={scrollToTop}>
         border: none;
         border-radius: 30%;
         /* overflow: clip; */
-        backdrop-filter: blur(max(1vw, 1rem));
+        backdrop-filter: blur(max(1vw, 1rem)) brightness(90%);
         background-color: var(--background_color_lightCyan_lowerOpacity075);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
         filter: drop-shadow(0 0 max(.5rem, 0.5vw) var(--background_color_lightCyanSaturated));

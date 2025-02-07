@@ -39,7 +39,7 @@
                 <!-- web by Artem Damin -->
                 artem damin by web
             </div>
-            <img class="footer_Decor" loading="lazy" src={footer_Decor_ID} alt="footer_Decor">
+            <img class="footer_Decor" src={footer_Decor_ID} alt="footer_Decor">
         </div>
     </div>
 </footer>

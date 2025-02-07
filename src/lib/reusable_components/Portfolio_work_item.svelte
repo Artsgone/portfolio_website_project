@@ -6,8 +6,8 @@
     import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
     
     import { onMount } from "svelte";
-    import { fade } from 'svelte/transition';
-    import { quadOut, sineInOut } from 'svelte/easing';
+    import { fade, scale } from 'svelte/transition';
+    import { elasticOut, sineInOut } from 'svelte/easing';
 
     let imageHeight
     export let fadeAnimation_Delay = 0
@@ -82,6 +82,18 @@
     } else {
         fadeBar_displayMobile = "none";
     }
+
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+        lazyLoadedImages.forEach((image) => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", () => {
+                isLoaded()
+            })
+        })
+    }
 </script>
 
 <svelte:window bind:innerWidth />
@@ -89,11 +101,11 @@
     <!-- id={workElementTitle} -->
     <!-- <main > -->
         <!-- style="--portfolio_item_visible:{workElementVisibility};" -->
-        <div class="workPresentation_container" in:fade={{ delay: fadeAnimation_Delay|0, duration: 400, easing: quadOut}}>
+        <div class="workPresentation_container">
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
             style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
-                <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box">
-                    <img class="Portfolio_workPreviewElement" src={workElementImage} alt="Portfolio_workPreviewElement">
+                <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: fadeAnimation_Delay|0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1}} use:lazyLoadedImagesFunc>
+                    <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
                 </div>
                 <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
                     <div class="description_box" bind:clientHeight={description_box_height}>
@@ -120,6 +132,13 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
+    }
+    .forLazyLoad{
+        opacity: 0;
+    }
+    *:is(.isLoaded){
+        opacity: 1;
+        transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     .workPresentation_container{
         width: 100%;

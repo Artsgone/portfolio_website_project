@@ -1,18 +1,15 @@
 <script>
     import { fade } from 'svelte/transition';
-    import { quadIn, quadOut } from 'svelte/easing';
+    import { sineIn, sineOut } from 'svelte/easing';
 
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    // import Global_loadingAnimationWebp from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.webp'
 
     export let fadeDuration = 250;
     export let fadeDelay = 100;
 </script>
 
-<div in:fade={{ delay: 0, duration: fadeDuration, easing: quadIn}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: quadOut}} class="loader_animation" fetchpriority="high">
-    <!-- <img class="loadingSpinner" src={Global_loadingAnimationWebp} fetchpriority="high" alt="*"> -->
+<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineIn}} out:fade={{ delay: fadeDelay|0, duration: 750, easing: sineOut}} class="loader_animation">
     <object class="loadingSpinner" data={Global_loadingAnimation} type="image/svg+xml" aria-label="loading"></object>
-    
 </div>
 
 <style>
@@ -24,9 +21,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* font-family: 'Brolimo', system-ui, sans-serif;
-        font-size: var(--text_size_medium_big);
-        color: var(--text_color_gray5); */
 
         display: flex;
         flex-direction: column;
