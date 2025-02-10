@@ -73,7 +73,6 @@
     import { elasticOut, quadOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
-    // let works_preview_grid_bind;
     let pageLoaded = false;
     onMount(async() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
@@ -108,25 +107,7 @@
         Portfolio_workPreviewElement_Travelin_Logo = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Travelin_Logo.svg')).default
         Portfolio_workPreviewElement_Tari = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_Tari.svg')).default
         Portfolio_workPreviewElement_GeometryFontType = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg')).default
-
-        Portfolio_TimerForWork = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png')).default
-        Portfolio_TFW_register = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png')).default
-        Portfolio_TFW_main_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png')).default
-        Portfolio_TFW_register_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png')).default
-        Portfolio_TFW_EditProject = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png')).default
-        TFW_accountDetails = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png')).default
-
-        Portfolio_Endimo_main = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png')).default
-        Portfolio_Endimo_cart = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png')).default
-        Portfolio_Endimo_about = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png')).default
-        Portfolio_Endimo_contact = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png')).default
-
-        Portfolio_Mount_Fuji = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png')).default
-        Portfolio_Postttrrr = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png')).default
-        Portfolio_TravelinPoster = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png')).default
-        Portfolio_FakePoster_LowRes = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png')).default
-        Porftolio_AccountManager = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png')).default
-        // largeWork_preview_box_wrapper_WIDTH = largeWork_preview_box_wrapper_WIDTH
+        
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -180,11 +161,35 @@
     let Portfolio_Endimo_about
     let Portfolio_Endimo_contact
 
+    let Porftolio_AccountManager
+
+    async function loadLargeWorks() {
+        Portfolio_TimerForWork = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png')).default
+        Portfolio_TFW_register = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png')).default
+        Portfolio_TFW_main_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png')).default
+        Portfolio_TFW_register_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png')).default
+        Portfolio_TFW_EditProject = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png')).default
+        TFW_accountDetails = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png')).default
+
+        Porftolio_AccountManager = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png')).default
+        
+        Portfolio_Endimo_main = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png')).default
+        Portfolio_Endimo_cart = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png')).default
+        Portfolio_Endimo_about = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png')).default
+        Portfolio_Endimo_contact = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png')).default
+    }
+
     let Portfolio_Mount_Fuji
     let Portfolio_Postttrrr
     let Portfolio_TravelinPoster
     let Portfolio_FakePoster_LowRes
-    let Porftolio_AccountManager
+    
+    async function loadHalfWorks() {
+        Portfolio_Mount_Fuji = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png')).default
+        Portfolio_Postttrrr = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png')).default
+        Portfolio_TravelinPoster = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png')).default
+        Portfolio_FakePoster_LowRes = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png')).default
+    }
     
     $: innerHeight = 0
     let y = 0
@@ -222,20 +227,20 @@
         listOfIntersectedElementsSetter.update(set => (set.clear(), set))
     }
 
-    let amountOfChildElementsList = [];
-    function checkForAmountOfChildren() {
-        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
-        lW_preview_boxes.forEach( (box, boxId) => {
-            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.halfScreenPreview")
-            if (amountOfChildren.length > 1) {
-                box.classList.add("moreThanOneChild")
-                amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
-            } else {
-                amountOfChildElementsList.splice(boxId, 1, 0)
-            }
-        })
-        // console.log(amountOfChildElementsList)
-    }
+    // let amountOfChildElementsList = [];
+    // function checkForAmountOfChildren() {
+    //     const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
+    //     lW_preview_boxes.forEach( (box, boxId) => {
+    //         const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.halfScreenPreview")
+    //         if (amountOfChildren.length > 1) {
+    //             box.classList.add("moreThanOneChild")
+    //             amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
+    //         } else {
+    //             amountOfChildElementsList.splice(boxId, 1, 0)
+    //         }
+    //     })
+    //     // console.log(amountOfChildElementsList)
+    // }
     let amountOfChildElementsList_fullScreen = [];
     function checkForAmountOfChildren_fullScreen() {
         const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
@@ -251,98 +256,98 @@
         // console.log("Fullscreen", amountOfChildElementsList_fullScreen)
     }
 
-    // let largeWork_preview_box_wrapper_WIDTH = 0
+    // function boxScroll() {
+    //     const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
+    //     const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.halfScreenButton")
+    //     const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.halfScreenButton")
+    //     const listLength = largeWorkImages.length
+    //     var scrollElementsIndexes = new Array(listLength)
+    //     scrollElementsIndexes.fill(0, 0)
 
-    function boxScroll() {
-        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
-        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.halfScreenButton")
-        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.halfScreenButton")
-        const listLength = largeWorkImages.length
-        var scrollElementsIndexes = new Array(listLength)
-        scrollElementsIndexes.fill(0, 0)
-
-        let indexedLargeWorkImages = []
-        largeWorkImages.forEach( (largeWorkImage) => {
-            // largeWorkImage.imageIndex = indexOfImage
-            indexedLargeWorkImages.push(largeWorkImage)
-        })
-        let indexedLargeWorkRightButtons = []
-        buttons_right.forEach( (largeWorkButton) => {
-            // largeWorkButton.leftButtonIndex = indexOfRightButton
-            indexedLargeWorkRightButtons.push(largeWorkButton)
-        })
-        let indexedLargeWorkLeftButtons = []
-        buttons_left.forEach( (largeWorkButton) => {
-            // largeWorkButton.leftButtonIndex = indexOfLeftButton
-            indexedLargeWorkLeftButtons.push(largeWorkButton)
-        })
+    //     let indexedLargeWorkImages = []
+    //     largeWorkImages.forEach( (largeWorkImage) => {
+    //         // largeWorkImage.imageIndex = indexOfImage
+    //         indexedLargeWorkImages.push(largeWorkImage)
+    //     })
+    //     let indexedLargeWorkRightButtons = []
+    //     buttons_right.forEach( (largeWorkButton) => {
+    //         // largeWorkButton.leftButtonIndex = indexOfRightButton
+    //         indexedLargeWorkRightButtons.push(largeWorkButton)
+    //     })
+    //     let indexedLargeWorkLeftButtons = []
+    //     buttons_left.forEach( (largeWorkButton) => {
+    //         // largeWorkButton.leftButtonIndex = indexOfLeftButton
+    //         indexedLargeWorkLeftButtons.push(largeWorkButton)
+    //     })
         
-        let amountOfScrolledImages = 0
-        let numberOfChildElements = 0
-        let currentBox
-        let currentRightButton
-        let currentLeftButton
+    //     let amountOfScrolledImages = 0
+    //     let numberOfChildElements = 0
+    //     let currentBox
+    //     let currentRightButton
+    //     let currentLeftButton
         
-        buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
-            largeWorkButton.addEventListener("click", (e) => {
-                currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
-                numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+    //     buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
+    //         largeWorkButton.addEventListener("click", (e) => {
+    //             currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
+    //             numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
 
-                amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
-                if (amountOfScrolledImages < numberOfChildElements) {
-                    amountOfScrolledImages++
-                    scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
-                }
+    //             amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
+    //             if (amountOfScrolledImages < numberOfChildElements) {
+    //                 amountOfScrolledImages++
+    //                 scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
+    //             }
                 
-                // console.log("List:", scrollElementsIndexes)
+    //             // console.log("List:", scrollElementsIndexes)
 
-                currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
-                    if (elementId === amountOfScrolledImages) {
-                        element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
-                    }
-                })
-                if (amountOfScrolledImages == numberOfChildElements - 1) {
-                    largeWorkButton.classList.add("visually_hidden") 
-                }
-                currentLeftButton = indexedLargeWorkLeftButtons.at(largeWorkButtonId)
-                currentLeftButton.classList.remove("visually_hidden")
-            })
+    //             currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
+    //                 if (elementId === amountOfScrolledImages) {
+    //                     element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+    //                 }
+    //             })
+    //             if (amountOfScrolledImages == numberOfChildElements - 1) {
+    //                 largeWorkButton.classList.add("visually_hidden") 
+    //             }
+    //             currentLeftButton = indexedLargeWorkLeftButtons.at(largeWorkButtonId)
+    //             currentLeftButton.classList.remove("visually_hidden")
+    //         })
 
-        })
-        buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
+    //     })
+    //     buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
 
-            if (amountOfScrolledImages === 0) {
-                largeWorkButton.classList.add("visually_hidden")
-            }
-            largeWorkButton.addEventListener("click", (e) => {
-                currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
-                numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+    //         if (amountOfScrolledImages === 0) {
+    //             largeWorkButton.classList.add("visually_hidden")
+    //         }
+    //         largeWorkButton.addEventListener("click", (e) => {
+    //             currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
+    //             numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
 
-                amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
-                if (amountOfScrolledImages > 0) {
-                    amountOfScrolledImages--
-                    scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
-                }
+    //             amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
+    //             if (amountOfScrolledImages > 0) {
+    //                 amountOfScrolledImages--
+    //                 scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
+    //             }
                 
-                // console.log("List:", scrollElementsIndexes)
+    //             // console.log("List:", scrollElementsIndexes)
 
-                currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
-                    if (elementId === amountOfScrolledImages) {
-                        element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
-                    }
-                })
-                if (amountOfScrolledImages === 0) {
-                    largeWorkButton.classList.add("visually_hidden") 
-                }
-                currentRightButton = indexedLargeWorkRightButtons.at(largeWorkButtonId)
-                currentRightButton.classList.remove("visually_hidden")
-            })
+    //             currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
+    //                 if (elementId === amountOfScrolledImages) {
+    //                     element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+    //                 }
+    //             })
+    //             if (amountOfScrolledImages === 0) {
+    //                 largeWorkButton.classList.add("visually_hidden") 
+    //             }
+    //             currentRightButton = indexedLargeWorkRightButtons.at(largeWorkButtonId)
+    //             currentRightButton.classList.remove("visually_hidden")
+    //         })
 
-        })
+    //     })
         
-    }
+    // }
+
     function boxScroll_fullScreen() {
         const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
+        // const largeWorkBox = document.querySelector(".largeWork_preview_box.fullScreenBox")
         const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.fullScreenButton")
         const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.fullScreenButton")
         const listLength = largeWorkImages.length
@@ -364,6 +369,13 @@
             // largeWorkButton.leftButtonIndex = indexOfLeftButton
             indexedLargeWorkLeftButtons.push(largeWorkButton)
         })
+
+        // const previewImagesInBox = largeWorkBox.querySelectorAll(".largeWork_element_preview.fullScreenPreview")
+        // let numberOfChildElements = previewImagesInBox.length
+
+        // if (amountOfScrolledImages === 0) {
+        //     button_left.classList.add("visually_hidden")
+        // }
         
         let amountOfScrolledImages = 0
         let numberOfChildElements = 0
@@ -371,6 +383,35 @@
         let currentRightButton
         let currentLeftButton
         
+        // button_right.addEventListener("click", () => {
+        //     if (amountOfScrolledImages < numberOfChildElements) {
+        //         amountOfScrolledImages++
+        //     }
+        //     previewImagesInBox.forEach( (element, elementId) => {
+        //         if (elementId === amountOfScrolledImages) {
+        //             element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+        //         }
+        //     })
+        //     if (amountOfScrolledImages == numberOfChildElements - 1) {
+        //         button_right.classList.add("visually_hidden")
+        //     }
+        //     button_left.classList.remove("visually_hidden")
+        // })
+        // button_left.addEventListener("click", () => {
+        //     if (amountOfScrolledImages > 0) {
+        //         amountOfScrolledImages--
+        //     }
+        //     previewImagesInBox.forEach( (element, elementId) => {
+        //         if (elementId === amountOfScrolledImages) {
+        //             element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+        //         }
+        //     })
+        //     if (amountOfScrolledImages === 0) {
+        //         button_left.classList.add("visually_hidden")
+        //     }
+        //     button_right.classList.remove("visually_hidden")
+        // })
+
         buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
             largeWorkButton.addEventListener("click", (e) => {
 
@@ -395,37 +436,6 @@
                 }
                 currentLeftButton = indexedLargeWorkLeftButtons.at(largeWorkButtonId)
                 currentLeftButton.classList.remove("visually_hidden")
-
-                // largeWorkImages.forEach( (largeWork, largeWorkId) => {
-                //     if (largeWorkId === largeWorkButtonId) {
-
-                //         numberOfChildElements = amountOfChildElementsList_fullScreen.at(largeWorkButtonId)
-
-                //         amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
-                //         if (amountOfScrolledImages < numberOfChildElements) {
-                //             amountOfScrolledImages++
-                //             scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
-                //         }
-                        
-                        
-                //         console.log("List:", scrollElementsIndexes)
-
-                //         largeWork.querySelectorAll(".largeWork_element_preview.fullScreenPreview").forEach( (element, elementId) => {
-                //             if (elementId == amountOfScrolledImages) {
-                //                 element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
-                //             }
-                //         })
-                //         if (amountOfScrolledImages == numberOfChildElements - 1) {
-                //             largeWorkButton.classList.add("visually_hidden") 
-                //         }
-                //         // buttons_left[largeWorkButtonId]
-                //         buttons_left.forEach( (leftButton, leftButtonId) => {
-                //             if (leftButtonId == largeWorkButtonId) {
-                //                 leftButton.classList.remove("visually_hidden")
-                //             }
-                //         })
-                //     }
-                // })
             })
 
         })
@@ -508,7 +518,7 @@
     
 
     function saveIntersectedElementsToSS() {
-        let elementsToSaveDefault = [ 24, 25, 26 ]
+        let elementsToSaveDefault = [ 27 ]
         let elementsToSave = []
 
         elementsToSaveDefault.forEach( elementToSave => {
@@ -582,8 +592,23 @@
             image.addEventListener("load", () => {
                 setTimeout(function () {
                     isLoaded()
-                }, 250)
+                }, 100)
             })
+        })
+    }
+    function lazyLoadedImagesFuncLogos() {
+        const lazyLoadedImages = document.querySelectorAll(".work_element_preview")
+        lazyLoadedImages.forEach(image => {
+            function isLoaded() {
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", () => {
+                isLoaded()
+            })
+            // image.removeEventListener("load", () => {
+            //     isLoaded()
+            //     console.log("removed")
+            // })
         })
     }
 </script>
@@ -639,7 +664,7 @@
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(0)}
-                        <img src={Portfolio_workPreviewElement_ART} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_ART} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -647,12 +672,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(1)}
-                        <img src={Portfolio_workPreviewElement_LXY} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_LXY} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(2)}
-                        <img src={Portfolio_workPreviewElement_Architect} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Architect} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -666,17 +691,17 @@
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(3)}
-                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(4)}
-                        <img src={Portfolio_workPreviewElement_Omic} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Omic} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(5)}
-                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 
@@ -685,17 +710,17 @@
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(6)}
-                        <img src={Portfolio_workPreviewElement_Anata} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Anata} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(7)}
-                        <img src={Portfolio_workPreviewElement_Bena} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Bena} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(8)}
-                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
 
@@ -708,17 +733,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(9)}
-                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(10)}
-                        <img src={Portfolio_workPreviewElement_Museum} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Museum} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(11)}
-                        <img src={Portfolio_workPreviewElement_Nameless} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Nameless} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
 
@@ -726,17 +751,17 @@
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(12)}
-                        <img src={Portfolio_workPreviewElement_Roe} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Roe} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(13)}
-                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(14)}
-                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
 
@@ -749,17 +774,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(15)}
-                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(16)}
-                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(17)}
-                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
 
@@ -767,17 +792,17 @@
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(18)}
-                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(19)}
-                        <img src={Portfolio_workPreviewElement_Lexi} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Lexi} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(20)}
-                        <img src={Portfolio_workPreviewElement_Tari} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Tari} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
 
@@ -790,12 +815,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(21)}
-                        <img src={Portfolio_workPreviewElement_DTM} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 0, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_DTM} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(22)}
-                        <img src={Portfolio_workPreviewElement_Eroy} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 100, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_Eroy} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -803,108 +828,125 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(23)}
-                        <img src={Portfolio_workPreviewElement_LLL} alt="Portfolio_workPreviewElement_ART" class="work_element_preview" in:fade={{ delay: 200, duration: 250, easing: quadOut}}>
+                        <img src={Portfolio_workPreviewElement_LLL} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
                     {/if}
                 </a>
             </div>
         </div>
     </div>
-    <div class="default_container endless flsWS forInsObs" id="fullScreenWorksSection" use:observeDefaultCont>
-        {#if $listOfIntersectedElementsSetter_DF.has(24)}
-            <div class="content_container work_summary_page fullscreenWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
-                <p class="largeWorks_upperText">Portfolio - websites</p>
-                <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
-                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={TFW_accountDetails} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_EditProject} loading="lazy" alt="Portfolio_TimerForWork">
-                        </a>
-                    </div>
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
-                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_main} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_cart} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_about} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_contact} loading="lazy" alt="Portfolio_Endimo_main">
-                        </a>
-                    </div>
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
-                        <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} loading="lazy" alt="Porftolio_AccountManager">
-                        </a>
-                    </div>
+    <div class="default_container endless flsWS" id="fullScreenWorksSection" use:observeDefaultCont>
+        <div class="content_container work_summary_page fullscreenWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }} use:loadLargeWorks>
+            <p class="largeWorks_upperText">Portfolio - websites</p>
+            <div class="fullScreenWorks_preview_grid">
+                <div class="forInsObs">
+                    {#if $listOfIntersectedElementsSetter_DF.has(24)}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
+                            <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TimerForWork} alt="Portfolio_TimerForWork">
+                                <img class="largeWork_element_preview fullScreenPreview" src={TFW_accountDetails} loading="lazy" alt="Portfolio_TimerForWork">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register} loading="lazy" alt="Portfolio_TimerForWork">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_main_mobile} loading="lazy" alt="Portfolio_TimerForWork">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_register_mobile} loading="lazy" alt="Portfolio_TimerForWork">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_TFW_EditProject} loading="lazy" alt="Portfolio_TimerForWork">
+                            </a>
+                        </div>
+                    {:else}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                            </a>
+                        </div>
+                    {/if}
+                </div>
+                <div class="forInsObs">
+                    {#if $listOfIntersectedElementsSetter_DF.has(25)}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
+                            <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_main} alt="Portfolio_Endimo_main">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_cart} loading="lazy" alt="Portfolio_Endimo_main">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_about} loading="lazy" alt="Portfolio_Endimo_main">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_Endimo_contact} loading="lazy" alt="Portfolio_Endimo_main">
+                            </a>
+                        </div>
+                    {:else}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                            </a>
+                        </div>
+                    {/if}
+                </div>
+                <div class="forInsObs">
+                    {#if $listOfIntersectedElementsSetter_DF.has(26)}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
+                            <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Porftolio_AccountManager} alt="Porftolio_AccountManager">
+                            </a>
+                        </div>
+                    {:else}
+                        <div class="largeWork_preview_box_wrapper fullScreenWrapper">
+                            <a href="#blank" class="largeWork_preview_box fullScreenBox">
+                                <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
+                            </a>
+                        </div>
+                    {/if}
                 </div>
             </div>
-        {:else}
+        </div>
+        <!-- {:else}
             <div class="content_container work_summary_page fullscreenWorks fakeSections">
                 <p class="largeWorks_upperText">Portfolio - websites</p>
                 <div class="fullScreenWorks_preview_grid">
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
-                        </a>
-                    </div>
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
-                        </a>
-                    </div>
-                    <div class="largeWork_preview_box_wrapper fullScreenWrapper">
-                        <a href="#blank" class="largeWork_preview_box fullScreenBox">
-                            <img class="largeWork_element_preview fullScreenPreview" src={Portfolio_WorksPreviewDecor} loading="lazy" alt="Portfolio_WorksPreviewDecor">
-                        </a>
-                    </div>
+                    
+                    
+                    
                 </div>
             </div>
-        {/if}
+        {/if} -->
     </div>
     <div class="default_container endless hlfsWS forInsObs" id="largeWorksSection" use:observeDefaultCont>
-        {#if $listOfIntersectedElementsSetter_DF.has(25)}
-            <div class="content_container work_summary_page largeWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
+        {#if $listOfIntersectedElementsSetter_DF.has(27)}
+            <div class="content_container work_summary_page largeWorks" in:fade={{ delay: 0, duration: 300, easing: quadOut }} use:loadHalfWorks>
                 <p class="largeWorks_upperText">Portfolio - banners</p>
-                <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
+                <!-- use:boxScroll use:checkForAmountOfChildren -->
+                <div class="largeWorks_preview_grid" use:lazyLoadedImagesFunc data-sveltekit-preload-data="tap">
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
-                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <!-- bind:offsetWidth={largeWork_preview_box_wrapper_WIDTH} -->
+                        <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
                         <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_TravelinPoster} loading="lazy" alt="Portfolio_Postttrrr">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
-                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
                         <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Mount_Fuji} loading="lazy" alt="Portfolio_Mount_Fuji">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
-                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
                         <a href="/portfolio/project_page/tomato_Poster" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_FakePoster_LowRes} loading="lazy" alt="Portfolio_FakePoster_LowRes">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="Postrrr">
-                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
                         <a href="/portfolio/project_page/action_Postrrr" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_Postttrrr} loading="lazy" alt="Portfolio_Postttrrr">
                         </a>
                     </div>
                     <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="GeometryFontType">
-                        <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                        <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
                         <a href="/portfolio/project_page/ABC_poster" class="largeWork_preview_box halfScreenBox">
                             <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
                         </a>
@@ -946,7 +988,7 @@
     </div>
     
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection" use:observeDefaultCont>
-        {#if $listOfIntersectedElementsSetter_DF.has(26)}
+        {#if $listOfIntersectedElementsSetter_DF.has(28)}
             <div class="content_container work_summary_page" in:fade={{ delay: 0, duration: 300, easing: quadOut }}>
                 <p class="largeWorks_upperText">Portfolio - fonts</p>
                 <div class="fontPresentationWrapper">
@@ -965,11 +1007,11 @@
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 1500, start: 0.95, easing: elasticOut, opacity: 1 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 200, start: 0.75, easing: sineInOut, opacity: 0 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
-                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} fadeAnimation_Delay=100 workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                    <WorkPresent workElementImage={Portfolio_workPreviewElement_ART} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
@@ -1405,6 +1447,7 @@
         width: 80%;
         max-height: 80%;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
+        opacity: 0;
     }
 
     .work_element_preview_box.rounded > .work_element_preview{
@@ -1610,7 +1653,7 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
-        scale: 0.95;
+        scale: 1.05;
         filter: blur(max(3rem, 3vw));
         border-radius: max(2.6rem, 2.6vw);
     }
@@ -1650,6 +1693,9 @@
     .scrollLeftAndRightButton:active{
         scale: 1;
     }
+    .scrollLeftAndRightButton:is(:hover) > .largeWork_scrollButton{
+        translate: -7.5% 0;
+    }
     .scrollLeftAndRightButton:is(.visually_hidden){
         opacity: 0;
         visibility: hidden;
@@ -1658,11 +1704,11 @@
     .largeWork_preview_box_wrapper:has(.largeWork_preview_box:not(.moreThanOneChild)) .scrollLeftAndRightButton {
         /* opacity: 0; */
         display: none;
-        /* transition: opacity 0.1s ease, visibility 0.1s ease; */
     }
     .largeWork_scrollButton{
         width: 60%;
         aspect-ratio: 1;
+        transition: translate 0.75s var(--wiggleTransition);
     }
     .scrollLeftAndRightButton.left{
         left: max(0.5rem, 0.5vw);
@@ -1685,7 +1731,7 @@
     *:is(.isLoaded){
         opacity: 1;
         /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(0); */
-        transition: opacity 0.5s ease-in;
+        transition: opacity 0.4s ease-in;
     }
 
     @media (width < 1000px) {

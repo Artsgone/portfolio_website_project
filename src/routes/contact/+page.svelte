@@ -79,7 +79,7 @@
 
     function optionMenuDisplay() {
         if (!optionMenuShow) {
-            border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0; filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));"
+            border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0;"
             arrow_rotation = "180deg"
             optionMenuShow = true
         }
@@ -276,7 +276,7 @@
                     
                     <img class="Global_arrowDropdownMenu" src={Global_arrowDropdownMenu} alt="Global_arrowDropdownMenu" style="rotate: {arrow_rotation};"> 
                     {#if optionMenuShow}
-                        <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-2.5vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
+                        <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-3vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
                                  <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
@@ -544,7 +544,7 @@
         grid-template-columns: 1fr;
         grid-auto-rows: max(3.75vw, 6vh);
         align-items: center;
-        max-height: 350%;
+        max-height: 375%;
         overflow-y: scroll;
         overflow-x: clip;
         overscroll-behavior: none;

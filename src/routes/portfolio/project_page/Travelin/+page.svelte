@@ -1,8 +1,8 @@
 <script>
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { sineInOut } from 'svelte/easing';
+    import { elasticOut, sineInOut } from 'svelte/easing';
 
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
     import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
@@ -65,7 +65,7 @@
         {#if y < (50) || oldY > y}
             <Sticky_navbar anchorLinkToLargeWork="#TravelinBanner" />
         {/if}
-        <div class="content_container">
+        <div class="content_container" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.03, opacity: 1 }}>
             <div class="project_image_wrapper"> <img class="project_image" src={Portfolio_TravelinPoster} alt="Portfolio_Mount_Fuji"> </div>
             
             <div class="project_name"> Travelin </div>

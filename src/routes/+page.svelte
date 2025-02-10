@@ -147,7 +147,7 @@
         let timeOutTime = 0
         lazyLoadedImages.forEach((image) => {
             if (!image.classList.contains("SVG")) {
-                timeOutTime = 350
+                timeOutTime = 150
             }
             function isLoaded() {
                 image.classList.add("isLoaded")
@@ -247,11 +247,11 @@
             <div class="content_container page4" use:lazyLoadedImagesFunc>
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG forLazyLoad" loading="lazy" src={sunsetInTheClouds} alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={sunsetInTheClouds} alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
-                <div class="right_part page4" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                    <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
+                <div class="right_part page4">
+                    <div class="page4_title_text darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Gorgeous sunset in the clouds</div>
                 </div>
             </div>
         {/if}
@@ -260,11 +260,11 @@
         {#if $listOfIntersectedElementsSetter.has(5)}
             <div class="content_container page5" use:lazyLoadedImagesFunc>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG1 forLazyLoad" loading="lazy" src={dandelions} alt="dandelionIMG">
+                    <img class="dandelion IMG1 forLazyLoad" src={dandelions} alt="dandelionIMG">
                 </div>
                 <div class="page5_gradient"></div>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG2 forLazyLoad" loading="lazy" src={dandelions} alt="dandelionIMG">
+                    <img class="dandelion IMG2 forLazyLoad" src={dandelions} alt="dandelionIMG">
                 </div>
                 <div class="page5_title_text lightgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Distinguished <br> dream, <br> pure <br> perfection.</div>
                 <div class="page5_title_text lightgrayText blured" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Distinguished <br> dream, <br> pure <br> perfection.</div>
@@ -275,7 +275,7 @@
         {#if $listOfIntersectedElementsSetter.has(6)}
             <div class="content_container page6" use:lazyLoadedImagesFunc>
                 <div class="left_part img_box">
-                    <img class="goldenLeaves forLazyLoad" loading="lazy" src={goldenLeaves} alt="goldenLeaves">
+                    <img class="goldenLeaves forLazyLoad" src={goldenLeaves} alt="goldenLeaves">
                 </div>
                 <div class="right_part page6" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
@@ -288,7 +288,7 @@
         {#if $listOfIntersectedElementsSetter.has(7)}
             <div class="content_container page7" use:lazyLoadedImagesFunc>
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" loading="lazy" src={violetFlowers} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" src={violetFlowers} alt="Violet_flowers">
                 </div>
                 
                 <div class="text_wrapper_page7 firstLayer lightgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
@@ -307,7 +307,7 @@
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" loading="lazy" src={modernBuilding} alt="Modern_building">
+                    <img class="Modern_building forLazyLoad" src={modernBuilding} alt="Modern_building">
                 </div>
             </div>
         {/if}
@@ -1050,7 +1050,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        scale: -1 1;
+        /* scale: -1 1; */
     }
     
     .text_wrapper_page7{
@@ -1065,6 +1065,7 @@
         font-size: max(4.5rem, 8vw);
         line-height: max(6rem, 10vw);
         inset: 5% 10%;
+        direction: rtl;
     }
     .text_wrapper_page7.firstLayer{
         z-index: 2;

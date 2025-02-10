@@ -1,7 +1,8 @@
 <script>
     import { fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
-
+    import '$lib/styles_and_fonts/fonts.css'
+    import '$lib/styles_and_fonts/styles.css'
     import backButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
     export let anchorLinkToLargeWork = "#largeWorksSection"
@@ -58,16 +59,29 @@
         text-decoration: none;
         font-family: 'Neutral_Normal', system-ui, sans-serif;
         color: var(--text_color_gray5);
-        backdrop-filter: blur(0.5rem) invert(0.2);
-        background-color: var(--background_color_lightCyan_lowerOpacity);
-        box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
+        backdrop-filter: blur(max(1vw, 1rem)) brightness(90%);
+        background-color: var(--background_color_lightCyan_lowerOpacity075);
+        /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
+        filter: drop-shadow(0 0 max(.5rem, 0.5vw) var(--background_color_lightCyanSaturated));
 
         border: max(4px, 0.250vw) var(--background_color_lightCyan) solid;
         border-radius: max(1vw, 1rem);
+        transition: scale 1s var(--wiggleTransition);
     }
     .backButtonArrow{
         height: 45%;
         aspect-ratio: 1;
-        filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated));
+        transition: translate 1s var(--wiggleTransition), scale 1s var(--wiggleTransition);
+        /* filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated)); */
+    }
+    .back_button:hover > .backButtonArrow{
+        translate: -20% 0;
+        scale: 1.1;
+    }
+    .back_button:hover{
+        scale: 1.05;
+    }
+    .back_button:active{
+        scale: 1;
     }
 </style>

@@ -114,7 +114,7 @@
                         <p class="work_description">{workElementText} <slot/> </p>
                     </div>
                 </div>
-                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1 }} use:lazyLoadedImagesFunc>
+                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.95, opacity: 1 }} use:lazyLoadedImagesFunc>
                         <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
                     </div>
                     {#if enableScrollAllow && description_box_height > 300}

@@ -198,7 +198,7 @@
                 <div class="text languages">
                     <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
                     <p class="darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                        English - B2 / C1 <br>
+                        English - C1 <br>
                         Czech - Fluent <br>
                         Russian - Fluent
                     </p>
@@ -291,7 +291,7 @@
     }
     *:is(.isLoaded){
         opacity: 1;
-        transition: opacity 1s cubic-bezier(0.313, 0.158, 0, 0.524);
+        transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     
     *, *::before, *::after {
@@ -526,7 +526,7 @@
     .AboutMe_LanguagesYellowHighlight{
         position: absolute;
         width: 40%;
-        translate: 130% -5%;
+        translate: 135% -5%;
         z-index: -1;
         filter: blur(max(0.5rem, 0.5vw));
         border-radius: max(1rem, 1vw);

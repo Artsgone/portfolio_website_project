@@ -38,14 +38,11 @@ class="scrollUp_button" on:click={scrollToTop}>
     }
     .scrollUp_button:hover > .arrowIcon{
         translate: 0 -15%;
-        transition: translate 1s var(--wiggleTransition);
     }
     .scrollUp_button:hover{
         scale: 1.1;
-        transition: scale 1s var(--wiggleTransition);
     }
     .scrollUp_button:active{
         scale: 1;
-        transition: scale 1s var(--wiggleTransition);
     }
 </style>
