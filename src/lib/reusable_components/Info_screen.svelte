@@ -2,7 +2,7 @@
     import { fly, scale } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
-    import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
+    // import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
     // export let closeInfoScreen;
     export let statusCode;
 

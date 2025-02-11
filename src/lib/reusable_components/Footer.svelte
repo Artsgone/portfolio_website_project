@@ -9,8 +9,8 @@
     export let footer_Decor_ID = ""
     export let snap_align = 'end'
 
-    import '$lib/styles_and_fonts/fonts.css'
-    import '$lib/styles_and_fonts/styles.css'
+    // import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/styles.css'
 
     let authorName_element = false;
     function animate_troll(){
@@ -222,6 +222,7 @@
     }
     .footer_Decor{
         width: max(25rem, 60%);
+        max-height: 100%;
         align-self: flex-end;
         grid-area: 1 / 2 / 3 / 4;
         /* z-index: -1; */

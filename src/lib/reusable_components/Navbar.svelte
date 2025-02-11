@@ -6,8 +6,8 @@
     export let linkAddress2 = ""
     export let linkAddress3 = ""
 
-    import '$lib/styles_and_fonts/fonts.css'
-    import '$lib/styles_and_fonts/styles.css'
+    // import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/styles.css'
 
 </script>
 
@@ -37,6 +37,7 @@
     }
     .navbar_container {
         width: 100%;
+        margin-bottom: max(1vw, 1vh);
         container-type: inline-size;
     }
     .navbar_inner {
@@ -125,7 +126,6 @@
     @container (inline-size < 500px) {
         .navbar_inner{
             gap: 1.6rem;
-            /* margin-bottom: 5vh; */
             margin-bottom: 2.5vh;
         }
         .navbar_list{

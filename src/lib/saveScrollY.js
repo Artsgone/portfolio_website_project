@@ -1,7 +1,7 @@
-import { writable } from "svelte/store";
+// import { writable } from "svelte/store";
 
 function storePrerefreshScrollPosition(scrollY){
-    const { subscribe, set, update } = writable(scrollY);
+    // const { subscribe, set, update } = writable(scrollY);
 
     function updateScrollY(scrollY){
         sessionStorage.setItem("stored_scrollY", scrollY)
@@ -10,7 +10,7 @@ function storePrerefreshScrollPosition(scrollY){
         sessionStorage.setItem("stored_scrollY", 0)
     }
 
-    return { subscribe, updateScrollY, resetScrollY }
+    return { updateScrollY, resetScrollY }
 }
 
 export const saveScrollY = storePrerefreshScrollPosition(0);

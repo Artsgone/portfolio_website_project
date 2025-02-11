@@ -315,10 +315,14 @@
     <!-- <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
     titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
-
-    <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
-    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-    titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
+    <div class="default_container ghost">
+        {#if $listOfIntersectedElementsSetter.has(9)}
+             <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
+            linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
+            titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
+        {/if}
+    </div>
+    
 </main>
 
 <style >
@@ -374,7 +378,13 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
-    
+    .default_container.ghost{
+        height: auto;
+        background-color: none;
+        box-shadow: none;
+        border-bottom: none;
+        scroll-snap-align: none;
+    }
     .content_container{
         width: 92.5%;
         height: 87.5%;
@@ -426,8 +436,8 @@
     }
     #MainPage_titlePageSVG{
         width: var(--element_size_title_decor_main_page);
+        max-height: 100vh;
         position: absolute;
-        /* left: 19%; */
     }
     .title_name{
         font-size: var(--text_size_title_ultrabig);

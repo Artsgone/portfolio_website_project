@@ -1,8 +1,8 @@
 <script>
     import { fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
-    import '$lib/styles_and_fonts/fonts.css'
-    import '$lib/styles_and_fonts/styles.css'
+    // import '$lib/styles_and_fonts/fonts.css'
+    // import '$lib/styles_and_fonts/styles.css'
     import backButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
     export let anchorLinkToLargeWork = "#largeWorksSection"
@@ -72,7 +72,7 @@
         height: 45%;
         aspect-ratio: 1;
         transition: translate 1s var(--wiggleTransition), scale 1s var(--wiggleTransition);
-        /* filter: drop-shadow(0 0 max(.5rem, .5vw) var(--background_color_darkCyanSaturated)); */
+        filter: drop-shadow(0 0 max(.75rem, .75vw) var(--background_color_darkCyanSaturated));
     }
     .back_button:hover > .backButtonArrow{
         translate: -20% 0;

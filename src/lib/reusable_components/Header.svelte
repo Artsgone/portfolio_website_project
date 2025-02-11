@@ -11,7 +11,7 @@
         <div class="inner_header left">
             <img id="A_Logo" src={A_Logo} alt="A_Logo">
         </div>
-        {#if innerWidth > 800}
+        {#if innerWidth > 850}
             <div class="inner_header right">
                 <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
             </div>
@@ -50,8 +50,9 @@
         align-items: start;
     }
     #A_Logo{
-        width: max(10vh, 6rem);
-        width: max(5svw, 6rem);
+        /* width: max(10vh, 6rem); */
+        width: max(5vw, 6rem);
+        max-height: 100%;
         translate: 0 1vh;
     }
     .title_Decor{

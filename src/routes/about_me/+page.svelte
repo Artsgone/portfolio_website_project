@@ -433,6 +433,7 @@
         font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         font-size: var(--text_size_medium);
         line-height: var(--text_line_height_medium);
+        text-wrap: pretty;
     }
     .text.education > p > span.university_name{
         font-size: max(2.25vw, 2rem);
