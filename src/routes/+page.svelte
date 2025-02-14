@@ -8,6 +8,7 @@
     import MainPage_titlePageDecor from '$lib/svg_files/MainPage/MainPage_titlePageDecor.svg'
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     import MainPage_FooterDecor from '$lib/svg_files/MainPage/MainPage_footerDecor.svg'
+    import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
 //
     import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin_q.png'
 //
@@ -16,7 +17,7 @@
 //
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { onMount } from "svelte";
-    import { writable } from "svelte/store";
+    import { get, writable } from "svelte/store";
     import { fly, scale } from 'svelte/transition';
     import { elasticOut } from 'svelte/easing';
     
@@ -41,6 +42,7 @@
         pageLoaded = true
         // Header = (await import('$lib/reusable_components/Header.svelte')).default
         // Navbar = (await import('$lib/reusable_components/Navbar.svelte')).default
+        // import('$lib/styles_and_fonts/fonts.css')
         Footer = (await import('$lib/reusable_components/Footer.svelte')).default
         ScrollUpButtonLazy = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
 
@@ -50,12 +52,6 @@
         MainPage_earLikeThingSVG = (await import('$lib/svg_files/MainPage/MainPage_earLikeThingSVG.svg')).default
         MainPage_MY = (await import('$lib/svg_files/MainPage/MY.svg')).default
         MainPage_YellowHighlight = (await import('$lib/svg_files/MainPage/MainPage_YellowHighlight.svg')).default
-
-        sunsetInTheClouds = (await import('$lib/compressed_images/sunset_inthe_clouds.webp')).default
-        dandelions = (await import('$lib/compressed_images/IMG_20210627_185235-min.webp')).default
-        goldenLeaves = (await import('$lib/compressed_images/golden_leaves.webp')).default
-        violetFlowers = (await import('$lib/compressed_images/Violet_flowers.webp')).default
-        modernBuilding = (await import('$lib/compressed_images/Modern_building.jpg')).default
         // const interval = setInterval(() => {
         // }, 1000);
         // return () => clearInterval(interval);
@@ -73,26 +69,101 @@
         pageLoaded = true
     });
 
-    let sunsetInTheClouds
-    let dandelions
-    let goldenLeaves
-    let violetFlowers
-    let modernBuilding
+    let sunsetInTheClouds = ""
+    let dandelions = ""
+    let goldenLeaves = ""
+    let violetFlowers = ""
+    let modernBuilding = ""
+
+    const imageMap = writable(new Map())
+
+    // let pathsToImages = {
+    //     1: '../lib/compressed_images/sunset_inthe_clouds.webp',
+    //     2: '../lib/compressed_images/IMG_20210627_185235-min.webp',
+    //     3: '../lib/compressed_images/golden_leaves.webp',
+    //     4: '../lib/compressed_images/Violet_flowers.webp',
+    //     5: '../lib/compressed_images/Modern_building_C.avif',
+    // }
+    async function importAllImages() {
+        // let newImages = new Map()
+
+        // await Promise.all(
+        //     Object.entries(pathsToImages).map(async ([index, path]) => {
+        //         if (!newImages.has(index)) {
+        //             const module = await import(/* @vite-ignore */ path)
+        //             const img = new Image()
+        //             img.src = module.default
+        //             await img.decode()
+        //             newImages.set(index, module.default)
+        //         }
+        //     })
+        // )
+        // imageMap.set(newImages)
+        
+        // import('$lib/compressed_images/sunset_inthe_clouds.webp').then((module) => {
+        //     const img = new Image()
+        //     img.src = module.default
+        //     img.decode().then(() => {
+        //         sunsetInTheClouds = module.default
+        //     })
+        // })
+        // import('$lib/compressed_images/IMG_20210627_185235-min.webp').then((module) => {
+        //     const img = new Image()
+        //     img.src = module.default
+        //     img.decode().then(() => {
+        //         dandelions = module.default
+        //     })
+        // })
+        // import('$lib/compressed_images/golden_leaves.webp').then((module) => {
+        //     const img = new Image()
+        //     img.src = module.default
+        //     img.decode().then(() => {
+        //         goldenLeaves = module.default
+        //     })
+        // })
+        // import('$lib/compressed_images/Violet_flowers.webp').then((module) => {
+        //     const img = new Image()
+        //     img.src = module.default
+        //     img.decode().then(() => {
+        //         violetFlowers = module.default
+        //     })
+        // })
+        // import('$lib/compressed_images/Modern_building_C.avif').then((module) => {
+        //     const img = new Image()
+        //     img.src = module.default
+        //     img.decode().then(() => {
+        //         modernBuilding = module.default
+        //     })
+        // })
+        
+        sunsetInTheClouds = (await import('$lib/compressed_images/sunset_in_the_clouds_1280.avif')).default
+        dandelions = (await import('$lib/compressed_images/dandelion_1280.avif')).default
+        goldenLeaves = (await import('$lib/compressed_images/golden_leaves_1280.avif')).default
+        violetFlowers = (await import('$lib/compressed_images/violet_flowers_1280.avif')).default
+        modernBuilding = (await import('$lib/compressed_images/modern_building_1280.avif')).default
+    }
 
     let svelte_main_element
     let y = 0
     
+    let timeIsOut = false
     let newY = []
     $: oldY = newY[1]
+
     function updateY(){
-        y = svelte_main_element.scrollTop
-        if (y % 4 == 0) {
-            newY.push(y)
-            if(newY.length > 5) {
-                newY.shift()
-            }
-            newY=newY
+        if (!timeIsOut) {
+            setTimeout(function () {
+                y = svelte_main_element.scrollTop
+                // console.log(y)
+                newY.push(y)
+                if(newY.length > 5) {
+                    newY.shift()
+                }
+                newY=newY
+                timeIsOut = false
+            }, 100)
         }
+        timeIsOut = true
     }
 
     const listOfIntersectedElementsSetter = writable(new Set())
@@ -102,15 +173,19 @@
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
         let intersectingElementIndex
+        let imagesImported = false
 
         const intersecObserver = new IntersectionObserver( entries => {
             entries.forEach( entry => {
                 intersectingElementIndex = entry.target.containerIndex
-                
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+                    if (intersectingElementIndex > 2 && !imagesImported) {
+                        importAllImages()
+                        imagesImported = true
+                    }
                     listOfIntersectedElementsSetter.update(set => {
-                        // entry.target.classList.add("showOnScreen")
-                        // console.log(intersectingElementIndex, entry.target, 'is visible');
+                        entry.target.classList.add("showOnScreen")
+                        console.log(intersectingElementIndex, 'is visible');
                         set.add(intersectingElementIndex)
                         return set
                     })
@@ -120,7 +195,7 @@
                     
                     if (amountOfElementsObserved == listLenght - 1) {
                         intersecObserver.disconnect()
-                        // console.log("DISCONNECTED")
+                        console.log("DISCONNECTED")
                     }
                 }
                     
@@ -128,7 +203,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: 0.2,
+                threshold: [0, 0.1],
                 rootMargin: "0px",
             }
         )
@@ -173,7 +248,7 @@
 <svelte:window bind:innerHeight />
 
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement use:lazyLoadedImagesFunc>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -197,13 +272,15 @@
             
             <!-- <svelte:component this={Navbar} firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
             linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/> -->
+
+            <!-- in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }} -->
         </div>
     </div>
     <div class="default_container greeting">
-         {#if $listOfIntersectedElementsSetter.has(1)}
-             <div class="content_container greeting_page" use:lazyLoadedImagesFunc>
-                <div class="wrapper_greetingSVG" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
+        <!-- {#if $listOfIntersectedElementsSetter.has(1)} -->
+            <div class="content_container greeting_page">
+                <div class="wrapper_greetingSVG">
+                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(1) ? MainPage_greetingPageSVG : ""} data-src={MainPage_greetingPageSVG} alt="MainPage_greetingPageSVG">
                 </div>
                 <div class="text introducing">
                     <p class="lightgrayText">
@@ -212,116 +289,111 @@
                     </p>
                 </div>
             </div>
-         {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container greeting dwnCV">
-        {#if $listOfIntersectedElementsSetter.has(2)}
-            <div class="content_container CV_download_page" use:lazyLoadedImagesFunc>
-                <div class="text cvDownload" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+        <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
+            <div class="content_container CV_download_page">
+                <div class="text cvDownload">
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
                     <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.5 }}>
-                         Download <img class="MainPage_cvDownloadDecor forLazyLoad SVG" src={MainPage_cvDownloadDecor} alt=">">
+                        Download <img class="MainPage_cvDownloadDecor forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(2) ? MainPage_cvDownloadDecor : ""} data-src={MainPage_cvDownloadDecor} alt=">">
                     </a>
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container cyanSaturated">
-        {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container introductionToPhotos_page" use:lazyLoadedImagesFunc>
-                <div class="top_part page3" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
-                    <img class="MY forLazyLoad SVG" src={MainPage_MY} alt="MY">
-                    <img class="earLikeThing forLazyLoad SVG" src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
+        <!-- {#if $listOfIntersectedElementsSetter.has(3)} -->
+            <div class="content_container introductionToPhotos_page">
+                <div class="top_part page3">
+                    <img class="MY forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? MainPage_MY : ""} data-src={MainPage_MY} alt="MY">
+                    <img class="earLikeThing forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? MainPage_earLikeThingSVG : ""} data-src={MainPage_earLikeThingSVG} alt="MainPage_earLikeThingSVG">
                 </div>
-                <div class="bottom_part page3" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
-                    <img class="copyright_text forLazyLoad SVG" src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
+                <div class="bottom_part page3">
+                    <img class="copyright_text forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? MainPage_MyPhotosDecorElement : ""} data-src={MainPage_MyPhotosDecorElement} alt="MainPage_MyPhotosDecorElement">
                     <div class="photo_collection_text lightgrayText">photo <br> collection</div>
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container page4" use:lazyLoadedImagesFunc>
+        <!-- {#if $listOfIntersectedElementsSetter.has(4)} -->
+            <div class="content_container page4">
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={sunsetInTheClouds} alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? sunsetInTheClouds : ""} data-src={Portfolio_WorksPreviewDecor} loading="lazy" alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
                 <div class="right_part page4">
-                    <div class="page4_title_text darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Gorgeous sunset in the clouds</div>
+                    <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container page5" use:lazyLoadedImagesFunc>
+        <!-- {#if $listOfIntersectedElementsSetter.has(5)} -->
+            <div class="content_container page5">
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG1 forLazyLoad" src={dandelions} alt="dandelionIMG">
+                    <img class="dandelion IMG1 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? dandelions : ""} data-src={dandelions} loading="lazy" alt="dandelionIMG">
                 </div>
                 <div class="page5_gradient"></div>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG2 forLazyLoad" src={dandelions} alt="dandelionIMG">
+                    <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? dandelions : ""} data-src={dandelions} loading="lazy" alt="dandelionIMG">
                 </div>
-                <div class="page5_title_text lightgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Distinguished <br> dream, <br> pure <br> perfection.</div>
-                <div class="page5_title_text lightgrayText blured" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>Distinguished <br> dream, <br> pure <br> perfection.</div>
+                <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
+                <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(6)}
-            <div class="content_container page6" use:lazyLoadedImagesFunc>
+        <!-- {#if $listOfIntersectedElementsSetter.has(6)} -->
+            <div class="content_container page6">
                 <div class="left_part img_box">
-                    <img class="goldenLeaves forLazyLoad" src={goldenLeaves} alt="goldenLeaves">
+                    <img class="goldenLeaves forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? goldenLeaves : ""} data-src={goldenLeaves} loading="lazy" alt="goldenLeaves">
                 </div>
-                <div class="right_part page6" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+                <div class="right_part page6">
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
                     <img class="MainPage_YellowHighlight forLazyLoad" src={MainPage_YellowHighlight} alt="MainPage_YellowHighlight">
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(7)}
-            <div class="content_container page7" use:lazyLoadedImagesFunc>
+        <!-- {#if $listOfIntersectedElementsSetter.has(7)} -->
+            <div class="content_container page7">
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" src={violetFlowers} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? violetFlowers : ""} data-src={violetFlowers} loading="lazy" alt="Violet_flowers">
                 </div>
-                
-                <div class="text_wrapper_page7 firstLayer lightgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+                <div class="text_wrapper_page7 firstLayer lightgrayText">
                     <p>Rusty steel, rough concrete</p>
                 </div>
                 <div class="text_wrapper_page7 secondLayer">
                     <p>Rusty steel, rough concrete</p>
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(8)}
-            <div class="content_container page8" use:lazyLoadedImagesFunc>
-                <div class="text_wrapper_page8 darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
+        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
+            <div class="content_container page8">
+                <div class="text_wrapper_page8 darkgrayText">
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" src={modernBuilding} alt="Modern_building">
+                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? modernBuilding : ""} data-src={modernBuilding} loading="lazy" alt="Modern_building">
                 </div>
             </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <!-- <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
-    linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-    titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
-    <div class="default_container ghost">
-        {#if $listOfIntersectedElementsSetter.has(9)}
-             <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
-            linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-            titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
-        {/if}
-    </div>
+        linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
+        titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
+    <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
+        linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
+        titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/>
     
 </main>
 
@@ -353,12 +425,14 @@
 
     .forLazyLoad{
         opacity: 0;
-    }
-    *:is(.isLoaded){
-        opacity: 1;
         transition: opacity 1s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
-
+    .forLazyLoad.SVG{
+        transition: opacity 0.25s cubic-bezier(0.313, 0.158, 0, 0.524);
+    }
+    .forLazyLoad:is(.isLoaded){
+        opacity: 1;
+    }
 
     *, *::before, *::after {
         margin: 0;
@@ -378,16 +452,29 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
-    .default_container.ghost{
+    .default_container:not(.cyan):is(.showOnScreen) > .content_container{
+        opacity: 1;
+        scale: 1;
+        translate: 0 0%;
+    }
+     .default_container:not(.cyan) > .content_container{
+        opacity: 0;
+        scale: 1;
+        translate: 0 7.5%;
+        transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1.5s var(--wiggleTransition);
+    }
+    /* .default_container.ghost{
         height: auto;
         background-color: none;
         box-shadow: none;
         border-bottom: none;
         scroll-snap-align: none;
-    }
+    } */
     .content_container{
         width: 92.5%;
         height: 87.5%;
+        max-height: 87.5vh;
+        max-width: 92.5vw;
         /* transition-behavior: allow-discrete; */
     }
 
@@ -404,7 +491,7 @@
         height: 100svh;
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
-        border: none;
+        border-bottom: none;
     }
     *::selection{
         background-color: var(--background_color_lightCyan);
@@ -426,6 +513,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
+        /* min-height: 50svh; */
     }
     .title_page_name{
         position: relative;
@@ -480,12 +568,13 @@
     .default_container.greeting{
         background-color: hsl(0, 0%, 0%);
         box-shadow: none;
-        border: none;
+        border-bottom: none;
     }
     .content_container.greeting_page{
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 1fr 1.2fr;
+        grid-template-rows: 1fr;
         align-content: center;
         justify-items: center;
     }
@@ -822,7 +911,7 @@
         height: 90%;
         max-height: 75vh;
         z-index: 1;
-        background-image: url(/src/lib/compressed_images/sunset_inthe_clouds_HighlyCompressed.jpg);
+        background-image: url(/src/lib/compressed_images/sunset_inthe_clouds_HighlyCompressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -916,7 +1005,7 @@
         overflow: clip;
     }
     .dandelion_img_box{
-        background-image: url(/src/lib/compressed_images/Sunflower_HighlyCompressed.jpg);
+        background-image: url(/src/lib/compressed_images/Sunflower_HighlyCompressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -1049,7 +1138,7 @@
     .image_wrapper_page7{
         max-width: 100%;
         min-height: 100%;
-        background-image: url(/src/lib/compressed_images/Violet_flowers_HighlyCompressed.jpg);
+        background-image: url(/src/lib/compressed_images/Violet_flowers_HighlyCompressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -1105,7 +1194,7 @@
     .image_wrapper_page8{
         max-width: 100%;
         min-height: 100%;
-        background-image: url(/src/lib/compressed_images/Modern_building_compressed.jpg);
+        background-image: url(/src/lib/compressed_images/Modern_building_compressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

@@ -20,19 +20,19 @@
     font-family: 'Subjectivity_Regular';
     font-style: normal;
     src: url('/src/lib/fonts/Subjectivity/Subjectivity-Regular.woff2');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Subjectivity_Medium';
     font-style: normal;
     src: url('/src/lib/fonts/Subjectivity/Subjectivity-Medium.woff2');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Subjectivity_Bold';
     font-style: normal;
     src: url('/src/lib/fonts/Subjectivity/Subjectivity-Bold.woff2');
-    font-display: swap;
+    font-display: block;
 }
 @font-face {
     font-family: 'Misto';

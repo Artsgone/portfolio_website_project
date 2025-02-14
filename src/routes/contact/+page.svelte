@@ -59,17 +59,23 @@
     let y = 0
     let svelte_main_element
     
+    let timeIsOut = false
     let newY = []
     $: oldY = newY[1]
+
     function updateY(){
-        y = svelte_main_element.scrollTop;
-        if (y % 4 == 0) {
-            newY.push(y)
-            if(newY.length > 5) {
-                newY.shift()
-            }
-            newY=newY
+        if (!timeIsOut) {
+            setTimeout(function () {
+                y = svelte_main_element.scrollTop
+                newY.push(y)
+                if(newY.length > 5) {
+                    newY.shift()
+                }
+                newY=newY
+                timeIsOut = false
+            }, 100)
         }
+        timeIsOut = true
     }
     
     let optionMenuShow = false;
@@ -353,8 +359,8 @@
         scroll-snap-align: center;
     }
     .content_container{
-        width: 92.5%;
         height: 87.5%;
+        width: 92.5%;
     }
     .darkgrayText{
         color: var(--text_color_gray90);

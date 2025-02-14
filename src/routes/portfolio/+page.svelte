@@ -122,32 +122,32 @@
         pageLoaded = true;
     });
 
-    let Portfolio_workPreviewElement_ART
-    let Portfolio_workPreviewElement_Omic
-    let Portfolio_workPreviewElement_Roe
-    let Portfolio_workPreviewElement_Architect
-    let Portfolio_workPreviewElement_Artsgone
-    let Portfolio_workPreviewElement_LXY
-    let Portfolio_workPreviewElement_Lexi_alternate
-    let Portfolio_workPreviewElement_Museum
-    let Portfolio_workPreviewElement_Nameless
-    let Portfolio_workPreviewElement_Bena
-    let Portfolio_workPreviewElement_DTM
-    let Portfolio_workPreviewElement_Eroy
-    let Portfolio_workPreviewElement_LLL
-    let New_LOGO_AR
-    let Portfolio_workPreviewElement_Logo_Ww
-    let Portfolio_workPreviewElement_Ww_additional
-    let Portfolio_workPreviewElement_Logo_Tt
-    let Portfolio_workPreviewElement_Lexi
-    let Portfolio_workPreviewElement_Lexi_V2
-    let Portfolio_workPreviewElement_LXY_alt
-    let Portfolio_workPreviewElement_Anata
-    let Portfolio_workPreviewElement_MrGummy
-    let Portfolio_workPreviewElement_Dd_NEW
-    let Portfolio_workPreviewElement_Travelin_Logo
-    let Portfolio_workPreviewElement_Tari
-    let Portfolio_workPreviewElement_GeometryFontType
+    let Portfolio_workPreviewElement_ART = ""
+    let Portfolio_workPreviewElement_Omic = ""
+    let Portfolio_workPreviewElement_Roe = ""
+    let Portfolio_workPreviewElement_Architect = ""
+    let Portfolio_workPreviewElement_Artsgone = ""
+    let Portfolio_workPreviewElement_LXY = ""
+    let Portfolio_workPreviewElement_Lexi_alternate = ""
+    let Portfolio_workPreviewElement_Museum = ""
+    let Portfolio_workPreviewElement_Nameless = ""
+    let Portfolio_workPreviewElement_Bena = ""
+    let Portfolio_workPreviewElement_DTM = ""
+    let Portfolio_workPreviewElement_Eroy = ""
+    let Portfolio_workPreviewElement_LLL = ""
+    let New_LOGO_AR = ""
+    let Portfolio_workPreviewElement_Logo_Ww = ""
+    let Portfolio_workPreviewElement_Ww_additional = ""
+    let Portfolio_workPreviewElement_Logo_Tt = ""
+    let Portfolio_workPreviewElement_Lexi = ""
+    let Portfolio_workPreviewElement_Lexi_V2 = ""
+    let Portfolio_workPreviewElement_LXY_alt = ""
+    let Portfolio_workPreviewElement_Anata = ""
+    let Portfolio_workPreviewElement_MrGummy = ""
+    let Portfolio_workPreviewElement_Dd_NEW = ""
+    let Portfolio_workPreviewElement_Travelin_Logo = ""
+    let Portfolio_workPreviewElement_Tari = ""
+    let Portfolio_workPreviewElement_GeometryFontType = ""
 
     let Portfolio_TimerForWork
     let Portfolio_TFW_register
@@ -164,19 +164,19 @@
     let Porftolio_AccountManager
 
     async function loadLargeWorks() {
-        Portfolio_TimerForWork = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main.png')).default
-        Portfolio_TFW_register = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register.png')).default
-        Portfolio_TFW_main_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_main_mobile.png')).default
-        Portfolio_TFW_register_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_register_mobile.png')).default
-        Portfolio_TFW_EditProject = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TFW_EditProject.png')).default
-        TFW_accountDetails = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_accountDetails.png')).default
+        Portfolio_TimerForWork = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/TFW_main_C.png')).default
+        Portfolio_TFW_register = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/TFW_register_C.png')).default
+        Portfolio_TFW_main_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/TFW_main_mobile_C.png')).default
+        Portfolio_TFW_register_mobile = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/TFW_register_mobile_C.png')).default
+        Portfolio_TFW_EditProject = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/Portfolio_TFW_EditProject_C.png')).default
+        TFW_accountDetails = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/TFW_accountDetails_C.png')).default
 
-        Porftolio_AccountManager = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager.png')).default
+        Porftolio_AccountManager = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Porftolio_accountManager_C.png')).default
         
-        Portfolio_Endimo_main = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_main.png')).default
-        Portfolio_Endimo_cart = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_cart.png')).default
-        Portfolio_Endimo_about = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_about.png')).default
-        Portfolio_Endimo_contact = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Endimo_contact.png')).default
+        Portfolio_Endimo_main = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/Portfolio_Endimo_main.png')).default
+        Portfolio_Endimo_cart = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/Portfolio_Endimo_cart.png')).default
+        Portfolio_Endimo_about = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/Portfolio_Endimo_about.png')).default
+        Portfolio_Endimo_contact = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/Portfolio_Endimo_contact.png')).default
     }
 
     let Portfolio_Mount_Fuji
@@ -185,27 +185,33 @@
     let Portfolio_FakePoster_LowRes
     
     async function loadHalfWorks() {
-        Portfolio_Mount_Fuji = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Mount_Fuji.png')).default
-        Portfolio_Postttrrr = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_Postttrrr_LowRes.png')).default
-        Portfolio_TravelinPoster = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_TravelinPoster.png')).default
-        Portfolio_FakePoster_LowRes = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Portfolio_FakePoster_LowRes.png')).default
+        Portfolio_Mount_Fuji = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/Portfolio_Mount_Fuji.png')).default
+        Portfolio_Postttrrr = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/Portfolio_Postttrrr_LowRes.png')).default
+        Portfolio_TravelinPoster = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/Portfolio_TravelinPoster.png')).default
+        Portfolio_FakePoster_LowRes = (await import('$lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/Portfolio_FakePoster_LowRes.png')).default
     }
     
     $: innerHeight = 0
     let y = 0
     let svelte_main_element
     
+    let timeIsOut = false
     let newY = []
     $: oldY = newY[1]
+
     function updateY(){
-        y = svelte_main_element.scrollTop
-        if (y % 4 == 0) {
-            newY.push(y)
-            if(newY.length > 5) {
-                newY.shift()
-            }
-            newY=newY
+        if (!timeIsOut) {
+            setTimeout(function () {
+                y = svelte_main_element.scrollTop
+                newY.push(y)
+                if(newY.length > 5) {
+                    newY.shift()
+                }
+                newY=newY
+                timeIsOut = false
+            }, 100)
         }
+        timeIsOut = true
     }
     
     // let portfolio_loadingScreenShow = false;
@@ -550,7 +556,7 @@
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
-            if ((entry.isIntersecting && intersectingElementIndex_DF > 23) || (entry.intersectionRatio >= 0.5 && intersectingElementIndex_DF <= 23)) {
+            if ((entry.isIntersecting && intersectingElementIndex_DF > 23) || (entry.intersectionRatio >= 0.2 && intersectingElementIndex_DF <= 23)) {
                 listOfIntersectedElementsSetter_DF.update(set => {
                     set.add(intersectingElementIndex_DF)
                     if (intersectingElementIndex_DF >= 24) {
@@ -572,7 +578,7 @@
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: [0, 0.3, 0.5],
+                threshold: [0, 0.2, 0.3],
                 rootMargin: "0px",
             }
         )
@@ -596,21 +602,19 @@
             })
         })
     }
-    function lazyLoadedImagesFuncLogos() {
-        const lazyLoadedImages = document.querySelectorAll(".work_element_preview")
-        lazyLoadedImages.forEach(image => {
-            function isLoaded() {
-                image.classList.add("isLoaded")
-            }
-            image.addEventListener("load", () => {
-                isLoaded()
-            })
-            // image.removeEventListener("load", () => {
-            //     isLoaded()
-            //     console.log("removed")
-            // })
-        })
-    }
+    
+    // function lazyLoadedImagesFuncLogos() {
+    //     const lazyLoadedImages = document.querySelectorAll(".work_element_preview")
+        
+    //     lazyLoadedImages.forEach(image => {
+    //         function isLoaded() {
+    //             image.classList.add("isLoaded")
+    //         }
+    //         image.addEventListener("load", () => {
+    //             isLoaded()
+    //         })  
+    //     })
+    // }
 </script>
 
 <svelte:head>
@@ -664,7 +668,7 @@
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(0)}
-                        <img src={Portfolio_workPreviewElement_ART} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_ART} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -672,12 +676,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(1)}
-                        <img src={Portfolio_workPreviewElement_LXY} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_LXY} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(2)}
-                        <img src={Portfolio_workPreviewElement_Architect} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Architect} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -691,17 +695,17 @@
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(3)}
-                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Artsgone} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(4)}
-                        <img src={Portfolio_workPreviewElement_Omic} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Omic} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(5)}
-                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Lexi_alternate} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 
@@ -710,17 +714,17 @@
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(6)}
-                        <img src={Portfolio_workPreviewElement_Anata} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Anata} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(7)}
-                        <img src={Portfolio_workPreviewElement_Bena} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Bena} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(8)}
-                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_MrGummy} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
 
@@ -733,17 +737,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(9)}
-                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_LXY_alt} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(10)}
-                        <img src={Portfolio_workPreviewElement_Museum} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Museum} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(11)}
-                        <img src={Portfolio_workPreviewElement_Nameless} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Nameless} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
 
@@ -751,17 +755,17 @@
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(12)}
-                        <img src={Portfolio_workPreviewElement_Roe} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Roe} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(13)}
-                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Logo_Ww} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(14)}
-                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Ww_additional} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
 
@@ -774,17 +778,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(15)}
-                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Logo_Tt} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(16)}
-                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Lexi_V2} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(17)}
-                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Dd_NEW} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
 
@@ -792,17 +796,17 @@
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(18)}
-                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Travelin_Logo} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
                     {#if $listOfIntersectedElementsSetter_DF.has(19)}
-                        <img src={Portfolio_workPreviewElement_Lexi} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Lexi} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(20)}
-                        <img src={Portfolio_workPreviewElement_Tari} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Tari} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
 
@@ -815,12 +819,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(21)}
-                        <img src={Portfolio_workPreviewElement_DTM} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_DTM} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
                     {#if $listOfIntersectedElementsSetter_DF.has(22)}
-                        <img src={Portfolio_workPreviewElement_Eroy} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_Eroy} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -828,7 +832,7 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
                     {#if $listOfIntersectedElementsSetter_DF.has(23)}
-                        <img src={Portfolio_workPreviewElement_LLL} alt="Logo" use:lazyLoadedImagesFuncLogos class="work_element_preview">
+                        <img src={Portfolio_workPreviewElement_LLL} alt="Logo" class="work_element_preview">
                     {/if}
                 </a>
             </div>
@@ -1007,7 +1011,7 @@
     <!-- on:introend={() => (portfolio_loadingScreenShow = false)}  -->
     <!-- on:introstart={() => (portfolio_loadingScreenShow = true)} on:scrollend={hide_LoadingScreen} -->
     {#if workPresent_Visibility == 'visible'}
-        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 200, start: 0.75, easing: sineInOut, opacity: 0 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
+        <div class="workPresent_wrapper" use:observeElement in:scale={{ delay: 0, duration: 250, start: 0.75, easing: sineInOut, opacity: 0 }} out:fly={{ delay: 0, duration: 200, easing: sineInOut, y: "-100vh", opacity: 0 }} >
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
@@ -1229,7 +1233,7 @@
     }
     .content_container{
         width: 92.5%;
-        height: 87.5%;
+        height: auto;
     }
     .darkgrayText{
         color: var(--text_color_gray90);
@@ -1447,7 +1451,7 @@
         width: 80%;
         max-height: 80%;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
-        opacity: 0;
+        /* opacity: 0; */
     }
 
     .work_element_preview_box.rounded > .work_element_preview{
