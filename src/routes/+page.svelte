@@ -69,22 +69,46 @@
         pageLoaded = true
     });
 
-    let sunsetInTheClouds = ""
-    let dandelions = ""
-    let goldenLeaves = ""
-    let violetFlowers = ""
-    let modernBuilding = ""
+    let pathsToImages = {
+        1: 'sunset_in_the_clouds_1280',
+        2: 'dandelion_1280',
+        3: 'golden_leaves_1280',
+        4: 'violet_flowers_1280',
+        5: 'modern_building_1280',
+    }
+    
+    const imageStore = writable({})
 
-    const imageMap = writable(new Map())
+    const imagesPath = import.meta.glob("/src/lib/compressed_images/*.avif")
 
-    // let pathsToImages = {
-    //     1: '../lib/compressed_images/sunset_inthe_clouds.webp',
-    //     2: '../lib/compressed_images/IMG_20210627_185235-min.webp',
-    //     3: '../lib/compressed_images/golden_leaves.webp',
-    //     4: '../lib/compressed_images/Violet_flowers.webp',
-    //     5: '../lib/compressed_images/Modern_building_C.avif',
-    // }
     async function importAllImages() {
+        for (const key in pathsToImages) {
+            const currentPath = `/src/lib/compressed_images/${pathsToImages[key]}.avif`
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
+                const img = new Image()
+                img.src = module.default
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStore[pathsToImages[key]] = module.default
+                    })
+                }
+            }
+            // import(/* @vite-ignore */ `/src/lib/compressed_images/${pathsToImages[key]}.avif`).then((module) => {
+            //     const img = new Image()
+            //     img.src = module.default
+            //     img.onload = () => {
+            //         img.decode().then(() => {
+            //             imageStore[pathsToImages[key]] = module.default
+            //             // console.log(imageStore[pathsToImages[key]])
+            //         })
+            //     }
+            // })
+        }
+    }
+
+    // const imageMap = writable(new Map())
+    // async function importAllImagesOld() {
         // let newImages = new Map()
 
         // await Promise.all(
@@ -100,48 +124,20 @@
         // )
         // imageMap.set(newImages)
         
-        // import('$lib/compressed_images/sunset_inthe_clouds.webp').then((module) => {
+        // import('$lib/compressed_images/sunset_in_the_clouds_1280.avif').then((module) => {
         //     const img = new Image()
         //     img.src = module.default
         //     img.decode().then(() => {
         //         sunsetInTheClouds = module.default
         //     })
         // })
-        // import('$lib/compressed_images/IMG_20210627_185235-min.webp').then((module) => {
-        //     const img = new Image()
-        //     img.src = module.default
-        //     img.decode().then(() => {
-        //         dandelions = module.default
-        //     })
-        // })
-        // import('$lib/compressed_images/golden_leaves.webp').then((module) => {
-        //     const img = new Image()
-        //     img.src = module.default
-        //     img.decode().then(() => {
-        //         goldenLeaves = module.default
-        //     })
-        // })
-        // import('$lib/compressed_images/Violet_flowers.webp').then((module) => {
-        //     const img = new Image()
-        //     img.src = module.default
-        //     img.decode().then(() => {
-        //         violetFlowers = module.default
-        //     })
-        // })
-        // import('$lib/compressed_images/Modern_building_C.avif').then((module) => {
-        //     const img = new Image()
-        //     img.src = module.default
-        //     img.decode().then(() => {
-        //         modernBuilding = module.default
-        //     })
-        // })
         
-        sunsetInTheClouds = (await import('$lib/compressed_images/sunset_in_the_clouds_1280.avif')).default
-        dandelions = (await import('$lib/compressed_images/dandelion_1280.avif')).default
-        goldenLeaves = (await import('$lib/compressed_images/golden_leaves_1280.avif')).default
-        violetFlowers = (await import('$lib/compressed_images/violet_flowers_1280.avif')).default
-        modernBuilding = (await import('$lib/compressed_images/modern_building_1280.avif')).default
-    }
+        // sunsetInTheClouds = (await import('$lib/compressed_images/sunset_in_the_clouds_1280.avif')).default
+        // dandelions = (await import('$lib/compressed_images/dandelion_1280.avif')).default
+        // goldenLeaves = (await import('$lib/compressed_images/golden_leaves_1280.avif')).default
+        // violetFlowers = (await import('$lib/compressed_images/violet_flowers_1280.avif')).default
+        // modernBuilding = (await import('$lib/compressed_images/modern_building_1280.avif')).default
+    // }
 
     let svelte_main_element
     let y = 0
@@ -178,14 +174,14 @@
         const intersecObserver = new IntersectionObserver( entries => {
             entries.forEach( entry => {
                 intersectingElementIndex = entry.target.containerIndex
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+                if (entry.isIntersecting) {
                     if (intersectingElementIndex > 2 && !imagesImported) {
                         importAllImages()
                         imagesImported = true
                     }
+                    entry.target.classList.add("showOnScreen")
                     listOfIntersectedElementsSetter.update(set => {
-                        entry.target.classList.add("showOnScreen")
-                        console.log(intersectingElementIndex, 'is visible');
+                        // console.log(intersectingElementIndex, 'is visible');
                         set.add(intersectingElementIndex)
                         return set
                     })
@@ -203,7 +199,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: [0, 0.1],
+                threshold: [0.75],
                 rootMargin: "0px",
             }
         )
@@ -221,9 +217,9 @@
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
         let timeOutTime = 0
         lazyLoadedImages.forEach((image) => {
-            if (!image.classList.contains("SVG")) {
-                timeOutTime = 150
-            }
+            // if (!image.classList.contains("SVG")) {
+            //     timeOutTime = 150
+            // }
             function isLoaded() {
                 image.classList.add("isLoaded")
             }
@@ -259,7 +255,6 @@
 
     <div class="default_container cyan">
         <Header headerDecorSVG={MainPage_titlePageDecor} />
-        <!-- <svelte:component this={Header} headerDecorSVG={MainPage_titlePageDecor} /> -->
         <div class="content_container title_page">
             <div  class="title_page_name">
                 <div class="title_name darkgrayText">Art's page</div>
@@ -269,11 +264,6 @@
             </div>
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
             linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
-            
-            <!-- <svelte:component this={Navbar} firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
-            linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/> -->
-
-            <!-- in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }} -->
         </div>
     </div>
     <div class="default_container greeting">
@@ -298,9 +288,11 @@
                     <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
-                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 500, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.5 }}>
-                        Download <img class="MainPage_cvDownloadDecor forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(2) ? MainPage_cvDownloadDecor : ""} data-src={MainPage_cvDownloadDecor} alt=">">
-                    </a>
+                    {#if $listOfIntersectedElementsSetter.has(2)}
+                        <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 700, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
+                            Download <img class="MainPage_cvDownloadDecor forLazyLoad SVG" src={MainPage_cvDownloadDecor} data-src={MainPage_cvDownloadDecor} alt=">">
+                        </a>
+                    {/if}
                 </div>
             </div>
         <!-- {/if} -->
@@ -324,7 +316,7 @@
             <div class="content_container page4">
                 <div class="left_part page4">
                     <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? sunsetInTheClouds : ""} data-src={Portfolio_WorksPreviewDecor} loading="lazy" alt="sunsetInTheCloudsIMG">
+                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['sunset_in_the_clouds_1280'] : ""} alt="sunsetInTheCloudsIMG">
                     </div>
                 </div>
                 <div class="right_part page4">
@@ -337,11 +329,11 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(5)} -->
             <div class="content_container page5">
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG1 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? dandelions : ""} data-src={dandelions} loading="lazy" alt="dandelionIMG">
+                    <img class="dandelion IMG1 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
                 </div>
                 <div class="page5_gradient"></div>
                 <div class="dandelion_img_box">
-                    <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? dandelions : ""} data-src={dandelions} loading="lazy" alt="dandelionIMG">
+                    <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
                 </div>
                 <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
                 <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
@@ -352,7 +344,7 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(6)} -->
             <div class="content_container page6">
                 <div class="left_part img_box">
-                    <img class="goldenLeaves forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? goldenLeaves : ""} data-src={goldenLeaves} loading="lazy" alt="goldenLeaves">
+                    <img class="goldenLeaves forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? imageStore['golden_leaves_1280'] : ""} alt="goldenLeaves">
                 </div>
                 <div class="right_part page6">
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
@@ -365,7 +357,7 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(7)} -->
             <div class="content_container page7">
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? violetFlowers : ""} data-src={violetFlowers} loading="lazy" alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? imageStore['violet_flowers_1280'] : ""} alt="Violet_flowers">
                 </div>
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
                     <p>Rusty steel, rough concrete</p>
@@ -383,7 +375,7 @@
                     <p>Thoughts transparent as water in the ocean</p>
                 </div>
                 <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? modernBuilding : ""} data-src={modernBuilding} loading="lazy" alt="Modern_building">
+                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? imageStore['modern_building_1280'] : ""} alt="Modern_building">
                 </div>
             </div>
         <!-- {/if} -->
@@ -458,10 +450,10 @@
         translate: 0 0%;
     }
      .default_container:not(.cyan) > .content_container{
-        opacity: 0;
-        scale: 1;
+        opacity: 0.25;
+        scale: 1.025;
         translate: 0 7.5%;
-        transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1.5s var(--wiggleTransition);
+        transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1s var(--wiggleTransition);
     }
     /* .default_container.ghost{
         height: auto;
@@ -722,6 +714,7 @@
     .MainPage_cvDownloadDecor{
         height: max(2.25rem, 2.25vw);
         filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_lightCyanSaturated));
+        opacity: 4;
     }
 
     .CV_downloadLink > .CV_downloadLinkInside:hover{

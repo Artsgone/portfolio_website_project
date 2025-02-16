@@ -212,7 +212,7 @@
         z-index: 500;
     } */
     .work_description_container::before{
-        content: "↓";
+        content: "";
         position: absolute;
         display: var(--displayFade);
         width: 100%;
@@ -223,10 +223,10 @@
         backdrop-filter: blur(5px);
         z-index: 500;
 
-        text-align: end;
+        /* text-align: end;
         color: var(--background_color_alternativeLightYellow_Darker);
         font-family: "Neutral_Bold", system-ui, sans-serif;
-        font-size: max(2.5rem, 2.5vw);
+        font-size: max(2.5rem, 2.5vw); */
     }
     .work_description_container::after{
         content: "";
@@ -330,7 +330,7 @@
             aspect-ratio: 1;
         }
         .content_container.work_presentation_page::before{
-            content: "↓";
+            content: "";
             position: absolute;
             width: 100%;
             height: 8%;
@@ -341,10 +341,10 @@
             backdrop-filter: blur(5px);
             z-index: 500;
 
-            text-align: end;
+            /* text-align: end;
             color: var(--text_color_gray90);
             font-family: "Neutral_Bold", system-ui, sans-serif;
-            font-size: max(2rem, 2vh);
+            font-size: max(2rem, 2vh); */
         }
         .content_container.work_presentation_page::after{
             content: "";

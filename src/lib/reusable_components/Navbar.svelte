@@ -37,7 +37,7 @@
     }
     .navbar_container {
         width: 100%;
-        margin-bottom: max(1vw, 1vh);
+        margin-bottom: max(0.5vw, 1vh);
         container-type: inline-size;
     }
     .navbar_inner {

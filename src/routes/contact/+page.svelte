@@ -24,7 +24,7 @@
     import { onMount } from "svelte";
     import { fade, fly, scale } from 'svelte/transition';
     import { elasticOut, sineInOut } from 'svelte/easing';
-    import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
+    import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     // let previousScreenHeight = 0;
     let pageLoaded = false;

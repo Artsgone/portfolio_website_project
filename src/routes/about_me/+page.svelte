@@ -10,26 +10,17 @@
 
     import AboutMe_OutlineTitleDecorSVG from '$lib/svg_files/AboutMe/AboutMe_OutlineTitleDecorSVG.svg'
     import AboutMe_titlePageSVG from '$lib/svg_files/AboutMe/AboutMe_TitleDecorSVG.svg'
-    import AboutMe_EducationSVG from '$lib/svg_files/AboutMe/AboutMe_EducationSVG.svg'
-    import AboutMe_BackgroundSVG from '$lib/svg_files/AboutMe/AboutMe_LanguagesDecorSVG.svg'
-    import AboutMe_BackgroundLanguagesMobile from '$lib/svg_files/AboutMe/AboutMe_LanguagesDecorMobile.svg'
-    import AboutMe_LanguagesYellowHighlight from '$lib/svg_files/AboutMe/AboutMe_LanguagesYellowHighlight.svg'
-    import AboutMe_SkillsTitleSVG from '$lib/svg_files/AboutMe/AboutMe_SkillsTitleSVG.svg'
-    import AboutMe_SkillsTitleSVG_Mobile from '$lib/svg_files/AboutMe/AboutMe_SkillsTitleSVG_Mobile.svg'
-    import AboutMe_Skills from '$lib/svg_files/AboutMe/AboutMe_Skills.svg'
-    import AboutMe_Skills_Mobile from '$lib/svg_files/AboutMe/AboutMe_Skills_Mobile.svg'
-    import AboutMe_OtherPE_Rounded from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Rounded.svg'
-    // import AboutMe_OtherPE_Square from '$lib/svg_files/AboutMe/AboutMe_OtherPE_Square.svg'
-    import AboutMe_FooterDecor from '$lib/svg_files/AboutMe/AboutMe_FooterDecor.svg'
 
     import { onMount } from 'svelte';
     import { writable } from "svelte/store";
-    import { fade, fly, scale } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { sineInOut, sineOut, elasticOut } from 'svelte/easing';
+    import { elasticOut } from 'svelte/easing';
     
     $: innerWidth = 0
-	// $: innerHeight = 0
+    let showLanguagesDesktop = false
+    let showSkillsTitleDesktop = false
+    let showSkillsDesktop = false
 
     let pageLoaded = false
     onMount(() => {
@@ -37,6 +28,11 @@
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
+        
+        showLanguagesDesktop = innerWidth > 1200 ? true : false
+        showSkillsTitleDesktop = innerWidth > 1000 ? true : false
+        showSkillsDesktop = innerWidth > 800 ? true : false
+        
         pageLoaded = true
     });
     beforeNavigate(({to, from}) => {
@@ -73,6 +69,36 @@
         }
         timeIsOut = true
     }
+
+    const pathsToImages = {
+        0: 'AboutMe_EducationSVG',
+        1: 'AboutMe_LanguagesDecorSVG',
+        2: 'AboutMe_LanguagesDecorMobile',
+        3: 'AboutMe_LanguagesYellowHighlight',
+        4: 'AboutMe_SkillsTitleSVG',
+        5: 'AboutMe_SkillsTitleSVG_Mobile',
+        6: 'AboutMe_Skills',
+        7: 'AboutMe_Skills_Mobile',
+        8: 'AboutMe_OtherPE_Rounded',
+        9: 'AboutMe_FooterDecor',
+    }
+    
+    const imageStore = writable({})
+
+    async function importAllImages() {
+        for (const key in pathsToImages) {
+            import(/* @vite-ignore */ `/src/lib/svg_files/AboutMe/${pathsToImages[key]}.svg`).then((module) => {
+                const img = new Image()
+                img.src = module.default
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStore[pathsToImages[key]] = module.default
+                        // console.log(imageStore[pathsToImages[key]])
+                    })
+                }
+            })
+        }
+    }
     
     // let listOfIntersectedElements = []
     const listOfIntersectedElementsSetter = writable(new Set())
@@ -88,6 +114,7 @@
                 intersectingElementIndex = entry.target.containerIndex
                 
                 if (entry.isIntersecting) {
+                    entry.target.classList.add("showOnScreen")
                     listOfIntersectedElementsSetter.update(set => {
                         set.add(intersectingElementIndex)
                         
@@ -105,7 +132,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: 0.3,
+                threshold: [0.5],
                 rootMargin: "0px",
             }
         )
@@ -151,7 +178,7 @@
 <svelte:window bind:innerWidth bind:innerHeight  />
 
 
-<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement>
+<main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement use:importAllImages use:lazyLoadedImagesFunc>
     {#if !pageLoaded}
         <LoadingScreen />
     {/if}
@@ -175,11 +202,76 @@
                     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"/>
         </div>
     </div>
+    <div class="default_container def_skills_title noBorders">
+        <!-- {#if $listOfIntersectedElementsSetter.has(3)} -->
+            <div class="content_container skills_title_page">
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" style:display={showSkillsTitleDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(1) && showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG'] : ""} alt="AboutMe_SkillsTitleSVG">
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" style:display={showSkillsTitleDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(1) && !showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG_Mobile'] : ""} alt="AboutMe_SkillsTitleSVG_Mobile">
+            </div>
+        <!-- {/if} -->
+    </div>
+    <div class="default_container def_skills">
+        <!-- {#if $listOfIntersectedElementsSetter.has(4)} -->
+            <div class="content_container skills_page">
+                <div class="skills_box">
+                    <!-- {#if innerWidth > 800} -->
+                        <img class="AboutMe_Skills forLazyLoad" style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(2) && showSkillsDesktop) ? imageStore['AboutMe_Skills'] : ""} alt="AboutMe_Skills">
+                    <!-- {:else} -->
+                        <img class="AboutMe_Skills_Mobile forLazyLoad" style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(2) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile'] : ""} alt="AboutMe_Skills_Mobile">
+                    <!-- {/if} -->
+                </div>
+            </div>
+        <!-- {/if} -->
+    </div>
     <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(1)}
-            <div class="content_container education_page" use:lazyLoadedImagesFunc>
-                <div class="wrapper_educationSVG" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                    <img class="AboutMe_EducationSVG forLazyLoad" src={AboutMe_EducationSVG} alt="AboutMe_EducationSVG">
+        <!-- {#if $listOfIntersectedElementsSetter.has(5)} -->
+            <div class="content_container otherAbilities_page">
+                <p class="altyellowText vt">soft skills</p>
+                <div class="text otherAbilities">
+                    <p class="rounded darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        Creative at designing things.
+                    </p>
+                    <p class="darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        Willing to learn and develope my skills anytime.
+                    </p>
+                    <p class="rounded darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        Aiming for hardwork to achieve the best result possible.
+                    </p>
+                    <p class="darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        Effective both on my own and in team.
+                    </p>
+                </div>
+                <p class="altyellowText vt">soft skills</p>
+            </div>
+        <!-- {/if} -->
+    </div>
+    <div class="default_container def_lang">
+        <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
+            <img class="AboutMe_BackgroundSVG forLazyLoad" src={($listOfIntersectedElementsSetter.has(4) && showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorSVG'] : ""} alt="AboutMe_BackgroundSVG">
+            <img class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={($listOfIntersectedElementsSetter.has(4) && !showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorMobile'] : ""} alt="AboutMe_BackgroundLanguagesMobile">
+            <div class="content_container languages_page">
+                <p class="grayText65">THE LANGUAGES</p>
+                <div class="text languages">
+                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_LanguagesYellowHighlight'] : ""} alt="AboutMe_LanguagesYellowHighlight">
+                    <p class="darkgrayText">
+                        English - C1 <br>
+                        Czech - Fluent <br>
+                        Russian - Fluent
+                    </p>
+                </div>
+                <p class="grayText65">...I KNOW</p>
+            </div>
+        <!-- {/if} -->
+    </div>
+    <div class="default_container">
+        <!-- {#if $listOfIntersectedElementsSetter.has(1)} -->
+            <div class="content_container education_page">
+                <div class="wrapper_educationSVG">
+                    <img class="AboutMe_EducationSVG forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
                 </div>
                 <div class="text education">
                     <p class="darkgrayText">
@@ -191,82 +283,11 @@
                     </p>
                 </div>
             </div>
-        {/if}
-    </div>
-    <div class="default_container def_lang">
-        {#if $listOfIntersectedElementsSetter.has(2)}
-            {#if innerWidth > 1200}
-                <img use:lazyLoadedImagesFunc class="AboutMe_BackgroundSVG forLazyLoad" src={AboutMe_BackgroundSVG} alt="AboutMe_BackgroundSVG">
-            {:else}
-                <img use:lazyLoadedImagesFunc class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={AboutMe_BackgroundLanguagesMobile} alt="AboutMe_BackgroundLanguagesMobile">
-            {/if}
-            <div class="content_container languages_page" use:lazyLoadedImagesFunc>
-                <p class="grayText65">LANGUAGES</p>
-                <div class="text languages">
-                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={AboutMe_LanguagesYellowHighlight} alt="AboutMe_LanguagesYellowHighlight">
-                    <p class="darkgrayText" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                        English - C1 <br>
-                        Czech - Fluent <br>
-                        Russian - Fluent
-                    </p>
-                </div>
-                <p class="grayText65">LANGUAGES</p>
-            </div>
-        {/if}
-    </div>
-    <div class="default_container def_skills_title noBorders">
-        {#if $listOfIntersectedElementsSetter.has(3)}
-            <div class="content_container skills_title_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.1, opacity: 1 }}>
-                {#if innerWidth > 1000}
-                    <img use:lazyLoadedImagesFunc class="AboutMe_SkillsTitleSVG forLazyLoad" src={AboutMe_SkillsTitleSVG} alt="AboutMe_SkillsTitleSVG">
-                {:else}
-                    <img use:lazyLoadedImagesFunc class="AboutMe_SkillsTitleSVG forLazyLoad" src={AboutMe_SkillsTitleSVG_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_SkillsTitleSVG_Mobile">
-                {/if}
-            </div>
-        {/if}
-    </div>
-    <div class="default_container def_skills">
-        {#if $listOfIntersectedElementsSetter.has(4)}
-            <div class="content_container skills_page" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }}>
-                <div class="skills_box">
-                    {#if innerWidth > 800}
-                        <img use:lazyLoadedImagesFunc class="AboutMe_Skills forLazyLoad" src={AboutMe_Skills} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills">
-                    {:else}
-                        <img use:lazyLoadedImagesFunc class="AboutMe_Skills_Mobile forLazyLoad" src={AboutMe_Skills_Mobile} in:fade={{ delay: 100, duration: 400, easing: sineInOut }} alt="AboutMe_Skills_Mobile">
-                    {/if}
-                </div>
-            </div>
-        {/if}
-    </div>
-    <div class="default_container">
-        {#if $listOfIntersectedElementsSetter.has(5)}
-            <div class="content_container otherAbilities_page">
-                <p class="altyellowText vt">OTHER ABILITIES</p>
-                <div class="text otherAbilities" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 1.05, opacity: 1 }} use:lazyLoadedImagesFunc>
-                    <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                        Creative at designing things.
-                    </p>
-                    <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                        Willing to learn and develope my skills anytime.
-                    </p>
-                    <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                        Aiming for hardwork to achieve the best result possible.
-                    </p>
-                    <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={AboutMe_OtherPE_Rounded} alt="AboutMe_OtherPE_Rounded">
-                        Effective both on my own and in team.
-                    </p>
-                </div>
-                <p class="altyellowText vt">OTHER ABILITIES</p>
-            </div>
-        {/if}
+        <!-- {/if} -->
     </div>
     <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
-    titleName="About me" footer_Decor_ID={AboutMe_FooterDecor}/>
+    titleName="About me" footer_Decor_ID={imageStore['AboutMe_FooterDecor']}/>
 </main>
 
 <style>
@@ -327,6 +348,17 @@
     .content_container{
         height: 87.5%;
         width: 92.5%;
+    }
+    .default_container:not(.cyan):is(.showOnScreen) > .content_container{
+        opacity: 1;
+        scale: 1;
+        translate: 0 0%;
+    }
+     .default_container:not(.cyan) > .content_container{
+        opacity: 0.25;
+        scale: 1.025;
+        translate: 0 7.5%;
+        transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1s var(--wiggleTransition);
     }
     .darkgrayText{
         color: var(--text_color_gray90);
@@ -418,6 +450,7 @@
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 1fr 1.4fr;
+        grid-template-rows: 1fr;
         align-content: center;
         align-items: center;
         justify-items: center;
@@ -517,12 +550,6 @@
         text-wrap: nowrap;
         filter: blur(0.1rem);
     }
-    /* .content_container.languages_page > p:not(p:nth-last-child(1)){
-        align-self: flex-end;
-    } */
-    .content_container.languages_page > p:nth-last-child(1){
-        scale: -1 -1;
-    }
     .text.languages{
         position: relative;
     }
@@ -564,6 +591,7 @@
     }
     .AboutMe_SkillsTitleSVG{
         width: max(40rem, 65%);
+        max-height: 50vh;
     }
 
     @media (width < 800px) {
