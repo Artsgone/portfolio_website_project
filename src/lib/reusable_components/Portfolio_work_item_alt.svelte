@@ -16,10 +16,24 @@
     onMount(() => {;
         imageHeight = imageHeight;
         if ((work_description_container_height - description_box_height) < 0) {
-        position = "start";
+            position = "start";
         } else {
             position = "center";
         }
+        if (innerWidth >= 1000) {
+            if ((work_description_container_height + scrollY) > (description_box_height)) {
+                fadeBar_display = "none";
+            } else {
+                fadeBar_display = "block";
+            }
+        } else {
+            if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
+                fadeBar_displayMobile = "block";
+            } else {
+                fadeBar_displayMobile = "none";
+            }
+        }
+        
     });
 
     $: work_presentation_page_height = 0;
@@ -43,12 +57,34 @@
     let enableScrollToggle = "clip"
     
     function scrollCounter(){
-        scrollY = work_description_container.scrollTop;
-        // console.log(scrollY + "scrolled")
+        if (innerWidth >= 1000) {
+            scrollY = work_description_container.scrollTop;
+            if (scrollY < (work_description_container_height * 0.025)) {
+                fadeBar_DisplayTop = "none";
+            } else {
+                fadeBar_DisplayTop = "block";
+            }
+            if ((work_description_container_height + scrollY) > (description_box_height)) {
+                fadeBar_display = "none";
+            } else {
+                fadeBar_display = "block";
+            }
+        }
     }
     function scrollCounterMobile(){
-        scrollYMobile = work_presentation_page.scrollTop;
-        // console.log(scrollYMobile + "scrolled")
+        if (innerWidth < 1000) {
+            scrollYMobile = work_presentation_page.scrollTop;
+            if (scrollYMobile < (work_presentation_page_height * 0.1)) {
+                fadeBar_DisplayTopMobile = "none";
+            } else {
+                fadeBar_DisplayTopMobile = "block";
+            }
+            if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
+                fadeBar_displayMobile = "block";
+            } else {
+                fadeBar_displayMobile = "none";
+            }
+        }
     }
     function enableScroll(){
         if (enableScrollAllow && innerWidth <= 1000 && description_box_height > 300) {
@@ -60,29 +96,6 @@
             scrollYMobile = 0;
             work_presentation_page.scrollTo({ top: 0, behavior: 'auto' })
         }
-    }
-
-    $: if (scrollY < (work_description_container_height * 0.025)) {
-        fadeBar_DisplayTop = "none";
-    } else {
-        fadeBar_DisplayTop = "block";
-    }
-    $: if (scrollYMobile < (work_presentation_page_height * 0.1)) {
-        fadeBar_DisplayTopMobile = "none";
-    } else {
-        fadeBar_DisplayTopMobile = "block";
-    }
-
-    $: if ((work_description_container_height + scrollY) > (description_box_height)) {
-        fadeBar_display = "none";
-    } else {
-        fadeBar_display = "block";
-    }
-
-    $: if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
-        fadeBar_displayMobile = "block";
-    } else {
-        fadeBar_displayMobile = "none";
     }
 
     function lazyLoadedImagesFunc() {
@@ -100,30 +113,28 @@
 
 <svelte:window bind:innerWidth />
 
-
-    <!-- <main > -->
-        <div class="workPresentation_container">
-            <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
-                style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
-                
-                <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
-                    style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
-                    
-                    <div class="description_box" bind:clientHeight={description_box_height}>
-                        <p class="work_title">"{workElementTitle}"</p>
-                        <p class="work_description">{workElementText} <slot/> </p>
-                    </div>
-                </div>
-                    <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.95, opacity: 1 }} use:lazyLoadedImagesFunc>
-                        <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
-                    </div>
-                    {#if enableScrollAllow && description_box_height > 300}
-                        <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
-                    {/if}
+<div class="workPresentation_container" use:lazyLoadedImagesFunc>
+    <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
+        style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
+        
+        <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
+            style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+            
+            <div class="description_box" bind:clientHeight={description_box_height}>
+                <p class="work_title">"{workElementTitle}"</p>
+                <p class="work_description">{workElementText} <slot/> </p>
             </div>
         </div>
-    <!-- </main> -->
-
+            <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1 }}>
+                <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
+            </div>
+            {#if enableScrollAllow && description_box_height > 300}
+                <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
+            {/if}
+    </div>
+    <div class="adviceArrows arrowUp"><div class="adviceArrows_inner">↑</div></div>
+    <div class="adviceArrows arrowDown"><div class="adviceArrows_inner">↓</div></div>
+</div>
 
 <style>
     *{
@@ -133,13 +144,6 @@
     *::selection{
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
-    }
-    .forLazyLoad{
-        opacity: 0;
-    }
-    *:is(.isLoaded){
-        opacity: 1;
-        transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     .workPresentation_container{
         width: 100%;
@@ -152,6 +156,27 @@
         background-color: var(--background_color_lightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        position: relative;
+    }
+    .adviceArrows{
+        position: absolute;
+        width: 100%;
+        height: 10dvh;
+        color: var(--background_color_alternativeLightYellow);
+        font-family: "Neutral_Bold", system-ui, sans-serif;
+        font-size: 6.5dvh;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+    .arrowUp{ 
+        top: 0;
+    }
+    .arrowDown{
+        bottom: 0;
+    }
+    .adviceArrows_inner{
+        padding-inline: 2.5vw;
     }
     .content_container.work_presentation_page{
         display: grid;
@@ -174,8 +199,14 @@
     }
     .Portfolio_workPreviewElement{
         width: max(20rem, 80%);
+        max-width: 50vw;
         max-height: 80vh;
         filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_alternativeLightYellow));
+        opacity: 0;
+        transition: opacity 0.5s var(--bezierTransition);
+    }
+    .Portfolio_workPreviewElement:is(.isLoaded){
+        opacity: 1;
     }
     
     .work_description_container{

@@ -85,18 +85,21 @@
     
     const imageStore = writable({})
 
+    const imagesPath = import.meta.glob("/src/lib/svg_files/AboutMe/*.svg")
+
     async function importAllImages() {
         for (const key in pathsToImages) {
-            import(/* @vite-ignore */ `/src/lib/svg_files/AboutMe/${pathsToImages[key]}.svg`).then((module) => {
+            const currentPath = `/src/lib/svg_files/AboutMe/${pathsToImages[key]}.svg`
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
                         imageStore[pathsToImages[key]] = module.default
-                        // console.log(imageStore[pathsToImages[key]])
                     })
                 }
-            })
+            }
         }
     }
     

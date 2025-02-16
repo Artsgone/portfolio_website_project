@@ -100,15 +100,6 @@
                     })
                 }
             }
-            // import(/* @vite-ignore */ `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesLogos[key]}.svg`).then((module) => {
-            //     const img = new Image()
-            //     img.src = module.default
-            //     img.onload = () => {
-            //         img.decode().then(() => {
-            //             imageStoreLogos[pathsToImagesLogos[key]] = module.default
-            //         })
-            //     }
-            // })
         }
     }
 
@@ -131,9 +122,6 @@
     }
     
     const imageStoreTFW = writable({})
-    const imageStoreEndimo = writable({})
-    const imageStoreAccMngr = writable({})
-
     const imagesPathTFW = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/*.png")
 
     async function loadLargeWorksTFW() {
@@ -149,34 +137,36 @@
                     })
                 }
             }
-            // import(/* @vite-ignore */ `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/${pathsToImagesTFW[key]}.png`).then((module) => {
-            //     const img = new Image()
-            //     img.src = module.default
-            //     img.onload = () => {
-            //         img.decode().then(() => {
-            //             imageStoreTFW[pathsToImagesTFW[key]] = module.default
-            //         })
-            //     }
-            // })
         }
     }
+
+    const imageStoreEndimo = writable({})
+    const imagesPathEndimo = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/*.png")
+
     async function loadLargeWorksEndimo() {
         for (const key in pathsToImagesEndimo) {
-            import(/* @vite-ignore */ `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/${pathsToImagesEndimo[key]}.png`).then((module) => {
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/${pathsToImagesEndimo[key]}.png`
+            if (imagesPathEndimo[currentPath]) {
+                const module = await imagesPathEndimo[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
-                    // imageStoreEndimo[pathsToImagesEndimo[key]] = module.default
                     img.decode().then(() => {
                         imageStoreEndimo[pathsToImagesEndimo[key]] = module.default
                     })
                 }
-            })
+            }
         }
     }
+
+    const imageStoreAccMngr = writable({})
+    const imagesPathAccMngr = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/*.png")
+
     async function loadLargeWorksAccMngr() {
         for (const key in pathsToImagesAccMngr) {
-            import(/* @vite-ignore */ `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/${pathsToImagesAccMngr[key]}.png`).then((module) => {
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/${pathsToImagesAccMngr[key]}.png`
+            if (imagesPathAccMngr[currentPath]) {
+                const module = await imagesPathAccMngr[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -184,7 +174,7 @@
                         imageStoreAccMngr[pathsToImagesAccMngr[key]] = module.default
                     })
                 }
-            })
+            }
         }
     }
 
@@ -196,10 +186,13 @@
     }
     
     const imageStoreBanners = writable({})
+    const imagesPathBanners = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/*.png")
 
     async function loadLargeWorksBanners() {
         for (const key in pathsToImagesBanners) {
-            import(/* @vite-ignore */ `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/${pathsToImagesBanners[key]}.png`).then((module) => {
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/${pathsToImagesBanners[key]}.png`
+            if (imagesPathBanners[currentPath]) {
+                const module = await imagesPathBanners[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -207,7 +200,7 @@
                         imageStoreBanners[pathsToImagesBanners[key]] = module.default
                     })
                 }
-            })
+            }
         }
     }
     
@@ -470,22 +463,21 @@
             if (entry.isIntersecting) {
                 listOfIntersectedElementsSetter.update(set => {
                     set.add(intersectingElementIndex)
-                    amountOfElementsObserved++
-
-                    intersecObserver.unobserve(entry.target)
-                    
-                    if (amountOfElementsObserved == listLenght) {
-                        intersecObserver.disconnect()
-                        // console.log("DISCONNECTED")
-                    }
                     return set
                 })
+                amountOfElementsObserved++
+                intersecObserver.unobserve(entry.target)
+                
+                if (amountOfElementsObserved == listLenght) {
+                    intersecObserver.disconnect()
+                    // console.log("DISCONNECTED")
+                }
             }
         })
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: 0.3,
+                threshold: [0.1],
                 rootMargin: "0px",
             }
         )
@@ -541,11 +533,11 @@
                 
                 listOfIntersectedElementsSetter_DF.update(set => {
                     set.add(intersectingElementIndex_DF)
-                    if (intersectingElementIndex_DF >= amountOfWep + 1) {
-                        intersecObserver.unobserve(entry.target)
-                    }
                     return set
                 })
+                if (intersectingElementIndex_DF >= amountOfWep + 1) {
+                    intersecObserver.unobserve(entry.target)
+                }
             }
             else { 
                 if (entry.intersectionRatio <= 0.3 && intersectingElementIndex_DF <= amountOfWep) {
@@ -1452,15 +1444,16 @@
         inset: 0;
     }
     .workPresent_wrapper::-webkit-scrollbar {
-        width: max(0.5em, 0.5vw);
+        /* width: max(0.5em, 0.5vw); */
+        display: none;
     }
-    .workPresent_wrapper::-webkit-scrollbar-track {
+    /* .workPresent_wrapper::-webkit-scrollbar-track {
         background-color: var(--background_color_lightCyan);
     }
     .workPresent_wrapper::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
-    }
+    } */
 
     @media (width < 900px) {
         .works_preview_grid{
