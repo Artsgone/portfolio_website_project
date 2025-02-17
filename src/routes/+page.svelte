@@ -73,8 +73,9 @@
         1: 'sunset_in_the_clouds_1280',
         2: 'dandelion_1280',
         3: 'golden_leaves_1280',
-        4: 'violet_flowers_1280',
-        5: 'modern_building_1280',
+        4: 'violet_flowers_1920',
+        5: 'violet_flowers_1280',
+        6: 'modern_building_1280',
     }
     
     const imageStore = writable({})
@@ -94,16 +95,6 @@
                     })
                 }
             }
-            // import(/* @vite-ignore */ `/src/lib/compressed_images/${pathsToImages[key]}.avif`).then((module) => {
-            //     const img = new Image()
-            //     img.src = module.default
-            //     img.onload = () => {
-            //         img.decode().then(() => {
-            //             imageStore[pathsToImages[key]] = module.default
-            //             // console.log(imageStore[pathsToImages[key]])
-            //         })
-            //     }
-            // })
         }
     }
 
@@ -123,20 +114,6 @@
         //     })
         // )
         // imageMap.set(newImages)
-        
-        // import('$lib/compressed_images/sunset_in_the_clouds_1280.avif').then((module) => {
-        //     const img = new Image()
-        //     img.src = module.default
-        //     img.decode().then(() => {
-        //         sunsetInTheClouds = module.default
-        //     })
-        // })
-        
-        // sunsetInTheClouds = (await import('$lib/compressed_images/sunset_in_the_clouds_1280.avif')).default
-        // dandelions = (await import('$lib/compressed_images/dandelion_1280.avif')).default
-        // goldenLeaves = (await import('$lib/compressed_images/golden_leaves_1280.avif')).default
-        // violetFlowers = (await import('$lib/compressed_images/violet_flowers_1280.avif')).default
-        // modernBuilding = (await import('$lib/compressed_images/modern_building_1280.avif')).default
     // }
 
     let svelte_main_element
@@ -191,7 +168,7 @@
                     
                     if (amountOfElementsObserved == listLenght - 1) {
                         intersecObserver.disconnect()
-                        console.log("DISCONNECTED")
+                        // console.log("DISCONNECTED")
                     }
                 }
                     
@@ -357,7 +334,7 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(7)} -->
             <div class="content_container page7">
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? imageStore['violet_flowers_1280'] : ""} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? imageStore['violet_flowers_1920'] : ""} alt="Violet_flowers">
                 </div>
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
                     <p>Rusty steel, rough concrete</p>
@@ -1064,7 +1041,7 @@
     .left_part.img_box{
         min-height: 100%;
         width: 100%;
-        background-image: url(/src/lib/compressed_images/golden_leaves_HeavilyCompressed.jpg);
+        background-image: url(/src/lib/compressed_images/golden_leaves_HeavilyCompressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

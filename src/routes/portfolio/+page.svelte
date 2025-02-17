@@ -33,10 +33,8 @@
         }
         pageLoaded = true;
         // retrieveIntersectedElementsToSS()
-
+        loadWorksLogos()
         New_LOGO_AR = (await import('$lib/svg_files/New_LOGO_AR.svg')).default
-        Portfolio_workPreviewElement_GeometryFontType = (await import('$lib/svg_files/Portfolio/Portfolio_Works/Portfolio_workPreviewElement_GeometryFontType.svg')).default
-        
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -87,18 +85,19 @@
 
     const imagesPathLogos = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_Works/*.svg")
 
-    async function loadLargeWorksLogos() {
+    async function loadWorksLogos() {
         for (const key in pathsToImagesLogos) {
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesLogos[key]}.svg`
             if (imagesPathLogos[currentPath]) {
                 const module = await imagesPathLogos[currentPath]()
-                const img = new Image()
-                img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStoreLogos[pathsToImagesLogos[key]] = module.default
-                    })
-                }
+                imageStoreLogos[pathsToImagesLogos[key]] = module.default
+                // const img = new Image()
+                // img.src = module.default
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStoreLogos[pathsToImagesLogos[key]] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -183,6 +182,8 @@
         2: 'Portfolio_Postttrrr_LowRes',
         3: 'Portfolio_TravelinPoster',
         4: 'Portfolio_FakePoster_LowRes',
+        5: 'Portfolio_growthBanner',
+        6: 'Portfolio_Web_Banner_1280',
     }
     
     const imageStoreBanners = writable({})
@@ -243,20 +244,20 @@
         listOfIntersectedElementsSetter.update(set => (set.clear(), set))
     }
 
-    // let amountOfChildElementsList = [];
-    // function checkForAmountOfChildren() {
-    //     const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
-    //     lW_preview_boxes.forEach( (box, boxId) => {
-    //         const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.halfScreenPreview")
-    //         if (amountOfChildren.length > 1) {
-    //             box.classList.add("moreThanOneChild")
-    //             amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
-    //         } else {
-    //             amountOfChildElementsList.splice(boxId, 1, 0)
-    //         }
-    //     })
-    //     // console.log(amountOfChildElementsList)
-    // }
+    let amountOfChildElementsList = [];
+    function checkForAmountOfChildren() {
+        const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
+        lW_preview_boxes.forEach( (box, boxId) => {
+            const amountOfChildren = box.querySelectorAll(".largeWork_element_preview.halfScreenPreview")
+            if (amountOfChildren.length > 1) {
+                box.classList.add("moreThanOneChild")
+                amountOfChildElementsList.splice(boxId, 1, amountOfChildren.length)
+            } else {
+                amountOfChildElementsList.splice(boxId, 1, 0)
+            }
+        })
+        // console.log(amountOfChildElementsList)
+    }
     let amountOfChildElementsList_fullScreen = [];
     function checkForAmountOfChildren_fullScreen() {
         const lW_preview_boxes = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
@@ -272,94 +273,94 @@
         // console.log("Fullscreen", amountOfChildElementsList_fullScreen)
     }
 
-    // function boxScroll() {
-    //     const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
-    //     const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.halfScreenButton")
-    //     const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.halfScreenButton")
-    //     const listLength = largeWorkImages.length
-    //     var scrollElementsIndexes = new Array(listLength)
-    //     scrollElementsIndexes.fill(0, 0)
+    function boxScroll() {
+        const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.halfScreenBox")
+        const buttons_left = document.querySelectorAll(".scrollLeftAndRightButton.left.halfScreenButton")
+        const buttons_right = document.querySelectorAll(".scrollLeftAndRightButton.right.halfScreenButton")
+        const listLength = largeWorkImages.length
+        var scrollElementsIndexes = new Array(listLength)
+        scrollElementsIndexes.fill(0, 0)
 
-    //     let indexedLargeWorkImages = []
-    //     largeWorkImages.forEach( (largeWorkImage) => {
-    //         // largeWorkImage.imageIndex = indexOfImage
-    //         indexedLargeWorkImages.push(largeWorkImage)
-    //     })
-    //     let indexedLargeWorkRightButtons = []
-    //     buttons_right.forEach( (largeWorkButton) => {
-    //         // largeWorkButton.leftButtonIndex = indexOfRightButton
-    //         indexedLargeWorkRightButtons.push(largeWorkButton)
-    //     })
-    //     let indexedLargeWorkLeftButtons = []
-    //     buttons_left.forEach( (largeWorkButton) => {
-    //         // largeWorkButton.leftButtonIndex = indexOfLeftButton
-    //         indexedLargeWorkLeftButtons.push(largeWorkButton)
-    //     })
+        let indexedLargeWorkImages = []
+        largeWorkImages.forEach( (largeWorkImage) => {
+            // largeWorkImage.imageIndex = indexOfImage
+            indexedLargeWorkImages.push(largeWorkImage)
+        })
+        let indexedLargeWorkRightButtons = []
+        buttons_right.forEach( (largeWorkButton) => {
+            // largeWorkButton.leftButtonIndex = indexOfRightButton
+            indexedLargeWorkRightButtons.push(largeWorkButton)
+        })
+        let indexedLargeWorkLeftButtons = []
+        buttons_left.forEach( (largeWorkButton) => {
+            // largeWorkButton.leftButtonIndex = indexOfLeftButton
+            indexedLargeWorkLeftButtons.push(largeWorkButton)
+        })
         
-    //     let amountOfScrolledImages = 0
-    //     let numberOfChildElements = 0
-    //     let currentBox
-    //     let currentRightButton
-    //     let currentLeftButton
+        let amountOfScrolledImages = 0
+        let numberOfChildElements = 0
+        let currentBox
+        let currentRightButton
+        let currentLeftButton
         
-    //     buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
-    //         largeWorkButton.addEventListener("click", (e) => {
-    //             currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
-    //             numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+        buttons_right.forEach( (largeWorkButton, largeWorkButtonId) => {
+            largeWorkButton.addEventListener("click", (e) => {
+                currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
+                numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
 
-    //             amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
-    //             if (amountOfScrolledImages < numberOfChildElements) {
-    //                 amountOfScrolledImages++
-    //                 scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
-    //             }
+                amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
+                if (amountOfScrolledImages < numberOfChildElements) {
+                    amountOfScrolledImages++
+                    scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
+                }
                 
-    //             // console.log("List:", scrollElementsIndexes)
+                // console.log("List:", scrollElementsIndexes)
 
-    //             currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
-    //                 if (elementId === amountOfScrolledImages) {
-    //                     element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
-    //                 }
-    //             })
-    //             if (amountOfScrolledImages == numberOfChildElements - 1) {
-    //                 largeWorkButton.classList.add("visually_hidden") 
-    //             }
-    //             currentLeftButton = indexedLargeWorkLeftButtons.at(largeWorkButtonId)
-    //             currentLeftButton.classList.remove("visually_hidden")
-    //         })
+                currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
+                    if (elementId === amountOfScrolledImages) {
+                        element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                    }
+                })
+                if (amountOfScrolledImages == numberOfChildElements - 1) {
+                    largeWorkButton.classList.add("visually_hidden") 
+                }
+                currentLeftButton = indexedLargeWorkLeftButtons.at(largeWorkButtonId)
+                currentLeftButton.classList.remove("visually_hidden")
+            })
 
-    //     })
-    //     buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
+        })
+        buttons_left.forEach( (largeWorkButton, largeWorkButtonId) => {
 
-    //         if (amountOfScrolledImages === 0) {
-    //             largeWorkButton.classList.add("visually_hidden")
-    //         }
-    //         largeWorkButton.addEventListener("click", (e) => {
-    //             currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
-    //             numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
+            if (amountOfScrolledImages === 0) {
+                largeWorkButton.classList.add("visually_hidden")
+            }
+            largeWorkButton.addEventListener("click", (e) => {
+                currentBox = indexedLargeWorkImages.at(largeWorkButtonId)
+                numberOfChildElements = amountOfChildElementsList.at(largeWorkButtonId)
 
-    //             amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
-    //             if (amountOfScrolledImages > 0) {
-    //                 amountOfScrolledImages--
-    //                 scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
-    //             }
+                amountOfScrolledImages = scrollElementsIndexes.at(largeWorkButtonId)
+                if (amountOfScrolledImages > 0) {
+                    amountOfScrolledImages--
+                    scrollElementsIndexes.splice(largeWorkButtonId, 1, amountOfScrolledImages)
+                }
                 
-    //             // console.log("List:", scrollElementsIndexes)
+                // console.log("List:", scrollElementsIndexes)
 
-    //             currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
-    //                 if (elementId === amountOfScrolledImages) {
-    //                     element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
-    //                 }
-    //             })
-    //             if (amountOfScrolledImages === 0) {
-    //                 largeWorkButton.classList.add("visually_hidden") 
-    //             }
-    //             currentRightButton = indexedLargeWorkRightButtons.at(largeWorkButtonId)
-    //             currentRightButton.classList.remove("visually_hidden")
-    //         })
+                currentBox.querySelectorAll(".largeWork_element_preview.halfScreenPreview").forEach( (element, elementId) => {
+                    if (elementId === amountOfScrolledImages) {
+                        element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+                    }
+                })
+                if (amountOfScrolledImages === 0) {
+                    largeWorkButton.classList.add("visually_hidden") 
+                }
+                currentRightButton = indexedLargeWorkRightButtons.at(largeWorkButtonId)
+                currentRightButton.classList.remove("visually_hidden")
+            })
 
-    //     })
+        })
         
-    // }
+    }
 
     function boxScroll_fullScreen() {
         const largeWorkImages = document.querySelectorAll(".largeWork_preview_box.fullScreenBox")
@@ -517,31 +518,44 @@
     function observeDefaultCont() {
         const default_containers = document.querySelectorAll(".forInsObs")
         const wep_boxes = document.querySelectorAll(".wep_box")
+        const box_wrappers = document.querySelectorAll(".largeWork_preview_box_wrapper")
         const amountOfWep = wep_boxes.length - 1
+        const amountOfBox_wrappers = box_wrappers.length - 1
         let intersectingElementIndex_DF
+
+        let loadedLargeWorks = false
 
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
             if ((entry.intersectionRatio >= 0.3 && intersectingElementIndex_DF > amountOfWep) || (entry.intersectionRatio >= 0.3 && intersectingElementIndex_DF <= amountOfWep)) {
 
-                if (entry.target.hasChildNodes && intersectingElementIndex_DF <= amountOfWep) {
-                    entry.target.firstChild.classList.add("showOnScreen")
-                } else {
-                    entry.target.classList.add("showOnScreen")
-                }
+                // if (entry.target.hasChildNodes && intersectingElementIndex_DF <= amountOfWep) {
+                //     entry.target.firstChild.classList.add("showOnScreen")
+                // } else {
+                //     entry.target.classList.add("showOnScreen")
+                // }
                 
                 listOfIntersectedElementsSetter_DF.update(set => {
                     set.add(intersectingElementIndex_DF)
                     return set
                 })
-                if (intersectingElementIndex_DF >= amountOfWep + 1) {
+                if (intersectingElementIndex_DF > amountOfWep) {
                     intersecObserver.unobserve(entry.target)
+                }
+                if (!loadedLargeWorks) {
+                    if ((amountOfWep - 3) < intersectingElementIndex_DF && intersectingElementIndex_DF <= (amountOfWep + amountOfBox_wrappers)) {
+                        loadLargeWorksTFW()
+                        loadLargeWorksEndimo()
+                        loadLargeWorksAccMngr()
+                        loadLargeWorksBanners()
+                        loadedLargeWorks = true
+                    }
                 }
             }
             else { 
                 if (entry.intersectionRatio <= 0.3 && intersectingElementIndex_DF <= amountOfWep) {
-                    entry.target.firstChild.classList.remove("showOnScreen")
+                    // entry.target.firstChild.classList.remove("showOnScreen")
                     // $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
                     listOfIntersectedElementsSetter_DF.update(set => {
                         set.delete(intersectingElementIndex_DF)
@@ -553,7 +567,7 @@
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: [0, 0.3],
+                threshold: [0.3],
                 rootMargin: "0px",
             }
         )
@@ -638,24 +652,24 @@
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" use:openInLargeList data-sveltekit-preload-code="hover" use:lazyLoadedImagesFuncLogos use:loadLargeWorksLogos>
+            <div class="works_preview_grid" use:openInLargeList data-sveltekit-preload-code="hover" use:lazyLoadedImagesFuncLogos>
                 
-                <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded">
+                <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(0)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(0)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(0)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(0) ? imageStoreLogos['Portfolio_workPreviewElement_ART'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_ART']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded">
+                <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(1)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(1)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(1)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(1) ? imageStoreLogos['Portfolio_workPreviewElement_LXY'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LXY']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(2)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(2)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(2)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(2) ? imageStoreLogos['Portfolio_workPreviewElement_Architect'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Architect']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -663,157 +677,161 @@
                     <!-- blank_________________________________________________ -->
                 
                 
-                <div class="work_element_preview_box blank">
-                    <img src={$listOfIntersectedElementsSetter_DF.has(2) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank">
+                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(2)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(2)}>
+                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
-                <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded">
+                <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(3)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(3)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(3)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(3) ? imageStoreLogos['Portfolio_workPreviewElement_Artsgone'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Artsgone']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left">
+                <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(4)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(4)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(4)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(4) ? imageStoreLogos['Portfolio_workPreviewElement_Omic'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Omic']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(5)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(5)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(5)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(5) ? imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 
                     <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
                 
-                <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(6)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(6)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(6)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(6) ? imageStoreLogos['Portfolio_workPreviewElement_Anata'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Anata']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Bena" class="work_element_preview_box wep_box forInsObs top">
+                <a href="#Bena" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(7)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(7)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(7)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(7) ? imageStoreLogos['Portfolio_workPreviewElement_Bena'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Bena']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(8)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(8) ? imageStoreLogos['Portfolio_workPreviewElement_MrGummy'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_MrGummy']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
-                <div class="work_element_preview_box blank">
-                    <img src={$listOfIntersectedElementsSetter_DF.has(8) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank">
+                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
+                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
                     <!-- blank_________________________________________________ -->
-                        <div class="work_element_preview_box blank"> <img src={$listOfIntersectedElementsSetter_DF.has(8) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank"> </div>
+                        <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
+                            <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
+                        </div>
                     <!-- blank_________________________________________________ -->
-                <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(9)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(9)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(9)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(9) ? imageStoreLogos['Portfolio_workPreviewElement_LXY_alt'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LXY_alt']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(10)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(10)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(10)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(10) ? imageStoreLogos['Portfolio_workPreviewElement_Museum'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Museum']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(11)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(11)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(11)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(11) ? imageStoreLogos['Portfolio_workPreviewElement_Nameless'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Nameless']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(12)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(12)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(12)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(12) ? imageStoreLogos['Portfolio_workPreviewElement_Roe'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Roe']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top">
+                <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(13)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(13)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(13)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(13) ? imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(14)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(14) ? imageStoreLogos['Portfolio_workPreviewElement_Ww_additional'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Ww_additional']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
-                <div class="work_element_preview_box blank">
-                    <img src={$listOfIntersectedElementsSetter_DF.has(14) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank">
+                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
+                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
                     <!-- blank_________________________________________________ -->
-                        <div class="work_element_preview_box blank"> <img src={$listOfIntersectedElementsSetter_DF.has(14) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank"> </div>
+                        <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
+                            <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
+                        </div>
                     <!-- blank_________________________________________________ -->
-                <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(15)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(15)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(15)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(15) ? imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(16)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(16)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(16)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(16) ? imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(17)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(17)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(17)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(17) ? imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
                 <!-- next couple_______________________________________________________________________________________________________________________________________ -->
 
-                <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left">
+                <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(18)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(18)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(18)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(18) ? imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top">
+                <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(19)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(19)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(19)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(19) ? imageStoreLogos['Portfolio_workPreviewElement_Lexi'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded">
+                <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(20)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(20)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(20)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(20) ? imageStoreLogos['Portfolio_workPreviewElement_Tari'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Tari']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
                 <div class="work_element_preview_box blank">
-                    <img src={$listOfIntersectedElementsSetter_DF.has(20) ? Portfolio_WorksPreviewDecor : Portfolio_WorksPreviewDecorWebp} alt="decor_element" class="work_element_preview blank">
+                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(20)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(20)}>
                 </div>
 
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded">
+                <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(21)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(21)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(21)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(21) ? imageStoreLogos['Portfolio_workPreviewElement_DTM'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_DTM']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
-                <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left">
+                <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(22)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(22)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(22)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(22) ? imageStoreLogos['Portfolio_workPreviewElement_Eroy'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Eroy']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
                         <div class="work_element_preview_box blank mobileBlank"></div>
                     <!-- blank_________________________________________________ -->
-                <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded">
+                <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(23)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(23)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(23)} -->
-                        <img src={$listOfIntersectedElementsSetter_DF.has(23) ? imageStoreLogos['Portfolio_workPreviewElement_LLL'] : Portfolio_WorksPreviewDecorWebp} alt="Logo" class="work_element_preview">
+                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LLL']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
             </div>
         </div>
     </div>
     <div class="default_container endless flsWS" id="fullScreenWorksSection">
-        <div class="content_container work_summary_page fullscreenWorks" use:loadLargeWorksTFW use:loadLargeWorksEndimo use:loadLargeWorksAccMngr>
+        <div class="content_container work_summary_page fullscreenWorks">
             <p class="largeWorks_upperText">Portfolio - websites</p>
             <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen data-sveltekit-preload-data="tap">
                 <!-- <div class="forInsObs"> -->
@@ -859,45 +877,48 @@
     </div>
     <div class="default_container endless hlfsWS" id="largeWorksSection">
         <!-- {#if $listOfIntersectedElementsSetter_DF.has(27)} -->
-        <div class="content_container work_summary_page largeWorks" use:loadLargeWorksBanners>
+        <div class="content_container work_summary_page largeWorks">
             <p class="largeWorks_upperText">Portfolio - banners</p>
             <!-- use:boxScroll use:checkForAmountOfChildren -->
-            <div class="largeWorks_preview_grid" data-sveltekit-preload-data="tap">
+            <div class="largeWorks_preview_grid" data-sveltekit-preload-data="tap" use:boxScroll use:checkForAmountOfChildren>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
-                    <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
+                    <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? imageStoreBanners['Portfolio_TravelinPoster'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? imageStoreBanners['Portfolio_TravelinPoster'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Postttrrr">
                     </a>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
-                    <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
-                    <a href="/portfolio/project_page/mount_Fuji" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Mount_Fuji'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Mount_Fuji">
+                    <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <a href="#blank" class="largeWork_preview_box halfScreenBox forInsObs">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Mount_Fuji'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Mount_Fuji">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Postttrrr_LowRes'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_FakePoster_LowRes'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_FakePoster_LowRes">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_growthBanner'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_workPreviewElement_GeometryFontType">
                     </a>
                 </div>
-                <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
-                    <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
+                <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
+                    <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/tomato_Poster" class="largeWork_preview_box halfScreenBox forInsObs">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(29) ? imageStoreBanners['Portfolio_FakePoster_LowRes'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_FakePoster_LowRes">
                     </a>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="Postrrr">
-                    <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
+                    <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/action_Postrrr" class="largeWork_preview_box halfScreenBox forInsObs">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(30) ? imageStoreBanners['Portfolio_Postttrrr_LowRes'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Postttrrr">
                     </a>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="GeometryFontType">
-                    <!-- <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button> -->
+                    <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
+                    <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/ABC_poster" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={Portfolio_workPreviewElement_GeometryFontType} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(30) ? imageStoreBanners['Portfolio_growthBanner'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
                     </a>
-                </div>
+                </div> -->
             </div>
         </div> 
     </div>
@@ -1341,7 +1362,7 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s var(--bezierTransition), visibility 0s ease 0.75s, scale 0.75s var(--bezierTransition), filter 0.75s var(--bezierTransition);
-        scale: 1.1;
+        /* scale: 1.1; */
         filter: blur(max(2rem, 2vw));
     }
     .work_element_preview_box.rounded::after{
@@ -1351,7 +1372,7 @@
     .work_element_preview_box:not(.blank):hover::after{
         opacity: 1;
         visibility: visible;
-        scale: 1;
+        /* scale: 1; */
         filter: blur(0rem);
         transition: opacity 0.25s var(--bezierTransition), visibility 0s var(--bezierTransition) 0s, scale 0.25s var(--bezierTransition), filter 0.1s var(--bezierTransition);
     }
@@ -1364,17 +1385,28 @@
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
         object-fit: contain;
         opacity: 0;
-        transition: opacity 0.5s var(--bezierTransition), filter 0.5s var(--bezierTransition);
+        transition: opacity 0.5s var(--bezierTransition);
     }
-    .work_element_preview:is(.isLoaded){
+    .work_element_preview_box.visibleLogo > .work_element_preview:is(.isLoaded){
+        pointer-events: auto;
         opacity: 1;
+        content-visibility: visible;
     }
-    .work_element_preview:not(.blank):not(.showOnScreen):is(.isLoaded){
+    .work_element_preview_box.hiddenLogo > .work_element_preview{
+        pointer-events: none;
+        opacity: 0;
+        content-visibility: hidden;
+        transition: opacity 0.5s var(--bezierTransition);
+    }
+    /* .work_element_preview:is(.isLoaded){
+        opacity: 1;
+    } */
+    /* .work_element_preview:not(.blank):not(.showOnScreen):is(.isLoaded){
         filter: opacity(0.25);
     }
     .work_element_preview:not(.blank):is(.showOnScreen):is(.isLoaded){
         filter: opacity(1);
-    }
+    } */
     .work_element_preview_box.rounded > .work_element_preview{
         width: 80%;
         max-height: 70%;
@@ -1514,11 +1546,11 @@
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
-    .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
+    /* .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
         grid-column: 1 / 3;
         place-self: center;
         min-width: 50vw;
-    }
+    } */
     .largeWork_preview_box_wrapper{
         position: relative;
     }
@@ -1579,14 +1611,14 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
-        scale: 1.05;
+        /* scale: 1.05; */
         filter: blur(max(3rem, 3vw));
         border-radius: max(2.6rem, 2.6vw);
     }
     .largeWork_preview_box:not(.moreThanOneChild):hover::after{
         opacity: 1;
         visibility: visible;
-        scale: 1;
+        /* scale: 1; */
         filter: blur(0rem);
         transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
     }

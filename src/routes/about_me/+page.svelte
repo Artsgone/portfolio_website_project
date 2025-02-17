@@ -92,13 +92,14 @@
             const currentPath = `/src/lib/svg_files/AboutMe/${pathsToImages[key]}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                const img = new Image()
-                img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStore[pathsToImages[key]] = module.default
-                    })
-                }
+                imageStore[pathsToImages[key]] = module.default
+                // const img = new Image()
+                // img.src = module.default
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStore[pathsToImages[key]] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -321,7 +322,7 @@
         opacity: 0;
         will-change: opacity;
     }
-    *:is(.isLoaded){
+    .forLazyLoad:is(.isLoaded){
         opacity: 1;
         transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }

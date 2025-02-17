@@ -11,20 +11,14 @@
 
     import Contact_OutlineTitleDecor from '$lib/svg_files/Contact/Contact_OutlineTitleDecor.svg'
     import Contact_TitleDecor from '$lib/svg_files/Contact/Contact_TitleDecor.svg'
-    import Contact_BackgroundDecor from '$lib/svg_files/Contact/Contact_BackgroundDecor.svg'
-    import Contact_BackgroundDecor_Mobile from '$lib/svg_files/Contact/Contact_BackgroundDecor_Mobile.svg'
-    import Contact_BackgroundDecor_Mobile_Small from '$lib/svg_files/Contact/Contact_BackgroundDecor_Mobile_Small.svg'
-    import Instagram_Icon from '$lib/svg_files/Contact/Contact_Insta_Icon.svg'
-    import Telegram_Icon from '$lib/svg_files/Contact/Contact_Telegram_Icon.svg'
-    import Contact_ArrowForLinks from '$lib/svg_files/Contact/Contact_ArrowForLinks.svg'
     import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
     import submitButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
-    import Contact_FooterDecor from '$lib/svg_files/Contact/Contact_FooterDecor.svg'
 
     import { onMount } from "svelte";
-    import { fade, fly, scale } from 'svelte/transition';
+    import { fly, scale } from 'svelte/transition';
     import { elasticOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
+    import { writable } from "svelte/store";
     
     // let previousScreenHeight = 0;
     let pageLoaded = false;
@@ -35,6 +29,7 @@
         }
         // previousScreenHeight = innerHeight;
         pageLoaded = true;
+        importAllImages()
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -47,6 +42,31 @@
     afterNavigate(() => {
         pageLoaded = true;
     });
+
+    const pathsToImages = {
+        0: 'Contact_BackgroundDecor',
+        1: 'Contact_BackgroundDecor_Mobile',
+        2: 'AboutMe_LanguagesDecorMobile',
+        3: 'Contact_BackgroundDecor_Mobile_Small',
+        4: 'Contact_Insta_Icon',
+        5: 'Contact_Telegram_Icon',
+        6: 'Contact_ArrowForLinks',
+        7: 'Contact_FooterDecor',
+    }
+    
+    const imageStore = writable({})
+
+    const imagesPath = import.meta.glob("/src/lib/svg_files/Contact/*.svg")
+
+    async function importAllImages() {
+        for (const key in pathsToImages) {
+            const currentPath = `/src/lib/svg_files/Contact/${pathsToImages[key]}.svg`
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
+                imageStore[pathsToImages[key]] = module.default
+            }
+        }
+    }
 
     let numberOfRows = 1
     $: innerWidth = 0
@@ -259,11 +279,11 @@
     </div>
     <div class="default_container" id="contactForm_container">
         {#if innerWidth > 1000}
-            <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor} alt="Contact_BackgroundDecor">
+            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor']} alt="Contact_BackgroundDecor">
         {:else if innerWidth < 600}
-            <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor_Mobile_Small} alt="Contact_BackgroundDecor_Mobile_Small">
+            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor_Mobile_Small']} alt="Contact_BackgroundDecor_Mobile_Small">
         {:else}
-            <img id="Contact_BackgroundDecor" src={Contact_BackgroundDecor_Mobile} alt="Contact_BackgroundDecor_Mobile">
+            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor_Mobile']} alt="Contact_BackgroundDecor_Mobile">
         {/if}
         <div class="content_container contact_page" use:clickedOutsideOfOptionMenu>
             <p class="contact_title darkgrayText">Contact me</p>
@@ -299,11 +319,11 @@
             </form>
             <div class="links_bottom_part">
                 <div class="links">
-                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon" src={Telegram_Icon} alt="Telegram_Icon"> 
-                        <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
+                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon" src={imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
+                        <img class="Contact_ArrowForLinks" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
-                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon" src={Instagram_Icon} alt="Instagram_Icon"> 
-                        <img class="Contact_ArrowForLinks" src={Contact_ArrowForLinks} alt="Contact_ArrowForLinks">
+                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon" src={imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
+                        <img class="Contact_ArrowForLinks" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
                 </div>
                 <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin.contact@gmail.com">artemdamin.contact@gmail.com</a>
@@ -312,7 +332,7 @@
     </div>
     <Footer firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"
-    titleName="Contact" footer_Decor_ID={Contact_FooterDecor} />
+    titleName="Contact" footer_Decor_ID={imageStore['Contact_FooterDecor']} />
 </main>
 
 <style>
