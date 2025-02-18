@@ -65,9 +65,9 @@
                 }
                 newY=newY
                 timeIsOut = false
-            }, 100)
+            }, 150)
+            timeIsOut = true
         }
-        timeIsOut = true
     }
 
     const pathsToImages = {
@@ -89,10 +89,11 @@
 
     async function importAllImages() {
         for (const key in pathsToImages) {
-            const currentPath = `/src/lib/svg_files/AboutMe/${pathsToImages[key]}.svg`
+            const pathsToImagesSave = pathsToImages[key]
+            const currentPath = `/src/lib/svg_files/AboutMe/${pathsToImagesSave}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                imageStore[pathsToImages[key]] = module.default
+                imageStore[pathsToImagesSave] = module.default
                 // const img = new Image()
                 // img.src = module.default
                 // img.onload = () => {
@@ -147,24 +148,10 @@
                 intersecObserver.observe(container)
             }
         })
-        // default_containers.forEach( (container, indexOfContainer) => {
-            // container.containerIndex = indexOfContainer
-            // intersecObserver.observe(container)
-            
-            // setTimeout(function () {
-            //     listOfIntersectedElementsSetter.update(set => {
-            //         if (!$listOfIntersectedElementsSetter.has(indexOfContainer)) {
-            //             set.add(indexOfContainer) 
-            //         }
-            //         return set
-            //     })
-            // }, indexOfContainer * intervalForLoading); 
-        // })
     }
     function lazyLoadedImagesFunc() {
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
         lazyLoadedImages.forEach((image) => {
-            
             function isLoaded() {
                 image.classList.add("isLoaded")
             }
@@ -192,9 +179,9 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header headerDecorSVG={AboutMe_OutlineTitleDecorSVG} />
+        
         <div class="content_container title_page">
-            
+            <Header headerDecorSVG={AboutMe_OutlineTitleDecorSVG} />
             <div class="title_page_name" >
                 <div class="title_name darkgrayText">About me</div>
                 {#if pageLoaded}
@@ -358,7 +345,7 @@
         scale: 1;
         translate: 0 0%;
     }
-     .default_container:not(.cyan) > .content_container{
+    .default_container:not(.cyan) > .content_container{
         opacity: 0.25;
         scale: 1.025;
         translate: 0 7.5%;
@@ -394,19 +381,18 @@
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 0.5fr 1.6fr 1fr;
         align-items: center;
-        justify-content: space-around;
         height: 100%;
+        max-height: none;
+        max-width: none;
     }
     .title_page_name{
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        /* outline: max(0.25rem, 0.5vw) var(--background_color_lightCyanSaturated) solid; */
-        /* border-radius: max(1rem, 1vw); */
     }
     #AboutMe_titlePageSVG{
         width: var(--element_size_title_decor_about_me);
@@ -422,15 +408,14 @@
 
     @media (width < 1200px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 8.5vh;
+            grid-template-rows: auto 1fr 1.15fr;
         }
         .title_name{
             text-wrap: balance;
             text-align: center;
         }
     }
-    @media (width < 700px){
+    @media (width < 600px){
         #AboutMe_titlePageSVG{
             width: 90%;
             translate: 2% 2%;
@@ -438,12 +423,6 @@
         .title_name{
             font-size: 30vw;
             line-height: 22.5vw;
-        }
-    }
-    @media (width < 500px) and (height < 750px){
-        .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 2rem;
         }
     }
 
@@ -603,7 +582,7 @@
             width: min(100%, 30rem);
         }
         .default_container.def_skills_title{
-            height: 40vh;
+            height: 60vh;
             scroll-snap-align: start;
         }
     }

@@ -20,14 +20,12 @@
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { writable } from "svelte/store";
     
-    // let previousScreenHeight = 0;
     let pageLoaded = false;
     onMount(() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
-        // previousScreenHeight = innerHeight;
         pageLoaded = true;
         importAllImages()
     });
@@ -60,10 +58,11 @@
 
     async function importAllImages() {
         for (const key in pathsToImages) {
-            const currentPath = `/src/lib/svg_files/Contact/${pathsToImages[key]}.svg`
+            const pathsToImagesSave = pathsToImages[key]
+            const currentPath = `/src/lib/svg_files/Contact/${pathsToImagesSave}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                imageStore[pathsToImages[key]] = module.default
+                imageStore[pathsToImagesSave] = module.default
             }
         }
     }
@@ -93,9 +92,9 @@
                 }
                 newY=newY
                 timeIsOut = false
-            }, 100)
+            }, 150)
+            timeIsOut = true
         }
-        timeIsOut = true
     }
     
     let optionMenuShow = false;
@@ -263,9 +262,9 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header headerDecorSVG={Contact_OutlineTitleDecor} />
+        
         <div class="content_container title_page">
-            
+            <Header headerDecorSVG={Contact_OutlineTitleDecor} />
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Contact</div>
                 {#if pageLoaded}
@@ -408,11 +407,12 @@
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 0.5fr 1.6fr 1fr;
         align-items: center;
-        justify-content: space-around;
         height: 100%;
+        max-height: none;
+        max-width: none;
     }
     .title_page_name{
         display: flex;
@@ -434,11 +434,10 @@
 
     @media (width < 1200px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 8.5vh;
+            grid-template-rows: auto 1fr 1.15fr;
         }
     }
-    @media (width < 700px){
+    @media (width < 600px){
         
         #Contact_TitleDecor{
             width: 85%;
@@ -458,12 +457,6 @@
             inset: 0 0 0 0;
             visibility: visible;
             position: absolute;
-        }
-    }
-    @media (width < 500px) and (height < 750px){
-        .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 2rem;
         }
     }
 

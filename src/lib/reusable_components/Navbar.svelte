@@ -50,7 +50,7 @@
     .navbar_list{
         display: flex;
         align-items: center;
-        width: max(25%, 20rem);
+        width: max(25%, 15rem);
         position: relative;
         isolation: isolate;
     }
@@ -105,7 +105,7 @@
         transition: scale 1s var(--wiggleTransition);
     }
     
-    @container (inline-size < 1100px) {
+    @container (inline-size < 700px) {
         .navbar_inner{
             flex-direction: column;
             gap: max(1.5rem, 3vw);

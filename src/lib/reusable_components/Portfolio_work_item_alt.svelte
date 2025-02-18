@@ -6,7 +6,7 @@
     import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
 
     import { onMount } from "svelte";
-    import { fade, scale } from 'svelte/transition';
+    import { fade, fly, scale } from 'svelte/transition';
     import { elasticOut, sineInOut } from 'svelte/easing';
 
     let imageHeight;
@@ -16,37 +16,23 @@
     onMount(() => {;
         imageHeight = imageHeight;
         if ((work_description_container_height - description_box_height) < 0) {
-            position = "start";
+            position = "start"
         } else {
-            position = "center";
+            position = "center"
         }
-        if (innerWidth >= 1000) {
-            if ((work_description_container_height + scrollY) > (description_box_height)) {
-                fadeBar_display = "none";
-            } else {
-                fadeBar_display = "block";
-            }
-        } else {
-            if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
-                fadeBar_displayMobile = "block";
-            } else {
-                fadeBar_displayMobile = "none";
-            }
-        }
-        
     });
 
-    $: work_presentation_page_height = 0;
-    $: work_description_container_height = 0;
-    $: description_box_height = 0;
+    let work_presentation_page_height = 0
+    let work_description_container_height = 0
+    let description_box_height = 0
 
-    let position = "center";
+    let position = "center"
 
-    let fadeBar_DisplayTop = "none";
-    let fadeBar_DisplayTopMobile = "none";
+    let fadeBar_DisplayTop = false
+    let fadeBar_DisplayTopMobile = false
 
-    let fadeBar_display = "block";
-    let fadeBar_displayMobile = "block";
+    let fadeBar_display = true
+    let fadeBar_displayMobile = true
 
     let work_description_container;
     let work_presentation_page;
@@ -56,34 +42,45 @@
     let enableScrollAllow = true;
     let enableScrollToggle = "clip"
     
+    let timeIsOut = true
     function scrollCounter(){
-        if (innerWidth >= 1000) {
-            scrollY = work_description_container.scrollTop;
-            if (scrollY < (work_description_container_height * 0.025)) {
-                fadeBar_DisplayTop = "none";
-            } else {
-                fadeBar_DisplayTop = "block";
-            }
-            if ((work_description_container_height + scrollY) > (description_box_height)) {
-                fadeBar_display = "none";
-            } else {
-                fadeBar_display = "block";
-            }
+        if (innerWidth > 1000 && timeIsOut) {
+            setTimeout(function () {
+                scrollY = work_description_container.scrollTop;
+                console.log(scrollY)
+                if (scrollY > 25) {
+                    fadeBar_DisplayTop = true
+                } else {
+                    fadeBar_DisplayTop = false
+                }
+                if ((work_description_container_height + scrollY) > (description_box_height)) {
+                    fadeBar_display = false
+                } else {
+                    fadeBar_display = true
+                }
+                timeIsOut = true
+            }, 250)
+            timeIsOut = false
         }
     }
+
+    let timeIsOutMobile = true
     function scrollCounterMobile(){
-        if (innerWidth < 1000) {
-            scrollYMobile = work_presentation_page.scrollTop;
-            if (scrollYMobile < (work_presentation_page_height * 0.1)) {
-                fadeBar_DisplayTopMobile = "none";
-            } else {
-                fadeBar_DisplayTopMobile = "block";
-            }
-            if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
-                fadeBar_displayMobile = "block";
-            } else {
-                fadeBar_displayMobile = "none";
-            }
+        if (innerWidth <= 1000 && timeIsOutMobile) {
+            setTimeout(function () {
+                scrollYMobile = work_presentation_page.scrollTop;
+                if (scrollYMobile > imageHeight / 2) {
+                    fadeBar_DisplayTopMobile = true
+                } else {
+                    fadeBar_DisplayTopMobile = false
+                }
+                if ((description_box_height - scrollYMobile + 50) > (work_presentation_page_height - imageHeight)) {
+                    fadeBar_displayMobile = true
+                } else {
+                    fadeBar_displayMobile = false
+                }
+            }, 250)
+            timeIsOut = false
         }
     }
     function enableScroll(){
@@ -113,24 +110,27 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="workPresentation_container" use:lazyLoadedImagesFunc>
-    <div class="content_container work_presentation_page" tabindex="0" role="button" on:keydown={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
-        style="overflow-y: {enableScrollToggle}; --fade_offsetMobile: {scrollYMobile}px; --displayFadeMobile: {fadeBar_displayMobile}; --displayFadeMobileTop: {fadeBar_DisplayTopMobile};">
-        
-        <div on:scroll={scrollCounter}  class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height}
-            style="align-items: {position}; --fade_offset: {scrollY}px; --displayFade: {fadeBar_display}; --displayFadeTop: {fadeBar_DisplayTop};">
+<div class="workPresentation_container">
+    <div class="work_presentation_page__outer" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '2.5vh', opacity: 0}} class:showBlurMaskBottom={fadeBar_displayMobile} class:showBlurMaskTop={fadeBar_DisplayTopMobile} class:showBlurMaskBottomHidden={!fadeBar_displayMobile} class:showBlurMaskTopHidden={!fadeBar_DisplayTopMobile}>
+        <div class="content_container work_presentation_page" tabindex="0" role="button" on:keyup={enableScroll} on:click={enableScroll} on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} 
+            style="overflow-y: {enableScrollToggle}; ">
             
-            <div class="description_box" bind:clientHeight={description_box_height}>
-                <p class="work_title">"{workElementTitle}"</p>
-                <p class="work_description">{workElementText} <slot/> </p>
+            <div class="work_description_container__outer" class:showBlurMaskBottom={fadeBar_display} class:showBlurMaskTop={fadeBar_DisplayTop} class:showBlurMaskBottomHidden={!fadeBar_display} class:showBlurMaskTopHidden={!fadeBar_DisplayTop}>
+                <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position};">
+                    
+                    <div class="description_box" bind:clientHeight={description_box_height}>
+                        <p class="work_title">"{workElementTitle}"</p>
+                        <p class="work_description">{workElementText} <slot/> </p>
+                    </div>
+                </div>
             </div>
-        </div>
             <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1 }}>
                 <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
             </div>
-            {#if enableScrollAllow && description_box_height > 300}
+            {#if enableScrollAllow && description_box_height > 300 && innerWidth <= 1000}
                 <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">- Tap for description -</div>
             {/if}
+        </div>
     </div>
     <div class="adviceArrows arrowUp"><div class="adviceArrows_inner">↑</div></div>
     <div class="adviceArrows arrowDown"><div class="adviceArrows_inner">↓</div></div>
@@ -154,8 +154,8 @@
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
-        box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        /* border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow); */
         position: relative;
     }
     .adviceArrows{
@@ -164,7 +164,7 @@
         height: 10dvh;
         color: var(--background_color_alternativeLightYellow);
         font-family: "Neutral_Bold", system-ui, sans-serif;
-        font-size: 6.5dvh;
+        font-size: 5dvh;
         display: flex;
         align-items: center;
         justify-content: start;
@@ -178,16 +178,19 @@
     .adviceArrows_inner{
         padding-inline: 2.5vw;
     }
+    .work_presentation_page__outer{
+        width: 95%;
+        height: 85%;
+    }
     .content_container.work_presentation_page{
         display: grid;
         grid-template-columns: 1.5fr 2fr;
-        /* grid-template-rows: 1fr 2.5rem; */
         grid-template-rows: 1fr;
         align-items: center;
         justify-items: center;
         gap: 0rem max(2.5rem, 4vw);
-        width: 95%;
-        height: 85%;
+        width: 100%;
+        height: 100%;
     }
     
     .workPreviewElement_Box{
@@ -199,59 +202,74 @@
     }
     .Portfolio_workPreviewElement{
         width: max(20rem, 80%);
-        max-width: 50vw;
         max-height: 80vh;
         filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_alternativeLightYellow));
-        opacity: 0;
+        /* opacity: 0; */
         transition: opacity 0.5s var(--bezierTransition);
     }
     .Portfolio_workPreviewElement:is(.isLoaded){
         opacity: 1;
     }
     
-    .work_description_container{
+    .work_description_container__outer{
         width: 100%;
         height: 75%;
+        position: relative;
+        isolation: isolate;
+    }
+    .work_description_container{
+        width: 100%;
+        height: 100%;
         display: flex;
 
         overflow-x: clip;
         overflow-y: auto;
         direction: rtl;
         overscroll-behavior: none;
-
-        position: relative;
-        isolation: isolate;
     }
-    .work_description_container::before{
+    .work_description_container__outer::before{
         content: "";
         position: absolute;
-        display: var(--displayFade);
-        width: 100%;
-        height: 10%;
-        bottom: calc((var(--fade_offset) * -1) - 5px);
+        width: 102%;
+        height: 15%;
+        translate: -1% 0;
+        bottom: -1%;
         background: linear-gradient(transparent, var(--background_color_lightYellow) 90%);
         mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 75%);
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(max(0.2vw, 0.2vh));
         z-index: 500;
-
-        /* text-align: end;
-        color: var(--background_color_alternativeLightYellow_Darker);
-        font-family: "Neutral_Bold", system-ui, sans-serif;
-        font-size: max(2.5rem, 2.5vw); */
+        transition: opacity 0.5s var(--bezierTransition);
     }
-    .work_description_container::after{
+    .work_description_container__outer::after{
         content: "";
         position: absolute;
-        display: var(--displayFadeTop);
-        width: 100%;
-        height: 20%;
-        translate: 0 -50%;
-        top: calc(var(--fade_offset));
-        background: linear-gradient(transparent, var(--background_color_lightYellow) 30%, var(--background_color_lightYellow) 50%, transparent);
-        mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 15%, var(--background_color_lightYellow) 65%, transparent);
-        backdrop-filter: blur(5px);
+        width: 102%;
+        height: 15%;
+        translate: -1% 0;
+        top: -1%;
+        background: linear-gradient(var(--background_color_lightYellow) 10%, transparent);
+        mask: linear-gradient(180deg, var(--background_color_lightYellow) 25%, transparent);
+        backdrop-filter: blur(max(0.2vw, 0.2vh));
         z-index: 500;
+        transition: opacity 0.5s var(--bezierTransition);
     }
+    .work_description_container__outer.showBlurMaskTop::after{
+        content-visibility: visible;
+        opacity: 1;
+    }
+    .work_description_container__outer.showBlurMaskBottom::before{
+        content-visibility: visible;
+        opacity: 1;
+    }
+    .work_description_container__outer.showBlurMaskTopHidden::after{
+        content-visibility: hidden;
+        opacity: 0;
+    }
+    .work_description_container__outer.showBlurMaskBottomHidden::before{
+        content-visibility: hidden;
+        opacity: 0;
+    }
+
     .tapForMoreInfo_button{
         display: none;
     }
@@ -260,10 +278,11 @@
         width: max(0.5em, 0.5vw);
     }
     .work_description_container::-webkit-scrollbar-track {
-        background-color: var(--background_color_lightYellow);
+        background-color: var(--background_color_lightCyan_lowerOpacity);
     }
     .work_description_container::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
+        outline: max(0.15vw, 0.15rem) var(--background_color_alternativeLightYellow) solid;
         border-radius: 5rem;
     }
 
@@ -286,7 +305,7 @@
         font-family: 'Subjectivity_Regular', system-ui, sans-serif;
         font-size: var(--text_size_small);
         line-height: var(--text_line_small);
-        letter-spacing: -0.5px;
+        letter-spacing: -0.01rem;
         text-wrap: pretty;
         /* text-align: end; */
         direction: ltr;
@@ -314,15 +333,16 @@
         }
     }
     @media (width < 1000px) {
+        .work_presentation_page__outer{
+            position: relative;
+            isolation: isolate;
+        }
         .content_container.work_presentation_page{
             grid-template-columns: 1fr;
             grid-template-rows: 1.4fr 1fr;
             gap: max(1rem + 2.5vh, 3.5vw) 0;
             overflow-x: clip;
             overflow-clip-margin: 1rem;
-
-            position: relative;
-            isolation: isolate;
         }
         .tapForMoreInfo_button{
             position: absolute;
@@ -330,8 +350,8 @@
             width: 105%;
             translate: 0 2.5vh;
             height: calc(100% - var(--imageHeight) - 10vh);
-            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative));
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 25%);
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow));
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 25%);
             backdrop-filter: blur(5px);
             border-radius: max(1vw, 1rem);
             display: flex;
@@ -339,7 +359,7 @@
             justify-content: center;
             align-items: center;
             gap: 1.25vh 0;
-            z-index: 501;
+            z-index: 510;
 
             font-family: 'Subjectivity_Regular', system-ui, sans-serif;
             /* text-transform: uppercase; */
@@ -350,35 +370,50 @@
             width: min(25%, 4rem);
             aspect-ratio: 1;
         }
-        .content_container.work_presentation_page::before{
+        .work_presentation_page__outer::before{
             content: "";
             position: absolute;
-            width: 100%;
-            height: 8%;
-            display: var(--displayFadeMobile);
-            bottom: calc((var(--fade_offsetMobile) * -1) - 10px);
-            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 85%);
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 60%);
-            backdrop-filter: blur(5px);
+            width: 102%;
+            height: 10%;
+            translate: -1% 0;
+            bottom: -1%;
+            background: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 80%);
+            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 65%);
+            backdrop-filter: blur(max(0.2vw, 0.2vh));
             z-index: 500;
-
-            /* text-align: end;
-            color: var(--text_color_gray90);
-            font-family: "Neutral_Bold", system-ui, sans-serif;
-            font-size: max(2rem, 2vh); */
+            opacity: 1;
+            transition: opacity 0.25s var(--bezierTransition);
         }
-        .content_container.work_presentation_page::after{
+        .work_presentation_page__outer::after{
             content: "";
             position: absolute;
-            display: var(--displayFadeMobileTop);
-            width: 100%;
-            height: 16%;
-            translate: 0 -50%;
-            top: calc(var(--fade_offsetMobile) - 5px);
-            background: linear-gradient(transparent, var(--background_color_lightYellow_middlealternative) 15%, var(--background_color_lightYellow_middlealternative) 60%, transparent);
-            mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow_middlealternative) 0%, var(--background_color_lightYellow_middlealternative) 75%, transparent);
-            backdrop-filter: blur(5px);
+            width: 102%;
+            height: 10%;
+            translate: -1% 0;
+            top: -1%;
+            background: linear-gradient(var(--background_color_lightYellow) 20%, transparent);
+            mask: linear-gradient(180deg, var(--background_color_lightYellow) 35%, transparent);
+            backdrop-filter: blur(max(0.2vw, 0.2vh));
             z-index: 500;
+            opacity: 1;
+            transition: opacity 0.25s var(--bezierTransition);
+        }
+
+        .work_presentation_page__outer.showBlurMaskTopHidden::after{
+            content-visibility: hidden;
+            opacity: 0;
+        }
+        .work_presentation_page__outer.showBlurMaskBottomHidden::before{
+            content-visibility: hidden;
+            opacity: 0;
+        }
+        .work_presentation_page__outer.showBlurMaskTop::after{
+            content-visibility: visible;
+            opacity: 1;
+        }
+        .work_presentation_page__outer.showBlurMaskBottom::before{
+            content-visibility: visible;
+            opacity: 1;
         }
 
         .workPreviewElement_Box{
@@ -390,10 +425,12 @@
             order: 1;
         }
 
-        .work_description_container{
+        .work_description_container__outer{
             align-self: flex-start;
-            overflow-y: visible;
             order: 2;
+        }
+        .work_description_container{
+            overflow-y: visible;
             padding-left: 0vw;
             height: fit-content;
             justify-content: center;
@@ -401,15 +438,19 @@
         .description_box{
             width: max(25rem, 75%);
         }
-        .work_description_container::before{ display: none;}
-        .work_description_container::after{ display: none;}
+        .work_description_container__outer::after{
+            display: none;
+        }
+        .work_description_container__outer::before{
+            display: none;
+        }
 
         .description_box::before{
             translate: 0 300%;
             z-index: 600;
         }
     }
-    @media (width < 500px) {
+    @media (width < 600px) {
         .workPreviewElement_Box{
             min-height: 35dvh;
         }
@@ -422,13 +463,13 @@
     }
 
     @media (width < 1100px) {
-        .content_container.work_presentation_page{
+        .work_presentation_page__outer{
             width: 85%;
             height: 80%;
         }
     }     
     @media (width < 1100px) and (height < 690px){ 
-        .content_container.work_presentation_page{
+        .work_presentation_page__outer{
             width: 85%;
             height: 90%;
         }

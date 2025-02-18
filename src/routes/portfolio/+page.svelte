@@ -52,7 +52,6 @@
     });
 
     let New_LOGO_AR = ""
-    let Portfolio_workPreviewElement_GeometryFontType = ""
 
     let pathsToImagesLogos = {
         1: 'Portfolio_workPreviewElement_ART',
@@ -87,10 +86,11 @@
 
     async function loadWorksLogos() {
         for (const key in pathsToImagesLogos) {
-            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesLogos[key]}.svg`
+            const pathsToImagesSave = pathsToImagesLogos[key]
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesSave}.svg`
             if (imagesPathLogos[currentPath]) {
                 const module = await imagesPathLogos[currentPath]()
-                imageStoreLogos[pathsToImagesLogos[key]] = module.default
+                imageStoreLogos[pathsToImagesSave] = module.default
                 // const img = new Image()
                 // img.src = module.default
                 // img.onload = () => {
@@ -125,14 +125,15 @@
 
     async function loadLargeWorksTFW() {
         for (const key in pathsToImagesTFW) {
-            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/${pathsToImagesTFW[key]}.png`
+            const pathsToImagesSave = pathsToImagesTFW[key]
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/${pathsToImagesSave}.png`
             if (imagesPathTFW[currentPath]) {
                 const module = await imagesPathTFW[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreTFW[pathsToImagesTFW[key]] = module.default
+                        imageStoreTFW[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -144,14 +145,15 @@
 
     async function loadLargeWorksEndimo() {
         for (const key in pathsToImagesEndimo) {
-            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/${pathsToImagesEndimo[key]}.png`
+            const pathsToImagesSave = pathsToImagesEndimo[key]
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/${pathsToImagesSave}.png`
             if (imagesPathEndimo[currentPath]) {
                 const module = await imagesPathEndimo[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreEndimo[pathsToImagesEndimo[key]] = module.default
+                        imageStoreEndimo[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -163,14 +165,15 @@
 
     async function loadLargeWorksAccMngr() {
         for (const key in pathsToImagesAccMngr) {
-            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/${pathsToImagesAccMngr[key]}.png`
+            const pathsToImagesSave = pathsToImagesAccMngr[key]
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/${pathsToImagesSave}.png`
             if (imagesPathAccMngr[currentPath]) {
                 const module = await imagesPathAccMngr[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreAccMngr[pathsToImagesAccMngr[key]] = module.default
+                        imageStoreAccMngr[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -191,14 +194,15 @@
 
     async function loadLargeWorksBanners() {
         for (const key in pathsToImagesBanners) {
-            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/${pathsToImagesBanners[key]}.png`
+            const pathsToImagesSave = pathsToImagesBanners[key]
+            const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/${pathsToImagesSave}.png`
             if (imagesPathBanners[currentPath]) {
                 const module = await imagesPathBanners[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreBanners[pathsToImagesBanners[key]] = module.default
+                        imageStoreBanners[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -223,9 +227,9 @@
                 }
                 newY=newY
                 timeIsOut = false
-            }, 100)
+            }, 150)
+            timeIsOut = true
         }
-        timeIsOut = true
     }
     
     let workPresent_Visibility = 'hidden'
@@ -466,19 +470,21 @@
                     set.add(intersectingElementIndex)
                     return set
                 })
+                $listOfIntersectedElementsSetter.delete(intersectingElementIndex - 2)
+                $listOfIntersectedElementsSetter.delete(intersectingElementIndex + 2)
                 amountOfElementsObserved++
-                intersecObserver.unobserve(entry.target)
+                // intersecObserver.unobserve(entry.target)
                 
-                if (amountOfElementsObserved == listLenght) {
-                    intersecObserver.disconnect()
-                    // console.log("DISCONNECTED")
-                }
+                // if (amountOfElementsObserved == listLenght) {
+                //     intersecObserver.disconnect()
+                //     // console.log("DISCONNECTED")
+                // }
             }
         })
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: [0.1],
+                threshold: [0.75],
                 rootMargin: "0px",
             }
         )
@@ -585,9 +591,7 @@
                 image.classList.add("isLoaded")
             }
             image.addEventListener("load", () => {
-                setTimeout(function () {
-                    isLoaded()
-                }, 100)
+                isLoaded()
             })
         })
     }
@@ -626,9 +630,9 @@
     {/if}
 
     <div class="default_container cyan">
-        <Header headerDecorSVG={Portfolio_OutlineTitleDecor} />
+        
         <div class="content_container title_page">
-            
+            <Header headerDecorSVG={Portfolio_OutlineTitleDecor} />
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Portfolio</div>
                 {#if pageLoaded}
@@ -1114,6 +1118,7 @@
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: none;
+        scroll-behavior: smooth;
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -1129,9 +1134,6 @@
         border-radius: 5rem;
     }
     @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: none;
-        } */
         main.svelte_main::-webkit-scrollbar {
             display: none;
         }
@@ -1155,13 +1157,13 @@
         background-color: var(--background_color_lightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
-        position: relative;
-        z-index: 0;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
     .endless{
         height: auto;
+        position: relative;
+        z-index: 0;
     }
     .content_container{
         width: 92.5%;
@@ -1177,26 +1179,33 @@
         border-bottom: none;
     }
     .classForIntersecObserver{
-        /* background-color: var(--background_color_lightCyan); */
         scroll-snap-align: center;
         scroll-snap-stop: always;
         background-color: var(--background_color_lightYellow);
-        box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
     }
+    /* .classForIntersecObserver.visibleLogoDetailed{
+        opacity: 1;
+        content-visibility: visible;
+    }
+    .classForIntersecObserver.hiddenLogoDetailed{
+        opacity: 0;
+        content-visibility: hidden;
+        transition: opacity 0.5s var(--bezierTransition);
+    } */
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 0.5fr 1.6fr 1fr;
         align-items: center;
-        justify-content: space-around;
         height: 100%;
+        max-height: none;
+        max-width: none;
     }
     .title_page_name{
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
         position: relative;
     }
     #Portfolio_TitleDecor{
@@ -1212,11 +1221,10 @@
 
     @media (width < 1200px){
         .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 8.5vh;
+            grid-template-rows: auto 1fr 1.15fr;
         }
     }
-    @media (width < 700px){
+    @media (width < 525px){
         
         #Portfolio_TitleDecor{
             width: 95%;
@@ -1236,12 +1244,6 @@
             inset: 0 0 0 0;
             visibility: visible;
             position: absolute;
-        }
-    }
-    @media (width < 500px) and (height < 750px){
-        .content_container.title_page{
-            justify-content: space-evenly;
-            gap: 2rem;
         }
     }
 

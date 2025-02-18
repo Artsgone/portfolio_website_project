@@ -160,7 +160,7 @@
     }
     .authorName{
         background-color: var(--background_color_lightCyan);
-        color: var(--text_color_transparent);
+        color: transparent;
         border-radius: 50rem;
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
         position: relative;

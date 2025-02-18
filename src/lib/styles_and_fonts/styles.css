@@ -5,7 +5,7 @@
     --background_color_alternativeLightYellow: hsl(35, 40%, 88%);
     --background_color_alternativeLightYellow_lowerOpacity: hsla(35, 40%, 88%, 0.75);
     --background_color_alternativeLightYellow_Darker: hsl(34, 40%, 80%);
-    --background_color_darkGray: #0c0c0c;
+    /* --background_color_darkGray: #0c0c0c; */
 
     --background_color_lightCyan: hsl(172, 20%, 70%);
     --background_color_lightCyan_lowerOpacity075: hsla(172, 23%, 77%, 0.65);
@@ -26,21 +26,21 @@
     --text_color_gray50: #a5a5a5;
     --text_color_gray65: hsl(0, 0%, 85%);
     --text_color_gray90: #1f1f1f;
-    --text_color_yellow60: #e1ddc6ff;
-    --text_color_transparent: #00000000;
+    /* --text_color_yellow60: #e1ddc6ff; */
+    /* --text_color_transparent: #00000000; */
 
     --element_background_color_darkerYellow: hsl(51, 31%, 87%);
     --element_background_color_darkestYellow: hsl(49, 32%, 71%);
     --element_background_color_lightestCyan: hsl(172, 20%, 79%);
 
     /* ELEMENTS SIZES */
-    --element_size_title_decor_main_page: max(42vw, 21rem);
+    --element_size_title_decor_main_page: max(42vw, 20rem);
     --element_size_title_decor_about_me: max(33vw, 19rem);
     --element_size_title_decor_portfolio: max(36vw, 20rem);
     --element_size_title_decor_contact: max(31vw, 18rem);
     
     /* FONT SIZES */
-    --text_size_title_ultrabig: max(15vw, 7.5rem);
+    --text_size_title_ultrabig: max(15vw, 7rem);
     --text_size_big: max(4vw, 2.75rem);
     --text_line_height_big: max(4vw, 2.5rem);
     --text_size_medium_big: max(2vw, 1.75rem);
