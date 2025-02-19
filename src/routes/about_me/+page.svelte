@@ -460,6 +460,8 @@
     }
     .AboutMe_EducationSVG{
         width: 100%;
+        height: 100%;
+        object-fit: contain;
         max-height: 50vh;
     }
     .placeholder_EducationSVG{
@@ -468,7 +470,7 @@
         background-image: url(/src/lib/svg_files/AboutMe/AboutMe_EducationSVG_Blurred.png);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 100%;
+        background-size: 90%;
     }
     .placeholder_EducationSVG.showPlaceholder{
         opacity: 1;
