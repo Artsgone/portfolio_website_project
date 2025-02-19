@@ -9,11 +9,11 @@ const config = {
 		adapter: adapter({
 			split: true
 		}),
-		ssr: true,
-		prerender: {
-			default: true,
-			entries: ['*'],
-		}
+		// ssr: true,
+		// prerender: {
+		// 	default: true,
+		// 	entries: ['*'],
+		// }
 	}
 };
 
