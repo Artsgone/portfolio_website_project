@@ -41,7 +41,7 @@
         pageLoaded = false
         // console.log("To: " + to?.url.pathname + ", from: " + from?.url.pathname)
         if ( from?.url.pathname == "/" && to?.url.pathname == undefined ) {
-            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+            saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
         }
@@ -182,7 +182,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: [0.5],
+                threshold: [0.25],
                 rootMargin: "0px",
             }
         )
@@ -198,19 +198,12 @@
     
     function lazyLoadedImagesFunc() {
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
-        let timeOutTime = 0
         lazyLoadedImages.forEach((image) => {
-            // if (!image.classList.contains("SVG")) {
-            //     timeOutTime = 150
-            // }
             function isLoaded() {
+                image.removeEventListener("load", isLoaded)
                 image.classList.add("isLoaded")
             }
-            image.addEventListener("load", () => {
-                setTimeout(function () {
-                    isLoaded()
-                }, timeOutTime)
-            })
+            image.addEventListener("load", isLoaded, {once: true})
         })
     }
     
@@ -505,7 +498,7 @@
         text-wrap: nowrap;
     }
 
-    @media (width < 1200px){
+    @media (width < 850px){
         .content_container.title_page{
             /* justify-content: space-evenly;
             gap: 8.5vh; */
@@ -647,8 +640,8 @@
         content: "";
         position: absolute;
         height: 125%;
-        width: 200%;
-        left: -50%;
+        width: 175%;
+        left: -35%;
         background-image: radial-gradient(var(--background_color_darkCyanSaturated) 15%, var(--cyan_outline) 100%);
         background-size: 100% 100%;
         background-position: right bottom;
@@ -726,7 +719,7 @@
             font-size: min(12.5vw, 4.5rem);
         }
         .span_CV::before{
-            filter: blur(max(17.5vw, 3rem));
+            filter: blur(max(10vw, 5rem));
         }
         .MainPage_cvDownloadDecor{
             height: min(2.25rem, 7.5vw);
@@ -882,8 +875,6 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        /* background-color: var(--background_color_alternativeLightYellow); */
-        /* background: radial-gradient(var(--background_color_alternativeLightYellow) 55%, var(--background_color_alternativeLightYellow_lowerOpacity) 125%); */
         border-radius: max(1vw, 1rem);
     }
     .sunsetInTheCloudsIMG{

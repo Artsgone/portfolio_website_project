@@ -38,7 +38,7 @@
     beforeNavigate(({to, from}) => {
         pageLoaded = false
         if ( from?.url.pathname == "/about_me" && to?.url.pathname == undefined ) {
-            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+            saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
         }
@@ -137,7 +137,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: [0.5],
+                threshold: [0.25],
                 rootMargin: "0px",
             }
         )
@@ -153,13 +153,20 @@
         const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
         lazyLoadedImages.forEach((image) => {
             function isLoaded() {
+                image.removeEventListener("load", isLoaded)
                 image.classList.add("isLoaded")
             }
-            image.addEventListener("load", () => {
-                isLoaded()
-            })
+            image.addEventListener("load", isLoaded, {once: true})
         })
     }
+
+    let placeholderSkillsTitle = true
+    let placeholderSkillsTitleMobile = true
+
+    let placeholderSkills = true
+    let placeholderSkillsMobile = true
+
+    let placeholderEdu = true
 </script>
 
 <svelte:head>
@@ -196,8 +203,11 @@
     <div class="default_container def_skills_title noBorders">
         <!-- {#if $listOfIntersectedElementsSetter.has(3)} -->
             <div class="content_container skills_title_page">
-                <img class="AboutMe_SkillsTitleSVG forLazyLoad" style:display={showSkillsTitleDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(1) && showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG'] : ""} alt="AboutMe_SkillsTitleSVG">
-                <img class="AboutMe_SkillsTitleSVG forLazyLoad" style:display={showSkillsTitleDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(1) && !showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG_Mobile'] : ""} alt="AboutMe_SkillsTitleSVG_Mobile">
+                <div class="placeholder_SkillsTitle" style:display={showSkillsTitleDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsTitle} class:hidePlaceholder={!placeholderSkillsTitle}></div>
+                <div class="placeholder_SkillsTitle mobile" style:display={!showSkillsTitleDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsTitleMobile} class:hidePlaceholder={!placeholderSkillsTitleMobile}></div>
+                
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitle = false}} style:display={showSkillsTitleDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(1) && showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG'] : ""} alt="AboutMe_SkillsTitleSVG">
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitleMobile = false}} style:display={showSkillsTitleDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(1) && !showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG_Mobile'] : ""} alt="AboutMe_SkillsTitleSVG_Mobile">
             </div>
         <!-- {/if} -->
     </div>
@@ -205,11 +215,11 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(4)} -->
             <div class="content_container skills_page">
                 <div class="skills_box">
-                    <!-- {#if innerWidth > 800} -->
-                        <img class="AboutMe_Skills forLazyLoad" style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(2) && showSkillsDesktop) ? imageStore['AboutMe_Skills'] : ""} alt="AboutMe_Skills">
-                    <!-- {:else} -->
-                        <img class="AboutMe_Skills_Mobile forLazyLoad" style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(2) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile'] : ""} alt="AboutMe_Skills_Mobile">
-                    <!-- {/if} -->
+                    <div class="placeholder_Skills" style:display={showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkills} class:hidePlaceholder={!placeholderSkills}></div>
+                    <div class="placeholder_Skills mobile" style:display={!showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsMobile} class:hidePlaceholder={!placeholderSkillsMobile}></div>
+                    
+                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(2) && showSkillsDesktop) ? imageStore['AboutMe_Skills'] : ""} alt="AboutMe_Skills">
+                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(2) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile'] : ""} alt="AboutMe_Skills_Mobile">
                 </div>
             </div>
         <!-- {/if} -->
@@ -262,7 +272,8 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(1)} -->
             <div class="content_container education_page">
                 <div class="wrapper_educationSVG">
-                    <img class="AboutMe_EducationSVG forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
+                    <div class="placeholder_EducationSVG" class:showPlaceholder={placeholderEdu} class:hidePlaceholder={!placeholderEdu}></div>
+                    <img class="AboutMe_EducationSVG forLazyLoad" on:transitionstart={() => {placeholderEdu = false}} src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
                 </div>
                 <div class="text education">
                     <p class="darkgrayText">
@@ -406,7 +417,7 @@
         z-index: 999;
     }
 
-    @media (width < 1200px){
+    @media (width < 850px){
         .content_container.title_page{
             grid-template-rows: auto 1fr 1.15fr;
         }
@@ -440,15 +451,31 @@
         gap: 3vw;
     }
     .wrapper_educationSVG{
-        width: 100%;
+        width: max(15rem, 60%);
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
     .AboutMe_EducationSVG{
-        width: max(15rem, 60%);
+        width: 100%;
         max-height: 50vh;
+    }
+    .placeholder_EducationSVG{
+        position: absolute;
+        inset: 0;
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_EducationSVG_Blurred.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+    }
+    .placeholder_EducationSVG.showPlaceholder{
+        opacity: 1;
+    }
+    .placeholder_EducationSVG.hidePlaceholder{
+        opacity: 0;
+        transition: opacity 0.5s var(--bezierTransition);
     }
     .text.education{
         justify-self: start;
@@ -476,8 +503,10 @@
             grid-auto-flow: row;
             grid-auto-rows: 1fr 1fr;
         }
-        .AboutMe_EducationSVG{
+        .wrapper_educationSVG{
             width: min(65%, 20rem);
+        }
+        .AboutMe_EducationSVG{
             max-height: 40vh;
         }
         .text.education{
@@ -527,11 +556,10 @@
     }
     .content_container.languages_page > p {
         font-family: 'Brolimo', system-ui, sans-serif;
-        color: hsl(171, 22%, 80%);
-        font-size: max(3.3vw, 2.25rem);
+        color: hsl(171, 22%, 85%);
+        font-size: max(3.25vw, 2.5rem);
         text-align: center;
         text-wrap: nowrap;
-        filter: blur(0.1rem);
     }
     .text.languages{
         position: relative;
@@ -545,7 +573,7 @@
     .AboutMe_LanguagesYellowHighlight{
         position: absolute;
         width: 40%;
-        translate: 135% -5%;
+        translate: 135% 0%;
         z-index: -1;
         filter: blur(max(0.5rem, 0.5vw));
         border-radius: max(1rem, 1vw);
@@ -553,16 +581,14 @@
 
 
     @media (width < 800px) {
+        .content_container.languages_page > p {
+            font-size: min(11vw, 2.5rem);
+        }
         .text.languages > p{
             font-size: min(8vw, 2.25rem);
             line-height: min(11vw, 3rem);
         }
     }
-    /* @media (height < 800px) {
-        .content_container.languages_page > p {
-            visibility: hidden;
-        }
-    } */
 
     /* PAGE 4(1) SKILLS TITLE */ 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -571,10 +597,30 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+    }
+    .placeholder_SkillsTitle{
+        position: absolute;
+        inset: 0;
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_SkillsTitle_Blurred.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: max(40rem, 65%);
+    }
+    .placeholder_SkillsTitle.mobile{
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_SkillsTitleSVG_Mobile_Blurred.png);
+        background-size: min(100%, 30rem);
+    }
+    .placeholder_SkillsTitle.showPlaceholder{
+        opacity: 1;
+    }
+    .placeholder_SkillsTitle.hidePlaceholder{
+        opacity: 0;
+        transition: opacity 0.5s var(--bezierTransition);
     }
     .AboutMe_SkillsTitleSVG{
         width: max(40rem, 65%);
-        max-height: 50vh;
+        max-height: 80vh;
     }
 
     @media (width < 800px) {
@@ -601,6 +647,7 @@
         align-items: center;
         width: max(50rem, 65%);
         height: 100%;
+        position: relative;
     }
     .AboutMe_Skills{
         width: 100%;
@@ -610,6 +657,27 @@
         width: 100%;
         max-height: 85vh;
     }
+    .placeholder_Skills{
+        position: absolute;
+        inset: 0;
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Blurred.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+    }
+    .placeholder_Skills.mobile{
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Mobile_Blurred.png);
+        background-size: min(100%, 27.5rem) 100%;
+        max-height: 85vh;
+    }
+    .placeholder_Skills.showPlaceholder{
+        opacity: 1;
+    }
+    .placeholder_Skills.hidePlaceholder{
+        opacity: 0;
+        transition: opacity 0.5s var(--bezierTransition);
+    }
+
     @media (width < 800px) {
         .skills_box{
             width: 100%;
@@ -626,7 +694,7 @@
     }
     .content_container.otherAbilities_page > p {
         font-family: 'Misto', system-ui, sans-serif;
-        font-size: 9.85vh;
+        font-size: 10vh;
         height: 100%;
         text-align: center;
         text-wrap: nowrap;
@@ -666,16 +734,11 @@
 
     @media (width < 1100px) {
         .content_container.otherAbilities_page > p {
-            font-size: min(9vh, 6vw);
+            font-size: min(9vh, 12vw);
+            writing-mode: horizontal-tb;
         }
-    }
-    @media (width < 1000px) {
         .content_container.otherAbilities_page{
             flex-direction: column;
-        }
-        .content_container.otherAbilities_page > p {
-            writing-mode: horizontal-tb;
-            font-size: 9.25vw;
         }
     }
     @media (width < 800px) {

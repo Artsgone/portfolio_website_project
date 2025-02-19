@@ -40,7 +40,7 @@
         pageLoaded = false;
         if ( from?.url.pathname == "/portfolio" && to?.url.pathname == undefined ) {
             if (svelte_main_element.scrollTop != null) {
-                saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+                saveScrollY.updateScrollY(y)
             }
         } else {
             saveScrollY.updateScrollY(0)
@@ -484,7 +484,7 @@
         },
             { 
                 root: document.querySelector(".workPresent_wrapper"),
-                threshold: [0.75],
+                threshold: [0.9],
                 rootMargin: "0px",
             }
         )
@@ -588,11 +588,10 @@
         const lazyLoadedImages = document.querySelectorAll(".largeWork_element_preview")
         lazyLoadedImages.forEach(image => {
             function isLoaded() {
+                image.removeEventListener("load", isLoaded)
                 image.classList.add("isLoaded")
             }
-            image.addEventListener("load", () => {
-                isLoaded()
-            })
+            image.addEventListener("load", isLoaded, {once: true})
         })
     }
     
@@ -601,11 +600,10 @@
         
         lazyLoadedImages.forEach(image => {
             function isLoaded() {
+                image.removeEventListener("load", isLoaded)
                 image.classList.add("isLoaded")
             }
-            image.addEventListener("load", () => {
-                isLoaded()
-            })  
+            image.addEventListener("load", isLoaded, {once: true})
         })
     }
 </script>
@@ -951,7 +949,7 @@
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_ART']} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                    <WorkPresent firstWorkElement={true} workElementImage={imageStoreLogos['Portfolio_workPreviewElement_ART']} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
@@ -1094,9 +1092,10 @@
             </div>
             <div id="ANV" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(24)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_LLL']} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
+                    <WorkPresent lastWorkElement={true} workElementImage={imageStoreLogos['Portfolio_workPreviewElement_LLL']} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
+            <!-- CHANGE LAST WORK ELEMENT !!! -->
         
         </div>
     {/if}
@@ -1178,20 +1177,6 @@
         box-shadow: none;
         border-bottom: none;
     }
-    .classForIntersecObserver{
-        scroll-snap-align: center;
-        scroll-snap-stop: always;
-        background-color: var(--background_color_lightYellow);
-    }
-    /* .classForIntersecObserver.visibleLogoDetailed{
-        opacity: 1;
-        content-visibility: visible;
-    }
-    .classForIntersecObserver.hiddenLogoDetailed{
-        opacity: 0;
-        content-visibility: hidden;
-        transition: opacity 0.5s var(--bezierTransition);
-    } */
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -1219,7 +1204,7 @@
         z-index: 999;
     }
 
-    @media (width < 1200px){
+    @media (width < 850px){
         .content_container.title_page{
             grid-template-rows: auto 1fr 1.15fr;
         }
@@ -1487,6 +1472,24 @@
     .workPresent_wrapper::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
+    } */
+    .classForIntersecObserver{
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        background-color: var(--background_color_lightYellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    /* .classForIntersecObserver.visibleLogoDetailed{
+        opacity: 1;
+        content-visibility: visible;
+    }
+    .classForIntersecObserver.hiddenLogoDetailed{
+        opacity: 0;
+        content-visibility: hidden;
+        transition: opacity 0.5s var(--bezierTransition);
     } */
 
     @media (width < 900px) {

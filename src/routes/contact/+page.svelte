@@ -28,11 +28,12 @@
         }
         pageLoaded = true;
         importAllImages()
+        lazyLoadedImagesFunc()
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
         if ( from?.url.pathname == "/contact" && to?.url.pathname == undefined ) {
-            saveScrollY.updateScrollY(svelte_main_element.scrollTop)
+            saveScrollY.updateScrollY(y)
         } else {
             saveScrollY.updateScrollY(0)
         }
@@ -67,13 +68,7 @@
         }
     }
 
-    let numberOfRows = 1
     $: innerWidth = 0
-
-    if (innerWidth < 600){
-        numberOfRows = 2
-    }
-
     $: innerHeight = 0
     let y = 0
     let svelte_main_element
@@ -117,7 +112,6 @@
             } else {
                 arrow_rotation = "0deg"
             }
-            
             optionMenuShow = false
         }
     }
@@ -239,6 +233,16 @@
     //         return () => clearInterval(interval)
     //     }
     // }
+    function lazyLoadedImagesFunc() {
+        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+        lazyLoadedImages.forEach((image) => {
+            function isLoaded() {
+                image.removeEventListener("load", isLoaded)
+                image.classList.add("isLoaded")
+            }
+            image.addEventListener("load", isLoaded, {once: true})
+        })
+    }
 </script>
 
 <svelte:head>
@@ -277,13 +281,13 @@
         </div>
     </div>
     <div class="default_container" id="contactForm_container">
-        {#if innerWidth > 1000}
-            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor']} alt="Contact_BackgroundDecor">
-        {:else if innerWidth < 600}
-            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor_Mobile_Small']} alt="Contact_BackgroundDecor_Mobile_Small">
-        {:else}
-            <img id="Contact_BackgroundDecor" src={imageStore['Contact_BackgroundDecor_Mobile']} alt="Contact_BackgroundDecor_Mobile">
-        {/if}
+        
+        <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
+        <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
+        <object class="Contact_BackgroundDecor forLazyLoad" data={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
+        <!-- <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} alt="Contact_BackgroundDecor">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="Contact_BackgroundDecor_Mobile_Small">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="Contact_BackgroundDecor_Mobile"> -->
         <div class="content_container contact_page" use:clickedOutsideOfOptionMenu>
             <p class="contact_title darkgrayText">Contact me</p>
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
@@ -318,11 +322,11 @@
             </form>
             <div class="links_bottom_part">
                 <div class="links">
-                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon" src={imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
-                        <img class="Contact_ArrowForLinks" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
+                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon forLazyLoad" src={imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
+                        <img class="Contact_ArrowForLinks forLazyLoad" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
-                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon" src={imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
-                        <img class="Contact_ArrowForLinks" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
+                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon forLazyLoad" src={imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
+                        <img class="Contact_ArrowForLinks forLazyLoad" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
                 </div>
                 <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin.contact@gmail.com">artemdamin.contact@gmail.com</a>
@@ -361,7 +365,14 @@
     button:disabled{
         background: radial-gradient(var(--text_color_gray50) 25%, var(--text_color_gray65) 100%);
     }
-    
+    .forLazyLoad{
+        opacity: 0;
+        will-change: opacity;
+    }
+    .forLazyLoad:is(.isLoaded){
+        opacity: 1;
+        transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
+    }
 
     .default_container{
         width: 100%;
@@ -432,7 +443,7 @@
         z-index: 999;
     }
 
-    @media (width < 1200px){
+    @media (width < 850px){
         .content_container.title_page{
             grid-template-rows: auto 1fr 1.15fr;
         }
@@ -472,7 +483,7 @@
         justify-content: space-between;
         position: relative;
     }
-    #Contact_BackgroundDecor{
+    .Contact_BackgroundDecor{
         width: 100%;
         position: absolute;
         z-index: -1;
@@ -696,12 +707,11 @@
         font-family: 'Neutral_Normal', system-ui, sans-serif;
         text-decoration: none;
         font-size: var(--text_size_extra_small);
-        letter-spacing: 0.07rem;
+        /* letter-spacing: 0.05rem; */
         background-color: var(--background_color_lightCyanSaturated);
         box-shadow: inset -0.2rem 0.2rem max(1rem, 1vw) max(0.75rem, 0.5vw) var(--cyan_outline_bright);
-        border-radius: 50rem;
-        width: 100%;
-        padding: max(1.25vw, 1.15rem) max(2vw, 1.75rem);   
+        border-radius: 25rem;
+        padding: max(1.25vw, 1.15rem) max(2vw, 1.75rem);
 
         display: flex;
         align-items: center;
@@ -779,7 +789,7 @@
             grid-auto-rows: 1.5fr;
             gap: 2.5vw 1vw;
         }
-        #Contact_BackgroundDecor{
+        .Contact_BackgroundDecor{
             translate: 0% 0%;
         }
         
@@ -805,7 +815,7 @@
         }
         .contact_title{
             /* min(23vw, 12.5vh) */
-            font-size: min(23vw, 7.5rem);
+            font-size: min(23vw, 6.5rem);
             text-align: center;
             text-wrap: wrap;
             line-height: min(10vh, 17vw);
@@ -823,7 +833,7 @@
             gap: max(1vw, 0.75rem);
         }
         .links > a {
-            gap: 5vw;
+            gap: min(1.5rem, 5vw);
             padding: max(1.25vw, 1.15rem) max(1.5vw, 1.5rem); 
         }
         .Contact_ArrowForLinks{

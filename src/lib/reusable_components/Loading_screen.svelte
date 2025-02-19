@@ -2,13 +2,14 @@
     import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
 
+    import '$lib/styles_and_fonts/styles.css'
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
 
-    export let fadeDuration = 250;
-    export let fadeDelay = 150;
+    // export let fadeDuration = 250;
+    // export let fadeDelay = 150;
 </script>
 
-<div in:fade={{ delay: 0, duration: fadeDuration, easing: sineInOut}} out:fade={{ delay: fadeDelay|0, duration: 500, easing: sineInOut}} class="loader_animation">
+<div in:fade={{ delay: 0, duration: 100, easing: sineInOut}} out:fade={{ delay: 100, duration: 600, easing: sineInOut}} class="loader_animation">
     <object class="loadingSpinner" data={Global_loadingAnimation} type="image/svg+xml" aria-label="loading"></object>
 </div>
 

@@ -2,6 +2,8 @@
     export let workElementTitle = "Title area: no data"
     export let workElementText = "Text area: not data"
     export let workElementImage = '';
+    export let firstWorkElement = false
+    export let lastWorkElement = false
     // export let workElementVisibility = 'hidden';
     import Global_tapIcon from '$lib/svg_files/GlobalSVGs/Global_tapIcon.svg'
     
@@ -94,30 +96,49 @@
         }
     }
 
-    function lazyLoadedImagesFunc() {
-        const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
-        lazyLoadedImages.forEach((image) => {
-            function isLoaded() {
-                image.classList.add("isLoaded")
+    // function lazyLoadedImagesFunc() {
+    //     const lazyLoadedImages = document.querySelectorAll(".forLazyLoad")
+    //     lazyLoadedImages.forEach((image) => {
+    //         console.log("loaded")
+    //         function isLoaded() {
+    //             image.removeEventListener("load", isLoaded)
+                
+    //             setTimeout(() => {
+    //                 image.classList.add("isLoaded")
+    //             }, 1000)
+    //         }
+    //         image.addEventListener("load", isLoaded, {once: true})
+    //     })
+    // }
+    function loadListener(node) {
+        // console.log("loaded")
+        function isLoaded() {
+            node.removeEventListener("load", isLoaded)
+            setTimeout(() => {
+                node.classList.add("isLoaded")
+            }, 100)
+        }
+        node.addEventListener("load", isLoaded, {once: true})
+        return {
+            destroy() {
+                node.removeEventListener("load", isLoaded)
             }
-            image.addEventListener("load", () => {
-                isLoaded()
-            })
-        })
+        }
     }
+    let showAdviceArrows = false
 </script>
 
 <svelte:window bind:innerWidth />
 
-    <div class="workPresentation_container">
-        <div class="work_presentation_page__outer" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '2.5vh', opacity: 0}} class:showBlurMaskBottom={fadeBar_displayMobile} class:showBlurMaskTop={fadeBar_DisplayTopMobile} class:showBlurMaskBottomHidden={!fadeBar_displayMobile} class:showBlurMaskTopHidden={!fadeBar_DisplayTopMobile}>
+    <!-- <div class="workPresentation_container"> -->
+        <div class="work_presentation_page__outer" class:showBlurMaskBottom={fadeBar_displayMobile} class:showBlurMaskTop={fadeBar_DisplayTopMobile} class:showBlurMaskBottomHidden={!fadeBar_displayMobile} class:showBlurMaskTopHidden={!fadeBar_DisplayTopMobile}>
             <div class="content_container work_presentation_page" tabindex="0" role="button" on:keyup={enableScroll} on:click={enableScroll} 
                 on:scroll={scrollCounterMobile} bind:this={work_presentation_page} bind:clientHeight={work_presentation_page_height} style="overflow-y: {enableScrollToggle};">
                 <div bind:offsetHeight={imageHeight} class="workPreviewElement_Box" in:scale={{ delay: 0, duration: 2000, easing: elasticOut, start: 0.975, opacity: 1 }}>
-                    <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} alt="Portfolio_workPreviewElement">
+                    <img class="Portfolio_workPreviewElement forLazyLoad" src={workElementImage} use:loadListener alt="Portfolio_workPreviewElement">
                 </div>
                 
-                <div class="work_description_container__outer" class:showBlurMaskBottom={fadeBar_display} class:showBlurMaskTop={fadeBar_DisplayTop} class:showBlurMaskBottomHidden={!fadeBar_display} class:showBlurMaskTopHidden={!fadeBar_DisplayTop}>
+                <div class="work_description_container__outer" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '2.5vh', opacity: 0}} class:showBlurMaskBottom={fadeBar_display} class:showBlurMaskTop={fadeBar_DisplayTop} class:showBlurMaskBottomHidden={!fadeBar_display} class:showBlurMaskTopHidden={!fadeBar_DisplayTop}>
                     <div on:scroll={scrollCounter} class="work_description_container" bind:this={work_description_container} bind:clientHeight={work_description_container_height} style="align-items: {position};">
                         <div class="description_box" bind:clientHeight={description_box_height}>
                             <p class="work_title">"{workElementTitle}"</p>
@@ -127,14 +148,22 @@
                 </div>
                 <!-- <div class="fade_blur"></div> -->
                 {#if enableScrollAllow && description_box_height > 300 && innerWidth <= 1000}
-                    <div transition:fade={{ delay: 0, duration: 200, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">Tap for description</div>
+                    <div transition:fade={{ delay: 0, duration: 150, easing: sineInOut}} class="tapForMoreInfo_button" style="--imageHeight: {imageHeight}px;"> <img class="Global_tapIcon" src={Global_tapIcon} alt="Global_tapIcon">Tap for description</div>
                 {/if}
                     
             </div>
         </div>
-        <div class="adviceArrows arrowUp"><div class="adviceArrows_inner">↑</div></div>
-        <div class="adviceArrows arrowDown"><div class="adviceArrows_inner">↓</div></div>
-    </div>
+        <div class="adviceArrows arrowUp" in:fly={{ delay: 250, duration: 1000, easing: elasticOut, y: '5vh', opacity: 0}} on:introstart={() => {showAdviceArrows = true}} on:introend={() => {showAdviceArrows = false}}>
+            {#if showAdviceArrows && !firstWorkElement}
+                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '-15vh', opacity: 1}}>↑</div>
+            {/if}
+        </div>
+        <div class="adviceArrows arrowDown" in:fly={{ delay: 250, duration: 1000, easing: elasticOut, y: '-5vh', opacity: 0}}>
+            {#if showAdviceArrows && !lastWorkElement}
+                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '15vh', opacity: 1}}>↓</div>
+            {/if}
+        </div>
+    <!-- </div> -->
 
 <style>
     *{
@@ -145,26 +174,21 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
-    .workPresentation_container{
+    /* .workPresentation_container{
         width: 100%;
         height: 100%;
-        z-index: 9991;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
         background-color: var(--background_color_lightYellow);
-        /* border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid; */
-        /* box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow); */
-        position: relative;
-    }
+    } */
     .adviceArrows{
         position: absolute;
         width: 100%;
-        height: 10dvh;
+        height: min(15dvh, 25vw);
         color: var(--background_color_alternativeLightYellow);
         font-family: "Neutral_Bold", system-ui, sans-serif;
-        font-size: 5dvh;
+        font-size: min(7.5dvh, 12.5vw);
         display: flex;
         align-items: center;
         justify-content: start;
@@ -176,7 +200,7 @@
         bottom: 0;
     }
     .adviceArrows_inner{
-        padding-inline: 2.5vw;
+        padding-inline: max(2.5vw, 1.5rem);
     }
     .work_presentation_page__outer{
         width: 95%;
@@ -206,7 +230,7 @@
         width: max(20rem, 80%);
         max-height: 80vh;
         filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_alternativeLightYellow));
-        /* opacity: 0; */
+        opacity: 0;
         transition: opacity 0.5s var(--bezierTransition);
     }
     .Portfolio_workPreviewElement:is(.isLoaded){
