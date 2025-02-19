@@ -10,7 +10,10 @@ const config = {
 			split: true
 		}),
 		ssr: true,
-		prerender: { entries: ['*'] }
+		prerender: {
+			default: true,
+			entries: ['*'],
+		}
 	}
 };
 
