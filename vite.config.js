@@ -7,7 +7,7 @@ export default defineConfig({
 		cssCodeSplit: true,
 		minify: "esbuild",
 		rollupOptions: {
-			treeshake: true
+			treeshake: true,
 		}
 	}
 });
