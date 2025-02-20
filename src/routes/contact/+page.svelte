@@ -342,16 +342,30 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--text_color_gray90);
+        background-color: var(--background_color_lightCyan);
     }
+    :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    *::selection{
+        background-color: var(--background_color_lightCyan);
+        color: var(--text_color_gray5);
+    }
+    img {
+        max-width: 100%;
+    }
+    
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
     }
-    :global(body)::-webkit-scrollbar {
-        display: none;
-    }
+    
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
     }
@@ -403,18 +417,7 @@
         background: radial-gradient(var(--background_color_lightCyan) 55%, var(--background_color_lightCyanSaturated) 125%);
         box-shadow: none;
     }
-    *::selection{
-        background-color: var(--background_color_lightCyan);
-        color: var(--text_color_gray5);
-    }
-    @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
+    
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -441,34 +444,6 @@
         font-size: var(--text_size_title_ultrabig);
         font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
-    }
-
-    @media (width < 850px){
-        .content_container.title_page{
-            grid-template-rows: auto 1fr 1.15fr;
-        }
-    }
-    @media (width < 600px){
-        
-        #Contact_TitleDecor{
-            width: 85%;
-            translate: 0% 10%;
-        }
-        .title_name{
-            visibility: hidden;
-            position: relative;
-            word-break: break-all;
-            text-wrap: balance;
-            text-align: center;
-            font-size: 30vw;
-            line-height: 25vw;
-        }
-        .title_name::after{
-            content: "Con-tact";
-            inset: 0 0 0 0;
-            visibility: visible;
-            position: absolute;
-        }
     }
 
     /* CONTACT */
@@ -555,7 +530,7 @@
     .Global_arrowDropdownMenu{
         position: absolute;
         height: 50%;
-        right: 6%;
+        right: max(1.3rem, 1.75vw);
         transition: rotate 1s var(--wiggleTransition);
     }
     .typeOfWork_optionMenu{
@@ -754,9 +729,15 @@
     .links > a:is(:hover) > .Contact_ArrowForLinks{
         rotate: 45deg;
     }
-    /* ---------------------------------------------------------------------------------------------------------------------- */
+    
+/* --------------------------------------------------------------- */
 
-    @media (width < 1100px) {
+    @media (width < 1400px) {
+        .content_container{
+            width: 87.5%;
+            height: 87.5%;
+        }
+        /* --- */
         .contact_form_grid{
             grid-template-columns: 3fr 2.5fr;
             grid-template-rows: repeat(3, 1fr);
@@ -773,16 +754,23 @@
         }
         .emailAdress_Text{
             font-size: var(--text_size_extra_small);
-            font-size: min(1.1rem, 4.25vw);
-        }
-    }  
-    @media (width < 950px) {
-        .contact_title{
-            font-size: max(14vw, 5rem);
-            align-self: center;
+            font-size: min(1.35rem, 4.25vw);
         }
     }
-    @media (width < 815px) {
+    @media (width < 1100px) and (height < 700px){ 
+        .content_container{
+            width: 87.5%;
+            height: 90%;
+        }
+    }
+    @media (width < 850px) {
+        .content_container.title_page{
+            grid-template-rows: auto 1fr 1.15fr;
+        }
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
+        /* --- */
         .contact_form_grid{
             grid-template-columns: 1fr;
             grid-template-rows: repeat(4, 1fr);
@@ -808,17 +796,16 @@
             max-height: 425%;
             grid-auto-rows: max(3.25rem, 5.5vh);
         }
-    }
-    @media (width < 750px) {
+        /* --- */
         .content_container.contact_page{
             gap: 3vh;
         }
         .contact_title{
-            /* min(23vw, 12.5vh) */
+            align-self: center;
             font-size: min(23vw, 6.5rem);
             text-align: center;
             text-wrap: wrap;
-            line-height: min(10vh, 17vw);
+            line-height: min(16vw, 5rem);
         }
         .contact_form_grid{
             gap: 1.5vh;
@@ -848,17 +835,26 @@
             grid-auto-rows: 0.8fr;
         }
     }
-/* --------------------------------------------------------------- */
-    @media (width < 1100px) {
-        .content_container{
-            width: 87.5%;
-            height: 87.5%;
+    @media (width < 600px){
+        #Contact_TitleDecor{
+            width: 85%;
+            translate: 0% 10%;
+        }
+        .title_name{
+            visibility: hidden;
+            position: relative;
+            word-break: break-all;
+            text-wrap: balance;
+            text-align: center;
+            font-size: 30vw;
+            line-height: 25vw;
+        }
+        .title_name::after{
+            content: "Con-tact";
+            inset: 0 0 0 0;
+            visibility: visible;
+            position: absolute;
         }
     }
-    @media (width < 1100px) and (height < 690px){ 
-        .content_container{
-            width: 87.5%;
-            height: 90%;
-        }
-    }  
+     
 </style>

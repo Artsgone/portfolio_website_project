@@ -105,7 +105,6 @@
         }
     }
     
-    // let listOfIntersectedElements = []
     const listOfIntersectedElementsSetter = writable(new Set())
 
     function observeElement() {
@@ -296,15 +295,28 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--text_color_gray90);
+        background-color: var(--background_color_lightCyan);
     }
+    :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    *::selection{
+        background-color: var(--background_color_lightCyan);
+        color: var(--text_color_gray5);
+    }
+    img {
+        max-width: 100%;
+    }
+    
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
-    }
-    :global(body)::-webkit-scrollbar {
-        display: none;
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -325,15 +337,6 @@
         transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
     
-    *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    *::selection{
-        background-color: var(--background_color_lightCyan);
-        color: var(--text_color_gray5);
-    }
     .default_container{
         width: 100%;
         height: 100vh;
@@ -381,15 +384,6 @@
         border: none;
     }
 
-    @media (width < 800px){
-        /* main.svelte_main{
-            scroll-snap-type: block mandatory;
-        } */
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
         display: grid;
@@ -417,26 +411,6 @@
         z-index: 999;
     }
 
-    @media (width < 850px){
-        .content_container.title_page{
-            grid-template-rows: auto 1fr 1.15fr;
-        }
-        .title_name{
-            text-wrap: balance;
-            text-align: center;
-        }
-    }
-    @media (width < 600px){
-        #AboutMe_titlePageSVG{
-            width: 90%;
-            translate: 2% 2%;
-        }
-        .title_name{
-            font-size: 30vw;
-            line-height: 22.5vw;
-        }
-    }
-
     /* PAGE 2 EDUCATION */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -453,6 +427,7 @@
     .wrapper_educationSVG{
         width: max(15rem, 60%);
         height: 100%;
+        max-height: 50vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -462,7 +437,6 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        max-height: 50vh;
     }
     .placeholder_EducationSVG{
         position: absolute;
@@ -470,14 +444,14 @@
         background-image: url(/src/lib/svg_files/AboutMe/AboutMe_EducationSVG_Blurred.png);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 90%;
+        background-size: 100%;
     }
     .placeholder_EducationSVG.showPlaceholder{
         opacity: 1;
     }
     .placeholder_EducationSVG.hidePlaceholder{
         opacity: 0;
-        transition: opacity 0.5s var(--bezierTransition);
+        transition: opacity 0.25s var(--bezierTransition);
     }
     .text.education{
         justify-self: start;
@@ -498,38 +472,6 @@
     }
     .text.education > p > span.time_range{
         font-family: 'Neutral_Bold', system-ui, sans-serif;
-    }
-
-    @media (width < 1100px) {
-        .content_container.education_page{
-            grid-auto-flow: row;
-            grid-auto-rows: 1fr 1fr;
-        }
-        .wrapper_educationSVG{
-            width: min(65%, 20rem);
-        }
-        .AboutMe_EducationSVG{
-            max-height: 40vh;
-        }
-        .text.education{
-            padding-inline: 0.5rem;
-        }
-        .text.education > p{
-            text-align: center;
-            font-size: min(5.5vw, 1.8rem);
-            line-height: min(8vw, 2.5rem);
-        }
-        .text.education{
-            justify-self: center;
-        }
-    }
-    @media (width < 600px) {
-        .content_container.education_page{
-            gap: 0;
-        }
-        .text.education > p > span.university_name{
-            font-size: min(6.5vw, 2rem);
-        }
     }
 
     /* PAGE 3 LANGUAGES */
@@ -581,17 +523,6 @@
         border-radius: max(1rem, 1vw);
     }
 
-
-    @media (width < 800px) {
-        .content_container.languages_page > p {
-            font-size: min(11vw, 2.5rem);
-        }
-        .text.languages > p{
-            font-size: min(8vw, 2.25rem);
-            line-height: min(11vw, 3rem);
-        }
-    }
-
     /* PAGE 4(1) SKILLS TITLE */ 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -625,16 +556,6 @@
         max-height: 80vh;
     }
 
-    @media (width < 800px) {
-        .AboutMe_SkillsTitleSVG{
-            width: min(100%, 30rem);
-        }
-        .default_container.def_skills_title{
-            height: 60vh;
-            scroll-snap-align: start;
-        }
-    }
-
     /* PAGE 4(2) SKILLS */ 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -649,15 +570,16 @@
         align-items: center;
         width: max(50rem, 65%);
         height: 100%;
+        max-height: 85vh;
         position: relative;
     }
     .AboutMe_Skills{
         width: 100%;
-        max-height: 85vh;
+        height: 100%;
     }
     .AboutMe_Skills_Mobile{
         width: 100%;
-        max-height: 85vh;
+        height: 100%;
     }
     .placeholder_Skills{
         position: absolute;
@@ -669,7 +591,7 @@
     }
     .placeholder_Skills.mobile{
         background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Mobile_Blurred.png);
-        background-size: min(100%, 27.5rem) 100%;
+        background-size: min(100%, 25rem) 100%;
         max-height: 85vh;
     }
     .placeholder_Skills.showPlaceholder{
@@ -678,12 +600,6 @@
     .placeholder_Skills.hidePlaceholder{
         opacity: 0;
         transition: opacity 0.5s var(--bezierTransition);
-    }
-
-    @media (width < 800px) {
-        .skills_box{
-            width: 100%;
-        }
     }
 
     /* PAGE 5 OTHER INFOs */ 
@@ -714,8 +630,6 @@
     .text.otherAbilities > p{
         font-family: 'Subjectivity_Medium', system-ui, sans-serif;
         text-wrap: pretty;
-        /* font-size: var(--text_size_medium);
-        line-height: var(--text_line_height_medium); */
         font-size: max(1.8vw, 1.25rem);
         line-height: max(2.25vw, 1.55rem);
         position: relative;
@@ -734,7 +648,10 @@
         width: max(2.25vw, 1.5rem);
     }
 
+    /* Global media querries ----------------------------------------------------------- */
+
     @media (width < 1100px) {
+        /* Soft skills */
         .content_container.otherAbilities_page > p {
             font-size: min(9vh, 12vw);
             writing-mode: horizontal-tb;
@@ -742,23 +659,91 @@
         .content_container.otherAbilities_page{
             flex-direction: column;
         }
-    }
-    @media (width < 800px) {
-        .AboutMe_OtherPE_Rounded{
-            top: 0;
-            translate: -10% -125%;
-            opacity: 0.75;
+        /* Education */
+        .content_container.education_page{
+            grid-auto-flow: row;
+            grid-auto-rows: 1fr 1fr;
         }
-    }
-
-    /* MEDIA for content container */
-    @media (width < 1100px) {
+        .wrapper_educationSVG{
+            width: min(65%, 20rem);
+        }
+        .AboutMe_EducationSVG{
+            max-height: 40vh;
+        }
+        .text.education{
+            padding-inline: 0.5rem;
+        }
+        .text.education > p{
+            text-align: center;
+            font-size: min(5.5vw, 1.8rem);
+            line-height: min(8vw, 2.5rem);
+        }
+        .text.education{
+            justify-self: center;
+        }
+        /* General */
         .content_container{
             width: 87.5%;
             height: 87.5%;
         }
     }
-    @media (width < 1100px) and (height < 690px){ 
+    @media (width < 850px){
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
+        /* Title page */
+        .content_container.title_page{
+            grid-template-rows: auto 1fr 1.15fr;
+        }
+        .title_name{
+            text-wrap: balance;
+            text-align: center;
+        }
+        /* Skills title */
+        .AboutMe_SkillsTitleSVG{
+            width: min(100%, 30rem);
+        }
+        .default_container.def_skills_title{
+            height: 60vh;
+            scroll-snap-align: start;
+        }
+        /* Skills */
+        .skills_box{
+            width: 100%;
+        }
+        /* Soft skills */
+        .AboutMe_OtherPE_Rounded{
+            top: 0;
+            translate: -10% -125%;
+            opacity: 0.75;
+        }
+        /* Languages */
+        .content_container.languages_page > p {
+            font-size: min(11vw, 2.5rem);
+        }
+        .text.languages > p{
+            font-size: min(8vw, 2.25rem);
+            line-height: min(11vw, 3rem);
+        }
+    }
+    @media (width < 600px){
+        #AboutMe_titlePageSVG{
+            width: 90%;
+            translate: 2% 2%;
+        }
+        .title_name{
+            font-size: 30vw;
+            line-height: 22.5vw;
+        }
+        /* Education */
+        .content_container.education_page{
+            gap: 0;
+        }
+        .text.education > p > span.university_name{
+            font-size: min(6.5vw, 2rem);
+        }
+    }
+    @media (width < 1100px) and (height < 700px){ 
         .content_container{
             width: 87.5%;
             height: 90%;

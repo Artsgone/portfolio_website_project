@@ -1111,16 +1111,32 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--text_color_gray90);
+        background-color: var(--background_color_lightCyan);
     }
+    :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    *::selection{
+        background-color: var(--background_color_lightCyan);
+        color: var(--text_color_gray5);
+    }
+    img {
+        max-width: 100%;
+    }
+    img[src=""] {
+        opacity: 0;
+    }
+
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: none;
         scroll-behavior: smooth;
-    }
-    :global(body)::-webkit-scrollbar {
-        display: none;
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -1131,20 +1147,6 @@
     main.svelte_main::-webkit-scrollbar-thumb {
         background-color: var(--background_color_alternativeLightYellow);
         border-radius: 5rem;
-    }
-    @media (width < 800px){
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
-    *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    *::selection{
-        background-color: var(--background_color_lightCyan);
-        color: var(--text_color_gray5);
     }
     .default_container{
         width: 100%;
@@ -1204,34 +1206,6 @@
         z-index: 999;
     }
 
-    @media (width < 850px){
-        .content_container.title_page{
-            grid-template-rows: auto 1fr 1.15fr;
-        }
-    }
-    @media (width < 525px){
-        
-        #Portfolio_TitleDecor{
-            width: 95%;
-            translate: 0% 7%;
-        }
-        .title_name{
-            visibility: hidden;
-            position: relative;
-            word-break: break-all;
-            text-wrap: balance;
-            text-align: center;
-            font-size: 30vw;
-            line-height: 25vw;
-        }
-        .title_name::after{
-            content: "Port-folio";
-            inset: 0 0 0 0;
-            visibility: visible;
-            position: absolute;
-        }
-    }
-
 
     .default_container.linksToSections{
         height: max-content;
@@ -1269,15 +1243,6 @@
         scale: 1.05;
         text-decoration-style: wavy;
         text-decoration-thickness: max(0.1rem, 0.1vw);
-    }
-
-    @media (width < 800px) {
-        .content_container.sections_links{
-            grid-template-columns: 1fr;
-        }
-        .anchorLink_toSections:last-child{
-            grid-column: 1 / 2;
-        }
     }
 
     /* PREVIEW OF WORKS */
@@ -1492,49 +1457,9 @@
         transition: opacity 0.5s var(--bezierTransition);
     } */
 
-    @media (width < 900px) {
-        .works_preview_grid{
-            grid-template-columns: repeat(2, 50%);
-            grid-template-rows: repeat(7, 42.5vw);
-            gap: max(1.5rem, 7.5vw) 0;
-        }
-        .works_preview_grid > .work_element_preview_box.blank:not(.mobileBlank){
-            display: none;
-        }
-        .mobileBlank{
-            display: block;
-        }
-        .work_element_preview_box{
-            height: 100%;
-            align-self: center;
-        }
-        .work_element_preview{
-            width: 80%;
-        }
-        .work_element_preview_box::after{
-            display: none;
-        }
-        .rounded, .rounded::before{
-            border-radius: 0%;
-        }
-        .mobile_rounded, .mobile_rounded::before{
-            border-radius: 25%;
-        }
-        .mobile_rounded::before{
-            rotate: 90deg;
-        }
-    }
-    @media (width < 475px) {
-        .work_element_preview{
-            width: 85%;
-            max-height: 85%;
-        }
-    }
+    
 /* ----------------------------------------------------- */
 
-    /* .content_container.work_summary_page.largeWorks{
-        gap: 0 0;
-    } */
     .largeWorks_upperText{
         font-family: "Subjectivity_Regular", system-ui, sans-serif;
         font-size: max(4rem, 5vw);
@@ -1688,35 +1613,11 @@
         object-fit: contain;
         scroll-snap-align: center;
         scroll-snap-stop: always;
-        /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(max(1vw, 1rem)); */
         opacity: 0;
         transition: opacity 0.4s var(--bezierTransition);
     }
     .largeWork_element_preview:is(.isLoaded){
         opacity: 1;
-        /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow)) blur(0); */
-    }
-
-    @media (width < 1000px) {
-        .largeWorks_preview_grid{
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr;
-            grid-auto-rows: 1fr;
-            gap: max(4rem, 5vw) max(1rem, 1vw);
-        }
-        .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
-            grid-column: 1 / 2;
-            width: 100%;
-        }
-        .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
-            display: none;
-        }
-        .largeWorks_upperText{
-            text-wrap: balance;
-            line-height: min(4rem, 11.5vw);
-            font-size: min(4rem, 11.5vw);
-            translate: 0 -40%;
-        }
     }
 
     /* Fullscreen works */
@@ -1796,11 +1697,104 @@
             width: 87.5%;
             height: 87.5%;
         }
+        .works_preview_grid{
+            grid-template-columns: repeat(2, 50%);
+            grid-template-rows: repeat(7, 42.5vw);
+            gap: max(1.5rem, 7.5vw) 0;
+        }
+        .works_preview_grid > .work_element_preview_box.blank:not(.mobileBlank){
+            display: none;
+        }
+        .mobileBlank{
+            display: block;
+        }
+        .work_element_preview_box{
+            height: 100%;
+            align-self: center;
+        }
+        .work_element_preview{
+            width: 80%;
+        }
+        .work_element_preview_box::after{
+            display: none;
+        }
+        .rounded, .rounded::before{
+            border-radius: 0%;
+        }
+        .mobile_rounded, .mobile_rounded::before{
+            border-radius: 25%;
+        }
+        .mobile_rounded::before{
+            rotate: 90deg;
+        }
+        /* Large works */
+        .largeWorks_preview_grid{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            grid-auto-rows: 1fr;
+            gap: max(4rem, 5vw) max(1rem, 1vw);
+        }
+        .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
+            grid-column: 1 / 2;
+            width: 100%;
+        }
+        .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
+            display: none;
+        }
+        .largeWorks_upperText{
+            text-wrap: balance;
+            line-height: min(4rem, 11.5vw);
+            font-size: min(4rem, 11.5vw);
+            translate: 0 -40%;
+        }
     }
-    @media (width < 1100px) and (height < 690px){ 
+    @media (width < 1100px) and (height < 700px){ 
         .content_container{
             width: 87.5%;
             height: 90%;
         }
     }
+    @media (width < 850px){
+        .content_container.title_page{
+            grid-template-rows: auto 1fr 1.15fr;
+        }
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
+        /* Links */
+        .content_container.sections_links{
+            grid-template-columns: 1fr;
+        }
+        .anchorLink_toSections:last-child{
+            grid-column: 1 / 2;
+        }
+    }
+    @media (width < 600px){
+        
+        #Portfolio_TitleDecor{
+            width: 95%;
+            translate: 0% 7%;
+        }
+        .title_name{
+            visibility: hidden;
+            position: relative;
+            word-break: break-all;
+            text-wrap: balance;
+            text-align: center;
+            font-size: 30vw;
+            line-height: 25vw;
+        }
+        .title_name::after{
+            content: "Port-folio";
+            inset: 0 0 0 0;
+            visibility: visible;
+            position: absolute;
+        }
+        /* Works */
+        .work_element_preview{
+            width: 85%;
+            max-height: 85%;
+        }
+    }
+
 </style>

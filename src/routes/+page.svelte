@@ -367,16 +367,29 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--text_color_gray90);
+        background-color: var(--background_color_lightCyan);
     }
+    :global(body)::-webkit-scrollbar {
+        display: none;
+    }
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    *::selection{
+        background-color: var(--background_color_lightCyan);
+        color: var(--text_color_gray5);
+    }
+    img{
+        max-width: 100%;
+    }
+
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
         /* interpolate-size: allow-keywords; */
-    }
-    :global(body)::-webkit-scrollbar {
-        display: none;
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -400,11 +413,6 @@
         opacity: 1;
     }
 
-    *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
     .default_container{
         width: 100%;
         height: 100vh;
@@ -459,19 +467,6 @@
         box-shadow: none;
         border-bottom: none;
     }
-    *::selection{
-        background-color: var(--background_color_lightCyan);
-        color: var(--text_color_gray5);
-    }
-    img{
-        max-width: 100%;
-    }
-
-    @media (width < 800px){
-        main.svelte_main::-webkit-scrollbar {
-            display: none;
-        }
-    }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
     .content_container.title_page{
@@ -496,30 +491,6 @@
         font-family: 'Brolimo', system-ui, sans-serif;
         z-index: 999;
         text-wrap: nowrap;
-    }
-
-    @media (width < 850px){
-        .content_container.title_page{
-            /* justify-content: space-evenly;
-            gap: 8.5vh; */
-            grid-template-rows: auto 1fr 1.15fr;
-        }
-        .title_name{
-            text-wrap: balance;
-            text-align: center;
-        }
-    }
-    @media (width < 600px){
-        #MainPage_titlePageSVG{
-            width: 100%;
-            top: 14%;
-            left: 1.75%;
-        }
-        .title_name{
-            text-align: center;
-            font-size: 30vw;
-            line-height: 22.5vw;
-        }
     }
 
     /* PAGE 2 */
@@ -568,44 +539,6 @@
         -webkit-text-fill-color: transparent;
         font-size: var(--text_size_medium_big);
         text-wrap: nowrap;
-    }
-
-    @media (width < 1100px) {
-        .content_container.greeting_page{
-            grid-auto-flow: row;
-            grid-auto-rows: 1fr 2fr;
-        }
-        .MainPage_greetingPageSVG{
-            width: max(27.5rem, 60%);
-            max-height: 45vh;
-        }
-        .text.introducing > p{
-            text-align: center;
-            text-wrap: pretty;
-            font-size: max(2vw, 1.3rem);
-            line-height: max(3.5vw, 2rem);
-        }
-        .text.introducing > p > span{
-            font-size: max(2.5vw, 1.5rem);
-        }
-    }
-    @media (width < 500px) {
-        .text.introducing{
-            width: 100%;
-        }
-        .MainPage_greetingPageSVG{
-            width: 100%;
-        }
-        .text.introducing{
-            padding-inline: max(1rem, 1vw);
-        }
-        .text.introducing > p{
-            font-size: min(4.5vw, 1.3rem);
-            line-height: min(7.5vw, 2rem);
-        }
-        .text.introducing > p > span{
-            font-size: min(5.5vw, 1.5rem);
-        }
     }
 
     /* CV Download */
@@ -673,7 +606,6 @@
         color: var(--background_color_lightCyan);
         text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
         backdrop-filter: blur(max(0.6rem, 0.6vw));
-        /* background: radial-gradient(var(--background_color_darkCyan) 1%, var(--background_color_darkGray) 150%); */
         border-radius: max(5rem, 5vw);
         border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
         transition: filter 0.15s ease-out, box-shadow 0.15s ease-out, translate 0.75s var(--wiggleTransition);
@@ -706,42 +638,6 @@
         background-size: 100% 100%;
         background-position: center top;
         background-repeat: no-repeat;
-    }
-
-    @media (width < 670px) {
-        .content_container.CV_download_page{
-            grid-template-rows: 1fr 1.5fr;
-        }
-        .text.cvDownload > p{
-            font-size: min(9vw, 3.5rem);
-        }
-        .span_CV{
-            font-size: min(12.5vw, 4.5rem);
-        }
-        .span_CV::before{
-            filter: blur(max(10vw, 5rem));
-        }
-        .MainPage_cvDownloadDecor{
-            height: min(2.25rem, 7.5vw);
-        }
-        .CV_downloadLinkInside{
-            border-radius: max(2.1rem, 2.1vw);
-        }
-        .CV_downloadLink::before{
-            height: 112.5%;
-        }
-    }
-    @media (width < 500px) {
-        .CV_downloadLink{
-            width: 85%;
-        }
-        .CV_downloadLinkInside{
-            gap: min(2rem, 5vw);
-            padding: max(1rem, 1vw) max(3rem, 3vw);
-            font-size: min(6vw, 1.75rem);
-            border-radius: max(2rem, 2vw);
-            border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
-        }
     }
 
     /* PAGE 3 */
@@ -791,7 +687,6 @@
     }
     .photo_collection_text{
         font-family: 'Brolimo', system-ui, sans-serif;
-        /* padding-bottom: max(1vw, 2rem); */
         font-size: max(7.5vw, 5rem);
         text-align: end;
         align-self: center;
@@ -803,53 +698,6 @@
         align-self: center;
         z-index: 1;
     }
-    
-    @media (width < 1200px) {
-        .earLikeThing{
-            width: 40%;
-            height: min(17.5rem, 85%);
-        }
-        .MY{
-            height: 60%;
-            width: 60%;
-        } 
-    }
-    @media (width < 800px) {
-        .MY{
-            height: 35%;
-            width: 100%;
-            min-height: auto;
-        } 
-        .earLikeThing{
-            height: 55%;
-            max-height: 20vh;
-            width: 50%;
-            max-width: none;
-        }
-        .bottom_part.page3{
-            justify-content: center;
-        } 
-        .photo_collection_text{
-            text-align: center;
-            font-size: min(19vw, 6rem);
-        }
-        .copyright_text{
-            display: none;
-        }
-        .top_part.page3{
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5vh;
-            height: 60%;
-        }
-        .bottom_part.page3{
-            display: grid;
-            justify-content: center;
-            align-content: center;
-            height: 40%;
-        }
-    }
 
     /* PAGE 4 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -858,7 +706,7 @@
         display: grid;
         grid-template-columns: 1.5fr 1fr;
         grid-template-rows: 1fr;
-        gap: max(7.5vw, 2rem);
+        gap: max(7.5vw, 3rem);
     }
     .left_part.page4, .right_part.page4{
         display: flex;
@@ -914,41 +762,13 @@
     }
     .page4_title_text{
         font-family: 'Neutral_Normal', system-ui, sans-serif;
-        --page4_title_text_size: max(3vw, 2.85rem);
+        text-wrap: pretty;
+        --page4_title_text_size: max(3vw, 2.5rem);
         font-size: var(--page4_title_text_size);
         line-height: var(--page4_title_text_size);
         padding-block-start: min(8vw, 15vh);
     }
 
-    @media (width < 1000px) {
-        .content_container.page4{
-            grid-template-columns: 1fr;
-            grid-auto-rows: 1.65fr;
-            gap: max(8vh, 4rem);
-        }
-        .page4_title_text{
-            padding-block-start: max(1rem, 2.5vh);
-            --page4_title_text_size: min(9vw, 2.65rem);
-            font-size: var(--page4_title_text_size);
-            line-height: var(--page4_title_text_size);
-        }
-
-        .right_part.page4::before{
-            height: min(10vh, 22.5vw);
-        }
-        .left_part.page4{
-            order: 2;
-        }
-        .sunsetIMG_box{
-            height: 87.5%;
-            max-height: 50vh;
-        }
-    }
-    @media (width < 1000px) and (height < 690px) {
-        .content_container.page4{
-            gap: min(6vh, 3rem);
-        }
-    }
     /* PAGE 5 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -988,20 +808,6 @@
         height: 100%;
         opacity: 0.75;
         background: linear-gradient(-25deg, hsl(93, 8%, 40%), hsl(94, 8%, 65%));
-    }
-    
-
-    @media (width < 800px) {
-        .content_container.page5{
-            --_central_row: 37.5%;
-            --_edge_rows: calc((100% - var(--_central_row)) / 2);
-            grid-template-columns: 100%;
-            grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
-        }
-        .page5_title_text{
-            font-size: 9vw;
-            line-height: 9vw;
-        }
     }
 
     /* PAGE 6 */
@@ -1048,31 +854,6 @@
         line-height: 4.5vw;
         writing-mode: vertical-rl;
     }
-    
-    @media (width < 1000px) {
-        .content_container.page6{
-            grid-template-columns: 1fr;
-            grid-template-rows: 1.6fr 1fr;
-        } 
-        .right_part.page6{
-            width: 100%;
-            align-items: start;
-        }
-        .goldenLeaves{
-            height: 100%;
-            max-height: 60svh;
-        }
-        .MainPage_YellowHighlight{
-            width: min(35vw, 12.5rem);
-            rotate: 0deg;
-        }
-        .page6_text{
-            --font_size_golden_leaves: min(11vw, 3.65rem);
-            font-size: var(--font_size_golden_leaves);
-            line-height: var(--font_size_golden_leaves);
-            writing-mode: horizontal-tb;
-        }
-    }
 
     /* PAGE 7 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -1107,7 +888,7 @@
         align-items: center;
         justify-content: center;
 
-        font-family: 'Misto', Verdana, sans-serif;
+        font-family: 'Misto';
         text-align: end;
         text-wrap: balance;
         font-size: max(4.5rem, 8vw);
@@ -1122,12 +903,6 @@
         color: var(--background_color_alternativeLightYellow);
         filter: blur(max(0.75rem, 1vw));
         z-index: 1;
-    }
-    @media (width < 1100px) {
-        .text_wrapper_page7{
-            font-size: min(4.5rem, 11.5vw);
-            line-height: min(6rem, 15vw);
-        }
     }
 
 /* ------------------------------------- */
@@ -1165,7 +940,82 @@
         line-height: max(3rem, 3.25vw);
     }
 
+/* Global media querries --------------------------------------------------------------------------------------------------------------------------- */
+
     @media (width < 1100px) {
+        /* Greeting page */
+        .content_container.greeting_page{
+            grid-auto-flow: row;
+            grid-auto-rows: 1fr 2fr;
+        }
+        .MainPage_greetingPageSVG{
+            width: max(27.5rem, 60%);
+            max-height: 45vh;
+        }
+        .text.introducing > p{
+            text-align: center;
+            text-wrap: pretty;
+            font-size: max(2vw, 1.3rem);
+            line-height: max(3.5vw, 2rem);
+        }
+        .text.introducing > p > span{
+            font-size: max(2.5vw, 1.5rem);
+        }
+        /* Photo collection */
+        .earLikeThing{
+            width: 40%;
+            height: min(17.5rem, 85%);
+        }
+        .MY{
+            height: 60%;
+            width: 60%;
+        }
+        /* Sunset */
+        .content_container.page4{
+            grid-template-columns: 1fr;
+            grid-auto-rows: 1.65fr;
+            gap: min(5vh, 5rem);
+        }
+        .page4_title_text{
+            padding-block-start: max(1rem, 2.5vh);
+            --page4_title_text_size: min(9vw, 2.65rem);
+            font-size: var(--page4_title_text_size);
+            line-height: var(--page4_title_text_size);
+        }
+        .right_part.page4::before{
+            height: min(10vh, 22.5vw);
+        }
+        .left_part.page4{
+            order: 2;
+        }
+        .sunsetIMG_box{
+            height: 87.5%;
+            max-height: 50vh;
+        }
+        /* Golden leaves */
+        .content_container.page6{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1.6fr 1fr;
+        } 
+        .right_part.page6{
+            width: 100%;
+            align-items: start;
+        }
+        .goldenLeaves{
+            height: 100%;
+            max-height: 60svh;
+        }
+        .MainPage_YellowHighlight{
+            width: min(35vw, 12.5rem);
+            rotate: 0deg;
+        }
+        .page6_text{
+            --font_size_golden_leaves: min(11vw, 3.65rem);
+            font-size: var(--font_size_golden_leaves);
+            line-height: var(--font_size_golden_leaves);
+            writing-mode: horizontal-tb;
+        }
+        /* Modern Building */
         .content_container.page8{
             grid-template-columns: 1fr;
             grid-template-rows: 1fr 2fr;
@@ -1174,19 +1024,145 @@
             font-size: min(3rem, 10vw);
             line-height: min(3rem, 10vw);
         }
-    }
-
-/* ------------------------------------- */
-    @media (width < 1100px) {
+        /* Violet flowers */
+        .text_wrapper_page7{
+            font-size: min(4.5rem, 11.5vw);
+            line-height: min(6rem, 15vw);
+        }
+        /* General styles */
         .content_container{
             width: 87.5%;
             height: 87.5%;
         }
     }
-    @media (width < 1100px) and (height < 690px){ 
+    @media (width < 1100px) and (height < 700px){ 
         .content_container{
             width: 87.5%;
             height: 90%;
         }
     }
+    @media (width < 850px) {
+        main.svelte_main::-webkit-scrollbar {
+            display: none;
+        }
+        /* Title page */
+        .content_container.title_page{
+            grid-template-rows: auto 1fr 1.15fr;
+        }
+        .title_name{
+            text-wrap: balance;
+            text-align: center;
+        }
+        /* CV Download */
+        .content_container.CV_download_page{
+            grid-template-rows: 1fr 1.5fr;
+        }
+        .text.cvDownload > p{
+            font-size: min(9vw, 3.5rem);
+        }
+        .span_CV{
+            font-size: min(12.5vw, 4.5rem);
+        }
+        .span_CV::before{
+            filter: blur(max(10vw, 5rem));
+        }
+        .MainPage_cvDownloadDecor{
+            height: min(2.25rem, 7.5vw);
+        }
+        .CV_downloadLinkInside{
+            border-radius: max(2.1rem, 2.1vw);
+        }
+        .CV_downloadLink::before{
+            height: 112.5%;
+        }
+        /* Photo collections */
+        .MY{
+            height: 35%;
+            width: 100%;
+            min-height: auto;
+        } 
+        .earLikeThing{
+            height: 55%;
+            max-height: 20vh;
+            width: 50%;
+            max-width: none;
+        }
+        .bottom_part.page3{
+            justify-content: center;
+        } 
+        .photo_collection_text{
+            text-align: center;
+            font-size: min(19vw, 6rem);
+        }
+        .copyright_text{
+            display: none;
+        }
+        .top_part.page3{
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5vh;
+            height: 60%;
+        }
+        .bottom_part.page3{
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            height: 40%;
+        }
+        /* Dandelions */
+        .content_container.page5{
+            --_central_row: min(45%, 22.5rem);
+            --_edge_rows: calc((100% - var(--_central_row)) / 2);
+            grid-template-columns: 100%;
+            grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
+        }
+        .page5_title_text{
+            font-size: 9vw;
+            line-height: 9vw;
+        }
+    }
+    @media (width < 600px){
+        #MainPage_titlePageSVG{
+            width: 100%;
+            top: 14%;
+            left: 1.75%;
+        }
+        .title_name{
+            text-align: center;
+            font-size: 30vw;
+            line-height: 22.5vw;
+        }
+    }
+    @media (width < 500px) {
+        /* Greeting */
+        .text.introducing{
+            width: 100%;
+        }
+        .MainPage_greetingPageSVG{
+            width: 100%;
+        }
+        .text.introducing{
+            padding-inline: max(1rem, 1vw);
+        }
+        .text.introducing > p{
+            font-size: min(4.5vw, 1.3rem);
+            line-height: min(7.5vw, 2rem);
+        }
+        .text.introducing > p > span{
+            font-size: min(5.5vw, 1.5rem);
+        }
+        /* CV Download */
+        .CV_downloadLink{
+            width: 85%;
+        }
+        .CV_downloadLinkInside{
+            gap: min(2rem, 5vw);
+            padding: max(1rem, 1vw) max(3rem, 3vw);
+            font-size: min(6vw, 1.75rem);
+            border-radius: max(2rem, 2vw);
+            border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+        }
+    }
+    
 </style>
