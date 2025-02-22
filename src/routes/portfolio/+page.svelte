@@ -53,6 +53,12 @@
 
     let New_LOGO_AR = ""
 
+    const imagesPath = import.meta.glob(["/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/*.png", 
+    "/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/*.png", 
+    "/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/*.png",
+    "/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/*.png",
+    "/src/lib/svg_files/Portfolio/Portfolio_Works/*.svg"])
+
     let pathsToImagesLogos = {
         1: 'Portfolio_workPreviewElement_ART',
         2: 'Portfolio_workPreviewElement_Omic',
@@ -81,15 +87,14 @@
     }
 
     const imageStoreLogos = writable({})
-
-    const imagesPathLogos = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_Works/*.svg")
+    // const imagesPathLogos = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_Works/*.svg")
 
     async function loadWorksLogos() {
         for (const key in pathsToImagesLogos) {
             const pathsToImagesSave = pathsToImagesLogos[key]
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesSave}.svg`
-            if (imagesPathLogos[currentPath]) {
-                const module = await imagesPathLogos[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 imageStoreLogos[pathsToImagesSave] = module.default
                 // const img = new Image()
                 // img.src = module.default
@@ -121,14 +126,14 @@
     }
     
     const imageStoreTFW = writable({})
-    const imagesPathTFW = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/*.png")
+    // const imagesPathTFW = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/*.png")
 
     async function loadLargeWorksTFW() {
         for (const key in pathsToImagesTFW) {
             const pathsToImagesSave = pathsToImagesTFW[key]
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/${pathsToImagesSave}.png`
-            if (imagesPathTFW[currentPath]) {
-                const module = await imagesPathTFW[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -141,14 +146,14 @@
     }
 
     const imageStoreEndimo = writable({})
-    const imagesPathEndimo = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/*.png")
+    // const imagesPathEndimo = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/*.png")
 
     async function loadLargeWorksEndimo() {
         for (const key in pathsToImagesEndimo) {
             const pathsToImagesSave = pathsToImagesEndimo[key]
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/${pathsToImagesSave}.png`
-            if (imagesPathEndimo[currentPath]) {
-                const module = await imagesPathEndimo[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -161,14 +166,14 @@
     }
 
     const imageStoreAccMngr = writable({})
-    const imagesPathAccMngr = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/*.png")
+    // const imagesPathAccMngr = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/*.png")
 
     async function loadLargeWorksAccMngr() {
         for (const key in pathsToImagesAccMngr) {
             const pathsToImagesSave = pathsToImagesAccMngr[key]
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/${pathsToImagesSave}.png`
-            if (imagesPathAccMngr[currentPath]) {
-                const module = await imagesPathAccMngr[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -190,14 +195,14 @@
     }
     
     const imageStoreBanners = writable({})
-    const imagesPathBanners = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/*.png")
+    // const imagesPathBanners = import.meta.glob("/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/*.png")
 
     async function loadLargeWorksBanners() {
         for (const key in pathsToImagesBanners) {
             const pathsToImagesSave = pathsToImagesBanners[key]
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/${pathsToImagesSave}.png`
-            if (imagesPathBanners[currentPath]) {
-                const module = await imagesPathBanners[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
                 img.onload = () => {
@@ -524,23 +529,17 @@
     function observeDefaultCont() {
         const default_containers = document.querySelectorAll(".forInsObs")
         const wep_boxes = document.querySelectorAll(".wep_box")
-        const box_wrappers = document.querySelectorAll(".largeWork_preview_box_wrapper")
+        const fs_box_wrappers = document.querySelectorAll(".fullScreenBox")
+        const hs_box_wrappers = document.querySelectorAll(".halfScreenBox")
         const amountOfWep = wep_boxes.length - 1
-        const amountOfBox_wrappers = box_wrappers.length - 1
+        const amountOfFS_Boxes = fs_box_wrappers.length - 1
+        // const amountOfHS_Boxes = hs_box_wrappers.length - 1
         let intersectingElementIndex_DF
-
-        let loadedLargeWorks = false
 
         const intersecObserver = new IntersectionObserver( entries => {
         entries.forEach( entry => {
             intersectingElementIndex_DF = entry.target.containerIndex
-            if ((entry.intersectionRatio >= 0.3 && intersectingElementIndex_DF > amountOfWep) || (entry.intersectionRatio >= 0.3 && intersectingElementIndex_DF <= amountOfWep)) {
-
-                // if (entry.target.hasChildNodes && intersectingElementIndex_DF <= amountOfWep) {
-                //     entry.target.firstChild.classList.add("showOnScreen")
-                // } else {
-                //     entry.target.classList.add("showOnScreen")
-                // }
+            if ((entry.intersectionRatio >= 0.1 && intersectingElementIndex_DF > amountOfWep) || (entry.intersectionRatio >= 0.3 && intersectingElementIndex_DF <= amountOfWep)) {
                 
                 listOfIntersectedElementsSetter_DF.update(set => {
                     set.add(intersectingElementIndex_DF)
@@ -549,19 +548,29 @@
                 if (intersectingElementIndex_DF > amountOfWep) {
                     intersecObserver.unobserve(entry.target)
                 }
-                if (!loadedLargeWorks) {
-                    if ((amountOfWep - 3) < intersectingElementIndex_DF && intersectingElementIndex_DF <= (amountOfWep + amountOfBox_wrappers)) {
-                        loadLargeWorksTFW()
-                        loadLargeWorksEndimo()
-                        loadLargeWorksAccMngr()
-                        loadLargeWorksBanners()
-                        loadedLargeWorks = true
-                    }
+
+                
+                if (amountOfWep + 1 === intersectingElementIndex_DF){
+                    loadLargeWorksTFW()
+                    console.log("run")
                 }
+                if (amountOfWep + 2 === intersectingElementIndex_DF){
+                    loadLargeWorksEndimo()
+                    console.log("run")
+                }
+                if (amountOfWep + 3 === intersectingElementIndex_DF){
+                    loadLargeWorksAccMngr()
+                    console.log("run")
+                }
+                if ((amountOfWep + amountOfFS_Boxes + 2) === intersectingElementIndex_DF){
+                    loadLargeWorksBanners()
+                    console.log("run")
+                }
+                
+                
             }
             else { 
                 if (entry.intersectionRatio <= 0.3 && intersectingElementIndex_DF <= amountOfWep) {
-                    // entry.target.firstChild.classList.remove("showOnScreen")
                     // $listOfIntersectedElementsSetter_DF.delete(intersectingElementIndex_DF)
                     listOfIntersectedElementsSetter_DF.update(set => {
                         set.delete(intersectingElementIndex_DF)
@@ -573,7 +582,7 @@
         },
             {
                 root: document.querySelector(".svelte_main"),
-                threshold: [0.3],
+                threshold: [0.1, 0.3],
                 rootMargin: "0px",
             }
         )
@@ -634,7 +643,7 @@
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Portfolio</div>
                 {#if pageLoaded}
-                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Portfolio_TitleDecor">
+                    <img id="Portfolio_TitleDecor" src={Portfolio_TitleDecor} fetchpriority="high" transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Portfolio_TitleDecor">
                 {/if}
             </div>
             
@@ -1111,7 +1120,7 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -1136,7 +1145,7 @@
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: none;
-        scroll-behavior: smooth;
+        /* scroll-behavior: auto; */
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -1158,6 +1167,7 @@
         background-color: var(--background_color_lightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        overflow-x: clip;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
@@ -1471,7 +1481,7 @@
     }
     .largeWorks_preview_grid{
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 50%);
         grid-template-rows: 1fr;
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
@@ -1522,7 +1532,6 @@
         border-radius: 5rem;
     }
     .largeWork_preview_box:is(.moreThanOneChild){
-        /* grid-template-columns: max(4vw, 4rem) repeat(2, calc(100% - max(8vw, 8rem))) max(4vw, 4rem); */
         overflow-x: scroll;
         overflow-y: clip;
     }
@@ -1608,6 +1617,7 @@
 
     .largeWork_element_preview{
         width: 90%;
+        max-width: 45vw;
         height: 45vh;
         max-height: 90%;
         object-fit: contain;
@@ -1620,7 +1630,7 @@
         opacity: 1;
     }
 
-    /* Fullscreen works */
+    /* Fullscreen works -------------------------------------------------- */
 
     .fullScreenWorks_preview_grid{
         display: grid;
@@ -1635,6 +1645,7 @@
     }
     .largeWork_element_preview.fullScreenPreview{
         width: 90%;
+        max-width: 85vw;
         height: 75vh;
         max-height: 90%;
         object-fit: contain;
@@ -1642,14 +1653,15 @@
         scroll-snap-stop: always;
         /* image-rendering: optimizeQuality; */
     }
+
 /* fonts ___________________________________________________________________ */
+
     .default_container.fontsContainer{
         min-height: 50vh;
     }
     .fontPresentationWrapper{
         display: grid;
         grid-template-columns: 1fr;
-        /* grid-auto-rows: max-content; */
         border: max(0.5rem, 0.5vw) hsla(0, 100%, 50%, 0.85) solid;
         /* border-radius: max(1rem, 1vw); */
         gap: max(3vh, 3vw);
@@ -1734,12 +1746,15 @@
             grid-auto-rows: 1fr;
             gap: max(4rem, 5vw) max(1rem, 1vw);
         }
-        .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
+        /* .largeWork_preview_box_wrapper.halfScreenWrapper:last-child{
             grid-column: 1 / 2;
             width: 100%;
-        }
+        } */
         .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
             display: none;
+        }
+        .largeWork_element_preview{
+            max-width: 85vw;
         }
         .largeWorks_upperText{
             text-wrap: balance;

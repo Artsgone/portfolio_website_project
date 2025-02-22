@@ -9,7 +9,7 @@
     // export let fadeDelay = 150;
 </script>
 
-<div in:fade={{ delay: 0, duration: 100, easing: sineInOut}} out:fade={{ delay: 100, duration: 600, easing: sineInOut}} class="loader_animation">
+<div in:fade={{ delay: 0, duration: 100, easing: sineInOut}} out:fade={{ delay: 150, duration: 600, easing: sineInOut}} class="loader_animation">
     <object class="loadingSpinner" data={Global_loadingAnimation} type="image/svg+xml" aria-label="loading"></object>
 </div>
 
@@ -17,7 +17,8 @@
     .loader_animation{
         position: fixed;
         z-index: 9999;
-        background: radial-gradient(var(--background_color_lightCyan) 30%, var(--background_color_darkCyan) 150%);
+        /* background: radial-gradient(var(--background_color_lightCyan) 30%, var(--background_color_darkCyan) 150%); */
+        background-color: var(--background_color_lightCyan);
         inset: -10% -10% -10% -10%;
         display: flex;
         align-items: center;

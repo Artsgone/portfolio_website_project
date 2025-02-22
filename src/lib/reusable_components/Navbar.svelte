@@ -101,7 +101,7 @@
         transition: translate 0.75s var(--wiggleTransition), box-shadow 0.25s ease-out;
     }
     .navbar_list > a:active{
-        scale: 1.05;
+        scale: 1.025;
         transition: scale 1s var(--wiggleTransition);
     }
     

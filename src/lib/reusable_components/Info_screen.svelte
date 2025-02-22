@@ -1,5 +1,5 @@
 <script>
-    import { fly, scale } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import Global_loadingAnimation from '$lib/svg_files/GlobalSVGs/Global_loadingAnimation.svg'
     // import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
@@ -9,7 +9,7 @@
 </script>
 
 <div in:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '-100' }} out:fly={{ delay: 100, duration: 250, easing: sineInOut, y: '100' }} class="loader_animation"> 
-    <img class="loadingSpinner" src={Global_loadingAnimation} alt="*"> 
+    <object class="loadingSpinner" data={Global_loadingAnimation} type="image/svg+xml" aria-label="loading"></object>
     <!-- Your email has been sent!  -->
      {statusCode}
     <!-- <button class="closeButton" on:click={closeInfoScreen} on:keypress={closeInfoScreen}> <img class="Global_closeIcon" src={Global_closeIcon} alt="Global_closeIcon"> </button> -->
@@ -85,32 +85,8 @@
         }
     }
 
-    @keyframes closeIcon_animation{
-        0%, 100% {
-            rotate: 0deg;
-            scale: 1;
-        }
-        25%{
-            rotate: 5deg;
-            scale: 0.85;
-        }
-        65%{
-            rotate: -10deg;
-            scale: 0.85;
-        }
-    }
-    @keyframes close_button_animation{
-        0%, 100% {
-            box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated);
-        }
-        50%{
-            box-shadow: 0 0 max(1.5rem, 1.5vw) max(0.15rem, 0.15vw) var(--background_color_lightCyanSaturated);
-        }
-    }
-
     @media (width < 1000px) {
         .loader_animation{
-            /* inset: 30% 10%; */
             font-size: min(7vw, 1.75rem);
         }
     }

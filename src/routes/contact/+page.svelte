@@ -3,8 +3,6 @@
     import Header from '$lib/reusable_components/Header.svelte'
     import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
-    import Info_screen from '$lib/reusable_components/Info_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
@@ -14,14 +12,14 @@
     import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
     import submitButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
     import { fly, scale } from 'svelte/transition';
     import { elasticOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     import { writable } from "svelte/store";
     
     let pageLoaded = false;
-    onMount(() => {
+    onMount(async() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
@@ -29,6 +27,8 @@
         pageLoaded = true;
         importAllImages()
         lazyLoadedImagesFunc()
+        ScrollUpButton = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
+        Info_screen = (await import('$lib/reusable_components/Info_screen.svelte')).default
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -41,6 +41,9 @@
     afterNavigate(() => {
         pageLoaded = true;
     });
+
+    let ScrollUpButton = ""
+    let Info_screen = ""
 
     const pathsToImages = {
         0: 'Contact_BackgroundDecor',
@@ -97,7 +100,9 @@
     let border_radius = "inherit"
     let arrow_rotation = "1"
 
-    function optionMenuDisplay() {
+    let firstOption
+
+    async function optionMenuDisplay() {
         if (!optionMenuShow) {
             border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0;"
             arrow_rotation = "180deg"
@@ -135,44 +140,54 @@
                 optionMenuHide()
                 afterClose = true
             })
-            // option.addEventListener("keydown", (e) => {
-            //     optionText = typeOfWorkList[index]
-            //     optionMenuHide()
-            //     afterClose = true
-            // })
+            option.addEventListener("keydown", (e) => {
+                const keyName = e.key
+                if (keyName === "Enter") {
+                    optionText = typeOfWorkList[index]
+                    optionChosenIs = true
+                    optionMenuHide()
+                    afterClose = true
+                }
+            })
         })
     }
-    function clickedOutsideOfOptionMenu() {
-        const itemtypeOfWork = document.querySelector(".form_item.itemtypeOfWork")
+    function clickedOptionMenuOutside() {
+        const itemtypeOfWork = document.querySelector(".itemtypeOfWork")
 
         window.addEventListener("click", (e) => {
-            if (itemtypeOfWork != null) {
-                if (itemtypeOfWork.contains(e.target)) {
-                    if (optionMenuShow) {
-                        optionMenuHide()
-                    } else if (!afterClose) {
-                        optionMenuDisplay()
-                    }
-                } else if (optionMenu != null) {
-                    if (!optionMenu.contains(e.target) || optionMenu.contains(e.target)) {
-                        optionMenuHide()
-                    }
+            if (optionMenuShow) {
+                if (!optionMenu?.contains(e.target) && !itemtypeOfWork.contains(e.target)) {
+                    optionMenuHide()
                 }
                 afterClose = false
             }
         })
         window.addEventListener("keydown", (e) => {
-            if (itemtypeOfWork != null) {
-                if (itemtypeOfWork.contains(e.target)) {
-                    if (optionMenuShow) {
-                        optionMenuHide()
-                    } else if (!afterClose) {
-                        optionMenuDisplay()
-                    }
-                } else if (optionMenu != null) {
-                    if (!optionMenu.contains(e.target) || optionMenu.contains(e.target)) {
-                        optionMenuHide()
-                    }
+            if (!optionMenu?.contains(e.target) && !itemtypeOfWork.contains(e.target)) {
+                optionMenuHide()
+            }
+            afterClose = false
+        })
+    }
+    
+    function clickedOptionMenu() {
+        const itemtypeOfWork = document.querySelector(".itemtypeOfWork")
+
+        itemtypeOfWork.addEventListener("click", (e) => {
+            if (!afterClose && !optionMenuShow) {
+                optionMenuDisplay()
+            } else if (optionMenuShow) {
+                optionMenuHide()
+            }
+            afterClose = false
+        })
+        itemtypeOfWork.addEventListener("keydown", (e) => {
+            const keyName = e.key;
+            if (keyName === "Enter") {
+                if (!afterClose && !optionMenuShow) {
+                    optionMenuDisplay()
+                } else if (optionMenuShow) {
+                    optionMenuHide()
                 }
                 afterClose = false
             }
@@ -258,11 +273,13 @@
     {/if}
     <!-- closeInfoScreen={() => {infoScreenShow = false}} -->
     {#if infoScreenShow}
-        <Info_screen statusCode={status} />
+        <!-- <Info_screen statusCode={status} /> -->
+        <svelte:component this={Info_screen} statusCode={status} />
     {/if}
 
     {#if y > (innerHeight / 1.1) && oldY > y}
-        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
+        <!-- <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/> -->
+        <svelte:component this={ScrollUpButton} scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
     {/if}
 
     <div class="default_container cyan">
@@ -272,7 +289,7 @@
             <div class="title_page_name">
                 <div class="title_name darkgrayText">Contact</div>
                 {#if pageLoaded}
-                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Contact_TitleDecor">
+                    <img id="Contact_TitleDecor" src={Contact_TitleDecor} fetchpriority="high" transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="Contact_TitleDecor">
                 {/if}
             </div>
             
@@ -288,7 +305,7 @@
         <!-- <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} alt="Contact_BackgroundDecor">
         <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="Contact_BackgroundDecor_Mobile_Small">
         <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="Contact_BackgroundDecor_Mobile"> -->
-        <div class="content_container contact_page" use:clickedOutsideOfOptionMenu>
+        <div class="content_container contact_page" use:clickedOptionMenu use:clickedOptionMenuOutside>
             <p class="contact_title darkgrayText">Contact me</p>
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
                 <input type="hidden" name="access_key" value="b8420fdb-0274-431b-b438-8f96dad35660">
@@ -307,7 +324,7 @@
                     {#if optionMenuShow}
                         <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-3vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                 <div class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
+                                <div tabindex="0" class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
@@ -342,7 +359,7 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -397,6 +414,7 @@
         justify-content: center;
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
+        overflow-x: clip;
         position: relative;
         z-index: 0;
         scroll-snap-stop: always;
@@ -531,8 +549,14 @@
         position: absolute;
         height: 50%;
         right: max(1.3rem, 1.75vw);
-        transition: rotate 1s var(--wiggleTransition);
+        transition: rotate 1s var(--wiggleTransition), scale 1s var(--wiggleTransition);
     }
+    @media (hover: hover) {
+        .form_item.itemtypeOfWork:not(.optionChosen):hover > .Global_arrowDropdownMenu{
+            scale: 1.1;
+        }
+    }
+    
     .typeOfWork_optionMenu{
         box-sizing: border-box;
         position: absolute;
@@ -547,8 +571,9 @@
 
         display: grid;
         grid-template-columns: 1fr;
-        grid-auto-rows: max(3.75vw, 6vh);
+        grid-auto-rows: max(3.75vw, 7vh);
         align-items: center;
+        min-height: 7.5vh;
         max-height: 375%;
         overflow-y: scroll;
         overflow-x: clip;
@@ -583,10 +608,11 @@
         background-color: var(--cyan_outline_bright);
         color: var(--text_color_gray5);
     }
-    /* .tow_option:active{
+    .tow_option:focus-visible{
+        scale: 0.95;
         background-color: var(--cyan_outline_bright);
-        color: red;
-    } */
+        color: var(--text_color_gray5);
+    }
 
     .submitButton{
         position: absolute;
@@ -718,7 +744,7 @@
     }
     .Contact_ArrowForLinks{
         width: max(1.25vw, 1rem);
-        transition: rotate 0.75s var(--wiggleTransition);
+        rotate: 0;
     }
     .Telegram_Icon{
         width: max(1.5vw, 1.25rem);
@@ -726,13 +752,18 @@
     .Instagram_Icon{
         width: max(1.5vw, 1.25rem);
     }
-    .links > a:is(:hover) > .Contact_ArrowForLinks{
+    .links > a:not(:hover) > .Contact_ArrowForLinks, .links > a:not(:focus-visible) > .Contact_ArrowForLinks{
+        rotate: 0deg;
+        transition: rotate 0.75s var(--wiggleTransition)
+    }
+    .links > a:is(:hover) > .Contact_ArrowForLinks, .links > a:is(:focus-visible) > .Contact_ArrowForLinks{
         rotate: 45deg;
+        transition: rotate 0.75s var(--wiggleTransition)
     }
     
 /* --------------------------------------------------------------- */
 
-    @media (width < 1400px) {
+    @media (width < 1200px) {
         .content_container{
             width: 87.5%;
             height: 87.5%;

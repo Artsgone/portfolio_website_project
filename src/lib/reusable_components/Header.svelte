@@ -8,10 +8,10 @@
 <header class="header">
     <div class="header_inside">
         <div class="inner_header left">
-            <img id="A_Logo" src={A_Logo} alt="A_Logo">
+            <img id="A_Logo" src={A_Logo} alt="A_Logo" fetchpriority="high">
         </div>
         <div class="inner_header right">
-            <img class="title_Decor" src={headerDecorSVG} alt="title_Decor">
+            <img class="title_Decor" src={headerDecorSVG} alt="title_Decor" fetchpriority="high">
         </div>
     </div>
 </header>

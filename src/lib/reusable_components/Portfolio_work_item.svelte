@@ -116,7 +116,7 @@
             node.removeEventListener("load", isLoaded)
             setTimeout(() => {
                 node.classList.add("isLoaded")
-            }, 100)
+            }, 0)
         }
         node.addEventListener("load", isLoaded, {once: true})
         return {
@@ -155,12 +155,12 @@
         </div>
         <div class="adviceArrows arrowUp" in:fly={{ delay: 250, duration: 1000, easing: elasticOut, y: '5vh', opacity: 0}} on:introstart={() => {showAdviceArrows = true}} on:introend={() => {showAdviceArrows = false}}>
             {#if showAdviceArrows && !firstWorkElement}
-                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '-15vh', opacity: 1}}>↑</div>
+                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '-15vh', opacity: 0}}>↑</div>
             {/if}
         </div>
         <div class="adviceArrows arrowDown" in:fly={{ delay: 250, duration: 1000, easing: elasticOut, y: '-5vh', opacity: 0}}>
             {#if showAdviceArrows && !lastWorkElement}
-                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '15vh', opacity: 1}}>↓</div>
+                <div class="adviceArrows_inner" out:fly={{ delay: 250, duration: 250, easing: sineInOut, y: '15vh', opacity: 0}}>↓</div>
             {/if}
         </div>
     <!-- </div> -->
@@ -265,7 +265,7 @@
         mask: linear-gradient(180deg, transparent, var(--background_color_lightYellow) 75%);
         backdrop-filter: blur(max(0.2vw, 0.2vh));
         z-index: 500;
-        transition: opacity 0.5s var(--bezierTransition);
+        transition: opacity 0.25s var(--bezierTransition);
     }
     .work_description_container__outer::after{
         content: "";
@@ -278,7 +278,7 @@
         mask: linear-gradient(180deg, var(--background_color_lightYellow) 25%, transparent);
         backdrop-filter: blur(max(0.2vw, 0.2vh));
         z-index: 500;
-        transition: opacity 0.5s var(--bezierTransition);
+        transition: opacity 0.25s var(--bezierTransition);
     }
     .work_description_container__outer.showBlurMaskTop::after{
         content-visibility: visible;

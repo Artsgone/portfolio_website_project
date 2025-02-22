@@ -20,7 +20,6 @@
     import { elasticOut } from 'svelte/easing';
     
     let pageLoaded = false
-    $: innerHeight = 0
     let Footer = ""
     let ScrollUpButtonLazy = ""
 
@@ -50,6 +49,8 @@
         pageLoaded = true
     });
 
+    const imagesPath = import.meta.glob(["/src/lib/svg_files/MainPage/*.svg", "/src/lib/compressed_images/*.avif"])
+
     let pathsToImagesSVG = {
         1: 'MainPage_greetingPageSVG',
         2: 'MainPage_cvDownloadDecor',
@@ -61,19 +62,21 @@
     }
     
     const imageStoreSVG = writable({})
-
-    const imagesPathSVG = import.meta.glob("/src/lib/svg_files/MainPage/*.svg")
+    // const imagesPathSVG = import.meta.glob("/src/lib/svg_files/MainPage/*.svg")
 
     async function importAllImagesSVG() {
         for (const key in pathsToImagesSVG) {
             const pathsToImagesSVGsave = pathsToImagesSVG[key]
             const currentPath = `/src/lib/svg_files/MainPage/${pathsToImagesSVGsave}.svg`
-            if (imagesPathSVG[currentPath]) {
-                const module = await imagesPathSVG[currentPath]()
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
                 imageStoreSVG[pathsToImagesSVGsave] = module.default
             }
         }
     }
+
+    $: innerHeight = 0
+    $: innerWidth = 0
 
     let pathsToImages = {
         1: 'sunset_in_the_clouds_1280',
@@ -81,12 +84,13 @@
         3: 'golden_leaves_1280',
         4: 'violet_flowers_1920',
         5: 'violet_flowers_1280',
-        6: 'modern_building_1280',
+        6: 'violet_flowers_2560',
+        7: 'violet_flowers_3840',
+        8: 'modern_building_1280',
     }
     
     const imageStore = writable({})
-
-    const imagesPath = import.meta.glob("/src/lib/compressed_images/*.avif")
+    // const imagesPath = import.meta.glob("/src/lib/compressed_images/*.avif")
 
     async function importAllImages() {
         for (const key in pathsToImages) {
@@ -182,7 +186,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: [0.5],
+                threshold: [0.6],
                 rootMargin: "0px",
             }
         )
@@ -214,7 +218,7 @@
     <meta name="description" content="A personal web-portfolio of Artem Damin" />
 </svelte:head>
 
-<svelte:window bind:innerHeight />
+<svelte:window bind:innerHeight bind:innerWidth />
 
 
 <main class="svelte_main" on:scroll={updateY} bind:this={svelte_main_element} use:observeElement use:lazyLoadedImagesFunc>
@@ -233,7 +237,7 @@
             <div  class="title_page_name">
                 <div class="title_name darkgrayText">Art's page</div>
                 {#if pageLoaded}
-                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="MainPage_titlePageSVG">
+                    <img id="MainPage_titlePageSVG" src={MainPage_titlePageSVG} fetchpriority="high" transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="MainPage_titlePageSVG">
                 {/if}
             </div>
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
@@ -329,9 +333,11 @@
     </div>
     <div class="default_container">
         <!-- {#if $listOfIntersectedElementsSetter.has(7)} -->
+        <!-- srcset="{imageStore['violet_flowers_1280']} 1280w, {imageStore['violet_flowers_2560']} 2560w, {imageStore['violet_flowers_3840']} 3840w" -->
             <div class="content_container page7">
                 <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? imageStore['violet_flowers_1920'] : ""} alt="Violet_flowers">
+                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? (imageStore['violet_flowers_1920']) : ""} 
+                     alt="Violet_flowers">
                 </div>
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
                     <p>Rusty steel, rough concrete</p>
@@ -404,10 +410,10 @@
 
     .forLazyLoad{
         opacity: 0;
-        transition: opacity 1s cubic-bezier(0.313, 0.158, 0, 0.524);
+        transition: opacity 1s var(--wiggleTransition);
     }
     .forLazyLoad.SVG{
-        transition: opacity 0.25s cubic-bezier(0.313, 0.158, 0, 0.524);
+        transition: opacity 0.25s var(--wiggleTransition);
     }
     .forLazyLoad:is(.isLoaded){
         opacity: 1;
@@ -423,6 +429,7 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        overflow-x: clip;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
@@ -432,7 +439,7 @@
         translate: 0 0%;
     }
      .default_container:not(.cyan) > .content_container{
-        opacity: 0.25;
+        opacity: 0.5;
         scale: 1.025;
         translate: 0 7.5%;
         transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1s var(--wiggleTransition);
@@ -1025,6 +1032,9 @@
             line-height: min(3rem, 10vw);
         }
         /* Violet flowers */
+        /* .Violet_flowers{
+            rotate: -90deg;
+        } */
         .text_wrapper_page7{
             font-size: min(4.5rem, 11.5vw);
             line-height: min(6rem, 15vw);

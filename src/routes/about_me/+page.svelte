@@ -136,7 +136,7 @@
         },
             { 
                 root: document.querySelector(".svelte_main"),
-                threshold: [0.5],
+                threshold: [0.6],
                 rootMargin: "0px",
             }
         )
@@ -191,7 +191,7 @@
             <div class="title_page_name" >
                 <div class="title_name darkgrayText">About me</div>
                 {#if pageLoaded}
-                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_titlePageSVG">
+                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} fetchpriority="high" transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_titlePageSVG">
                 {/if}
             </div>
             
@@ -295,7 +295,7 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -347,6 +347,7 @@
         background-color: var(--background_color_lightYellow);
         box-shadow: inset 0 0 5rem var(--background_color_alternativeLightYellow);
         border-bottom: max(6px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
+        overflow-x: clip;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
@@ -360,7 +361,7 @@
         translate: 0 0%;
     }
     .default_container:not(.cyan) > .content_container{
-        opacity: 0.25;
+        opacity: 0.75;
         scale: 1.025;
         translate: 0 7.5%;
         transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1s var(--wiggleTransition);

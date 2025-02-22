@@ -36,10 +36,9 @@
         
         <div class="footer_bottom">
             <div tabindex="0" role="button" class="authorName" class:troll={authorName_element} on:mousedown={animate_troll}>
-                <!-- web by Artem Damin -->
                 artem damin by web
             </div>
-            <img class="footer_Decor" src={footer_Decor_ID} alt="footer_Decor">
+            <img class="footer_Decor" src={footer_Decor_ID} alt="footer_Decor" fetchpriority="low">
         </div>
     </div>
 </footer>
@@ -142,7 +141,7 @@
         transition: translate 0.75s var(--wiggleTransition), box-shadow 0.25s ease-out;
     }
     .navbar_list > a:active{
-        scale: 1.05;
+        scale: 1.025;
         transition: scale 1s var(--wiggleTransition);
     }
     
