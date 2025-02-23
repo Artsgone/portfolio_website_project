@@ -81,6 +81,8 @@
         7: 'AboutMe_Skills_Mobile',
         8: 'AboutMe_OtherPE_Rounded',
         9: 'AboutMe_FooterDecor',
+        10: 'AboutMe_Skills_Tech',
+        11: 'AboutMe_Skills_Mobile_Tech',
     }
     
     const imageStore = writable({})
@@ -165,6 +167,9 @@
     let placeholderSkills = true
     let placeholderSkillsMobile = true
 
+    let placeholderSkills_Tech = true
+    let placeholderSkillsMobile_Tech = true
+
     let placeholderEdu = true
 </script>
 
@@ -223,25 +228,38 @@
             </div>
         <!-- {/if} -->
     </div>
+    <div class="default_container def_skills">
+        <!-- {#if $listOfIntersectedElementsSetter.has(4)} -->
+            <div class="content_container skills_page">
+                <div class="skills_box">
+                    <div class="placeholder_Skills tech" style:display={showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkills_Tech} class:hidePlaceholder={!placeholderSkills_Tech}></div>
+                    <div class="placeholder_Skills mobile tech" style:display={!showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsMobile_Tech} class:hidePlaceholder={!placeholderSkillsMobile_Tech}></div>
+                    
+                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills_Tech = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(3) && showSkillsDesktop) ? imageStore['AboutMe_Skills_Tech'] : ""} alt="AboutMe_Skills">
+                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile_Tech = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(3) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile_Tech'] : ""} alt="AboutMe_Skills_Mobile">
+                </div>
+            </div>
+        <!-- {/if} -->
+    </div>
     <div class="default_container">
         <!-- {#if $listOfIntersectedElementsSetter.has(5)} -->
             <div class="content_container otherAbilities_page">
                 <p class="altyellowText vt">soft skills</p>
                 <div class="text otherAbilities">
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Creative at designing things.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Willing to learn and develope my skills anytime.
                     </p>
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Aiming for hardwork to achieve the best result possible.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(3) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Effective both on my own and in team.
                     </p>
                 </div>
@@ -251,12 +269,12 @@
     </div>
     <div class="default_container def_lang">
         <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
-            <img class="AboutMe_BackgroundSVG forLazyLoad" src={($listOfIntersectedElementsSetter.has(4) && showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorSVG'] : ""} alt="AboutMe_BackgroundSVG">
-            <img class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={($listOfIntersectedElementsSetter.has(4) && !showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorMobile'] : ""} alt="AboutMe_BackgroundLanguagesMobile">
+            <img class="AboutMe_BackgroundSVG forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorSVG'] : ""} alt="AboutMe_BackgroundSVG">
+            <img class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && !showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorMobile'] : ""} alt="AboutMe_BackgroundLanguagesMobile">
             <div class="content_container languages_page">
                 <p class="grayText65">THE LANGUAGES</p>
                 <div class="text languages">
-                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_LanguagesYellowHighlight'] : ""} alt="AboutMe_LanguagesYellowHighlight">
+                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_LanguagesYellowHighlight'] : ""} alt="AboutMe_LanguagesYellowHighlight">
                     <p class="darkgrayText">
                         English - C1 <br>
                         Czech - Fluent <br>
@@ -272,7 +290,7 @@
             <div class="content_container education_page">
                 <div class="wrapper_educationSVG">
                     <div class="placeholder_EducationSVG" class:showPlaceholder={placeholderEdu} class:hidePlaceholder={!placeholderEdu}></div>
-                    <img class="AboutMe_EducationSVG forLazyLoad" on:transitionstart={() => {placeholderEdu = false}} src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
+                    <img class="AboutMe_EducationSVG forLazyLoad" on:transitionstart={() => {placeholderEdu = false}} src={$listOfIntersectedElementsSetter.has(6) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
                 </div>
                 <div class="text education">
                     <p class="darkgrayText">
@@ -295,7 +313,6 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -312,11 +329,15 @@
     img {
         max-width: 100%;
     }
+    img[src=""] {
+        opacity: 0;
+    }
     
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
+        background-color: var(--background_color_lightYellow);
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
@@ -581,6 +602,7 @@
     .AboutMe_Skills_Mobile{
         width: 100%;
         height: 100%;
+        max-width: 27.5rem;
     }
     .placeholder_Skills{
         position: absolute;
@@ -592,9 +614,16 @@
     }
     .placeholder_Skills.mobile{
         background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Mobile_Blurred.png);
-        background-size: min(100%, 25rem) 100%;
-        max-height: 85vh;
+        background-size: min(100%, 27.5rem);
     }
+    /* --- */
+    .placeholder_Skills.tech{
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Tech_Blurred.png);
+    }
+    .placeholder_Skills.mobile.tech{
+        background-image: url(/src/lib/svg_files/AboutMe/AboutMe_Skills_Mobile_Tech_Blurred.png);
+    }
+    /* --- */
     .placeholder_Skills.showPlaceholder{
         opacity: 1;
     }

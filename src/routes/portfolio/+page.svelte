@@ -548,26 +548,11 @@
                 if (intersectingElementIndex_DF > amountOfWep) {
                     intersecObserver.unobserve(entry.target)
                 }
-
                 
-                if (amountOfWep + 1 === intersectingElementIndex_DF){
-                    loadLargeWorksTFW()
-                    console.log("run")
-                }
-                if (amountOfWep + 2 === intersectingElementIndex_DF){
-                    loadLargeWorksEndimo()
-                    console.log("run")
-                }
-                if (amountOfWep + 3 === intersectingElementIndex_DF){
-                    loadLargeWorksAccMngr()
-                    console.log("run")
-                }
-                if ((amountOfWep + amountOfFS_Boxes + 2) === intersectingElementIndex_DF){
-                    loadLargeWorksBanners()
-                    console.log("run")
-                }
-                
-                
+                if (amountOfWep + 1 === intersectingElementIndex_DF) loadLargeWorksTFW();
+                if (amountOfWep + 2 === intersectingElementIndex_DF) loadLargeWorksEndimo();
+                if (amountOfWep + 3 === intersectingElementIndex_DF) loadLargeWorksAccMngr();
+                if (amountOfWep + amountOfFS_Boxes + 2 === intersectingElementIndex_DF) loadLargeWorksBanners();
             }
             else { 
                 if (entry.intersectionRatio <= 0.3 && intersectingElementIndex_DF <= amountOfWep) {
@@ -1120,7 +1105,6 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -1145,6 +1129,7 @@
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: none;
+        background-color: var(--background_color_lightYellow);
         /* scroll-behavior: auto; */
     }
     main.svelte_main::-webkit-scrollbar {
@@ -1407,6 +1392,9 @@
         outline: max(0.25rem, 0.25vw) var(--cyan_outline_bright) solid;
         border: none;
         border-radius: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         backdrop-filter: blur(max(0.5vw, 0.5rem)) brightness(90%);
         background-color: var(--background_color_lightCyan_lowerOpacity075);
         /* box-shadow: 0 0 max(1rem, 1vw) max(0.1rem, 0.1vw) var(--background_color_lightCyanSaturated); */
@@ -1416,7 +1404,7 @@
     
     .Global_closeIcon{
         width: 60%;
-        aspect-ratio: 1;
+        /* aspect-ratio: 1; */
         filter: drop-shadow(0 0 max(.65rem, .65vw) var(--background_color_darkAsHellCyanSaturated));
         transition: rotate 1s var(--wiggleTransition);
     }
@@ -1482,7 +1470,7 @@
     .largeWorks_preview_grid{
         display: grid;
         grid-template-columns: repeat(2, 50%);
-        grid-template-rows: 1fr;
+        /* grid-template-rows: 1fr; */
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
@@ -1493,14 +1481,15 @@
     } */
     .largeWork_preview_box_wrapper{
         position: relative;
+        overflow-x: clip;
     }
     .largeWork_preview_box_wrapper::before{
         content: '';
         box-sizing: border-box;
         position: absolute;
         width: 100%;
-        height: 110%;
-        top: -5%;
+        height: calc(100% + 4vh);
+        top: -2vh;
         background-color: var(--background_color_alternativeLightYellow);
         border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         border-radius: max(3rem, 3vw);
@@ -1635,18 +1624,19 @@
     .fullScreenWorks_preview_grid{
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        grid-auto-rows: 1fr;
+        /* grid-template-rows: 1fr; */
+        grid-auto-rows: auto;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
     .largeWork_preview_box_wrapper.fullScreenWrapper::before{
-        height: 106%;
-        top: -3%;
+        /* height: 106%; */
+        height: calc(100% + 4vh);
+        top: -2vh;
     }
     .largeWork_element_preview.fullScreenPreview{
         width: 90%;
-        max-width: 85vw;
-        height: 75vh;
+        max-width: 80vw;
+        height: 80vh;
         max-height: 90%;
         object-fit: contain;
         scroll-snap-align: center;
@@ -1754,13 +1744,20 @@
             display: none;
         }
         .largeWork_element_preview{
-            max-width: 85vw;
+            max-width: 80vw;
         }
         .largeWorks_upperText{
             text-wrap: balance;
             line-height: min(4rem, 11.5vw);
             font-size: min(4rem, 11.5vw);
             translate: 0 -40%;
+        }
+        .largeWork_preview_box_wrapper.fullScreenWrapper{
+            height: fit-content;
+        }
+        .largeWork_element_preview.fullScreenPreview{
+            height: fit-content;
+            min-height: 40svh;
         }
     }
     @media (width < 1100px) and (height < 700px){ 

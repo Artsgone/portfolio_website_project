@@ -359,7 +359,6 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightYellow);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -373,14 +372,18 @@
         background-color: var(--background_color_lightCyan);
         color: var(--text_color_gray5);
     }
-    img {
+    img{
         max-width: 100%;
+    }
+    img[src=""] {
+        opacity: 0;
     }
     
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
+        background-color: var(--background_color_lightYellow);
     }
     
     main.svelte_main::-webkit-scrollbar {
@@ -621,6 +624,10 @@
         border-radius: 50%;
         inset: auto min(0.9rem, 2.5vw) min(0.9rem, 2.5vw) auto;
 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         background: radial-gradient(var(--background_color_lightCyanSaturated) 25%, var(--cyan_outline_bright) 100%);
         /* border: max(4px, 0.250vw) var(--cyan_outline) solid; */
         border: none;
@@ -630,7 +637,7 @@
     }
     .submitButtonArrow{
         height: 50%;
-        aspect-ratio: 1;
+        /* aspect-ratio: 1; */
         rotate: 180deg;
         transition: translate 1s var(--wiggleTransition), scale 1s var(--wiggleTransition);
     }

@@ -365,7 +365,7 @@
         titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
     <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
         linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-        titleName="Main page" footer_Decor_ID={imageStoreSVG['MainPage_footerDecor']}/>
+        titleName="Art's page" footer_Decor_ID={imageStoreSVG['MainPage_footerDecor']}/>
     
 </main>
 
@@ -373,7 +373,6 @@
     :global(body){
         margin: 0;
         padding: 0;
-        background-color: var(--background_color_lightCyan);
     }
     :global(body)::-webkit-scrollbar {
         display: none;
@@ -390,11 +389,15 @@
     img{
         max-width: 100%;
     }
+    img[src=""] {
+        opacity: 0;
+    }
 
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
+        background-color: var(--background_color_darkCyan);
         /* interpolate-size: allow-keywords; */
     }
     main.svelte_main::-webkit-scrollbar {
@@ -1122,7 +1125,7 @@
         }
         /* Dandelions */
         .content_container.page5{
-            --_central_row: min(45%, 22.5rem);
+            --_central_row: min(40%, 22.5rem);
             --_edge_rows: calc((100% - var(--_central_row)) / 2);
             grid-template-columns: 100%;
             grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
