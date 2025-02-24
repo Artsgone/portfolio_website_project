@@ -136,11 +136,14 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStoreTFW[pathsToImagesSave] = module.default
-                    })
-                }
+                img.decode().then(() => {
+                    imageStoreTFW[pathsToImagesSave] = module.default
+                })
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStoreTFW[pathsToImagesSave] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -156,11 +159,14 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStoreEndimo[pathsToImagesSave] = module.default
-                    })
-                }
+                img.decode().then(() => {
+                    imageStoreEndimo[pathsToImagesSave] = module.default
+                })
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStoreEndimo[pathsToImagesSave] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -176,11 +182,14 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStoreAccMngr[pathsToImagesSave] = module.default
-                    })
-                }
+                img.decode().then(() => {
+                    imageStoreAccMngr[pathsToImagesSave] = module.default
+                })
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStoreAccMngr[pathsToImagesSave] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -205,11 +214,14 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStoreBanners[pathsToImagesSave] = module.default
-                    })
-                }
+                img.decode().then(() => {
+                    imageStoreBanners[pathsToImagesSave] = module.default
+                })
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStoreBanners[pathsToImagesSave] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -1122,25 +1134,25 @@
         max-width: 100%;
     }
     img[src=""] {
-        opacity: 0;
+        visibility: hidden;
     }
 
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: none;
-        background-color: var(--background_color_lightYellow);
+        /* background-color: var(--background_color_lightYellow); */
         /* scroll-behavior: auto; */
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
     }
     main.svelte_main::-webkit-scrollbar-track {
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--cyan_outline_bright);
     }
     main.svelte_main::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_alternativeLightYellow);
-        border-radius: 5rem;
+        background-color: var(--background_color_lightYellow_middlealternative);
+        border-radius: 0 5rem 5rem 0;
     }
     .default_container{
         width: 100%;
@@ -1295,7 +1307,7 @@
         /* z-index: 5; */
     }
     .work_element_preview_box::after{
-        content: '- view detailed -';
+        content: '< view detailed >';
         position: absolute;
         inset: 0;
         display: flex;
@@ -1305,12 +1317,12 @@
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 25%, hsla(35, 39%, 88%, 0.35) 125%);
-        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.75);
+        backdrop-filter: blur(max(1rem, 1vw)) opacity(0.85);
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.75s var(--bezierTransition), visibility 0s ease 0.75s, scale 0.75s var(--bezierTransition), filter 0.75s var(--bezierTransition);
-        /* scale: 1.1; */
-        filter: blur(max(2rem, 2vw));
+        transition: opacity 0.75s var(--bezierTransition), visibility 0.75s, scale 0.75s var(--bezierTransition), filter 0.75s var(--bezierTransition);
+        scale: 0.95;
+        filter: blur(max(3rem, 3vw));
     }
     .work_element_preview_box.rounded::after{
         border-radius: 32.5%;
@@ -1319,9 +1331,9 @@
     .work_element_preview_box:not(.blank):hover::after{
         opacity: 1;
         visibility: visible;
-        /* scale: 1; */
+        scale: 1;
         filter: blur(0rem);
-        transition: opacity 0.25s var(--bezierTransition), visibility 0s var(--bezierTransition) 0s, scale 0.25s var(--bezierTransition), filter 0.1s var(--bezierTransition);
+        transition: opacity 0.25s var(--bezierTransition), visibility 0s var(--bezierTransition), scale 0.25s var(--bezierTransition), filter 0.1s var(--bezierTransition);
     }
     .work_element_preview_box:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;
@@ -1525,7 +1537,7 @@
         overflow-y: clip;
     }
     .largeWork_preview_box:not(.moreThanOneChild, .fullScreenBox)::after{
-        content: '- view detailed -';
+        content: '< view detailed >';
         position: absolute;
         inset: -0.2% 0 -0.2% 0;
         display: flex;
@@ -1535,10 +1547,10 @@
         font-family: 'Brolimo', system-ui, sans-serif;
         color: white;
         background: radial-gradient(var(--background_color_alternativeLightYellow_Darker) 20%, hsla(35, 39%, 88%, 0.35) 110%);
-        backdrop-filter: blur(max(5rem, 5vw)) opacity(0.25);
+        backdrop-filter: blur(max(3rem, 3vw)) opacity(0.75);
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.75s ease, visibility 0s ease 0.75s, scale 0.75s ease, filter 0.75s ease;
+        transition: opacity 0.75s ease, visibility 0.75s, scale 0.75s ease, filter 0.75s ease;
         /* scale: 1.05; */
         filter: blur(max(3rem, 3vw));
         border-radius: max(2.6rem, 2.6vw);
@@ -1548,7 +1560,7 @@
         visibility: visible;
         /* scale: 1; */
         filter: blur(0rem);
-        transition: opacity 0.25s ease, visibility 0s ease 0s, scale 0.25s ease, filter 0.1s ease;
+        transition: opacity 0.35s ease, visibility 0s, scale 0.25s ease, filter 0.15s ease;
     }
     .largeWork_preview_box:focus-visible{
         outline: max(0.25rem, 0.25vw) var(--background_color_lightCyan) solid;

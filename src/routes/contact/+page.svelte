@@ -100,11 +100,9 @@
     let border_radius = "inherit"
     let arrow_rotation = "1"
 
-    let firstOption
-
     async function optionMenuDisplay() {
         if (!optionMenuShow) {
-            border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0;"
+            border_radius = "border-radius: max(1.7rem, 2.1vw) max(1.7rem, 2.1vw) 0 0; filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));"
             arrow_rotation = "180deg"
             optionMenuShow = true
         }
@@ -299,12 +297,12 @@
     </div>
     <div class="default_container" id="contactForm_container">
         
-        <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
+        <!-- <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
         <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
-        <object class="Contact_BackgroundDecor forLazyLoad" data={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
-        <!-- <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} alt="Contact_BackgroundDecor">
-        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="Contact_BackgroundDecor_Mobile_Small">
-        <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="Contact_BackgroundDecor_Mobile"> -->
+        <object class="Contact_BackgroundDecor forLazyLoad" data={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object> -->
+        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} alt="">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="">
         <div class="content_container contact_page" use:clickedOptionMenu use:clickedOptionMenuOutside>
             <p class="contact_title darkgrayText">Contact me</p>
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
@@ -324,7 +322,7 @@
                     {#if optionMenuShow}
                         <div class="typeOfWork_optionMenu" role="menu" in:fly={{ delay: 0, duration: 2000, easing: elasticOut, y: '-3vh'}} out:fly={{ delay: 0, duration: 100, easing: sineInOut, y: '-5vh' }} use:optionClicked bind:this={optionMenu}>
                             {#each typeOfWorkList as item,i}
-                                <div tabindex="0" class="tow_option" transition:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
+                                <div tabindex="0" class="tow_option" in:fly|global={{ delay: (i+1)*100, duration: 1750, easing: elasticOut, y: '-1vh', opacity: 1 }} role="menuitem">0{i + 1}. {item}</div>
                             {/each}
                         </div>
                     {/if}
@@ -376,25 +374,25 @@
         max-width: 100%;
     }
     img[src=""] {
-        opacity: 0;
+        visibility: hidden;
     }
     
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
-        background-color: var(--background_color_lightYellow);
+        /* background-color: var(--background_color_lightYellow); */
     }
     
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
     }
     main.svelte_main::-webkit-scrollbar-track {
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--cyan_outline_bright);
     }
     main.svelte_main::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_alternativeLightYellow);
-        border-radius: 5rem;
+        background-color: var(--background_color_lightYellow_middlealternative);
+        border-radius: 0 5rem 5rem 0;
     }
     button:disabled{
         background: radial-gradient(var(--text_color_gray50) 25%, var(--text_color_gray65) 100%);
@@ -405,6 +403,7 @@
     }
     .forLazyLoad:is(.isLoaded){
         opacity: 1;
+        /* visibility: visible; */
         transition: opacity 0.5s cubic-bezier(0.313, 0.158, 0, 0.524);
     }
 
@@ -570,7 +569,7 @@
         color: var(--text_color_gray90);
         border-radius: 0 0 max(1.5rem, 2vw) max(1.5rem, 2vw);
         outline: max(4px, 0.250vw) var(--cyan_outline_bright) solid;
-        filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity));
+        /* filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_lightCyan_lowerOpacity)); */
 
         display: grid;
         grid-template-columns: 1fr;

@@ -87,6 +87,8 @@
         6: 'violet_flowers_2560',
         7: 'violet_flowers_3840',
         8: 'modern_building_1280',
+        9: 'WeatheredHouse_1280',
+        10: 'UnderBridge_1280',
     }
     
     const imageStore = writable({})
@@ -99,11 +101,14 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.onload = () => {
-                    img.decode().then(() => {
-                        imageStore[pathsToImages[key]] = module.default
-                    })
-                }
+                img.decode().then(() => {
+                    imageStore[pathsToImages[key]] = module.default
+                })
+                // img.onload = () => {
+                //     img.decode().then(() => {
+                //         imageStore[pathsToImages[key]] = module.default
+                //     })
+                // }
             }
         }
     }
@@ -263,12 +268,14 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
             <div class="content_container CV_download_page">
                 <div class="text cvDownload">
-                    <p class="lightgrayText">Download my <span class="span_CV">CV</span> </p>
+                    <p class="lightgrayText">Check out my <span class="span_CV">CV</span> </p>
                 </div>
                 <div class="CV_downloadLink">
                     {#if $listOfIntersectedElementsSetter.has(2)}
                         <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 700, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
-                            Download <img class="MainPage_cvDownloadDecor" src={imageStoreSVG['MainPage_cvDownloadDecor']} alt=">">
+                            Get my CV 
+                            <img class="MainPage_cvDownloadDecor" src={imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
+                            <!-- <object class="MainPage_cvDownloadDecor" data={imageStoreSVG['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
                         </a>
                     {/if}
                 </div>
@@ -298,7 +305,7 @@
                     </div>
                 </div>
                 <div class="right_part page4">
-                    <div class="page4_title_text darkgrayText">Gorgeous sunset in the clouds</div>
+                    <div class="page4_title_text darkgrayText">Quintessential elegance in motion</div>
                 </div>
             </div>
         <!-- {/if} -->
@@ -313,8 +320,8 @@
                 <div class="dandelion_img_box">
                     <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
                 </div>
-                <div class="page5_title_text lightgrayText">Distinguished <br> dream, <br> pure <br> perfection.</div>
-                <div class="page5_title_text lightgrayText blured">Distinguished <br> dream, <br> pure <br> perfection.</div>
+                <div class="page5_title_text lightgrayText">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
+                <div class="page5_title_text lightgrayText blured">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
             </div>
         <!-- {/if} -->
     </div>
@@ -340,10 +347,10 @@
                      alt="Violet_flowers">
                 </div>
                 <div class="text_wrapper_page7 firstLayer lightgrayText">
-                    <p>Rusty steel, rough concrete</p>
+                    <p>Ephemeral velvet dynamics</p>
                 </div>
                 <div class="text_wrapper_page7 secondLayer">
-                    <p>Rusty steel, rough concrete</p>
+                    <p>Ephemeral velvet dynamics</p>
                 </div>
             </div>
         <!-- {/if} -->
@@ -352,10 +359,34 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
             <div class="content_container page8">
                 <div class="text_wrapper_page8 darkgrayText">
-                    <p>Thoughts transparent as water in the ocean</p>
+                    <p>Celestial synchronicity of enlightened silence</p>
                 </div>
                 <div class="image_wrapper_page8">
                     <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? imageStore['modern_building_1280'] : ""} alt="Modern_building">
+                </div>
+            </div>
+        <!-- {/if} -->
+    </div>
+    <div class="default_container">
+        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
+            <div class="content_container page8 reversed">
+                <div class="text_wrapper_page8 darkgrayText">
+                    <p>Ethereal symphony of organic disruption</p>
+                </div>
+                <div class="image_wrapper_page8">
+                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(9) ? imageStore['UnderBridge_1280'] : ""} alt="Under_Bridge">
+                </div>
+            </div>
+        <!-- {/if} -->
+    </div>
+    <div class="default_container">
+        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
+            <div class="content_container page8 underBridge">
+                <div class="text_wrapper_page8 darkgrayText">
+                    <p>Infinite reverb of fractal grace</p>
+                </div>
+                <div class="image_wrapper_page8">
+                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(10) ? imageStore['WeatheredHouse_1280'] : ""} alt="Weathered_House">
                 </div>
             </div>
         <!-- {/if} -->
@@ -390,33 +421,35 @@
         max-width: 100%;
     }
     img[src=""] {
-        opacity: 0;
+        visibility: hidden;
     }
 
     main.svelte_main{
         overflow-y: scroll;
         height: 100dvh;
         scroll-snap-type: block mandatory;
-        background-color: var(--background_color_darkCyan);
+        /* background-color: var(--background_color_darkCyan); */
         /* interpolate-size: allow-keywords; */
     }
     main.svelte_main::-webkit-scrollbar {
         width: max(0.5em, 0.5vw);
     }
     main.svelte_main::-webkit-scrollbar-track {
-        background-color: var(--background_color_lightCyan);
+        background-color: var(--cyan_outline_bright);
     }
     main.svelte_main::-webkit-scrollbar-thumb {
-        background-color: var(--background_color_alternativeLightYellow);
-        border-radius: 5rem;
+        background-color: var(--background_color_lightYellow_middlealternative);
+        border-radius: 0 5rem 5rem 0;
     }
 
     .forLazyLoad{
         opacity: 0;
-        transition: opacity 1s var(--wiggleTransition);
+        will-change: opacity;
+        /* content-visibility: auto; */
+        transition: opacity 1s var(--bezierTransition);
     }
     .forLazyLoad.SVG{
-        transition: opacity 0.25s var(--wiggleTransition);
+        transition: opacity 0.25s var(--bezierTransition);
     }
     .forLazyLoad:is(.isLoaded){
         opacity: 1;
@@ -445,7 +478,7 @@
         opacity: 0.5;
         scale: 1.025;
         translate: 0 7.5%;
-        transition: opacity 0.75s cubic-bezier(0.313, 0.158, 0, 0.524), scale 1.25s var(--wiggleTransition), translate 1s var(--wiggleTransition);
+        transition: opacity 0.75s var(--bezierTransition), scale 1s var(--wiggleTransition), translate 1s var(--wiggleTransition);
     }
     /* .default_container.ghost{
         height: auto;
@@ -605,7 +638,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: max(2rem, 2vw);
+        gap: max(2.25rem, 2.25vw);
         
         width: 100%;
         padding: max(1rem, 1vw) max(4rem, 4vw);
@@ -809,7 +842,7 @@
         font-family: 'Misto', Verdana, sans-serif;
         text-align: center;
         font-size: max(7.5vw, 5rem);
-        line-height: max(6.5vw, 4rem);
+        line-height: max(7.5vw, 5rem);
         position: absolute;
         place-self: center;
     }
@@ -918,7 +951,7 @@
 /* ------------------------------------- */
     .content_container.page8{
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1.25fr;
         grid-template-rows: 1fr;
         gap: max(4vw, 5vh);
 
@@ -950,6 +983,24 @@
         line-height: max(3rem, 3.25vw);
     }
 
+/* --- */
+    .content_container.page8.reversed{
+        grid-template-columns: 2fr 1fr;
+    }
+    .content_container.page8.reversed > .image_wrapper_page8{
+        background-image: url(/src/lib/compressed_images/UnderBridge_1280_Blurred.avif);
+    }
+    .content_container.page8.reversed > .text_wrapper_page8{
+        order: 2;
+    }
+    .content_container.page8.reversed > .Modern_building{
+        order: 1;
+    }
+
+/* --- */
+    .content_container.page8.underBridge > .image_wrapper_page8{
+        background-image: url(/src/lib/compressed_images/WeatheredHouse_1280_Blurred.avif);
+    }
 /* Global media querries --------------------------------------------------------------------------------------------------------------------------- */
 
     @media (width < 1100px) {
@@ -1029,6 +1080,10 @@
         .content_container.page8{
             grid-template-columns: 1fr;
             grid-template-rows: 1fr 2fr;
+        }
+        .content_container.page8.reversed{
+            grid-template-columns: 1fr;
+            grid-template-rows: 2fr 1fr;
         }
         .text_wrapper_page8{
             font-size: min(3rem, 10vw);
@@ -1131,8 +1186,8 @@
             grid-template-rows: var(--_edge_rows) var(--_central_row) var(--_edge_rows);
         }
         .page5_title_text{
-            font-size: 9vw;
-            line-height: 9vw;
+            font-size: min(12vw, 5rem);
+            line-height: min(12vw, 5rem);
         }
     }
     @media (width < 600px){
@@ -1170,8 +1225,8 @@
             width: 85%;
         }
         .CV_downloadLinkInside{
-            gap: min(2rem, 5vw);
-            padding: max(1rem, 1vw) max(3rem, 3vw);
+            gap: min(2.5rem, 6vw);
+            padding: max(1rem, 1vw) min(4rem, 6vw);
             font-size: min(6vw, 1.75rem);
             border-radius: max(2rem, 2vw);
             border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
