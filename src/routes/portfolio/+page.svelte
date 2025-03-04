@@ -908,12 +908,12 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_C_1280'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_accountDetails_C_1280'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_C_1280'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_mobile_C_1280'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_mobile_C_1280'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['Portfolio_TFW_EditProject_C_1280'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_C_1280'] : ""} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_accountDetails_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['Portfolio_TFW_EditProject_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -923,10 +923,10 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_main_C'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_cart_C'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_about_C'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_contact_C'] : Portfolio_WorksPreviewDecorWebp} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_main_C'] : ""} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_cart_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_about_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_contact_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -936,7 +936,7 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(26) ? imageStoreAccMngr['Porftolio_accountManager_C'] : Portfolio_WorksPreviewDecorWebp} alt="Porftolio_AccountManager">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(26) ? imageStoreAccMngr['Porftolio_accountManager_C'] : ""} alt="Porftolio_AccountManager">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -953,17 +953,17 @@
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? imageStoreBanners['Portfolio_TravelinPoster'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? imageStoreBanners['Portfolio_TravelinPoster'] : ""} alt="Portfolio_Postttrrr">
                     </a>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="#blank" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Mount_Fuji'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Mount_Fuji">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Postttrrr_LowRes'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_Postttrrr">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_FakePoster_LowRes'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_FakePoster_LowRes">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_growthBanner'] : Portfolio_WorksPreviewDecorWebp} alt="Portfolio_workPreviewElement_GeometryFontType">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Mount_Fuji'] : ""} alt="Portfolio_Mount_Fuji">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Postttrrr_LowRes'] : ""} loading="lazy" alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_FakePoster_LowRes'] : ""} loading="lazy" alt="Portfolio_FakePoster_LowRes">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
                     </a>
                 </div>
                 <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
@@ -1554,7 +1554,7 @@
     .largeWork_preview_box_wrapper{
         width: 100%;
         height: 100%;
-        max-width: 47.5vw;
+        max-width: 45vw;
         position: relative;
         overflow-x: clip;
     }
@@ -1688,6 +1688,7 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
         opacity: 0;
+        will-change: opacity;
         transition: opacity 0.4s var(--bezierTransition);
     }
     .largeWork_element_preview:is(.isLoaded){
@@ -1699,7 +1700,6 @@
     .fullScreenWorks_preview_grid{
         display: grid;
         grid-template-columns: 1fr;
-        /* grid-template-rows: 1fr; */
         grid-auto-rows: auto;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
@@ -1716,10 +1716,9 @@
         max-width: 80vw;
         height: 80vh;
         max-height: 90%;
-        object-fit: contain;
+        /* object-fit: contain;
         scroll-snap-align: center;
-        scroll-snap-stop: always;
-        /* image-rendering: optimizeQuality; */
+        scroll-snap-stop: always; */
     }
 
 /* fonts ___________________________________________________________________ */

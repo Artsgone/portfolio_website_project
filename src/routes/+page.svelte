@@ -33,60 +33,60 @@
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
         }
         pageLoaded = true
-        // importAllImagesSVG()
+        importAllImagesSVG()
 
-        if (window.Worker) {
-            const worker = new Worker("/src/lib/workers/importImages.js", { type: "module" });
+        // if (window.Worker) {
+        //     const worker = new Worker("/src/lib/workers/importImages.js", { type: "module" });
 
-            // const fileTypes = ['avif', 'svg']
-            // const basePaths = ['compressed_images/', 'svg_files/MainPage/']
-            const pathsToImages = {
-                1: 'MainPage_greetingPageSVG',
-                2: 'MainPage_cvDownloadDecor',
-                3: 'MainPage_MyPhotosDecorElement',
-                4: 'MainPage_earLikeThingSVG',
-                5: 'MainPage_MY',
-                6: 'MainPage_YellowHighlight',
-                7: 'MainPage_footerDecor',
-                8: 'sunset_in_the_clouds_1280',
-                9: 'dandelion_1280',
-                10: 'golden_leaves_1280',
-                11: 'violet_flowers_1920',
-                12: 'violet_flowers_1280',
-                13: 'violet_flowers_2560',
-                14: 'violet_flowers_3840',
-                15: 'modern_building_1280',
-                16: 'WeatheredHouse_1280',
-                17: 'UnderBridge_1280',
-            };
+        //     // const fileTypes = ['avif', 'svg']
+        //     // const basePaths = ['compressed_images/', 'svg_files/MainPage/']
+        //     const pathsToImages = {
+        //         1: 'MainPage_greetingPageSVG',
+        //         2: 'MainPage_cvDownloadDecor',
+        //         3: 'MainPage_MyPhotosDecorElement',
+        //         4: 'MainPage_earLikeThingSVG',
+        //         5: 'MainPage_MY',
+        //         6: 'MainPage_YellowHighlight',
+        //         7: 'MainPage_footerDecor',
+        //         8: 'sunset_in_the_clouds_1280',
+        //         9: 'dandelion_1280',
+        //         10: 'golden_leaves_1280',
+        //         11: 'violet_flowers_1920',
+        //         12: 'violet_flowers_1280',
+        //         13: 'violet_flowers_2560',
+        //         14: 'violet_flowers_3840',
+        //         15: 'modern_building_1280',
+        //         16: 'WeatheredHouse_1280',
+        //         17: 'UnderBridge_1280',
+        //     };
 
-            worker.postMessage(pathsToImages);
-            worker.onmessage = async (event) => {
-                // const decodedImages = {};
-                // for (const [name, url] of Object.entries(event.data)) {
-                //     const { name: decodedName, url: decodedUrl } = await decodeImage(url, name);
-                //     decodedImages[decodedName] = decodedUrl;
-                // }
-                // imageStore.set(decodedImages);
-                const { name, path, decode } = event.data
-                let decodedPath
+        //     worker.postMessage(pathsToImages);
+        //     worker.onmessage = async (event) => {
+        //         // const decodedImages = {};
+        //         // for (const [name, url] of Object.entries(event.data)) {
+        //         //     const { name: decodedName, url: decodedUrl } = await decodeImage(url, name);
+        //         //     decodedImages[decodedName] = decodedUrl;
+        //         // }
+        //         // imageStore.set(decodedImages);
+        //         const { name, path, decode } = event.data
+        //         let decodedPath
 
-                if (decode) {
-                    const dePath = await decodeImage(path);
-                    decodedPath = dePath
-                } else {
-                    decodedPath = path
-                }
+        //         if (decode) {
+        //             const dePath = await decodeImage(path);
+        //             decodedPath = dePath
+        //         } else {
+        //             decodedPath = path
+        //         }
                 
-                if (decodedPath) {
-                    imageStore.update(store => {
-                        store[name] = decodedPath
-                        return store
-                    })
-                }
+        //         if (decodedPath) {
+        //             imageStore.update(store => {
+        //                 store[name] = decodedPath
+        //                 return store
+        //             })
+        //         }
                 
-            };
-        }
+        //     };
+        // }
 
         Footer = (await import('$lib/reusable_components/Footer.svelte')).default
         ScrollUpButtonLazy = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
@@ -107,104 +107,82 @@
         pageLoaded = true
     });
 
-    async function decodeImage(path) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.src = path;
-            img.onload = async () => {
-                // console.log("Decoded: ", path)
-                await img.decode();
-                resolve(path);
-            };
-        });
+    // async function decodeImage(path) {
+    //     return new Promise((resolve) => {
+    //         const img = new Image();
+    //         img.src = path;
+    //         img.onload = async () => {
+    //             // console.log("Decoded: ", path)
+    //             await img.decode();
+    //             resolve(path);
+    //         };
+    //     });
+    // }
+
+    const imagesPath = import.meta.glob(["/src/lib/svg_files/MainPage/*.svg", "/src/lib/compressed_images/*.avif"])
+
+    let pathsToImagesSVG = {
+        1: 'MainPage_greetingPageSVG',
+        2: 'MainPage_cvDownloadDecor',
+        3: 'MainPage_MyPhotosDecorElement',
+        4: 'MainPage_earLikeThingSVG',
+        5: 'MainPage_MY',
+        6: 'MainPage_YellowHighlight',
+        7: 'MainPage_footerDecor',
+    }
+    
+    const imageStoreSVG = writable({})
+
+    async function importAllImagesSVG() {
+        for (const key in pathsToImagesSVG) {
+            const pathsToImagesSVGsave = pathsToImagesSVG[key]
+            const currentPath = `/src/lib/svg_files/MainPage/${pathsToImagesSVGsave}.svg`
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
+                imageStoreSVG.update(store => {
+                    store[pathsToImagesSVGsave] = module.default
+                    return store
+                })
+                // imageStoreSVG[pathsToImagesSVGsave] = module.default
+            }
+        }
     }
 
-    // const imagesPath = import.meta.glob(["/src/lib/svg_files/MainPage/*.svg", "/src/lib/compressed_images/*.avif"])
+    let pathsToImages = {
+        1: 'sunset_in_the_clouds_1280',
+        2: 'dandelion_1280',
+        3: 'golden_leaves_1280',
+        4: 'violet_flowers_1920',
+        5: 'violet_flowers_1280',
+        6: 'violet_flowers_2560',
+        7: 'violet_flowers_3840',
+        8: 'modern_building_1280',
+        9: 'WeatheredHouse_1280',
+        10: 'UnderBridge_1280',
+    }
 
-    // let pathsToImagesSVG = {
-    //     1: 'MainPage_greetingPageSVG',
-    //     2: 'MainPage_cvDownloadDecor',
-    //     3: 'MainPage_MyPhotosDecorElement',
-    //     4: 'MainPage_earLikeThingSVG',
-    //     5: 'MainPage_MY',
-    //     6: 'MainPage_YellowHighlight',
-    //     7: 'MainPage_footerDecor',
-    // }
-    
-    // const imageStoreSVG = writable({})
-    // const imagesPathSVG = import.meta.glob("/src/lib/svg_files/MainPage/*.svg")
-
-    // async function importAllImagesSVG() {
-    //     for (const key in pathsToImagesSVG) {
-    //         const pathsToImagesSVGsave = pathsToImagesSVG[key]
-    //         const currentPath = `/src/lib/svg_files/MainPage/${pathsToImagesSVGsave}.svg`
-    //         if (imagesPath[currentPath]) {
-    //             const module = await imagesPath[currentPath]()
-    //             imageStoreSVG.update(store => {
-    //                 store[pathsToImagesSVGsave] = module.default
-    //                 return store
-    //             })
-    //             // imageStoreSVG[pathsToImagesSVGsave] = module.default
-    //         }
-    //     }
-    // }
-
-    // let pathsToImages = {
-    //     1: 'sunset_in_the_clouds_1280',
-    //     2: 'dandelion_1280',
-    //     3: 'golden_leaves_1280',
-    //     4: 'violet_flowers_1920',
-    //     5: 'violet_flowers_1280',
-    //     6: 'violet_flowers_2560',
-    //     7: 'violet_flowers_3840',
-    //     8: 'modern_building_1280',
-    //     9: 'WeatheredHouse_1280',
-    //     10: 'UnderBridge_1280',
-    // }
-    
-    
-    // const imagesPath = import.meta.glob("/src/lib/compressed_images/*.avif")
-
-    // async function importAllImages() {
-    //     for (const key in pathsToImages) {
-    //         const currentName = pathsToImages[key]
-    //         const currentPath = `/src/lib/compressed_images/${currentName}.avif`
-    //         if (imagesPath[currentPath]) {
-    //             const module = await imagesPath[currentPath]()
-    //             const img = new Image()
-    //             img.src = module.default
-    //             img.onload = () => {
-    //                 img.decode().then(() => {
-    //                     imageStore.update(store => {
-    //                         store[currentName] = module.default
-    //                         return store
-    //                     })
-    //                     // imageStore.subscribe(values => {
-    //                     //     console.log(values)
-    //                     // })
-    //                 })
-    //             }
-    //         }
-    //     }
-    // }
-
-    // const imageMap = writable(new Map())
-    // async function importAllImagesOld() {
-        // let newImages = new Map()
-
-        // await Promise.all(
-        //     Object.entries(pathsToImages).map(async ([index, path]) => {
-        //         if (!newImages.has(index)) {
-        //             const module = await import(/* @vite-ignore */ path)
-        //             const img = new Image()
-        //             img.src = module.default
-        //             await img.decode()
-        //             newImages.set(index, module.default)
-        //         }
-        //     })
-        // )
-        // imageMap.set(newImages)
-    // }
+    async function importAllImages() {
+        for (const key in pathsToImages) {
+            const currentName = pathsToImages[key]
+            const currentPath = `/src/lib/compressed_images/${currentName}.avif`
+            if (imagesPath[currentPath]) {
+                const module = await imagesPath[currentPath]()
+                const img = new Image()
+                img.src = module.default
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStore.update(store => {
+                            store[currentName] = module.default
+                            return store
+                        })
+                        // imageStore.subscribe(values => {
+                        //     console.log(values)
+                        // })
+                    })
+                }
+            }
+        }
+    }
 
     let svelte_main_element
     let y = 0
@@ -236,16 +214,16 @@
         const listLenght = default_containers.length
         let amountOfElementsObserved = 0;
         let intersectingElementIndex
-        // let imagesImported = false
+        let imagesImported = false
 
         const intersecObserver = new IntersectionObserver( entries => {
             entries.forEach( entry => {
                 intersectingElementIndex = entry.target.containerIndex
                 if (entry.isIntersecting) {
-                    // if (intersectingElementIndex > 2 && !imagesImported) {
-                    //     importAllImages()
-                    //     imagesImported = true
-                    // }
+                    if (intersectingElementIndex > 2 && !imagesImported) {
+                        importAllImages()
+                        imagesImported = true
+                    }
                     entry.target.classList.add("showOnScreen")
                     listOfIntersectedElementsSetter.update(set => {
                         // console.log(intersectingElementIndex, 'is visible');
@@ -326,7 +304,7 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(1)} -->
             <div class="content_container greeting_page">
                 <div class="wrapper_greetingSVG">
-                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(1) ? $imageStore['MainPage_greetingPageSVG'] : ""} alt="MainPage_greetingPageSVG">
+                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(1) ? $imageStoreSVG['MainPage_greetingPageSVG'] : ""} alt="MainPage_greetingPageSVG">
                 </div>
                 <div class="text introducing">
                     <p class="lightgrayText">
@@ -347,7 +325,7 @@
                     {#if $listOfIntersectedElementsSetter.has(2)}
                         <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 700, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
                             Get my CV 
-                            <img class="MainPage_cvDownloadDecor" src={$imageStore['MainPage_cvDownloadDecor']} alt="">
+                            <img class="MainPage_cvDownloadDecor" src={$imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
                             <!-- <object class="MainPage_cvDownloadDecor" data={imageStore['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
                         </a>
                     {/if}
@@ -359,11 +337,11 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(3)} -->
             <div class="content_container introductionToPhotos_page">
                 <div class="top_part page3">
-                    <img class="MY forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStore['MainPage_MY'] : ""} alt="MY">
-                    <img class="earLikeThing forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStore['MainPage_earLikeThingSVG'] : ""} alt="MainPage_earLikeThingSVG">
+                    <img class="MY forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MY'] : ""} alt="MY">
+                    <img class="earLikeThing forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_earLikeThingSVG'] : ""} alt="MainPage_earLikeThingSVG">
                 </div>
                 <div class="bottom_part page3">
-                    <img class="copyright_text forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStore['MainPage_MyPhotosDecorElement'] : ""} alt="MainPage_MyPhotosDecorElement">
+                    <img class="copyright_text forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MyPhotosDecorElement'] : ""} alt="MainPage_MyPhotosDecorElement">
                     <div class="photo_collection_text lightgrayText">photo <br> collection</div>
                 </div>
             </div>
@@ -406,7 +384,7 @@
                 </div>
                 <div class="right_part page6">
                     <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
-                    <img class="MainPage_YellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? $imageStore['MainPage_YellowHighlight'] : ""} alt="MainPage_YellowHighlight">
+                    <img class="MainPage_YellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? $imageStoreSVG['MainPage_YellowHighlight'] : ""} alt="MainPage_YellowHighlight">
                 </div>
             </div>
         <!-- {/if} -->
