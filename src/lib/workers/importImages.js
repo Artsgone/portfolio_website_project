@@ -8,15 +8,15 @@ self.onmessage = async (event) => {
 		"/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Compressed_Banners/*.png",
 		"/src/lib/svg_files/Portfolio/Portfolio_Works/*.svg"
 	])
-	const {names, types, base} = event.data;
+	const names = event.data;
 	// let loadedImages = {};
   
 	for (const key in names) {
 	  const currentName = names[key];
-	//   const currentPath_ImagesAvif = `/src/lib/compressed_images/${currentName}.avif`;
-	//   const currentPath_SVGs = `/src/lib/svg_files/MainPage/${currentName}.svg`;
-	  const currentPath_ImagesAvif = `/src/lib/${base[0]}${currentName}.${types[0]}`;
-	  const currentPath_SVGs = `/src/lib/${base[1]}${currentName}.${types[1]}`;
+	  const currentPath_ImagesAvif = `/src/lib/compressed_images/${currentName}.avif`;
+	  const currentPath_SVGs = `/src/lib/svg_files/MainPage/${currentName}.svg`;
+	//   const currentPath_ImagesAvif = `/src/lib/${base[0]}${currentName}.${types[0]}`;
+	//   const currentPath_SVGs = `/src/lib/${base[1]}${currentName}.${types[1]}`;
 	//   const currentPath_PNGs = `/src/lib/${base[2]}${currentName}.${types[2]}`;
   
 	  let module

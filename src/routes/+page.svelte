@@ -38,8 +38,8 @@
         if (window.Worker) {
             const worker = new Worker("/src/lib/workers/importImages.js", { type: "module" });
 
-            const fileTypes = ['avif', 'svg']
-            const basePaths = ['compressed_images/', 'svg_files/MainPage/']
+            // const fileTypes = ['avif', 'svg']
+            // const basePaths = ['compressed_images/', 'svg_files/MainPage/']
             const pathsToImages = {
                 1: 'MainPage_greetingPageSVG',
                 2: 'MainPage_cvDownloadDecor',
@@ -60,7 +60,7 @@
                 17: 'UnderBridge_1280',
             };
 
-            worker.postMessage({names: pathsToImages, types: fileTypes, base: basePaths});
+            worker.postMessage(pathsToImages);
             worker.onmessage = async (event) => {
                 // const decodedImages = {};
                 // for (const [name, url] of Object.entries(event.data)) {
