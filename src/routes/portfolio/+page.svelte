@@ -26,6 +26,8 @@
     import { afterNavigate, beforeNavigate } from '$app/navigation';
     
     let pageLoaded = false;
+    // const imageStore = writable({})
+
     onMount(async() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
@@ -34,6 +36,71 @@
         pageLoaded = true;
         // retrieveIntersectedElementsToSS()
         loadWorksLogos()
+        // if (window.Worker) {
+        //     const worker = new Worker("/src/lib/workers/importImages.js", { type: "module" });
+
+        //     const fileTypes = ['avif', 'svg', 'png']
+        //     const basePaths = ['', 'svg_files/Portfolio/Portfolio_Works/']
+        //     const pathsToImages = {
+        //         1: 'Portfolio_workPreviewElement_ART',
+        //         2: 'Portfolio_workPreviewElement_Omic',
+        //         3: 'Portfolio_workPreviewElement_Roe',
+        //         4: 'Portfolio_workPreviewElement_Architect',
+        //         5: 'Portfolio_workPreviewElement_Artsgone',
+        //         6: 'Portfolio_workPreviewElement_LXY',
+        //         7: 'Portfolio_workPreviewElement_Lexi_alternate',
+        //         8: 'Portfolio_workPreviewElement_Museum',
+        //         9: 'Portfolio_workPreviewElement_Nameless',
+        //         10: 'Portfolio_workPreviewElement_Bena',
+        //         11: 'Portfolio_workPreviewElement_DTM',
+        //         12: 'Portfolio_workPreviewElement_Eroy',
+        //         13: 'Portfolio_workPreviewElement_LLL',
+        //         14: 'Portfolio_workPreviewElement_Logo_Ww',
+        //         15: 'Portfolio_workPreviewElement_Ww_additional',
+        //         16: 'Portfolio_workPreviewElement_Logo_Tt',
+        //         17: 'Portfolio_workPreviewElement_Lexi',
+        //         18: 'Portfolio_workPreviewElement_Lexi_V2',
+        //         19: 'Portfolio_workPreviewElement_LXY_alt',
+        //         20: 'Portfolio_workPreviewElement_Anata',
+        //         21: 'Portfolio_workPreviewElement_MrGummy',
+        //         22: 'Portfolio_workPreviewElement_Dd_NEW',
+        //         23: 'Portfolio_workPreviewElement_Travelin_Logo',
+        //         24: 'Portfolio_workPreviewElement_Tari',
+        //         25: 'TFW_main_C_1280',
+        //         26: 'TFW_register_C_1280',
+        //         27: 'TFW_main_mobile_C_1280',
+        //         28: 'TFW_register_mobile_C_1280',
+        //         29: 'Portfolio_TFW_EditProject_C_1280',
+        //         30: 'TFW_accountDetails_C_1280',
+        //     };
+
+        //     worker.postMessage({names: pathsToImages, types: fileTypes, base: basePaths});
+        //     worker.onmessage = async (event) => {
+        //         // const decodedImages = {};
+        //         // for (const [name, url] of Object.entries(event.data)) {
+        //         //     const { name: decodedName, url: decodedUrl } = await decodeImage(url, name);
+        //         //     decodedImages[decodedName] = decodedUrl;
+        //         // }
+        //         // imageStore.set(decodedImages);
+        //         const { name, path, decode } = event.data
+        //         let decodedPath
+
+        //         if (decode) {
+        //             const dePath = await decodeImage(path);
+        //             decodedPath = dePath
+        //         } else {
+        //             decodedPath = path
+        //         }
+                
+        //         if (decodedPath) {
+        //             imageStore.update(store => {
+        //                 store[name] = decodedPath
+        //                 return store
+        //             })
+        //         }
+                
+        //     };
+        // }
         New_LOGO_AR = (await import('$lib/svg_files/New_LOGO_AR.svg')).default
     });
     beforeNavigate(({to, from}) => {
@@ -50,6 +117,18 @@
     afterNavigate(() => {
         pageLoaded = true;
     });
+
+    // async function decodeImage(path) {
+    //     return new Promise((resolve) => {
+    //         const img = new Image();
+    //         img.src = path;
+    //         img.onload = async () => {
+    //             // console.log("Decoded: ", path)
+    //             await img.decode();
+    //             resolve(path);
+    //         };
+    //     });
+    // }
 
     let New_LOGO_AR = ""
 
@@ -96,13 +175,6 @@
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
                 imageStoreLogos[pathsToImagesSave] = module.default
-                // const img = new Image()
-                // img.src = module.default
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStoreLogos[pathsToImagesLogos[key]] = module.default
-                //     })
-                // }
             }
         }
     }
@@ -136,14 +208,11 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.decode().then(() => {
-                    imageStoreTFW[pathsToImagesSave] = module.default
-                })
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStoreTFW[pathsToImagesSave] = module.default
-                //     })
-                // }
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStoreTFW[pathsToImagesSave] = module.default
+                    })
+                }
             }
         }
     }
@@ -159,14 +228,11 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.decode().then(() => {
-                    imageStoreEndimo[pathsToImagesSave] = module.default
-                })
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStoreEndimo[pathsToImagesSave] = module.default
-                //     })
-                // }
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStoreEndimo[pathsToImagesSave] = module.default
+                    })
+                }
             }
         }
     }
@@ -182,14 +248,11 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.decode().then(() => {
-                    imageStoreAccMngr[pathsToImagesSave] = module.default
-                })
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStoreAccMngr[pathsToImagesSave] = module.default
-                //     })
-                // }
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStoreAccMngr[pathsToImagesSave] = module.default
+                    })
+                }
             }
         }
     }
@@ -214,14 +277,11 @@
                 const module = await imagesPath[currentPath]()
                 const img = new Image()
                 img.src = module.default
-                img.decode().then(() => {
-                    imageStoreBanners[pathsToImagesSave] = module.default
-                })
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStoreBanners[pathsToImagesSave] = module.default
-                //     })
-                // }
+                img.onload = () => {
+                    img.decode().then(() => {
+                        imageStoreBanners[pathsToImagesSave] = module.default
+                    })
+                }
             }
         }
     }
@@ -685,7 +745,7 @@
                     <!-- blank_________________________________________________ -->
                 
                 
-                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(2)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(2)}>
+                <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
@@ -724,12 +784,12 @@
                     <!-- {/if} -->
                 </a>
 
-                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
+                <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
                     <!-- blank_________________________________________________ -->
-                        <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
+                        <div class="work_element_preview_box blank">
                             <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                         </div>
                     <!-- blank_________________________________________________ -->
@@ -767,12 +827,12 @@
                     <!-- {/if} -->
                 </a>
 
-                <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
+                <div class="work_element_preview_box blank">
                     <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
                     <!-- blank_________________________________________________ -->
-                        <div class="work_element_preview_box blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
+                        <div class="work_element_preview_box blank">
                             <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                         </div>
                     <!-- blank_________________________________________________ -->
@@ -811,7 +871,7 @@
                 </a>
 
                 <div class="work_element_preview_box blank">
-                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(20)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(20)}>
+                    <img src={Portfolio_WorksPreviewDecor} alt="decor_element" class="work_element_preview blank">
                 </div>
 
                     <!-- blank_________________________________________________ -->
@@ -1288,7 +1348,6 @@
     .works_preview_grid{
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 1fr;
         grid-auto-rows: 1fr;
         gap: max(0.75rem, 0.75vw) max(1rem, 1vw);
     }
@@ -1343,8 +1402,10 @@
         max-height: 80%;
         filter: drop-shadow(0 0 max(.4rem, .4vw) var(--background_color_alternativeLightYellow));
         object-fit: contain;
-        opacity: 0;
         transition: opacity 0.5s var(--bezierTransition);
+    }
+    .work_element_preview:not(.blank){
+        opacity: 0;
     }
     .work_element_preview_box.visibleLogo > .work_element_preview:is(.isLoaded){
         pointer-events: auto;
@@ -1384,7 +1445,7 @@
         box-sizing: content-box;
         position: absolute;
         width: 100%;
-        height: 111%;
+        height: 110%;
         background-color: var(--background_color_alternativeLightYellow);
         border: max(5px, 0.5vw) var(--background_color_alternativeLightYellow) solid;
         z-index: -1;
@@ -1481,8 +1542,7 @@
     }
     .largeWorks_preview_grid{
         display: grid;
-        grid-template-columns: repeat(2, 50%);
-        /* grid-template-rows: 1fr; */
+        grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: 1fr;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
@@ -1492,6 +1552,9 @@
         min-width: 50vw;
     } */
     .largeWork_preview_box_wrapper{
+        width: 100%;
+        height: 100%;
+        max-width: 47.5vw;
         position: relative;
         overflow-x: clip;
     }
@@ -1640,6 +1703,9 @@
         grid-auto-rows: auto;
         gap: max(4rem, 5vw) max(1rem, 1vw);
     }
+    .largeWork_preview_box_wrapper.fullScreenWrapper{
+        max-width: 92.5vw;
+    }
     .largeWork_preview_box_wrapper.fullScreenWrapper::before{
         /* height: 106%; */
         height: calc(100% + 4vh);
@@ -1712,8 +1778,8 @@
             height: 87.5%;
         }
         .works_preview_grid{
-            grid-template-columns: repeat(2, 50%);
-            grid-template-rows: repeat(7, 42.5vw);
+            grid-template-columns: repeat(2, 1fr);
+            /* grid-template-rows: repeat(7, 42.5vw); */
             gap: max(1.5rem, 7.5vw) 0;
         }
         .works_preview_grid > .work_element_preview_box.blank:not(.mobileBlank){
@@ -1764,8 +1830,12 @@
             font-size: min(4rem, 11.5vw);
             translate: 0 -40%;
         }
+        .largeWork_preview_box_wrapper{
+            max-width: 87.5vw;
+        }
         .largeWork_preview_box_wrapper.fullScreenWrapper{
             height: fit-content;
+            max-width: 87.5vw;
         }
         .largeWork_element_preview.fullScreenPreview{
             height: fit-content;
