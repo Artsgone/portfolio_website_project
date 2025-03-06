@@ -95,14 +95,11 @@
             const currentPath = `/src/lib/svg_files/AboutMe/${pathsToImagesSave}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                imageStore[pathsToImagesSave] = module.default
-                // const img = new Image()
-                // img.src = module.default
-                // img.onload = () => {
-                //     img.decode().then(() => {
-                //         imageStore[pathsToImages[key]] = module.default
-                //     })
-                // }
+                imageStore.update(store => {
+                    store[pathsToImagesSave] = module.default
+                    return store
+                })
+                // imageStore[pathsToImagesSave] = module.default
             }
         }
     }
@@ -126,7 +123,7 @@
                         
                         amountOfElementsObserved++
                         intersecObserver.unobserve(entry.target)
-                        if (amountOfElementsObserved == listLenght - 1) {
+                        if (amountOfElementsObserved === listLenght) {
                             intersecObserver.disconnect()
                             // console.log("ended")
                         }
@@ -145,9 +142,9 @@
         
         default_containers.forEach( (container, indexOfContainer) => {
             container.containerIndex = indexOfContainer
-            if (indexOfContainer > 0) {
+            // if (indexOfContainer > 0) {
                 intersecObserver.observe(container)
-            }
+            // }
         })
     }
     function lazyLoadedImagesFunc() {
@@ -195,9 +192,7 @@
             <Header headerDecorSVG={AboutMe_OutlineTitleDecorSVG} />
             <div class="title_page_name" >
                 <div class="title_name darkgrayText">About me</div>
-                {#if pageLoaded}
-                    <img id="AboutMe_titlePageSVG" src={AboutMe_titlePageSVG} fetchpriority="high" transition:scale={{ delay: 100, duration: 1500, easing: elasticOut, start: 1.1, opacity: 1 }} alt="AboutMe_titlePageSVG">
-                {/if}
+                <img class="AboutMe_titlePageSVG forLazyLoad titleSVG" src={$listOfIntersectedElementsSetter.has(0) ? AboutMe_titlePageSVG : ""} fetchpriority="high" alt="AboutMe_titlePageSVG">
             </div>
             
             <Navbar firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
@@ -210,8 +205,8 @@
                 <div class="placeholder_SkillsTitle" style:display={showSkillsTitleDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsTitle} class:hidePlaceholder={!placeholderSkillsTitle}></div>
                 <div class="placeholder_SkillsTitle mobile" style:display={!showSkillsTitleDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsTitleMobile} class:hidePlaceholder={!placeholderSkillsTitleMobile}></div>
                 
-                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitle = false}} style:display={showSkillsTitleDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(1) && showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG'] : ""} alt="AboutMe_SkillsTitleSVG">
-                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitleMobile = false}} style:display={showSkillsTitleDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(1) && !showSkillsTitleDesktop) ? imageStore['AboutMe_SkillsTitleSVG_Mobile'] : ""} alt="AboutMe_SkillsTitleSVG_Mobile">
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitle = false}} style:display={showSkillsTitleDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(1) && showSkillsTitleDesktop) ? $imageStore['AboutMe_SkillsTitleSVG'] : ""} alt="AboutMe_SkillsTitleSVG">
+                <img class="AboutMe_SkillsTitleSVG forLazyLoad" on:transitionstart={() => {placeholderSkillsTitleMobile = false}} style:display={showSkillsTitleDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(1) && !showSkillsTitleDesktop) ? $imageStore['AboutMe_SkillsTitleSVG_Mobile'] : ""} alt="AboutMe_SkillsTitleSVG_Mobile">
             </div>
         <!-- {/if} -->
     </div>
@@ -222,8 +217,8 @@
                     <div class="placeholder_Skills" style:display={showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkills} class:hidePlaceholder={!placeholderSkills}></div>
                     <div class="placeholder_Skills mobile" style:display={!showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsMobile} class:hidePlaceholder={!placeholderSkillsMobile}></div>
                     
-                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(2) && showSkillsDesktop) ? imageStore['AboutMe_Skills'] : ""} alt="AboutMe_Skills">
-                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(2) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile'] : ""} alt="AboutMe_Skills_Mobile">
+                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(2) && showSkillsDesktop) ? $imageStore['AboutMe_Skills'] : ""} alt="AboutMe_Skills">
+                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(2) && !showSkillsDesktop) ? $imageStore['AboutMe_Skills_Mobile'] : ""} alt="AboutMe_Skills_Mobile">
                 </div>
             </div>
         <!-- {/if} -->
@@ -235,8 +230,8 @@
                     <div class="placeholder_Skills tech" style:display={showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkills_Tech} class:hidePlaceholder={!placeholderSkills_Tech}></div>
                     <div class="placeholder_Skills mobile tech" style:display={!showSkillsDesktop ? 'block' : 'none'} class:showPlaceholder={placeholderSkillsMobile_Tech} class:hidePlaceholder={!placeholderSkillsMobile_Tech}></div>
                     
-                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills_Tech = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(3) && showSkillsDesktop) ? imageStore['AboutMe_Skills_Tech'] : ""} alt="AboutMe_Skills">
-                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile_Tech = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(3) && !showSkillsDesktop) ? imageStore['AboutMe_Skills_Mobile_Tech'] : ""} alt="AboutMe_Skills_Mobile">
+                    <img class="AboutMe_Skills forLazyLoad" on:transitionstart={() => {placeholderSkills_Tech = false}} style:display={showSkillsDesktop ? 'block' : 'none'} src={($listOfIntersectedElementsSetter.has(3) && showSkillsDesktop) ? $imageStore['AboutMe_Skills_Tech'] : ""} alt="AboutMe_Skills">
+                    <img class="AboutMe_Skills_Mobile forLazyLoad" on:transitionstart={() => {placeholderSkillsMobile_Tech = false}} style:display={showSkillsDesktop ? 'none' : 'block'} src={($listOfIntersectedElementsSetter.has(3) && !showSkillsDesktop) ? $imageStore['AboutMe_Skills_Mobile_Tech'] : ""} alt="AboutMe_Skills_Mobile">
                 </div>
             </div>
         <!-- {/if} -->
@@ -247,19 +242,19 @@
                 <p class="altyellowText vt">soft skills</p>
                 <div class="text otherAbilities">
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Creative at designing things.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Willing to learn and develope my skills anytime.
                     </p>
                     <p class="rounded darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Aiming for hardwork to achieve the best result possible.
                     </p>
                     <p class="darkgrayText">
-                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Effective both on my own and in team.
                     </p>
                 </div>
@@ -269,12 +264,12 @@
     </div>
     <div class="default_container def_lang">
         <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
-            <img class="AboutMe_BackgroundSVG forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorSVG'] : ""} alt="AboutMe_BackgroundSVG">
-            <img class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && !showLanguagesDesktop) ? imageStore['AboutMe_LanguagesDecorMobile'] : ""} alt="AboutMe_BackgroundLanguagesMobile">
+            <img class="AboutMe_BackgroundSVG forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && showLanguagesDesktop) ? $imageStore['AboutMe_LanguagesDecorSVG'] : ""} alt="AboutMe_BackgroundSVG">
+            <img class="AboutMe_BackgroundLanguagesMobile forLazyLoad" src={($listOfIntersectedElementsSetter.has(5) && !showLanguagesDesktop) ? $imageStore['AboutMe_LanguagesDecorMobile'] : ""} alt="AboutMe_BackgroundLanguagesMobile">
             <div class="content_container languages_page">
                 <p class="grayText65">THE LANGUAGES</p>
                 <div class="text languages">
-                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? imageStore['AboutMe_LanguagesYellowHighlight'] : ""} alt="AboutMe_LanguagesYellowHighlight">
+                    <img class="AboutMe_LanguagesYellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? $imageStore['AboutMe_LanguagesYellowHighlight'] : ""} alt="AboutMe_LanguagesYellowHighlight">
                     <p class="darkgrayText">
                         English - C1 <br>
                         Czech - Fluent <br>
@@ -290,7 +285,7 @@
             <div class="content_container education_page">
                 <div class="wrapper_educationSVG">
                     <div class="placeholder_EducationSVG" class:showPlaceholder={placeholderEdu} class:hidePlaceholder={!placeholderEdu}></div>
-                    <img class="AboutMe_EducationSVG forLazyLoad" on:transitionstart={() => {placeholderEdu = false}} src={$listOfIntersectedElementsSetter.has(6) ? imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
+                    <img class="AboutMe_EducationSVG forLazyLoad" on:transitionstart={() => {placeholderEdu = false}} src={$listOfIntersectedElementsSetter.has(6) ? $imageStore['AboutMe_EducationSVG'] : ""} alt="AboutMe_EducationSVG">
                 </div>
                 <div class="text education">
                     <p class="darkgrayText">
@@ -306,7 +301,7 @@
     </div>
     <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
-    titleName="About me" footer_Decor_ID={imageStore['AboutMe_FooterDecor']}/>
+    titleName="About me" footer_Decor_ID={$imageStore['AboutMe_FooterDecor']}/>
 </main>
 
 <style>
@@ -335,7 +330,7 @@
     
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
+        height: 100svh;
         scroll-snap-type: block mandatory;
         /* background-color: var(--background_color_lightYellow); */
     }
@@ -357,10 +352,17 @@
     .forLazyLoad:is(.isLoaded){
         opacity: 1;
     }
+    .forLazyLoad.titleSVG{
+        scale: 0.95;
+        transition: opacity 0.5s var(--bezierTransition), scale 1s var(--wiggleTransition) 0.25s;
+    }
+    .forLazyLoad.titleSVG:is(.isLoaded){
+        scale: 1;
+    }
     
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -376,16 +378,14 @@
         height: 87.5%;
         width: 92.5%;
     }
+    .default_container:not(.cyan) > .content_container{
+        opacity: 0;
+        scale: 0.97;
+        transition: opacity 0.75s var(--bezierTransition), scale 1.25s var(--wiggleTransition);
+    }
     .default_container:not(.cyan):is(.showOnScreen) > .content_container{
         opacity: 1;
         scale: 1;
-        translate: 0 0%;
-    }
-    .default_container:not(.cyan) > .content_container{
-        opacity: 0.75;
-        scale: 1.025;
-        translate: 0 7.5%;
-        transition: opacity 0.75s var(--bezierTransition), scale 1s var(--wiggleTransition), translate 1s var(--wiggleTransition);
     }
     .darkgrayText{
         color: var(--text_color_gray90);
@@ -421,7 +421,7 @@
         justify-content: center;
         position: relative;
     }
-    #AboutMe_titlePageSVG{
+    .AboutMe_titlePageSVG{
         width: var(--element_size_title_decor_about_me);
         position: absolute;
         translate: 25% 2.5%;
@@ -714,7 +714,7 @@
         /* General */
         .content_container{
             width: 87.5%;
-            height: 87.5%;
+            height: 90%;
         }
     }
     @media (width < 850px){
@@ -757,7 +757,7 @@
         }
     }
     @media (width < 600px){
-        #AboutMe_titlePageSVG{
+        .AboutMe_titlePageSVG{
             width: 90%;
             translate: 2% 2%;
         }

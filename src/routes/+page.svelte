@@ -84,7 +84,6 @@
         //                 return store
         //             })
         //         }
-                
         //     };
         // }
 
@@ -294,7 +293,7 @@
             <Header headerDecorSVG={MainPage_titlePageDecor} />
             <div  class="title_page_name">
                 <div class="title_name darkgrayText">Art's page</div>
-                <img class="MainPage_titlePageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(0) ? MainPage_titlePageSVG : ""} fetchpriority="high" alt="MainPage_titlePageSVG">
+                <img class="MainPage_titlePageSVG forLazyLoad titleSVG" src={$listOfIntersectedElementsSetter.has(0) ? MainPage_titlePageSVG : ""} fetchpriority="high" alt="MainPage_titlePageSVG">
             </div>
             <Navbar firstLink="About me" secondLink = "Portfolio" thirdLink="Contact"
             linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"/>
@@ -319,11 +318,11 @@
         <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
             <div class="content_container CV_download_page">
                 <div class="text cvDownload">
-                    <p class="lightgrayText">Check out my <span class="span_CV">CV</span> </p>
+                    <p class="lightgrayText">Check out my <span class="span_CV">CV</span></p>
                 </div>
                 <div class="CV_downloadLink">
                     {#if $listOfIntersectedElementsSetter.has(2)}
-                        <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 700, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
+                        <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 750, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
                             Get my CV 
                             <img class="MainPage_cvDownloadDecor" src={$imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
                             <!-- <object class="MainPage_cvDownloadDecor" data={imageStore['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
@@ -447,7 +446,7 @@
         titleName="Main page" footer_Decor_ID={MainPage_FooterDecor}/> -->
     <svelte:component this={Footer} firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
         linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
-        titleName="Art's page" footer_Decor_ID={$imageStore['MainPage_footerDecor']}/>
+        titleName="Art's page" footer_Decor_ID={$imageStoreSVG['MainPage_footerDecor']}/>
     
 </main>
 
@@ -477,7 +476,7 @@
 
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
+        height: 100svh;
         scroll-snap-type: block mandatory;
         /* background-color: var(--background_color_darkCyan); */
         /* interpolate-size: allow-keywords; */
@@ -502,13 +501,20 @@
     .forLazyLoad.SVG{
         transition: opacity 0.25s var(--bezierTransition);
     }
+    .forLazyLoad.titleSVG{
+        scale: 0.95;
+        transition: opacity 0.5s var(--bezierTransition), scale 1s var(--wiggleTransition) 0.25s;
+    }
+    .forLazyLoad.titleSVG:is(.isLoaded){
+        scale: 1;
+    }
     .forLazyLoad:is(.isLoaded){
         opacity: 1;
     }
 
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -520,16 +526,15 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
+    
+     .default_container:not(.cyan) > .content_container{
+        opacity: 0;
+        translate: 0 10%;
+        transition: opacity 0.75s var(--bezierTransition), translate 1.25s var(--wiggleTransition);
+    }
     .default_container:not(.cyan):is(.showOnScreen) > .content_container{
         opacity: 1;
-        scale: 1;
         translate: 0 0%;
-    }
-     .default_container:not(.cyan) > .content_container{
-        opacity: 0.5;
-        scale: 1.025;
-        translate: 0 7.5%;
-        transition: opacity 0.75s var(--bezierTransition), scale 1s var(--wiggleTransition), translate 1s var(--wiggleTransition);
     }
     /* .default_container.ghost{
         height: auto;
@@ -722,7 +727,7 @@
         content: '';
         position: absolute;
         top: max(0.6rem, 0.45vw);
-        border-radius: max(2rem, 2vw);
+        border-radius: max(1.9rem, 2.5vw);
         width: 100%;
         height: 115%;
         border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
@@ -1151,7 +1156,7 @@
         /* General styles */
         .content_container{
             width: 87.5%;
-            height: 87.5%;
+            height: 90%;
         }
     }
     @media (width < 1100px) and (height < 700px){ 

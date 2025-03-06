@@ -174,7 +174,11 @@
             const currentPath = `/src/lib/svg_files/Portfolio/Portfolio_Works/${pathsToImagesSave}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                imageStoreLogos[pathsToImagesSave] = module.default
+                // imageStoreLogos[pathsToImagesSave] = module.default
+                imageStoreLogos.update(store => {
+                    store[pathsToImagesSave] = module.default
+                    return store
+                })
             }
         }
     }
@@ -210,7 +214,11 @@
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreTFW[pathsToImagesSave] = module.default
+                        imageStoreTFW.update(store => {
+                            store[pathsToImagesSave] = module.default
+                            return store
+                        })
+                        // imageStoreTFW[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -230,7 +238,11 @@
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreEndimo[pathsToImagesSave] = module.default
+                        imageStoreEndimo.update(store => {
+                            store[pathsToImagesSave] = module.default
+                            return store
+                        })
+                        // imageStoreEndimo[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -250,7 +262,11 @@
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreAccMngr[pathsToImagesSave] = module.default
+                        imageStoreAccMngr.update(store => {
+                            store[pathsToImagesSave] = module.default
+                            return store
+                        })
+                        // imageStoreAccMngr[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -279,7 +295,11 @@
                 img.src = module.default
                 img.onload = () => {
                     img.decode().then(() => {
-                        imageStoreBanners[pathsToImagesSave] = module.default
+                        imageStoreBanners.update(store => {
+                            store[pathsToImagesSave] = module.default
+                            return store
+                        })
+                        // imageStoreBanners[pathsToImagesSave] = module.default
                     })
                 }
             }
@@ -296,6 +316,7 @@
 
     function updateY(){
         if (!timeIsOut) {
+            timeIsOut = true
             setTimeout(function () {
                 y = svelte_main_element.scrollTop
                 newY.push(y)
@@ -305,7 +326,6 @@
                 newY=newY
                 timeIsOut = false
             }, 150)
-            timeIsOut = true
         }
     }
     
@@ -602,7 +622,7 @@
         const default_containers = document.querySelectorAll(".forInsObs")
         const wep_boxes = document.querySelectorAll(".wep_box")
         const fs_box_wrappers = document.querySelectorAll(".fullScreenBox")
-        const hs_box_wrappers = document.querySelectorAll(".halfScreenBox")
+        // const hs_box_wrappers = document.querySelectorAll(".halfScreenBox")
         const amountOfWep = wep_boxes.length - 1
         const amountOfFS_Boxes = fs_box_wrappers.length - 1
         // const amountOfHS_Boxes = hs_box_wrappers.length - 1
@@ -720,11 +740,11 @@
         <div class="content_container work_summary_page" >
             <p class="text_corner_previewOfWorks tcp1">portfolio <br> - logos</p>
             <p class="text_corner_previewOfWorks tcp2">portfolio <br> - logos</p>
-            <div class="works_preview_grid" use:openInLargeList data-sveltekit-preload-code="hover" use:lazyLoadedImagesFuncLogos>
+            <div class="works_preview_grid" use:openInLargeList use:lazyLoadedImagesFuncLogos>
                 
                 <a href="#ART" class="work_element_preview_box wep_box forInsObs top rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(0)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(0)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(0)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_ART']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_ART']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -732,12 +752,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY" class="work_element_preview_box wep_box forInsObs top mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(1)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(1)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(1)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LXY']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_LXY']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Architect" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(2)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(2)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(2)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Architect']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Architect']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -751,17 +771,17 @@
 
                 <a href="#Artsgone" class="work_element_preview_box wep_box forInsObs bottom rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(3)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(3)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(3)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Artsgone']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Artsgone']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Omic" class="work_element_preview_box wep_box forInsObs bottom mobile_rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(4)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(4)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(4)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Omic']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Omic']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Lexi2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(5)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(5)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(5)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 
@@ -770,17 +790,17 @@
                 
                 <a href="#Anata" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(6)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(6)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(6)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Anata']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Anata']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Bena" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(7)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(7)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(7)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Bena']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Bena']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#MR. Gummy" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(8)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(8)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(8)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_MrGummy']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_MrGummy']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
@@ -795,17 +815,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#LXY2" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(9)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(9)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(9)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LXY_alt']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_LXY_alt']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Antic Museum" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(10)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(10)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(10)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Museum']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Museum']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Nameless sadas" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(11)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(11)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(11)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Nameless']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Nameless']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
@@ -813,17 +833,17 @@
 
                 <a href="#Roe" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(12)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(12)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(12)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Roe']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Roe']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Wappa" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(13)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(13)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(13)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#W(in) logo" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(14)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(14)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(14)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Ww_additional']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Ww_additional']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
@@ -838,17 +858,17 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#Toreno" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(15)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(15)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(15)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Lanobi" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(16)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(16)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(16)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Dajy" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(17)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(17)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(17)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
@@ -856,17 +876,17 @@
 
                 <a href="#Travelin" class="work_element_preview_box wep_box forInsObs top rounded mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(18)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(18)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(18)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Lemmy" class="work_element_preview_box wep_box forInsObs top" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(19)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(19)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(19)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Lexi']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Lexi']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Tari" class="work_element_preview_box wep_box forInsObs top rounded mobile_left mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(20)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(20)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(20)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Tari']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Tari']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
 
@@ -879,12 +899,12 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#DTM" class="work_element_preview_box wep_box forInsObs bottom rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(21)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(21)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(21)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_DTM']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_DTM']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                 <a href="#Eroy" class="work_element_preview_box wep_box forInsObs bottom mobile_left" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(22)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(22)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(22)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_Eroy']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_Eroy']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
                     <!-- blank_________________________________________________ -->
@@ -892,7 +912,7 @@
                     <!-- blank_________________________________________________ -->
                 <a href="#ANV" class="work_element_preview_box wep_box forInsObs bottom mobile_left rounded mobile_rounded" class:visibleLogo={$listOfIntersectedElementsSetter_DF.has(23)} class:hiddenLogo={!$listOfIntersectedElementsSetter_DF.has(23)}>
                     <!-- {#if $listOfIntersectedElementsSetter_DF.has(23)} -->
-                        <img src={imageStoreLogos['Portfolio_workPreviewElement_LLL']} alt="Logo" class="work_element_preview">
+                        <img src={$imageStoreLogos['Portfolio_workPreviewElement_LLL']} alt="Logo" class="work_element_preview">
                     <!-- {/if} -->
                 </a>
             </div>
@@ -908,12 +928,12 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_C_1280'] : ""} alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_accountDetails_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_main_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['TFW_register_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? imageStoreTFW['Portfolio_TFW_EditProject_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['TFW_main_C_1280'] : ""} alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['TFW_accountDetails_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['TFW_register_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['TFW_main_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['TFW_register_mobile_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['Portfolio_TFW_EditProject_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -923,10 +943,10 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_main_C'] : ""} alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_cart_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_about_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? imageStoreEndimo['Portfolio_Endimo_contact_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? $imageStoreEndimo['Portfolio_Endimo_main_C'] : ""} alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? $imageStoreEndimo['Portfolio_Endimo_cart_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? $imageStoreEndimo['Portfolio_Endimo_about_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? $imageStoreEndimo['Portfolio_Endimo_contact_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -936,7 +956,7 @@
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <a href="#blank" class="largeWork_preview_box fullScreenBox forInsObs">
-                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(26) ? imageStoreAccMngr['Porftolio_accountManager_C'] : ""} alt="Porftolio_AccountManager">
+                            <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(26) ? $imageStoreAccMngr['Porftolio_accountManager_C'] : ""} alt="Porftolio_AccountManager">
                         </a>
                     </div>
                 <!-- </div> -->
@@ -953,17 +973,17 @@
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? imageStoreBanners['Portfolio_TravelinPoster'] : ""} alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? $imageStoreBanners['Portfolio_TravelinPoster'] : ""} alt="Portfolio_Postttrrr">
                     </a>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <a href="#blank" class="largeWork_preview_box halfScreenBox forInsObs">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Mount_Fuji'] : ""} alt="Portfolio_Mount_Fuji">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_Postttrrr_LowRes'] : ""} loading="lazy" alt="Portfolio_Postttrrr">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_FakePoster_LowRes'] : ""} loading="lazy" alt="Portfolio_FakePoster_LowRes">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Mount_Fuji'] : ""} alt="Portfolio_Mount_Fuji">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Postttrrr_LowRes'] : ""} loading="lazy" alt="Portfolio_Postttrrr">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_FakePoster_LowRes'] : ""} loading="lazy" alt="Portfolio_FakePoster_LowRes">
+                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
                     </a>
                 </div>
                 <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
@@ -1015,7 +1035,7 @@
             
             <div id="ART" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(0)}
-                    <WorkPresent firstWorkElement={true} workElementImage={imageStoreLogos['Portfolio_workPreviewElement_ART']} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
+                    <WorkPresent firstWorkElement={true} workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_ART']} workElementTitle="ART" workElementText="" > &nbsp&nbsp&nbsp&nbsp&nbsp The logo features a sleek, minimalist design with clean lines and simple shapes.
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp The museum's name is made in bold, uppercase letters, with the word ART emphasized in a contrasting color.  
                         <br> &nbsp&nbsp&nbsp&nbsp&nbsp It is made up of overlapping shapes in a range of vibrant colors, suggesting the museum's commitment to showcasing a diverse array of artwork and artists. The symbol also evokes a sense of movement and fluidity, hinting at the dynamic and ever-evolving nature of contemporary art.  
                         <br><br> &nbsp&nbsp&nbsp&nbsp&nbsp Overall, the logo conveys a sense of modernity, creativity, and inclusivity, positioning the museum as a cutting-edge institution that welcomes artists and audiences from all backgrounds.
@@ -1025,79 +1045,79 @@
                 
             <div id="Dajy" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(1)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW']} workElementTitle="Dajy" workElementText="Some logo that has no use yet..." />
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Dd_NEW']} workElementTitle="Dajy" workElementText="Some logo that has no use yet..." />
                 {/if}
             </div>
 
             <div id="Roe" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(2)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Roe']} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Roe']} workElementTitle="Roe" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Wappa" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(3)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww']} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Logo_Ww']} workElementTitle="Wappa" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
             
             <div id="Architect" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(4)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Architect']} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Architect']} workElementTitle="Architect" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Toreno" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(5)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt']} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Logo_Tt']} workElementTitle="Toreno" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Artsgone" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(6)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Artsgone']} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Artsgone']} workElementTitle="Artsgone" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lemmy" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(7)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Lexi']} workElementTitle="Lemmy" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Lexi']} workElementTitle="Lemmy" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(8)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_LXY']} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_LXY']} workElementTitle="LXY" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lanobi" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(9)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2']} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Lexi_V2']} workElementTitle="Lanobi" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Lexi2" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(10)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate']} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Lexi_alternate']} workElementTitle="Lexi2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="LXY2" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(11)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_LXY_alt']} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_LXY_alt']} workElementTitle="LXY2" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Antic Museum" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(12)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Museum']} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Museum']} workElementTitle="Antic Museum" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Anata" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(13)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Anata']} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Anata']} workElementTitle="Anata" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
@@ -1109,56 +1129,56 @@
 
             <div id="Omic" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(15)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Omic']} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Omic']} workElementTitle="Omic" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The logo for the imaginary brand Omic is designed in a modern and minimalist style. The main element of the logo is a large orange letter "O." It is bright and bold, catching the eye and symbolizing energy and creativity. <br> &nbsp&nbsp&nbsp&nbsp&nbsp Below the letter "O" the word "Omic" is written in a clean black font. This contrast between the vibrant orange letter and the black text creates a dynamic and memorable image that is easily recognizable and associated with the brand. The logo is ideal for a company looking to stand out and make a lasting impression on its audience. </WorkPresentAlt>
                 {/if}
             </div>
 
             <div id="Nameless sadas" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(16)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Nameless']} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Nameless']} workElementTitle="Nameless sadas" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="MR. Gummy" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(17)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_MrGummy']} workElementTitle="MR. Gummie" workElementText="This piece of art is a piece of ... art"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_MrGummy']} workElementTitle="MR. Gummie" workElementText="This piece of art is a piece of ... art"/>
                 {/if}
             </div>
 
             <div id="Bena" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(18)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Bena']} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Bena']} workElementTitle="Bena" workElementText=""> &nbsp&nbsp&nbsp&nbsp&nbsp The "Bena" logo features a whimsical and friendly design, capturing the essence of a specialty shop for dogs and cats. It blends playful elements with a touch of elegance, reflecting the variety of high-quality clothing, toys, and accessories offered. The logo's warm and inviting colors emphasize the joy and care Bena brings to pet owners and their furry companions. </WorkPresent>
                 {/if}
             </div>
 
             <div id="W(in) logo" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(19)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Ww_additional']} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Ww_additional']} workElementTitle="W(in) logo" workElementText="This piece of art is a piece of W"/>
                 {/if}
             </div>
             <div id="Travelin" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(20)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo']} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Travelin_Logo']} workElementTitle="Travelin" workElementText="This piece of art is a piece of travel"/>
                 {/if}
             </div>
             <div id="Tari" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(21)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Tari']} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Tari']} workElementTitle="Tari" workElementText="This piece of art is a piece of Tari"/>
                 {/if}
             </div>
             <div id="DTM" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(22)}
-                    <WorkPresent workElementImage={imageStoreLogos['Portfolio_workPreviewElement_DTM']} workElementTitle="DTM" workElementText="This piece of art is a piece of DTM"/>
+                    <WorkPresent workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_DTM']} workElementTitle="DTM" workElementText="This piece of art is a piece of DTM"/>
                 {/if}
             </div>
             <div id="Eroy" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(23)}
-                    <WorkPresentAlt workElementImage={imageStoreLogos['Portfolio_workPreviewElement_Eroy']} workElementTitle="Eroy" workElementText="This piece of art is a piece of Eroy"/>
+                    <WorkPresentAlt workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_Eroy']} workElementTitle="Eroy" workElementText="This piece of art is a piece of Eroy"/>
                 {/if}
             </div>
             <div id="ANV" class="classForIntersecObserver">
                 {#if $listOfIntersectedElementsSetter.has(24)}
-                    <WorkPresent lastWorkElement={true} workElementImage={imageStoreLogos['Portfolio_workPreviewElement_LLL']} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
+                    <WorkPresent lastWorkElement={true} workElementImage={$imageStoreLogos['Portfolio_workPreviewElement_LLL']} workElementTitle="ANV" workElementText="This piece of art is a piece of ANV"/>
                 {/if}
             </div>
             <!-- CHANGE LAST WORK ELEMENT !!! -->
@@ -1199,7 +1219,7 @@
 
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
+        height: 100svh;
         scroll-snap-type: none;
         /* background-color: var(--background_color_lightYellow); */
         /* scroll-behavior: auto; */
@@ -1216,7 +1236,7 @@
     }
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1228,10 +1248,11 @@
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
-    .endless{
+    .default_container.endless{
         height: auto;
         position: relative;
         z-index: 0;
+        padding-block: max(15vh, 5rem);
     }
     .content_container{
         width: 92.5%;
@@ -1316,9 +1337,6 @@
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
     /* General */
-    .default_container.endless{
-        padding-block: max(15vh, 5rem);
-    }
     .content_container.work_summary_page{
         display: flex;
         justify-content: space-evenly;

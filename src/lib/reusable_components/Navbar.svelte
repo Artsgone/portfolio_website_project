@@ -83,7 +83,7 @@
         content: '';
         position: absolute;
         top: max(0.6rem, 0.45vw);
-        border-radius: max(2.1vw, 2rem);
+        border-radius: max(2vw, 2rem);
         width: 100%;
         height: 110%;
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
@@ -115,7 +115,7 @@
         }
         .navbar_list::before{
             height: 105%;
-            border-radius: 1.85rem;
+            border-radius: 1.8rem;
         }
         .navbar_list > a{
             font-size: min(7vw, 1.75rem);
@@ -149,7 +149,7 @@
         }
         .navbar_list::before{
             height: 102.5%;
-            border-radius: 1.65rem;
+            border-radius: 1.6rem;
         }
     }
 </style>

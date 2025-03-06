@@ -66,7 +66,11 @@
             const currentPath = `/src/lib/svg_files/Contact/${pathsToImagesSave}.svg`
             if (imagesPath[currentPath]) {
                 const module = await imagesPath[currentPath]()
-                imageStore[pathsToImagesSave] = module.default
+                imageStore.update(store => {
+                    store[pathsToImagesSave] = module.default
+                    return store
+                })
+                // imageStore[pathsToImagesSave] = module.default
             }
         }
     }
@@ -300,9 +304,9 @@
         <!-- <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
         <object class="Contact_BackgroundDecor forLazyLoad" data={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object>
         <object class="Contact_BackgroundDecor forLazyLoad" data={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} type="image/svg+xml" aria-label="Contact_BackgroundDecor"></object> -->
-        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? imageStore['Contact_BackgroundDecor'] : ""} alt="">
-        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="">
-        <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth > 1000 ? $imageStore['Contact_BackgroundDecor'] : ""} alt="">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={innerWidth < 600 ? $imageStore['Contact_BackgroundDecor_Mobile_Small'] : ""} alt="">
+        <img class="Contact_BackgroundDecor forLazyLoad" src={(innerWidth <= 1000 && innerWidth >= 600) ? $imageStore['Contact_BackgroundDecor_Mobile'] : ""} alt="">
         <div class="content_container contact_page" use:clickedOptionMenu use:clickedOptionMenuOutside>
             <p class="contact_title darkgrayText">Contact me</p>
             <form class="contact_form_grid" on:submit|preventDefault={handleSubmit}>
@@ -337,20 +341,20 @@
             </form>
             <div class="links_bottom_part">
                 <div class="links">
-                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon forLazyLoad" src={imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
-                        <img class="Contact_ArrowForLinks forLazyLoad" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
+                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon forLazyLoad" src={$imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
+                        <img class="Contact_ArrowForLinks forLazyLoad" src={$imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
-                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon forLazyLoad" src={imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
-                        <img class="Contact_ArrowForLinks forLazyLoad" src={imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
+                    <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon forLazyLoad" src={$imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
+                        <img class="Contact_ArrowForLinks forLazyLoad" src={$imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
                 </div>
                 <a target="_blank" class="emailAdress_Text" href="mailto:artemdamin.contact@gmail.com">artemdamin.contact@gmail.com</a>
             </div>
         </div>
     </div>
-    <Footer firstLink="Art's page" secondLink="About me" thirdLink="Portfolio" 
+    <Footer firstLink="Art's page" secondLink="About me" thirdLink="Portfolio"
     linkAddress1="" linkAddress2="about_me" linkAddress3="portfolio"
-    titleName="Contact" footer_Decor_ID={imageStore['Contact_FooterDecor']} />
+    titleName="Contact" footer_Decor_ID={$imageStore['Contact_FooterDecor']} />
 </main>
 
 <style>
@@ -379,7 +383,7 @@
     
     main.svelte_main{
         overflow-y: scroll;
-        height: 100dvh;
+        height: 100svh;
         scroll-snap-type: block mandatory;
         /* background-color: var(--background_color_lightYellow); */
     }
@@ -409,7 +413,7 @@
 
     .default_container{
         width: 100%;
-        height: 100vh;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -772,7 +776,7 @@
     @media (width < 1200px) {
         .content_container{
             width: 87.5%;
-            height: 87.5%;
+            height: 90%;
         }
         /* --- */
         .contact_form_grid{

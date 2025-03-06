@@ -122,7 +122,7 @@
         content: '';
         position: absolute;
         top: max(0.6rem, 0.45vw);
-        border-radius: max(2.1vw, 2rem);
+        border-radius: max(2vw, 2rem);
         width: 100%;
         height: 110%;
         border: max(4px, 0.250vw) var(--cyan_outline) solid;
