@@ -1,9 +1,9 @@
 <script>
     import Navbar from '$lib/reusable_components/Navbar.svelte'
     import Header from '$lib/reusable_components/Header.svelte'
-    import Footer from '$lib/reusable_components/Footer.svelte'
+    // import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    // import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
@@ -13,9 +13,9 @@
 
     import { onMount } from 'svelte';
     import { writable } from "svelte/store";
-    import { scale } from 'svelte/transition';
+    // import { scale } from 'svelte/transition';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
-    import { elasticOut } from 'svelte/easing';
+    // import { elasticOut } from 'svelte/easing';
     
     $: innerWidth = 0
     let showLanguagesDesktop = false
@@ -23,7 +23,7 @@
     let showSkillsDesktop = false
 
     let pageLoaded = false
-    onMount(() => {
+    onMount(async() => {
         const oldScrollY = sessionStorage.getItem("stored_scrollY")
         if (oldScrollY != null) {
             svelte_main_element.scrollTo({ top: oldScrollY, behavior: 'auto' })
@@ -34,6 +34,9 @@
         showSkillsDesktop = innerWidth > 800 ? true : false
         
         pageLoaded = true
+
+        Footer = (await import('$lib/reusable_components/Footer.svelte')).default
+        ScrollUpButton = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false
@@ -46,6 +49,9 @@
     afterNavigate(() => {
         pageLoaded = true
     });
+
+    let Footer = ""
+    let ScrollUpButton = ""
 
     $: innerHeight = 0
     let y = 0
@@ -183,7 +189,8 @@
     {/if}
     
     {#if y > (innerHeight / 1.1) && oldY > y}
-        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
+        <svelte:component this={ScrollUpButton} scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })} />
+        <!-- <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/> -->
     {/if}
 
     <div class="default_container cyan">
@@ -299,9 +306,12 @@
             </div>
         <!-- {/if} -->
     </div>
-    <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
+    <svelte:component this={Footer} firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
     linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
-    titleName="About me" footer_Decor_ID={$imageStore['AboutMe_FooterDecor']}/>
+    titleName="About me" footer_Decor_ID={$imageStore['AboutMe_FooterDecor']} />
+    <!-- <Footer firstLink="Art's page" secondLink="Portfolio" thirdLink="Contact" 
+    linkAddress1="" linkAddress2="portfolio" linkAddress3="contact"
+    titleName="About me" footer_Decor_ID={$imageStore['AboutMe_FooterDecor']}/> -->
 </main>
 
 <style>
@@ -379,7 +389,7 @@
         width: 92.5%;
     }
     .default_container:not(.cyan) > .content_container{
-        opacity: 0;
+        opacity: 0.5;
         scale: 0.97;
         transition: opacity 0.75s var(--bezierTransition), scale 1.25s var(--wiggleTransition);
     }
@@ -462,7 +472,9 @@
     }
     .placeholder_EducationSVG{
         position: absolute;
-        inset: 0;
+        /* inset: 0; */
+        width: 100%;
+        aspect-ratio: 1 / 3;
         background-image: url(/src/lib/svg_files/AboutMe/AboutMe_EducationSVG_Blurred.png);
         background-repeat: no-repeat;
         background-position: center;

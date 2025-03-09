@@ -528,7 +528,7 @@
     }
     
      .default_container:not(.cyan) > .content_container{
-        opacity: 0;
+        opacity: 0.15;
         translate: 0 10%;
         transition: opacity 0.75s var(--bezierTransition), translate 1.25s var(--wiggleTransition);
     }

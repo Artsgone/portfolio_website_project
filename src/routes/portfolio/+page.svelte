@@ -1,9 +1,9 @@
 <script>
     import Navbar from '$lib/reusable_components/Navbar.svelte'
     import Header from '$lib/reusable_components/Header.svelte'
-    import Footer from '$lib/reusable_components/Footer.svelte'
+    // import Footer from '$lib/reusable_components/Footer.svelte'
     import LoadingScreen from '$lib/reusable_components/Loading_screen.svelte'
-    import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
+    // import ScrollUpButton from '$lib/reusable_components/ScrollUp_button.svelte'
     import { saveScrollY } from '$lib/saveScrollY'
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
@@ -15,7 +15,7 @@
     import Portfolio_FooterDecor from '$lib/svg_files/Portfolio/Portfolio_FooterDecor.svg'
 
     import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
-    import Portfolio_WorksPreviewDecorWebp from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.webp'
+    // import Portfolio_WorksPreviewDecorWebp from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.webp'
     import Global_closeIcon from '$lib/svg_files/GlobalSVGs/Global_closeIcon.svg'
     import scrollLeftAndRightButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
@@ -102,6 +102,8 @@
         //     };
         // }
         New_LOGO_AR = (await import('$lib/svg_files/New_LOGO_AR.svg')).default
+        Footer = (await import('$lib/reusable_components/Footer.svelte')).default
+        ScrollUpButton = (await import('$lib/reusable_components/ScrollUp_button.svelte')).default
     });
     beforeNavigate(({to, from}) => {
         pageLoaded = false;
@@ -131,6 +133,8 @@
     // }
 
     let New_LOGO_AR = ""
+    let Footer = ""
+    let ScrollUpButton = ""
 
     const imagesPath = import.meta.glob(["/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/TFW_Project/*.png", 
     "/src/lib/svg_files/Portfolio/Portfolio_LargeWorks/Endimo_Project/*.png", 
@@ -710,7 +714,8 @@
     {/if} -->
 
     {#if y > (innerHeight / 1.1) && oldY > y}
-        <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/>
+        <svelte:component this={ScrollUpButton} scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })} />
+        <!-- <ScrollUpButton scrollToTop={() => svelte_main_element.scrollTo({ top: 0, behavior: 'smooth' })}/> -->
     {/if}
 
     <div class="default_container cyan">
@@ -922,8 +927,6 @@
         <div class="content_container work_summary_page fullscreenWorks">
             <p class="largeWorks_upperText">Portfolio - websites</p>
             <div class="fullScreenWorks_preview_grid" use:checkForAmountOfChildren_fullScreen use:boxScroll_fullScreen data-sveltekit-preload-data="tap">
-                <!-- <div class="forInsObs"> -->
-                    <!-- {#if $listOfIntersectedElementsSetter_DF.has(24)} -->
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK2">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -936,9 +939,6 @@
                             <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(24) ? $imageStoreTFW['Portfolio_TFW_EditProject_C_1280'] : ""} loading="lazy" alt="Portfolio_TimerForWork">
                         </a>
                     </div>
-                <!-- </div> -->
-                <!-- <div class="forInsObs"> -->
-                    <!-- {#if $listOfIntersectedElementsSetter_DF.has(25)} -->
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK3">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -949,9 +949,6 @@
                             <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(25) ? $imageStoreEndimo['Portfolio_Endimo_contact_C'] : ""} loading="lazy" alt="Portfolio_Endimo_main">
                         </a>
                     </div>
-                <!-- </div> -->
-                <!-- <div class="forInsObs"> -->
-                    <!-- {#if $listOfIntersectedElementsSetter_DF.has(26)} -->
                     <div class="largeWork_preview_box_wrapper fullScreenWrapper" id="IDK4">
                         <button class="scrollLeftAndRightButton left fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                         <button class="scrollLeftAndRightButton right fullScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -959,32 +956,30 @@
                             <img class="largeWork_element_preview fullScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(26) ? $imageStoreAccMngr['Porftolio_accountManager_C'] : ""} alt="Porftolio_AccountManager">
                         </a>
                     </div>
-                <!-- </div> -->
             </div>
         </div>
     </div>
     <div class="default_container endless hlfsWS" id="largeWorksSection">
-        <!-- {#if $listOfIntersectedElementsSetter_DF.has(27)} -->
         <div class="content_container work_summary_page largeWorks">
             <p class="largeWorks_upperText">Portfolio - banners</p>
             <!-- use:boxScroll use:checkForAmountOfChildren -->
-            <div class="largeWorks_preview_grid" data-sveltekit-preload-data="tap" use:boxScroll use:checkForAmountOfChildren>
+            <div class="largeWorks_preview_grid" use:boxScroll use:checkForAmountOfChildren>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TravelinBanner">
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <a href="/portfolio/project_page/Travelin" class="largeWork_preview_box halfScreenBox forInsObs">
+                    <div class="largeWork_preview_box halfScreenBox forInsObs">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(27) ? $imageStoreBanners['Portfolio_TravelinPoster'] : ""} alt="Portfolio_Postttrrr">
-                    </a>
+                    </div>
                 </div>
                 <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="MountFuji">
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
                     <button class="scrollLeftAndRightButton right halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
-                    <a href="#blank" class="largeWork_preview_box halfScreenBox forInsObs">
+                    <div class="largeWork_preview_box halfScreenBox forInsObs">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Mount_Fuji'] : ""} alt="Portfolio_Mount_Fuji">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Postttrrr_LowRes'] : ""} loading="lazy" alt="Portfolio_Postttrrr">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_FakePoster_LowRes'] : ""} loading="lazy" alt="Portfolio_FakePoster_LowRes">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
-                    </a>
+                    </div>
                 </div>
                 <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
                     <button class="scrollLeftAndRightButton left halfScreenButton"> <img src={scrollLeftAndRightButtonArrow} alt="scrollLeftAndRightButtonArrow" class="largeWork_scrollButton"> </button>
@@ -1012,17 +1007,15 @@
     </div>
     
     <div class="default_container endless forInsObs fontsContainer" id="fontsSection">
-        <!-- {#if $listOfIntersectedElementsSetter_DF.has(28)} -->
-            <div class="content_container work_summary_page">
-                <p class="largeWorks_upperText">Portfolio - fonts</p>
-                <div class="fontPresentationWrapper">
-                    <p class="fontPresentation">Definity?</p>
-                    <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
-                    <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
-                    <p class="fontPresentation">Definity is a definite version of a minimalistic font!</p>
-                </div>
+        <div class="content_container work_summary_page">
+            <p class="largeWorks_upperText">Portfolio - fonts</p>
+            <div class="fontPresentationWrapper">
+                <p class="fontPresentation">Definity?</p>
+                <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
+                <p class="fontPresentation">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z , . ; 0 1 2 3 4 5 6 7 8 9</p>
+                <p class="fontPresentation">Definity is a definite version of a minimalistic font!</p>
             </div>
-        <!-- {/if} -->
+        </div>
     </div>
 
     {#if workPresent_Visibility === 'visible'}
@@ -1186,9 +1179,7 @@
         </div>
     {/if}
     
-    
-    
-        <Footer firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
+    <svelte:component this={Footer} firstLink="Art's page" secondLink="About me" thirdLink="Contact" 
     linkAddress1="" linkAddress2="about_me" linkAddress3="contact"
     titleName="Portfolio" footer_Decor_ID={Portfolio_FooterDecor} snap_align="none"/>
 </main>

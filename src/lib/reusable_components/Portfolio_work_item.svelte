@@ -114,9 +114,9 @@
         // console.log("loaded")
         function isLoaded() {
             node.removeEventListener("load", isLoaded)
-            setTimeout(() => {
+            // setTimeout(() => {
                 node.classList.add("isLoaded")
-            }, 0)
+            // }, 0)
         }
         node.addEventListener("load", isLoaded, {once: true})
         return {

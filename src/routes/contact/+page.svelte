@@ -12,7 +12,7 @@
     import Global_arrowDropdownMenu from '$lib/svg_files/GlobalSVGs/Global_arrowDropdownMenu.svg'
     import submitButtonArrow from '$lib/svg_files/GlobalSVGs/Global_arrowBack.svg'
 
-    import { onMount, tick } from "svelte";
+    import { onMount } from "svelte";
     import { fly, scale } from 'svelte/transition';
     import { elasticOut, sineInOut } from 'svelte/easing';
     import { afterNavigate, beforeNavigate } from '$app/navigation';
