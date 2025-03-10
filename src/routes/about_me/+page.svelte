@@ -260,6 +260,10 @@
                         <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Aiming for hardwork to achieve the best result possible.
                     </p>
+                    <p class="rounded darkgrayText">
+                        <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
+                        Committed to elegant and easy to understand design.
+                    </p>
                     <p class="darkgrayText">
                         <img class="AboutMe_OtherPE_Rounded forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['AboutMe_OtherPE_Rounded'] : ""} alt="AboutMe_OtherPE_Rounded">
                         Effective both on my own and in team.

@@ -307,8 +307,8 @@
                 </div>
                 <div class="text introducing">
                     <p class="lightgrayText">
-                        My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>Graphic</span> design. <br> <br> 
-                        I am committed to <span>elegant</span> and <span>easy</span> to understand design and I strive for <span>perfection</span> in this field.
+                        My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>graphic</span> design. <br> <br> 
+                        Furthermore, I am learning <span>frontend development</span> to have a broader perspective on design in general.
                     </p>
                 </div>
             </div>
