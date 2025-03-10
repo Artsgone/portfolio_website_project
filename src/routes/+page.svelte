@@ -8,7 +8,7 @@
     import MainPage_titlePageSVG from '$lib/svg_files/MainPage/MainPage_titlePageSVG.svg'
     // import Portfolio_WorksPreviewDecor from '$lib/svg_files/Portfolio/Portfolio_WorksPreviewDecor.svg'
 //
-    import CV_Artem_Damin from '$lib/misc_and_forDownload/CV_Artem_Damin_q.png'
+    import CV_Artem_Damin from '$lib/misc_and_forDownload/Damin_Artem_CV.pdf'
 //
     import '$lib/styles_and_fonts/fonts.css'
     import '$lib/styles_and_fonts/styles.css'
@@ -322,7 +322,7 @@
                 </div>
                 <div class="CV_downloadLink">
                     {#if $listOfIntersectedElementsSetter.has(2)}
-                        <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 750, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
+                        <a href={CV_Artem_Damin} download="Damin_Artem_CV" class="CV_downloadLinkInside" in:fly={{ delay: 750, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
                             Get my CV 
                             <img class="MainPage_cvDownloadDecor" src={$imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
                             <!-- <object class="MainPage_cvDownloadDecor" data={imageStore['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
