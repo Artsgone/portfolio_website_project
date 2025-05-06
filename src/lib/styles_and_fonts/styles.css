@@ -13,6 +13,7 @@
     --background_color_lightCyan_lowerOpacity025: hsla(172, 23%, 77%, 0.25);
 
     --background_color_lightCyanSaturated: hsl(172, 20%, 60%);
+    --background_color_lightCyanSaturatedLessOpacity: hsla(173, 20%, 60%, 0.8);
     --background_color_darkCyan: hsl(172, 20%, 47%);
     --background_color_darkCyanSaturated: hsl(172, 25%, 39%);
     --background_color_darkAsHellCyanSaturated: hsl(172, 25%, 28%);
@@ -20,7 +21,7 @@
     --element_color_darkerCyan: hsl(172, 22%, 71%);
 
     --cyan_outline_bright: hsl(172, 20%, 75%);
-    --cyan_outline: hsl(172, 20%, 52%);
+    --cyan_outline: hsl(172, 20%, 55%);
     --text_color_gray5: #f2f2f2ff;
     --text_color_gray40: rgb(120, 120, 120);
     --text_color_gray50: #a5a5a5;

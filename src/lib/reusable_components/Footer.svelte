@@ -106,7 +106,7 @@
         color: var(--text_color_gray90);
         /* background-color: var(--element_background_color_lightestCyan); */
         background: radial-gradient(var(--element_background_color_lightestCyan) 30%, var(--background_color_lightCyanSaturated) 145%);
-        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+        border: max(4px, 0.25vw) var(--cyan_outline) solid;
         border-radius: 50rem;
         font-size: max(1.7vw, 1rem);
         padding-block: max(1vw, 0.8rem);
@@ -125,7 +125,7 @@
         border-radius: max(2vw, 2rem);
         width: 100%;
         height: 110%;
-        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+        border: max(4px, 0.25vw) var(--cyan_outline) solid;
 
         background-image: radial-gradient(var(--background_color_lightCyan) 25%, var(--background_color_darkestCyan) 100%);
         background-size: 100% 100%;
@@ -161,7 +161,7 @@
         background-color: var(--background_color_lightCyan);
         color: transparent;
         border-radius: 50rem;
-        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+        border: max(4px, 0.25vw) var(--cyan_outline) solid;
         position: relative;
         font-family: 'Neutral_Bold', system-ui, sans-serif;
         letter-spacing: max(0.025vw, 0.035rem);
@@ -192,7 +192,7 @@
         width: 100%;
         height: 165%;
         /* border: max(2px, 0.125vw) var(--text_color_gray90) solid; */
-        border: max(4px, 0.250vw) var(--cyan_outline) solid;
+        border: max(4px, 0.25vw) var(--cyan_outline) solid;
         z-index: -1;
     }
     .authorName.troll::before{

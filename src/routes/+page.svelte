@@ -704,15 +704,15 @@
         font-family: "Neutral_Normal", system-ui, sans-serif;
         font-size: max(1.75vw, 1.75rem);
         color: var(--background_color_lightCyan);
-        text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturated);
+        text-shadow: 0rem 0rem 0.75rem var(--background_color_lightCyanSaturatedLessOpacity);
         backdrop-filter: blur(max(0.6rem, 0.6vw));
         border-radius: max(5rem, 5vw);
-        border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+        border: max(0.25rem, 0.3vw) var(--background_color_lightCyanSaturatedLessOpacity) solid;
         transition: filter 0.15s ease-out, box-shadow 0.15s ease-out, translate 0.75s var(--wiggleTransition);
     }
     .MainPage_cvDownloadDecor{
         height: max(2.25rem, 2.25vw);
-        filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_lightCyanSaturated));
+        filter: drop-shadow(0 0 max(1rem, 1vw) var(--background_color_lightCyanSaturatedLessOpacity));
         opacity: 4;
     }
 
@@ -720,18 +720,18 @@
         color: var(--text_color_gray5);
         text-shadow: 0rem 0rem max(0.75rem, 0.75vw) var(--text_color_gray5);
         translate: 0 max(0.4rem, 0.35vw);
-        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturated),
-                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.25rem var(--background_color_lightCyanSaturated);
+        box-shadow: inset 0 0 max(1.25rem, 1.25vw) 0.2rem var(--background_color_lightCyanSaturatedLessOpacity),
+                    0 max(0.5rem, 0.5vw) max(1rem, 1vw) 0.25rem var(--background_color_lightCyanSaturatedLessOpacity);
     }
 
     .CV_downloadLink::before{
         content: '';
         position: absolute;
         top: max(0.6rem, 0.45vw);
-        border-radius: max(1.9rem, 2.5vw);
+        border-radius: max(2rem, 2.3vw);
         width: 100%;
-        height: 115%;
-        border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+        height: 112.5%;
+        border: max(0.25rem, 0.3vw) var(--background_color_lightCyanSaturatedLessOpacity) solid;
         z-index: -1;
 
         background-image: radial-gradient(var(--text_color_gray90) 15%, var(--background_color_darkCyanSaturated) 100%);
@@ -1285,8 +1285,7 @@
             gap: min(2.5rem, 6vw);
             padding: max(1rem, 1vw) min(4rem, 6vw);
             font-size: min(6vw, 1.75rem);
-            border-radius: max(2rem, 2vw);
-            border: max(4px, 0.250vw) var(--background_color_lightCyanSaturated) solid;
+            border-radius: min(2rem, 10vw);
         }
     }
     
