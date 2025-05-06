@@ -271,6 +271,7 @@
 </script>
 
 <svelte:head>
+    <meta name="google-site-verification" content="AYCwBLpVobJH44cOBCoEV09H4na-YCSqtwdhL4cqHCg" />
     <title>Artem Damin - Art's page</title>
     <meta name="description" content="A personal web-portfolio of Artem Damin" />
 </svelte:head>
