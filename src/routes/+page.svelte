@@ -158,6 +158,8 @@
         8: 'modern_building_1280',
         9: 'WeatheredHouse_1280',
         10: 'UnderBridge_1280',
+        11: 'HazeMountains_1920',
+        12: 'Duomo_1280'
     }
 
     async function importAllImages() {
@@ -301,146 +303,149 @@
         </div>
     </div>
     <div class="default_container greeting">
-        <!-- {#if $listOfIntersectedElementsSetter.has(1)} -->
-            <div class="content_container greeting_page">
-                <div class="wrapper_greetingSVG">
-                    <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(1) ? $imageStoreSVG['MainPage_greetingPageSVG'] : ""} alt="MainPage_greetingPageSVG">
-                </div>
-                <div class="text introducing">
-                    <p class="lightgrayText">
-                        My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>graphic</span> design. <br> <br> 
-                        Furthermore, I am learning <span>frontend development</span> to have a broader perspective on design in general.
-                    </p>
-                </div>
+        <div class="content_container greeting_page">
+            <div class="wrapper_greetingSVG">
+                <img class="MainPage_greetingPageSVG forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(1) ? $imageStoreSVG['MainPage_greetingPageSVG'] : ""} alt="MainPage_greetingPageSVG">
             </div>
-        <!-- {/if} -->
+            <div class="text introducing">
+                <p class="lightgrayText">
+                    My name is <span>Artem Damin</span> and I am <span>20 years</span> old. <br> I specialize in <span>UI/UX</span> and <span>graphic</span> design. <br> <br> 
+                    Furthermore, I am learning <span>frontend development</span> to have a broader perspective on design in general.
+                </p>
+            </div>
+        </div>
     </div>
     <div class="default_container greeting dwnCV">
-        <!-- {#if $listOfIntersectedElementsSetter.has(2)} -->
-            <div class="content_container CV_download_page">
-                <div class="text cvDownload">
-                    <p class="lightgrayText">Check out my <span class="span_CV">CV</span></p>
-                </div>
-                <div class="CV_downloadLink">
-                    {#if $listOfIntersectedElementsSetter.has(2)}
-                        <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 750, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
-                            See my CV
-                            <img class="MainPage_cvDownloadDecor" src={$imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
-                            <!-- <object class="MainPage_cvDownloadDecor" data={imageStore['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
-                        </a>
-                    {/if}
-                </div>
+        <div class="content_container CV_download_page">
+            <div class="text cvDownload">
+                <p class="lightgrayText">Check out my <span class="span_CV">CV</span></p>
             </div>
-        <!-- {/if} -->
+            <div class="CV_downloadLink">
+                {#if $listOfIntersectedElementsSetter.has(2)}
+                    <a href={CV_Artem_Damin} download="CV_Artem_Damin" class="CV_downloadLinkInside" in:fly={{ delay: 750, duration: 1000, easing: elasticOut, y: "1vh", opacity: 0.4 }}>
+                        See my CV
+                        <img class="MainPage_cvDownloadDecor" src={$imageStoreSVG['MainPage_cvDownloadDecor']} alt="">
+                        <!-- <object class="MainPage_cvDownloadDecor" data={imageStore['MainPage_cvDownloadDecor']} type="image/svg+xml" aria-label="icon"></object> -->
+                    </a>
+                {/if}
+            </div>
+        </div>
     </div>
     <div class="default_container cyanSaturated">
-        <!-- {#if $listOfIntersectedElementsSetter.has(3)} -->
-            <div class="content_container introductionToPhotos_page">
-                <div class="top_part page3">
-                    <img class="MY forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MY'] : ""} alt="MY">
-                    <img class="earLikeThing forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_earLikeThingSVG'] : ""} alt="MainPage_earLikeThingSVG">
-                </div>
-                <div class="bottom_part page3">
-                    <img class="copyright_text forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MyPhotosDecorElement'] : ""} alt="MainPage_MyPhotosDecorElement">
-                    <div class="photo_collection_text lightgrayText">photo <br> collection</div>
-                </div>
+        <div class="content_container introductionToPhotos_page">
+            <div class="top_part page3">
+                <img class="MY forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MY'] : ""} alt="MY">
+                <img class="earLikeThing forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_earLikeThingSVG'] : ""} alt="MainPage_earLikeThingSVG">
             </div>
-        <!-- {/if} -->
+            <div class="bottom_part page3">
+                <img class="copyright_text forLazyLoad SVG" src={$listOfIntersectedElementsSetter.has(3) ? $imageStoreSVG['MainPage_MyPhotosDecorElement'] : ""} alt="MainPage_MyPhotosDecorElement">
+                <div class="photo_collection_text lightgrayText">photo <br> collection</div>
+            </div>
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(4)} -->
-            <div class="content_container page4">
-                <div class="left_part page4">
-                    <div class="sunsetIMG_box">
-                        <img class="sunsetInTheCloudsIMG forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['sunset_in_the_clouds_1280'] : ""} alt="sunsetInTheCloudsIMG">
-                    </div>
-                </div>
-                <div class="right_part page4">
-                    <div class="page4_title_text darkgrayText">Quintessential elegance in motion</div>
+        <div class="content_container page4">
+            <div class="left_part page4">
+                <div class="sunsetIMG_box">
+                    <img class="sunsetInTheCloudsIMG forLazyLoad" src={$listOfIntersectedElementsSetter.has(4) ? $imageStore['sunset_in_the_clouds_1280'] : ""} alt="sunsetInTheCloudsIMG">
                 </div>
             </div>
-        <!-- {/if} -->
-    </div>
-    <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(5)} -->
-            <div class="content_container page5">
-                <div class="dandelion_img_box">
-                    <img class="dandelion IMG1 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? $imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
-                </div>
-                <div class="page5_gradient"></div>
-                <div class="dandelion_img_box">
-                    <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? $imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
-                </div>
-                <div class="page5_title_text lightgrayText">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
-                <div class="page5_title_text lightgrayText blured">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
+            <div class="right_part page4">
+                <div class="page4_title_text darkgrayText">Quintessential elegance in motion</div>
             </div>
-        <!-- {/if} -->
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(6)} -->
-            <div class="content_container page6">
-                <div class="left_part img_box">
-                    <img class="goldenLeaves forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? $imageStore['golden_leaves_1280'] : ""} alt="goldenLeaves">
-                </div>
-                <div class="right_part page6">
-                    <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
-                    <img class="MainPage_YellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? $imageStoreSVG['MainPage_YellowHighlight'] : ""} alt="MainPage_YellowHighlight">
-                </div>
+        <div class="content_container page5">
+            <div class="dandelion_img_box">
+                <img class="dandelion IMG1 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? $imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
             </div>
-        <!-- {/if} -->
+            <div class="page5_gradient"></div>
+            <div class="dandelion_img_box">
+                <img class="dandelion IMG2 forLazyLoad" src={$listOfIntersectedElementsSetter.has(5) ? $imageStore['dandelion_1280'] : ""} alt="dandelionIMG">
+            </div>
+            <div class="page5_title_text lightgrayText">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
+            <div class="page5_title_text lightgrayText blured">Ethereal <br> dream, <br> harmonic <br> fusion.</div>
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(7)} -->
+        <div class="content_container reusable_page">
+            <div class="text_wrapper_reusablePage darkgrayText">
+                <p>Celestial synchronicity of enlightened silence</p>
+            </div>
+            <div class="image_wrapper_reusablePage modern_building">
+                <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(6) ? $imageStore['modern_building_1280'] : ""} alt="Modern_building">
+            </div>
+        </div>
+    </div>
+    <div class="default_container">
+        <div class="content_container page6">
+            <div class="left_part img_box">
+                <img class="goldenLeaves forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? $imageStore['golden_leaves_1280'] : ""} alt="goldenLeaves">
+            </div>
+            <div class="right_part page6">
+                <div class="page6_text darkgrayText">Importance <br> of <br> desillusion</div>
+                <img class="MainPage_YellowHighlight forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? $imageStoreSVG['MainPage_YellowHighlight'] : ""} alt="MainPage_YellowHighlight">
+            </div>
+        </div>
+    </div>
+    <div class="default_container">
+        <div class="content_container reusable_page reversed">
+            <div class="text_wrapper_reusablePage darkgrayText">
+                <p>Ethereal symphony of organic disruption</p>
+            </div>
+            <div class="image_wrapper_reusablePage under_bridge">
+                <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? $imageStore['UnderBridge_1280'] : ""} alt="Under_Bridge">
+            </div>
+        </div>
+    </div>
+    <div class="default_container">
         <!-- srcset="{imageStore['violet_flowers_1280']} 1280w, {imageStore['violet_flowers_2560']} 2560w, {imageStore['violet_flowers_3840']} 3840w" -->
-            <div class="content_container page7">
-                <div class="image_wrapper_page7">
-                    <img class="Violet_flowers forLazyLoad" src={$listOfIntersectedElementsSetter.has(7) ? ($imageStore['violet_flowers_1920']) : ""} 
-                     alt="Violet_flowers">
-                </div>
-                <div class="text_wrapper_page7 firstLayer lightgrayText">
-                    <p>Ephemeral velvet dynamics</p>
-                </div>
-                <div class="text_wrapper_page7 secondLayer">
-                    <p>Ephemeral velvet dynamics</p>
-                </div>
+        <div class="content_container fullBox_Page">
+            <div class="image_wrapper_fullBox_Page violet_flowers">
+                <img class="fullBox_image forLazyLoad" src={$listOfIntersectedElementsSetter.has(9) ? ($imageStore['violet_flowers_1920']) : ""} 
+                    alt="Violet_flowers">
             </div>
-        <!-- {/if} -->
+            <div class="text_wrapper_fullBox_Page firstLayer lightgrayText">
+                <p>Velvet residue of whispers</p>
+            </div>
+            <div class="text_wrapper_fullBox_Page secondLayer">
+                <p>Velvet residue of whispers</p>
+            </div>
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
-            <div class="content_container page8">
-                <div class="text_wrapper_page8 darkgrayText">
-                    <p>Celestial synchronicity of enlightened silence</p>
-                </div>
-                <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(8) ? $imageStore['modern_building_1280'] : ""} alt="Modern_building">
-                </div>
+        <div class="content_container reusable_page underBridge">
+            <div class="text_wrapper_reusablePage darkgrayText">
+                <p>Infinite reverb of fractal grace</p>
             </div>
-        <!-- {/if} -->
+            <div class="image_wrapper_reusablePage weathered_house">
+                <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(10) ? $imageStore['WeatheredHouse_1280'] : ""} alt="Weathered_House">
+            </div>
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
-            <div class="content_container page8 reversed">
-                <div class="text_wrapper_page8 darkgrayText">
-                    <p>Ethereal symphony of organic disruption</p>
-                </div>
-                <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(9) ? $imageStore['UnderBridge_1280'] : ""} alt="Under_Bridge">
-                </div>
+        <div class="content_container fullBox_Page">
+            <div class="image_wrapper_fullBox_Page haze_mountains">
+                <img class="fullBox_image forLazyLoad" src={$listOfIntersectedElementsSetter.has(11) ? ($imageStore['HazeMountains_1920']) : ""} alt="Haze_Mountains">
             </div>
-        <!-- {/if} -->
+            <div class="text_wrapper_fullBox_Page firstLayer lightgrayText">
+                <p>Ephemeral murmur of reverie</p>
+            </div>
+            <div class="text_wrapper_fullBox_Page secondLayer">
+                <p>Ephemeral murmur of reverie</p>
+            </div>
+        </div>
     </div>
     <div class="default_container">
-        <!-- {#if $listOfIntersectedElementsSetter.has(8)} -->
-            <div class="content_container page8 underBridge">
-                <div class="text_wrapper_page8 darkgrayText">
-                    <p>Infinite reverb of fractal grace</p>
-                </div>
-                <div class="image_wrapper_page8">
-                    <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(10) ? $imageStore['WeatheredHouse_1280'] : ""} alt="Weathered_House">
-                </div>
+        <div class="content_container reusable_page reversed">
+            <div class="text_wrapper_reusablePage darkgrayText">
+                <p>Halcyon rapture beneath astralic vestiges</p>
             </div>
-        <!-- {/if} -->
+            <div class="image_wrapper_reusablePage duomo">
+                <img class="Modern_building forLazyLoad" src={$listOfIntersectedElementsSetter.has(12) ? $imageStore['Duomo_1280'] : ""} alt="Duomo">
+            </div>
+        </div>
     </div>
     <!-- <Footer firstLink="About me" secondLink="Portfolio" thirdLink="Contact" 
         linkAddress1="about_me" linkAddress2="portfolio" linkAddress3="contact"
@@ -451,7 +456,7 @@
     
 </main>
 
-<style >
+<style>
     :global(body){
         margin: 0;
         padding: 0;
@@ -958,7 +963,7 @@
     /* PAGE 7 */
 /* ------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-    .content_container.page7{
+    .content_container.fullBox_Page{
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr;
@@ -968,21 +973,26 @@
         position: relative;
         isolation: isolate;
     }
-    .image_wrapper_page7{
+    .image_wrapper_fullBox_Page{
         max-width: 100%;
         min-height: 100%;
-        background-image: url(/src/lib/compressed_images/Violet_flowers_HighlyCompressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
     }
-    .Violet_flowers{
+    .image_wrapper_fullBox_Page.violet_flowers{
+        background-image: url(/src/lib/compressed_images/Violet_flowers_HighlyCompressed.avif);
+    }
+    .image_wrapper_fullBox_Page.haze_mountains{
+        background-image: url(/src/lib/compressed_images/HazeMountains_Blurred.avif);
+    }
+    .fullBox_image{
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
     
-    .text_wrapper_page7{
+    .text_wrapper_fullBox_Page{
         position: absolute;
         display: flex;
         align-items: center;
@@ -996,17 +1006,17 @@
         inset: 5% 10%;
         direction: rtl;
     }
-    .text_wrapper_page7.firstLayer{
+    .text_wrapper_fullBox_Page.firstLayer{
         z-index: 2;
     }
-    .text_wrapper_page7.secondLayer{
+    .text_wrapper_fullBox_Page.secondLayer{
         color: var(--background_color_alternativeLightYellow);
         filter: blur(max(0.75rem, 1vw));
         z-index: 1;
     }
 
 /* ------------------------------------- */
-    .content_container.page8{
+    .content_container.reusable_page{
         display: grid;
         grid-template-columns: 1fr 1.25fr;
         grid-template-rows: 1fr;
@@ -1015,22 +1025,22 @@
         position: relative;
         isolation: isolate;
     }
-    .image_wrapper_page8{
+    .image_wrapper_reusablePage{
         max-width: 100%;
         min-height: 100%;
-        background-image: url(/src/lib/compressed_images/Modern_building_compressed.avif);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         border-radius: max(1vw, 1rem);
         overflow: clip;
     }
+    
     .Modern_building{
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .text_wrapper_page8{
+    .text_wrapper_reusablePage{
         display: flex;
         align-items: center;
 
@@ -1041,21 +1051,27 @@
     }
 
 /* --- */
-    .content_container.page8.reversed{
+    .content_container.reusable_page.reversed{
         grid-template-columns: 2fr 1fr;
     }
-    .content_container.page8.reversed > .image_wrapper_page8{
+    .image_wrapper_reusablePage.under_bridge{
         background-image: url(/src/lib/compressed_images/UnderBridge_1280_Blurred.avif);
     }
-    .content_container.page8.reversed > .text_wrapper_page8{
+    .image_wrapper_reusablePage.duomo{
+        background-image: url(/src/lib/compressed_images/Duomo_Blurred.avif);
+    }
+    .image_wrapper_reusablePage.modern_building{
+        background-image: url(/src/lib/compressed_images/Modern_building_compressed.avif);
+    }
+    .content_container.reusable_page.reversed > .text_wrapper_reusablePage{
         order: 2;
     }
-    .content_container.page8.reversed > .image_wrapper_page8{
+    .content_container.reusable_page.reversed > .image_wrapper_reusablePage{
         order: 1;
     }
 
 /* --- */
-    .content_container.page8.underBridge > .image_wrapper_page8{
+    .image_wrapper_reusablePage.weathered_house{
         background-image: url(/src/lib/compressed_images/WeatheredHouse_1280_Blurred.avif);
     }
 /* Global media querries --------------------------------------------------------------------------------------------------------------------------- */
@@ -1134,15 +1150,15 @@
             writing-mode: horizontal-tb;
         }
         /* Modern Building */
-        .content_container.page8{
+        .content_container.reusable_page{
             grid-template-columns: 1fr;
             grid-template-rows: 1fr 2fr;
         }
-        .content_container.page8.reversed{
+        .content_container.reusable_page.reversed{
             grid-template-columns: 1fr;
             grid-template-rows: 2fr 1fr;
         }
-        .text_wrapper_page8{
+        .text_wrapper_reusablePage{
             font-size: min(3rem, 10vw);
             line-height: min(3rem, 10vw);
         }
@@ -1150,7 +1166,7 @@
         /* .Violet_flowers{
             rotate: -90deg;
         } */
-        .text_wrapper_page7{
+        .text_wrapper_fullBox_Page{
             font-size: min(4.5rem, 11.5vw);
             line-height: min(6rem, 15vw);
         }
