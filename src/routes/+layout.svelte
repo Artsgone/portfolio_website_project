@@ -7,19 +7,20 @@
   onMount(() => {
     const script = document.createElement('script');
     script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=G-BL8ZL12VTN`;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
-    function gtag(){ window.dataLayer.push(arguments); }
-    window.gtag = gtag;
+    window.gtag = function(){ window.dataLayer.push(arguments); };
 
-    gtag('js', new Date());
-    gtag('config', GA_ID, { page_path: window.location.pathname });
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID, { page_path: window.location.pathname });
+  });
 
-    afterNavigate(() => {
-      gtag('config', GA_ID, { page_path: window.location.pathname });
-    });
+  afterNavigate(() => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('config', GA_ID, { page_path: window.location.pathname });
+    }
   });
 </script>
 
