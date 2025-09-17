@@ -341,7 +341,7 @@
             </form>
             <div class="links_bottom_part">
                 <div class="links">
-                    <a href="https://web.telegram.org/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Telegram_Icon forLazyLoad" src={$imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
+                    <a href="https://t.me/artemiques" data-sveltekit-reload rel="noopener noreferrer" class="link lightgrayText"> <img class="Telegram_Icon forLazyLoad" src={$imageStore['Contact_Telegram_Icon']} alt="Telegram_Icon"> 
                         <img class="Contact_ArrowForLinks forLazyLoad" src={$imageStore['Contact_ArrowForLinks']} alt="Contact_ArrowForLinks">
                     </a>
                     <a href="https://www.instagram.com/" data-sveltekit-reload rel="external" class="link lightgrayText"> <img class="Instagram_Icon forLazyLoad" src={$imageStore['Contact_Insta_Icon']} alt="Instagram_Icon"> 
