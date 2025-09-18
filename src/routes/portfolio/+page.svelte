@@ -978,7 +978,7 @@
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Mount_Fuji'] : ""} alt="Portfolio_Mount_Fuji">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_Postttrrr_LowRes'] : ""} loading="lazy" alt="Portfolio_Postttrrr">
                         <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_FakePoster_LowRes'] : ""} loading="lazy" alt="Portfolio_FakePoster_LowRes">
-                        <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType">
+                        <!-- <img class="largeWork_element_preview halfScreenPreview" src={$listOfIntersectedElementsSetter_DF.has(28) ? $imageStoreBanners['Portfolio_growthBanner'] : ""} loading="lazy" alt="Portfolio_workPreviewElement_GeometryFontType"> -->
                     </div>
                 </div>
                 <!-- <div class="largeWork_preview_box_wrapper halfScreenWrapper" id="TomatoPoster">
